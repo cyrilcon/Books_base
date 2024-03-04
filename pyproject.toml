@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "books-base"
+version = "0.1.0"
+description = ""
+authors = ["sonic_72_kon <kko160305@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiogram = "^3.4.1"
+environs = "^10.3.0"
+redis = "^5.0.2"
+betterlogging = "^1.0.0"
+sqlalchemy = "^2.0.27"
+asyncpg = "^0.29.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

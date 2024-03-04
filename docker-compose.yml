@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  bot:
+    image: "${BOT_IMAGE_NAME}"
+    container_name: "${BOT_CONTAINER_NAME}"
+    stop_signal: SIGINT
+    build:
+      context: .
+    working_dir: "/usr/src/app/${BOT_NAME}"
+    volumes:
+      - .:/usr/src/app/${BOT_NAME}
+    command: python3 -m bot
+    restart: always
+    env_file:
+      - ".env"
+#    network_mode: host  # Используется host mode для доступа к хосту
+    depends_on:
+      - redis_cache  # Гарантирует, что redis_cache запущен перед тем, как стартует контейнер bot.
+      - pg_database  # Гарантирует, что pg_database запущен перед тем, как стартует контейнер bot.
+    networks:
+      - tg_bot
+
+  # http://pgconfigurator.cybertec.at/ Для конфигурации Postgres
+  pg_database:
+    container_name: "${PG_CONTAINER_NAME}"
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    volumes:
+      - tg_bot_pgdata_volume:/var/lib/postgresql/data
+    env_file:
+      - '.env'
+#    network_mode: host  # Используется host mode для доступа к хосту
+    networks:
+      - tg_bot
+
+  redis_cache:
+    image: redis:alpine
+    container_name: "${REDIS_CONTAINER_NAME}"
+    restart: always
+    command: redis-server --port ${REDIS_PORT} --loglevel warning --requirepass ${REDIS_PASSWORD}
+    env_file:
+      - ".env"
+#    network_mode: host  # Используется host mode для доступа к хосту
+    volumes:
+      - tg_bot_redis_volume:/data
+    networks:
+      - tg_bot
+
+networks:
+  tg_bot:
+    driver: bridge
+
+volumes:
+  tg_bot_redis_volume:
+    name: tg_bot_redis_volume
+  tg_bot_pgdata_volume:
+    name: tg_bot_pgdata_volume
