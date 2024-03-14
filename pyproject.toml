@@ -13,7 +13,12 @@ redis = "^5.0.2"
 betterlogging = "^1.0.0"
 sqlalchemy = "^2.0.27"
 asyncpg = "^0.29.0"
+greenlet = "^3.0.3"
+alembic = "^1.13.1"
 
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.2.0"
 
 [build-system]
 requires = ["poetry-core"]
