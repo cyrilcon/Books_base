@@ -10,9 +10,9 @@ from infrastructure.database.repo.base import BaseRepo
 
 class UserRepo(BaseRepo):
     async def user_activity(
-            self,
-            id_chat: int,
-            activity: Optional[datetime],
+        self,
+        id_chat: int,
+        activity: Optional[datetime],
     ):
         """
         Добавляется чат или обновляется время активности.
@@ -29,9 +29,7 @@ class UserRepo(BaseRepo):
             )
             .on_conflict_do_update(
                 index_elements=[Telegram_Chat.id_chat],
-                set_=dict(
-                    activity=activity
-                ),
+                set_=dict(activity=activity),
             )
             .returning(Telegram_Chat)
         )

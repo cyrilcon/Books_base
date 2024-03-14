@@ -30,6 +30,7 @@ class DbConfig:
     user: str
     database: str
     port: int = 5432
+    echo: bool = False
 
     # Для SQLAlchemy
     def construct_sqlalchemy_url(self, driver="asyncpg", host=None, port=None) -> str:
@@ -62,8 +63,14 @@ class DbConfig:
         user = env.str("POSTGRES_USER")
         database = env.str("POSTGRES_DB")
         port = env.int("POSTGRES_PORT", 5432)
+        echo = env.bool("POSTGRES_ECHO", False)
         return DbConfig(
-            host=host, password=password, user=user, database=database, port=port
+            host=host,
+            password=password,
+            user=user,
+            database=database,
+            port=port,
+            echo=echo,
         )
 
 
@@ -99,7 +106,9 @@ class TgBot:
         admins = list(map(int, env.list("ADMINS")))  # Список админов
         use_redis = env.bool("USE_REDIS")  # Использование Redis
         support_chat = env.int("SUPPORT_CHAT")  # Чат тех-поддержки
-        return TgBot(token=token, admins=admins, use_redis=use_redis, support_chat=support_chat)
+        return TgBot(
+            token=token, admins=admins, use_redis=use_redis, support_chat=support_chat
+        )
 
 
 @dataclass
@@ -188,7 +197,7 @@ class Config:
     redis: Optional[RedisConfig] = None
 
 
-def load_config(path: str = None) -> Config:
+def load_config(path: str = ".env") -> Config:
     """
     Эта функция принимает на вход необязательный путь к файлу и возвращает объект Config.
     :param path: Путь к env-файлу, из которого загружаются конфигурационные переменные.
@@ -197,7 +206,9 @@ def load_config(path: str = None) -> Config:
     """
 
     env = Env()  # Создаётся объект Env
-    env.read_env(path)  # Объект Env будет использоваться для чтения переменных окружения
+    env.read_env(
+        path
+    )  # Объект Env будет использоваться для чтения переменных окружения
 
     return Config(
         tg_bot=TgBot.from_env(env),

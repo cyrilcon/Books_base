@@ -9,7 +9,6 @@ from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
 
 from infrastructure.database.repo.requests import create_tables
-from infrastructure.database.setup import create_engine, create_session_pool
 from tgbot.config import load_config, Config
 from tgbot.handlers import routers_list
 from tgbot.middlewares import ConfigMiddleware
@@ -23,7 +22,9 @@ async def on_startup(config: Config, bot: Bot, admins: list[int]):
     """
 
     await set_default_commands(bot)  # Команды из меню бота
-    await broadcaster.broadcast(config, bot, admins, "Бот перезапущен!!")  # Уведомление админов о запуске бота
+    await broadcaster.broadcast(
+        config, bot, admins, "Бот перезапущен!!"
+    )  # Уведомление админов о запуске бота
 
 
 def register_global_middlewares(dp: Dispatcher, config: Config):
@@ -89,13 +90,18 @@ async def main():
     config = load_config(".env")
     storage = get_storage(config)
 
+    # Старые присваивания для создания таблиц в бд
     # engine = create_engine(config.db)
     # session_pool = create_session_pool(engine)
-    #
-    # await create_tables(config)  # Создание таблицы в бд
 
-    bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode="HTML"))
-    dp = Dispatcher(storage=storage, fsm_strategy=FSMStrategy.CHAT)  # CHAT — стейт и данные общие для всего чата.
+    await create_tables()  # Создание таблицы в бд
+
+    bot = Bot(
+        token=config.tg_bot.token, default=DefaultBotProperties(parse_mode="HTML")
+    )
+    dp = Dispatcher(
+        storage=storage, fsm_strategy=FSMStrategy.CHAT
+    )  # CHAT — стейт и данные общие для всего чата.
     # В ЛС разница незаметна, но в группе у всех участников будет один стейт и общие данные.
 
     dp.include_routers(*routers_list)  # Установка роутеров

@@ -42,7 +42,9 @@ class Telegram_Chat(Base, TimestampMixin, TableNameMixin):
 
     id_chat: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=False)
     group_name: Mapped[Optional[str]] = mapped_column(String(20))
-    activity: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=False), nullable=False)
+    activity: Mapped[datetime] = mapped_column(
+        TIMESTAMP(timezone=False), nullable=False
+    )
     schedule_time: Mapped[Optional[str]] = mapped_column(String(5))
 
     def __repr__(self):
