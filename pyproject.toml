@@ -11,10 +11,10 @@ aiogram = "^3.4.1"
 environs = "^10.3.0"
 redis = "^5.0.2"
 betterlogging = "^1.0.0"
-sqlalchemy = "^2.0.27"
 asyncpg = "^0.29.0"
 greenlet = "^3.0.3"
 alembic = "^1.13.1"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.28"}
 
 
 [tool.poetry.group.dev.dependencies]
