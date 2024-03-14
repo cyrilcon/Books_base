@@ -12,6 +12,7 @@ class ConfigMiddleware(BaseMiddleware):
     db=DbConfig(host='localhost', password='alcohol', user='testuser', database='test', port=5432),
     redis=RedisConfig(redis_pass='temnomor', redis_port=6388, redis_host='localhost'))
     """
+
     def __init__(self, config) -> None:
         self.config = config
 

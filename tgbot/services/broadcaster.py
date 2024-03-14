@@ -52,7 +52,9 @@ async def send_message(
     except exceptions.TelegramForbiddenError:
         logging.error(f"Target [ID:{user_id}]: got TelegramForbiddenError")
     except exceptions.TelegramMigrateToChat:
-        logging.error(f"Target [ID:{user_id}]: group chat was upgraded to a supergroup chat")
+        logging.error(
+            f"Target [ID:{user_id}]: group chat was upgraded to a supergroup chat"
+        )
         # await delete_chat(config, user_id)  # Удаляется чат
     except exceptions.TelegramRetryAfter as e:
         logging.error(

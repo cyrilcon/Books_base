@@ -15,7 +15,7 @@ class IsPrivate(BaseFilter):
     :return: True/False
     """
 
-    is_private: str = 'private'
+    is_private: str = "private"
 
     async def __call__(self, obj: Message, config: Config) -> bool:
         return obj.chat.type == self.is_private

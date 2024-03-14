@@ -7,7 +7,7 @@ async def get_url_user(fullname: str, username: str) -> str:
     """
 
     if username is not None:
-        url_user = f"<a href=\"t.me/{username}\">{fullname}</a>"
+        url_user = f'<a href="t.me/{username}">{fullname}</a>'
     else:
         url_user = f"<code>{fullname}</code>"
 

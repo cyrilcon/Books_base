@@ -1,4 +1,5 @@
 """Импортируются все роутеры и добавляются в список routers_list."""
+
 from .admin import admin_router
 from .echo import echo_router
 from .user import start_router
