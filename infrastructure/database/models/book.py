@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 class Book(Base, TableNameMixin):
-    id_book: Mapped[int] = mapped_column(primary_key=True)
+    id_book: Mapped[int] = mapped_column(primary_key=True, autoincrement=False)
     name: Mapped[str] = mapped_column(String(255))
     cover: Mapped[str] = mapped_column(String(255))
     description: Mapped[str] = mapped_column(Text())

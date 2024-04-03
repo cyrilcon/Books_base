@@ -1,8 +1,8 @@
 """Crate tables
 
-Revision ID: 14e2e1960ee3
+Revision ID: 42fa42050ece
 Revises: 
-Create Date: 2024-04-03 10:07:19.594846
+Create Date: 2024-04-03 10:32:06.870191
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "14e2e1960ee3"
+revision: str = "42fa42050ece"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -29,7 +29,7 @@ def upgrade() -> None:
     )
     op.create_table(
         "book",
-        sa.Column("id_book", sa.Integer(), nullable=False),
+        sa.Column("id_book", sa.Integer(), autoincrement=False, nullable=False),
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("cover", sa.String(length=255), nullable=False),
         sa.Column("description", sa.Text(), nullable=False),
@@ -67,7 +67,7 @@ def upgrade() -> None:
     )
     op.create_table(
         "book_file",
-        sa.Column("id_book_genre", sa.Integer(), nullable=False),
+        sa.Column("id_book_file", sa.Integer(), nullable=False),
         sa.Column("id_book", sa.Integer(), nullable=False),
         sa.Column("id_file", sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(
@@ -78,7 +78,7 @@ def upgrade() -> None:
             ["id_file"],
             ["file.id_file"],
         ),
-        sa.PrimaryKeyConstraint("id_book_genre"),
+        sa.PrimaryKeyConstraint("id_book_file"),
         sa.UniqueConstraint("id_book", "id_file", name="idx_unique_book_file"),
     )
     op.create_table(

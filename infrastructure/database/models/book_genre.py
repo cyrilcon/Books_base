@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base, TableNameMixin
+from .base import Base
 
 if TYPE_CHECKING:
     from .book import Book
@@ -31,3 +31,14 @@ class BookGenre(Base):
     genre_rel: Mapped["Genre"] = relationship(
         back_populates="book_genre_rel",
     )
+
+    def __str__(self):
+        return (
+            f"{self.__class__.__name__}"
+            f"(id_book_genre={self.id_book_genre}, "
+            f"id_book={self.id_book}, "
+            f"id_file={self.id_file})"
+        )
+
+    def __repr__(self):
+        return str(self)

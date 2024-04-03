@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base, TableNameMixin
+from .base import Base
 
 if TYPE_CHECKING:
     from .book import Book
@@ -31,3 +31,14 @@ class BookAuthor(Base):
     author_rel: Mapped["Author"] = relationship(
         back_populates="book_author_rel",
     )
+
+    def __str__(self):
+        return (
+            f"{self.__class__.__name__}"
+            f"(id_book_author={self.id_book_author}, "
+            f"id_book={self.id_book}, "
+            f"id_author={self.id_author})"
+        )
+
+    def __repr__(self):
+        return str(self)
