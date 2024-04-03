@@ -13,7 +13,7 @@ class Author(Base, TableNameMixin):
     id_author: Mapped[int] = mapped_column(primary_key=True)
     author: Mapped[str] = mapped_column(String(255))
 
-    book_author_rel: Mapped["BookAuthor"] = relationship(
+    book_author_rel: Mapped[list["BookAuthor"]] = relationship(
         back_populates="author_rel",
     )
 

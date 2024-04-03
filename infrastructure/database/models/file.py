@@ -15,7 +15,7 @@ class File(Base, TableNameMixin):
     format: Mapped[str] = mapped_column(String(10))
     file: Mapped[str] = mapped_column(String(255))
 
-    book_file_rel: Mapped["BookFile"] = relationship(
+    book_file_rel: Mapped[list["BookFile"]] = relationship(
         back_populates="file_rel",
     )
 

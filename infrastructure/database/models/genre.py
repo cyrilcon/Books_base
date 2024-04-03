@@ -13,7 +13,7 @@ class Genre(Base, TableNameMixin):
     id_genre: Mapped[int] = mapped_column(primary_key=True)
     genre: Mapped[str] = mapped_column(String(255))
 
-    book_genre_rel: Mapped["BookGenre"] = relationship(
+    book_genre_rel: Mapped[list["BookGenre"]] = relationship(
         back_populates="genre_rel",
     )
 

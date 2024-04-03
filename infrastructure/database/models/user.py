@@ -9,6 +9,7 @@ from .base import Base, TableNameMixin
 if TYPE_CHECKING:
     from .discount import Discount
     from .premium import Premium
+    from .user_booking import UserBooking
 
 
 class User(Base, TableNameMixin):
@@ -28,6 +29,10 @@ class User(Base, TableNameMixin):
     )
 
     premium_rel: Mapped["Premium"] = relationship(
+        back_populates="user_rel",
+    )
+
+    user_booking_rel: Mapped[list["UserBooking"]] = relationship(
         back_populates="user_rel",
     )
 

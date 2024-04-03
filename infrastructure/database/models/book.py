@@ -18,15 +18,15 @@ class Book(Base, TableNameMixin):
     description: Mapped[str] = mapped_column(Text())
     price: Mapped[int]
 
-    book_author_rel: Mapped["BookAuthor"] = relationship(
+    book_author_rel: Mapped[list["BookAuthor"]] = relationship(
         back_populates="book_rel",
     )
 
-    book_genre_rel: Mapped["BookGenre"] = relationship(
+    book_genre_rel: Mapped[list["BookGenre"]] = relationship(
         back_populates="book_rel",
     )
 
-    book_file_rel: Mapped["BookFile"] = relationship(
+    book_file_rel: Mapped[list["BookFile"]] = relationship(
         back_populates="book_rel",
     )
 
