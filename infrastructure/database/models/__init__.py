@@ -8,6 +8,7 @@ __all__ = (
     "Discount",
     "File",
     "Genre",
+    "Premium",
     "User",
 )
 
@@ -20,6 +21,5 @@ from .book_genre import BookGenre
 from .discount import Discount
 from .file import File
 from .genre import Genre
+from .premium import Premium
 from .user import User
-
-# from .users import Telegram_Chat

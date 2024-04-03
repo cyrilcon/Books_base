@@ -8,24 +8,26 @@ from .base import Base, TableNameMixin
 
 if TYPE_CHECKING:
     from .discount import Discount
+    from .premium import Premium
 
 
 class User(Base, TableNameMixin):
     id_user: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=False)
     fullname: Mapped[str | None] = mapped_column(Text())
     username: Mapped[str | None] = mapped_column(Text())
+    registration_date: Mapped[datetime]
     last_activity: Mapped[datetime] = mapped_column(
         server_default=func.now(),
         default=datetime.now(),
-    )
-    registration_date: Mapped[datetime] = mapped_column(
-        server_default=func.now(),  # ПОД ВОПРОСОМ
-        default=datetime.now(),  # ТРЕБУЕТ ТЕСТА И ПРОВЕРКИ
     )
     base: Mapped[int] = mapped_column(default=0, server_default="0")
     id_discount: Mapped[int] = mapped_column(ForeignKey("discount.id_discount"))
 
     discount_rel: Mapped["Discount"] = relationship(
+        back_populates="user_rel",
+    )
+
+    premium_rel: Mapped["Premium"] = relationship(
         back_populates="user_rel",
     )
 
