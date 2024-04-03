@@ -37,7 +37,7 @@ class BookGenre(Base):
             f"{self.__class__.__name__}"
             f"(id_book_genre={self.id_book_genre}, "
             f"id_book={self.id_book}, "
-            f"id_file={self.id_file})"
+            f"id_genre={self.id_genre})"
         )
 
     def __repr__(self):
