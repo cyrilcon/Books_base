@@ -10,7 +10,8 @@ if TYPE_CHECKING:
     from .file import File
 
 
-class BookFile(Base, TableNameMixin):
+class BookFile(Base):
+    __tablename__ = "book_file"
     __table_args__ = (
         UniqueConstraint(
             "id_book",

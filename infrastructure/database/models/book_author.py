@@ -10,7 +10,8 @@ if TYPE_CHECKING:
     from .author import Author
 
 
-class BookAuthor(Base, TableNameMixin):
+class BookAuthor(Base):
+    __tablename__ = "book_author"
     __table_args__ = (
         UniqueConstraint(
             "id_book",

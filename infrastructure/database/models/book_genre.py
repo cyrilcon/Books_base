@@ -10,7 +10,8 @@ if TYPE_CHECKING:
     from .genre import Genre
 
 
-class BookGenre(Base, TableNameMixin):
+class BookGenre(Base):
+    __tablename__ = "book_genre"
     __table_args__ = (
         UniqueConstraint(
             "id_book",
