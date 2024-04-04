@@ -14,7 +14,7 @@ class Premium(Base, TableNameMixin):
     id_premium: Mapped[int] = mapped_column(primary_key=True)
     id_user: Mapped[int] = mapped_column(ForeignKey("user.id_user"), unique=True)
     reading_limit: Mapped[int | None]
-    date_limit: Mapped[datetime | None]
+    limit_date: Mapped[datetime | None]
 
     user_rel: Mapped["User"] = relationship(
         back_populates="premium_rel",
@@ -26,7 +26,7 @@ class Premium(Base, TableNameMixin):
             f"(id_premium={self.id_premium}, "
             f"id_user={self.id_user}, "
             f"reading_limit={self.reading_limit}, "
-            f"date_limit={self.date_limit!r})"
+            f"limit_date={self.limit_date!r})"
         )
 
     def __repr__(self):

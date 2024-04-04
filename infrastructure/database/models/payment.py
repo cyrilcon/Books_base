@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class Payment(Base, TableNameMixin):
     id_payment: Mapped[str] = mapped_column(String(255), primary_key=True)
     price: Mapped[float] = mapped_column(DECIMAL(10, 2))
-    date_payment: Mapped[datetime] = mapped_column(
+    payment_date: Mapped[datetime] = mapped_column(
         server_default=func.now(),
         default=datetime.now(),
     )
@@ -32,7 +32,7 @@ class Payment(Base, TableNameMixin):
             f"{self.__class__.__name__}"
             f"(id_payment={self.id_payment}, "
             f"price={self.price}, "
-            f"date_payment={self.date_payment!r})"
+            f"payment_date={self.payment_date!r})"
         )
 
     def __repr__(self):

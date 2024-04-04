@@ -1,8 +1,8 @@
 """Crate tables
 
-Revision ID: 9944dbcaa08b
+Revision ID: 9d6df7e4c536
 Revises: 
-Create Date: 2024-04-04 10:40:37.075315
+Create Date: 2024-04-04 10:54:44.798369
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "9944dbcaa08b"
+revision: str = "9d6df7e4c536"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -42,7 +42,7 @@ def upgrade() -> None:
         sa.Column("author", sa.String(length=255), nullable=False),
         sa.Column("name_book", sa.String(length=255), nullable=False),
         sa.Column(
-            "date_booking",
+            "booking_date",
             sa.DateTime(),
             server_default=sa.text("now()"),
             nullable=False,
@@ -73,7 +73,7 @@ def upgrade() -> None:
         sa.Column("id_payment", sa.String(length=255), nullable=False),
         sa.Column("price", sa.DECIMAL(precision=10, scale=2), nullable=False),
         sa.Column(
-            "date_payment",
+            "payment_date",
             sa.DateTime(),
             server_default=sa.text("now()"),
             nullable=False,
@@ -169,7 +169,7 @@ def upgrade() -> None:
         sa.Column("id_premium", sa.Integer(), nullable=False),
         sa.Column("id_user", sa.BIGINT(), nullable=False),
         sa.Column("reading_limit", sa.Integer(), nullable=True),
-        sa.Column("date_limit", sa.DateTime(), nullable=True),
+        sa.Column("limit_date", sa.DateTime(), nullable=True),
         sa.ForeignKeyConstraint(
             ["id_user"],
             ["user.id_user"],
