@@ -20,7 +20,7 @@ services:
       - redis_cache  # Гарантирует, что redis_cache запущен перед тем, как стартует контейнер bot.
       - pg_database  # Гарантирует, что pg_database запущен перед тем, как стартует контейнер bot.
     networks:
-      - tg_bot
+      - books_base
 
   # http://pgconfigurator.cybertec.at/ Для конфигурации Postgres
   pg_database:
@@ -33,12 +33,12 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: "${POSTGRES_DB}"
     volumes:
-      - tg_bot_pgdata_volume:/var/lib/postgresql/data
+      - books_base_pgdata_volume:/var/lib/postgresql/data
     env_file:
       - '.env'
 #    network_mode: host  # Используется host mode для доступа к хосту
     networks:
-      - tg_bot
+      - books_base
 
   redis_cache:
     image: redis:alpine
@@ -49,16 +49,16 @@ services:
       - ".env"
 #    network_mode: host  # Используется host mode для доступа к хосту
     volumes:
-      - tg_bot_redis_volume:/data
+      - books_base_redis_volume:/data
     networks:
-      - tg_bot
+      - books_base
 
 networks:
-  tg_bot:
+  books_base:
     driver: bridge
 
 volumes:
-  tg_bot_redis_volume:
-    name: tg_bot_redis_volume
-  tg_bot_pgdata_volume:
-    name: tg_bot_pgdata_volume
+  books_base_redis_volume:
+    name: books_base_redis_volume
+  books_base_pgdata_volume:
+    name: books_base_pgdata_volume
