@@ -5,6 +5,7 @@ __all__ = (
     "BookAuthor",
     "BookFile",
     "BookGenre",
+    "BookPayment",
     "Booking",
     "Discount",
     "File",
@@ -22,6 +23,7 @@ from .book import Book
 from .book_author import BookAuthor
 from .book_file import BookFile
 from .book_genre import BookGenre
+from .book_payment import BookPayment
 from .booking import Booking
 from .discount import Discount
 from .file import File

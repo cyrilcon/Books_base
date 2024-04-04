@@ -8,6 +8,7 @@ from .base import Base, TableNameMixin
 
 if TYPE_CHECKING:
     from .user_payment import UserPayment
+    from .book_payment import BookPayment
 
 
 class Payment(Base, TableNameMixin):
@@ -19,6 +20,10 @@ class Payment(Base, TableNameMixin):
     )
 
     user_payment_rel: Mapped[list["UserPayment"]] = relationship(
+        back_populates="payment_rel",
+    )
+
+    book_payment_rel: Mapped[list["BookPayment"]] = relationship(
         back_populates="payment_rel",
     )
 

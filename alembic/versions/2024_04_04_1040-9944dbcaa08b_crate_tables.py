@@ -1,8 +1,8 @@
 """Crate tables
 
-Revision ID: 0a602e9150b9
+Revision ID: 9944dbcaa08b
 Revises: 
-Create Date: 2024-04-04 10:25:13.301626
+Create Date: 2024-04-04 10:40:37.075315
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "0a602e9150b9"
+revision: str = "9944dbcaa08b"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -129,6 +129,22 @@ def upgrade() -> None:
         sa.UniqueConstraint("id_book", "id_genre", name="idx_unique_book_genre"),
     )
     op.create_table(
+        "book_payment",
+        sa.Column("id_book_payment", sa.Integer(), nullable=False),
+        sa.Column("id_book", sa.Integer(), nullable=False),
+        sa.Column("id_payment", sa.String(length=255), nullable=False),
+        sa.ForeignKeyConstraint(
+            ["id_book"],
+            ["book.id_book"],
+        ),
+        sa.ForeignKeyConstraint(
+            ["id_payment"],
+            ["payment.id_payment"],
+        ),
+        sa.PrimaryKeyConstraint("id_book_payment"),
+        sa.UniqueConstraint("id_book", "id_payment", name="idx_unique_book_payment"),
+    )
+    op.create_table(
         "user",
         sa.Column("id_user", sa.BIGINT(), autoincrement=False, nullable=False),
         sa.Column("fullname", sa.Text(), nullable=True),
@@ -202,6 +218,7 @@ def downgrade() -> None:
     op.drop_table("user_booking")
     op.drop_table("premium")
     op.drop_table("user")
+    op.drop_table("book_payment")
     op.drop_table("book_genre")
     op.drop_table("book_file")
     op.drop_table("book_author")

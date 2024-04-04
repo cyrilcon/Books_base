@@ -24,7 +24,9 @@ class Premium(Base, TableNameMixin):
         return (
             f"{self.__class__.__name__}"
             f"(id_premium={self.id_premium}, "
-            f"id_user={self.id_user})"
+            f"id_user={self.id_user}, "
+            f"reading_limit={self.reading_limit}, "
+            f"date_limit={self.date_limit!r})"
         )
 
     def __repr__(self):

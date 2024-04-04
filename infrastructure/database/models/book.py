@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from .book_author import BookAuthor
     from .book_genre import BookGenre
     from .book_file import BookFile
+    from .book_payment import BookPayment
 
 
 class Book(Base, TableNameMixin):
@@ -27,6 +28,10 @@ class Book(Base, TableNameMixin):
     )
 
     book_file_rel: Mapped[list["BookFile"]] = relationship(
+        back_populates="book_rel",
+    )
+
+    book_payment_rel: Mapped[list["BookPayment"]] = relationship(
         back_populates="book_rel",
     )
 
