@@ -9,9 +9,11 @@ __all__ = (
     "Discount",
     "File",
     "Genre",
+    "Payment",
     "Premium",
     "User",
     "UserBooking",
+    "UserPayment",
 )
 
 from .author import Author
@@ -24,6 +26,8 @@ from .booking import Booking
 from .discount import Discount
 from .file import File
 from .genre import Genre
+from .payment import Payment
 from .premium import Premium
 from .user import User
 from .user_booking import UserBooking
+from .user_payment import UserPayment

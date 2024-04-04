@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 class Premium(Base, TableNameMixin):
-    id_premium: Mapped[int] = mapped_column(primary_key=True, autoincrement=False)
+    id_premium: Mapped[int] = mapped_column(primary_key=True)
     id_user: Mapped[int] = mapped_column(ForeignKey("user.id_user"), unique=True)
     reading_limit: Mapped[int | None]
     date_limit: Mapped[datetime | None]

@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from .discount import Discount
     from .premium import Premium
     from .user_booking import UserBooking
+    from .user_payment import UserPayment
 
 
 class User(Base, TableNameMixin):
@@ -33,6 +34,10 @@ class User(Base, TableNameMixin):
     )
 
     user_booking_rel: Mapped[list["UserBooking"]] = relationship(
+        back_populates="user_rel",
+    )
+
+    user_payment_rel: Mapped[list["UserPayment"]] = relationship(
         back_populates="user_rel",
     )
 
