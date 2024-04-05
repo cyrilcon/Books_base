@@ -8,7 +8,6 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
 
-from infrastructure.database.repo.requests import create_tables
 from tgbot.config import load_config, Config
 from tgbot.handlers import routers_list
 from tgbot.middlewares import ConfigMiddleware
@@ -89,12 +88,6 @@ async def main():
 
     config = load_config(".env")
     storage = get_storage(config)
-
-    # Старые присваивания для создания таблиц в бд
-    # engine = create_engine(config.db)
-    # session_pool = create_session_pool(engine)
-
-    await create_tables()  # Создание таблицы в бд
 
     bot = Bot(
         token=config.tg_bot.token, default=DefaultBotProperties(parse_mode="HTML")

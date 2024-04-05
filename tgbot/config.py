@@ -2,76 +2,6 @@ from dataclasses import dataclass
 from typing import Optional
 
 from environs import Env
-from sqlalchemy.engine.url import URL
-
-
-@dataclass
-class DbConfig:
-    """
-    Класс конфигурации базы данных.
-    Этот класс содержит настройки для базы данных, такие как хост, пароль, порт и т.д.
-
-    Атрибуты
-    ----------
-    host : str
-        Хост, на котором расположен сервер базы данных.
-    Password : str
-        Пароль, используемый для аутентификации в базе данных.
-    User : str
-        Имя пользователя, используемое для аутентификации в базе данных.
-    Database : str
-        Имя базы данных.
-    Port : int
-        Порт, на котором прослушивается сервер базы данных.
-    """
-
-    host: str
-    password: str
-    user: str
-    database: str
-    port: int = 5432
-    echo: bool = False
-
-    # Для SQLAlchemy
-    def construct_sqlalchemy_url(self, driver="asyncpg", host=None, port=None) -> str:
-        """
-        Создает и возвращает URL-адрес SQLAlchemy для данной конфигурации базы данных.
-        """
-
-        if not host:
-            host = self.host
-        if not port:
-            port = self.port
-        uri = URL.create(
-            drivername=f"postgresql+{driver}",
-            username=self.user,
-            password=self.password,
-            host=host,
-            port=port,
-            database=self.database,
-        )
-        return uri.render_as_string(hide_password=False)
-
-    @staticmethod
-    def from_env(env: Env):
-        """
-        Создает объект DbConfig из переменных окружения.
-        """
-
-        host = env.str("POSTGRES_HOST")
-        password = env.str("POSTGRES_PASSWORD")
-        user = env.str("POSTGRES_USER")
-        database = env.str("POSTGRES_DB")
-        port = env.int("POSTGRES_PORT", 5432)
-        echo = env.bool("POSTGRES_ECHO", False)
-        return DbConfig(
-            host=host,
-            password=password,
-            user=user,
-            database=database,
-            port=port,
-            echo=echo,
-        )
 
 
 @dataclass
@@ -193,7 +123,6 @@ class Config:
 
     tg_bot: TgBot
     misc: Miscellaneous
-    db: Optional[DbConfig] = None
     redis: Optional[RedisConfig] = None
 
 
@@ -212,7 +141,6 @@ def load_config(path: str = ".env") -> Config:
 
     return Config(
         tg_bot=TgBot.from_env(env),
-        db=DbConfig.from_env(env),
         redis=RedisConfig.from_env(env),
         misc=Miscellaneous(),
     )
