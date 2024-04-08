@@ -5,7 +5,7 @@ from environs import Env
 from infrastructure.books_base_api.base import BaseClient
 
 
-class Api(BaseClient):
+class BooksBaseApi(BaseClient):
     def __init__(self, env: Env, api_key: str = None, **kwargs):
         self.api_key = api_key
         self.base_url = env.str("API_URL")
@@ -54,4 +54,4 @@ class Api(BaseClient):
 
 env = Env()  # Создаётся объект Env
 env.read_env(".env")  # Объект Env будет использоваться для чтения переменных окружения
-api = Api(env)
+api = BooksBaseApi(env)
