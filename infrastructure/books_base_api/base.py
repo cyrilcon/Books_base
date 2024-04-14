@@ -65,7 +65,7 @@ class BaseClient:
             method, url, params=params, json=json, headers=headers, data=data
         ) as response:
             status = response.status
-            if status // 100 % 10 != 2:
+            if status not in {200, 201, 404}:
                 s = await response.text()
                 raise ClientError(f"Got status {status} for {method} {url}: {s}")
             try:

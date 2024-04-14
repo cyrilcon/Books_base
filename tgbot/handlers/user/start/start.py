@@ -21,14 +21,12 @@ async def start(message: Message):
     fullname = message.from_user.full_name
     username = message.from_user.username
 
-    status, result = await api.add_user(id_user, fullname, username)
+    status, result = await api.get_user(id_user)
+    if status == 404:
+        await api.add_user(id_user, fullname, username)
 
-    # Обработка результата
-    if status == 201:
-        print("Пользователь успешно добавлен.")
-        print(result)
-        await message.answer("Привет, пользователь!!")
-    else:
-        print("Произошла ошибка при добавлении пользователя.")
-        print(result)
-        await message.answer("Ошибка!!")
+    text = f", <b>{fullname}</b>" if fullname else None
+    await message.answer(
+        f"Привет{text}!!\n"
+        "Напиши название или артикул книги, чтобы купить и ознакомится с товаром"
+    )

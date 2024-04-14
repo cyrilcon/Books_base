@@ -30,16 +30,10 @@ class BooksBaseApi(BaseClient):
 
         endpoint = "/users"
 
-        date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
         data = {
             "id_user": id_user,
             "fullname": fullname,
             "username": username,
-            "registration_date": date,
-            "last_activity": date,
-            "base": 0,
-            "id_discount": None,
         }
 
         status, result = await self._make_request(
@@ -48,7 +42,30 @@ class BooksBaseApi(BaseClient):
             json=data,
         )
 
-        await self.close()
+        # await self.close()
+        return status, result
+
+    async def get_user(
+        self,
+        id_user: int,
+        **kwargs,
+    ):
+        """
+        Get a user by id with all the information
+
+        :param id_user: unique user identifier
+        :param kwargs: additional arguments
+        :return:
+        """
+
+        endpoint = f"/users/{id_user}"
+
+        status, result = await self._make_request(
+            method="GET",
+            url=endpoint,
+        )
+
+        # await self.close()
         return status, result
 
 
