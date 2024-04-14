@@ -1,15 +1,11 @@
 from datetime import datetime
 
-from environs import Env
-
 from infrastructure.books_base_api.base import BaseClient
 
 
-class BooksBaseApi(BaseClient):
-    def __init__(self, env: Env, api_key: str = None, **kwargs):
-        self.api_key = api_key
-        self.base_url = env.str("API_URL")
-        super().__init__(base_url=self.base_url)
+class UsersApi:
+    def __init__(self, base_client: BaseClient):
+        self.base_client = base_client
 
     async def add_user(
         self,
@@ -36,13 +32,12 @@ class BooksBaseApi(BaseClient):
             "username": username,
         }
 
-        status, result = await self._make_request(
+        status, result = await self.base_client.make_request(
             method="POST",
             url=endpoint,
             json=data,
         )
 
-        # await self.close()
         return status, result
 
     async def get_user(
@@ -60,15 +55,35 @@ class BooksBaseApi(BaseClient):
 
         endpoint = f"/users/{id_user}"
 
-        status, result = await self._make_request(
+        status, result = await self.base_client.make_request(
             method="GET",
             url=endpoint,
         )
 
-        # await self.close()
         return status, result
 
+    async def update_user(
+        self,
+        id_user: int,
+        **kwargs,
+    ):
+        """
+        Update a user by id
 
-env = Env()  # Создаётся объект Env
-env.read_env(".env")  # Объект Env будет использоваться для чтения переменных окружения
-api = BooksBaseApi(env)
+        :param id_user: unique user identifier
+        :param kwargs: additional arguments
+        :return:
+        """
+
+        endpoint = f"/users/{id_user}"
+
+        data = {key: value for key, value in kwargs.items()}
+        data["last_activity"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        status, result = await self.base_client.make_request(
+            method="PATCH",
+            url=endpoint,
+            json=data,
+        )
+
+        return status, result

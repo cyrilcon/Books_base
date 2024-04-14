@@ -42,7 +42,7 @@ class BaseClient:
         ClientError,
         max_time=10,
     )
-    async def _make_request(
+    async def make_request(
         self,
         method: str,
         url: str | URL,

@@ -21,12 +21,14 @@ async def start(message: Message):
     fullname = message.from_user.full_name
     username = message.from_user.username
 
-    status, result = await api.get_user(id_user)
+    status, result = await api.users.get_user(id_user)
     if status == 404:
-        await api.add_user(id_user, fullname, username)
+        await api.users.add_user(id_user, fullname, username)
+    else:
+        await api.users.update_user(id_user, fullname=fullname, username=username)
 
     text = f", <b>{fullname}</b>" if fullname else None
     await message.answer(
         f"Привет{text}!!\n"
-        "Напиши название или артикул книги, чтобы купить и ознакомится с товаром"
+        "Напиши название или артикул книги, чтобы купить или ознакомится с товаром"
     )
