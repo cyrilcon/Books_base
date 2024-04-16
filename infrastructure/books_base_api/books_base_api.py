@@ -1,6 +1,7 @@
 from environs import Env
 
 from infrastructure.books_base_api.base import BaseClient
+from .book_api import BooksApi
 from .user_api import UsersApi
 
 
@@ -11,7 +12,7 @@ class BooksBaseApi(BaseClient):
         super().__init__(base_url=self.base_url)
 
         self.users = UsersApi(self)
-        # self.books = BooksApi(self)
+        self.books = BooksApi(self)
         # self.orders = OrdersApi(self)
 
 

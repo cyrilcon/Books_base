@@ -6,6 +6,7 @@ from infrastructure.books_base_api.base import BaseClient
 class UsersApi:
     def __init__(self, base_client: BaseClient):
         self.base_client = base_client
+        self.endpoint = "/users"
 
     async def add_user(
         self,
@@ -24,8 +25,6 @@ class UsersApi:
         :return:
         """
 
-        endpoint = "/users"
-
         data = {
             "id_user": id_user,
             "fullname": fullname,
@@ -34,7 +33,7 @@ class UsersApi:
 
         status, result = await self.base_client.make_request(
             method="POST",
-            url=endpoint,
+            url=self.endpoint,
             json=data,
         )
 
@@ -53,11 +52,9 @@ class UsersApi:
         :return:
         """
 
-        endpoint = f"/users/{id_user}"
-
         status, result = await self.base_client.make_request(
             method="GET",
-            url=endpoint,
+            url=f"{self.endpoint}/{id_user}",
         )
 
         return status, result
@@ -75,14 +72,12 @@ class UsersApi:
         :return:
         """
 
-        endpoint = f"/users/{id_user}"
-
         data = {key: value for key, value in kwargs.items()}
         data["last_activity"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         status, result = await self.base_client.make_request(
             method="PATCH",
-            url=endpoint,
+            url=f"{self.endpoint}/{id_user}",
             json=data,
         )
 
