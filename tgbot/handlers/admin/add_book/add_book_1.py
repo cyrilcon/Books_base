@@ -25,7 +25,9 @@ async def add_book_1(message: Message, state: FSMContext):
     :return: Сообщение для выбора артикула и переход в FSM (select_article).
     """
 
-    language = message.from_user.language_code
+    id_user = message.chat.id
+    status, user = await api.users.get_user(id_user)
+    language = user["language"]
     l10n = get_fluent_localization(language)
 
     status, latest_article = await api.books.get_latest_article()
@@ -51,7 +53,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
 
     await delete_keyboard(bot, message)  # Удаляются inline кнопки
 
-    id_user = message.from_user.id
+    id_user = message.chat.id
     status, user = await api.users.get_user(id_user)
 
     language = user["language"]
@@ -85,9 +87,9 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
                 reply_markup=cancel_button,
             )
         else:
-            await state.update_data(article=article)  # Сохраняется артикул
             await message.answer(
                 l10n.format_value("add-book-name-book"),
                 reply_markup=back_and_cancel_buttons,
             )
+            await state.update_data(article=article)  # Сохраняется артикул
             await state.set_state(AddBook.add_name_book)  # Вход в FSM (add_name_book)

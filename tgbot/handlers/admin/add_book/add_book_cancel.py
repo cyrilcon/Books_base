@@ -3,6 +3,7 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 
+from infrastructure.books_base_api import api
 from tgbot.filters import AdminFilter
 from tgbot.services import get_fluent_localization
 from tgbot.states import AddBook
@@ -21,7 +22,9 @@ async def add_book_cancel(call: CallbackQuery, state: FSMContext):
     :param state: FSM (AddBook).
     """
 
-    language = call.message.from_user.language_code
+    id_user = call.message.chat.id
+    status, user = await api.users.get_user(id_user)
+    language = user["language"]
     l10n = get_fluent_localization(language)
     text = l10n.format_value("add-book-cancel")
 

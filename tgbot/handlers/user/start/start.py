@@ -18,7 +18,7 @@ async def start(message: Message):
     :return: Сообщение приветствие бота.
     """
 
-    id_user = message.from_user.id
+    id_user = message.chat.id
     fullname = message.from_user.full_name
     username = message.from_user.username
 
