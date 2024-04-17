@@ -11,6 +11,7 @@ class UsersApi:
     async def add_user(
         self,
         id_user: int,
+        language: str,
         fullname: str = None,
         username: str = None,
         **kwargs,
@@ -19,6 +20,7 @@ class UsersApi:
         Add a user
 
         :param id_user: unique user identifier
+        :param language: user selected language
         :param fullname: user's fullname (user's first name and last name)
         :param username: user's username (begins with the @ symbol)
         :param kwargs: additional arguments
@@ -29,6 +31,7 @@ class UsersApi:
             "id_user": id_user,
             "fullname": fullname,
             "username": username,
+            "language": language,
         }
 
         status, result = await self.base_client.make_request(

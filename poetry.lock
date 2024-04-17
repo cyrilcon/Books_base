@@ -180,6 +180,20 @@ tests-mypy = ["mypy (>=1.6)", "pytest-mypy-plugins"]
 tests-no-zope = ["attrs[tests-mypy]", "cloudpickle", "hypothesis", "pympler", "pytest (>=4.3.0)", "pytest-xdist[psutil]"]
 
 [[package]]
+name = "babel"
+version = "2.14.0"
+description = "Internationalization utilities"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Babel-2.14.0-py3-none-any.whl", hash = "sha256:efb1a25b7118e67ce3a259bed20545c29cb68be8ad2c784c83689981b7a57287"},
+    {file = "Babel-2.14.0.tar.gz", hash = "sha256:6919867db036398ba21eb5c7a0f6b28ab8cbc3ae7a73a44ebe34ae74a4e7d363"},
+]
+
+[package.extras]
+dev = ["freezegun (>=1.0,<2.0)", "pytest (>=6.0)", "pytest-cov"]
+
+[[package]]
 name = "backoff"
 version = "2.2.1"
 description = "Function decoration for backoff and retry"
@@ -300,6 +314,38 @@ python-dotenv = "*"
 dev = ["environs[tests]", "pre-commit (>=3.5,<4.0)", "tox"]
 django = ["dj-database-url", "dj-email-url", "django-cache-url"]
 tests = ["environs[django]", "pytest"]
+
+[[package]]
+name = "fluent-runtime"
+version = "0.4.0"
+description = "Localization library for expressive translations."
+optional = false
+python-versions = "*"
+files = [
+    {file = "fluent.runtime-0.4.0-py2.py3-none-any.whl", hash = "sha256:51fd02582c2363e1106d7051642967a1b7f406dd9c317bd4600a73ede40c5146"},
+    {file = "fluent.runtime-0.4.0.tar.gz", hash = "sha256:cb5ef96a58a3f67acaaca046d1201d202a1ebf2823e5e664370f359bae20574d"},
+]
+
+[package.dependencies]
+attrs = "*"
+babel = "*"
+"fluent.syntax" = ">=0.17,<0.20"
+pytz = "*"
+typing-extensions = ">=3.7,<5"
+
+[[package]]
+name = "fluent-syntax"
+version = "0.19.0"
+description = "Localization library for expressive translations."
+optional = false
+python-versions = "*"
+files = [
+    {file = "fluent.syntax-0.19.0-py2.py3-none-any.whl", hash = "sha256:b352b3475fac6c6ed5f06527921f432aac073d764445508ee5218aeccc7cc5c4"},
+    {file = "fluent.syntax-0.19.0.tar.gz", hash = "sha256:920326d7f46864b9758f0044e9968e3112198bc826acee16ddd8f11d359004fd"},
+]
+
+[package.dependencies]
+typing-extensions = ">=3.7,<5"
 
 [[package]]
 name = "frozenlist"
@@ -800,6 +846,17 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "pytz"
+version = "2024.1"
+description = "World timezone definitions, modern and historical"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pytz-2024.1-py2.py3-none-any.whl", hash = "sha256:328171f4e3623139da4983451950b28e95ac706e13f3f2630a879749e7a8b319"},
+    {file = "pytz-2024.1.tar.gz", hash = "sha256:2a29735ea9c18baf14b448846bde5a48030ed267578472d8955cd0e7443a9812"},
+]
+
+[[package]]
 name = "redis"
 version = "5.0.3"
 description = "Python client for Redis database and key-value store"
@@ -1005,4 +1062,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "c9cfa6d8a478d8b8083c2e91b15608a4176033b694b4b5fbcf0f1579d3e4968a"
+content-hash = "4e722141d847ee75f306ac10630a016c03cb5f44fcea4c32391a6cd61175944b"
