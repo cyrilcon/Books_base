@@ -22,7 +22,7 @@ async def add_book_cancel(call: CallbackQuery, state: FSMContext):
     :param state: FSM (AddBook).
     """
 
-    id_user = call.message.chat.id
+    id_user = call.from_user.id
     status, user = await api.users.get_user(id_user)
     language = user["language"]
     l10n = get_fluent_localization(language)

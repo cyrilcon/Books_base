@@ -8,7 +8,7 @@ add-book-article =
     Свободный артикул: <code>{ $free_article }</code>
 
 add-book-incorrect-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4
+    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
     Свободный артикул: <code>{ $free_article }</code>
 
 add-book-article-already-exist =
@@ -22,3 +22,11 @@ add-book-name-book =
     Введите <i><b>название</b></i> книги
 
 add-book-cancel = Вы отменили добавление книги
+
+add-book-name-book-incorrect =
+    В названии книги не должно содержаться символа <b>"#"</b>!!
+    Введите название книги ещё раз
+
+add-book-author =
+    <b>3/8</b>
+    Введите <i><b>автора</b></i>
