@@ -29,4 +29,8 @@ add-book-name-book-incorrect =
 
 add-book-author =
     <b>3/8</b>
-    Введите <i><b>автора</b></i>
+    Введите <i><b>автора(ов)</b></i>
+
+add-book-description =
+    <b>4/8</b>
+    Введите <i><b>описание</b></i> книги

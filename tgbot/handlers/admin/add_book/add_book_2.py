@@ -1,5 +1,5 @@
 from aiogram import Router, F, Bot
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 
@@ -7,7 +7,7 @@ from infrastructure.books_base_api import api
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import cancel_button, back_and_cancel_buttons
-from tgbot.services import get_fluent_localization
+from tgbot.services import get_user_language
 from tgbot.states import AddBook
 
 add_book_router_2 = Router()
@@ -15,7 +15,7 @@ add_book_router_2.message.filter(AdminFilter())
 
 
 @add_book_router_2.callback_query(
-    StateFilter(AddBook.add_name_book), F.data == "BACK_and_cancel"
+    StateFilter(AddBook.add_title), F.data == "BACK_and_cancel"
 )
 async def back_to_add_book_1(call: CallbackQuery, state: FSMContext):
     """
@@ -25,9 +25,7 @@ async def back_to_add_book_1(call: CallbackQuery, state: FSMContext):
     """
 
     id_user = call.from_user.id
-    status, user = await api.users.get_user(id_user)
-    language = user["language"]
-    l10n = get_fluent_localization(language)
+    l10n = await get_user_language(id_user)
 
     status, latest_article = await api.books.get_latest_article()
     free_article = "#{:04d}".format(latest_article["latest_article"] + 1)
@@ -40,26 +38,24 @@ async def back_to_add_book_1(call: CallbackQuery, state: FSMContext):
     await state.set_state(AddBook.select_article)  # Вход в FSM (select_article)
 
 
-@add_book_router_2.message(StateFilter(AddBook.add_name_book))
+@add_book_router_2.message(StateFilter(AddBook.add_title))
 async def add_book_2(message: Message, bot: Bot, state: FSMContext):
     """
     Добавление названия книги.
     :param message: Сообщение с ожидаемым названием книги.
     :param bot: Экземпляр бота.
     :param state: FSM (AddBook).
-    :return: Сообщение для выбора автора и переход в FSM (add_author).
+    :return: Сообщение для добавления автора(ов) и переход в FSM (add_description).
     """
 
     await delete_keyboard(bot, message)  # Удаляются inline кнопки
 
     id_user = message.from_user.id
-    status, user = await api.users.get_user(id_user)
-    language = user["language"]
-    l10n = get_fluent_localization(language)
+    l10n = await get_user_language(id_user)
 
-    name_book = message.text  # Название книги
+    title = message.text  # Название книги
 
-    if "#" in name_book:
+    if "#" in title:
         await message.answer(
             l10n.format_value("add-book-name-book-incorrect"),
             reply_markup=back_and_cancel_buttons,
@@ -69,6 +65,5 @@ async def add_book_2(message: Message, bot: Bot, state: FSMContext):
             l10n.format_value("add-book-author"),
             reply_markup=back_and_cancel_buttons,
         )
-        await state.update_data(name_book=name_book)  # Сохраняется название книги
-
-    await state.set_state(AddBook.add_author)  # Вход в FSM (add_author)
+        await state.update_data(title=title)  # Сохраняется название книги
+        await state.set_state(AddBook.add_authors)  # Вход в FSM (add_author)

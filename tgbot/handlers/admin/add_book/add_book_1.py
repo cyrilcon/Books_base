@@ -9,7 +9,7 @@ from infrastructure.books_base_api import api
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import cancel_button, back_and_cancel_buttons
-from tgbot.services import get_fluent_localization
+from tgbot.services import get_user_language
 from tgbot.states import AddBook
 
 add_book_router_1 = Router()
@@ -26,9 +26,7 @@ async def add_book_1(message: Message, state: FSMContext):
     """
 
     id_user = message.from_user.id
-    status, user = await api.users.get_user(id_user)
-    language = user["language"]
-    l10n = get_fluent_localization(language)
+    l10n = await get_user_language(id_user)
 
     status, latest_article = await api.books.get_latest_article()
     free_article = "#{:04d}".format(latest_article["latest_article"] + 1)
@@ -54,9 +52,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
     await delete_keyboard(bot, message)  # Удаляются inline кнопки
 
     id_user = message.from_user.id
-    status, user = await api.users.get_user(id_user)
-    language = user["language"]
-    l10n = get_fluent_localization(language)
+    l10n = await get_user_language(id_user)
 
     article = message.text  # Артикул добавляемой книги
 
@@ -91,4 +87,4 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
                 reply_markup=back_and_cancel_buttons,
             )
             await state.update_data(article=article)  # Сохраняется артикул
-            await state.set_state(AddBook.add_name_book)  # Вход в FSM (add_name_book)
+            await state.set_state(AddBook.add_title)  # Вход в FSM (add_title)

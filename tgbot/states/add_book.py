@@ -4,6 +4,7 @@ from aiogram.fsm.state import StatesGroup, State
 class AddBook(StatesGroup):
     """Класс состояний для добавления книги."""
 
-    select_article = State()  # Выбор артикула
-    add_name_book = State()  # Добавление названия книги
-    add_author = State()  # Добавление автора
+    select_article = State()  # Артикула
+    add_title = State()  # Название книги
+    add_authors = State()  # Авторы
+    add_description = State()  # Описание
