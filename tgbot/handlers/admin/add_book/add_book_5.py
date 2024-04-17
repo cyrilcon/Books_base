@@ -125,20 +125,9 @@ async def genres_to_list(
 
     if genres is None:
         genres = []
-    # for genre in genres_from_message.split(","):
-    #     genre = genre.strip().replace(" ", "_").lower()
-    #     if genre not in genres:
-    #         genres.append(genre)
 
-    #  ЗАТЕСТИТЬ!!!!!!!!
-
-    # Поиск всех жанров в строке
     new_genres = re.findall(r"\b(\w+(?:\s+\w+)*)\b", genres_from_message)
-
-    # Преобразование всех жанров в нижний регистр и замена пробелов на нижнее подчеркивание
     new_genres = [genre.strip().replace(" ", "_").lower() for genre in new_genres]
-
-    # Добавление новых жанров в список, исключая дубликаты
     genres.extend(set(new_genres) - set(genres))
 
     return genres

@@ -52,3 +52,7 @@ add-book-genres-example =
 add-book-cover =
     <b>6/8</b>
     Отправьте <i><b>фото обложки</b></i> книги
+
+add-book-files =
+    <b>7/8</b>
+    Отправьте <i><b>файл</b></i> книги
