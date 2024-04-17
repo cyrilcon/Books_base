@@ -5,3 +5,4 @@ class AddBook(StatesGroup):
     """Класс состояний для добавления книги."""
 
     select_article = State()  # Выбор артикула
+    add_name_book = State()  # Добавление названия

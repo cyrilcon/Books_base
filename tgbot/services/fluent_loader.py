@@ -19,14 +19,18 @@ def get_fluent_localization(language: str) -> FluentLocalization:
         raise NotADirectoryError(err)
 
     locales_dir = locales_dir.absolute()
-    locale_dir_found = False
-    for directory in Path.iterdir(locales_dir):
-        if directory.stem == language:
-            locale_dir_found = True
-            break
-    if not locale_dir_found:
-        err = f'Directory for "{language}" locale not found'
-        raise FileNotFoundError(err)
+
+    if language not in [x.stem for x in locales_dir.iterdir()]:
+        language = "ru"
+
+    # locale_dir_found = False
+    # for directory in Path.iterdir(locales_dir):
+    #     if directory.stem == language:
+    #         locale_dir_found = True
+    #         break
+    # if not locale_dir_found:
+    #     err = f'Directory for "{language}" locale not found'
+    #     raise FileNotFoundError(err)
 
     locale_files = list()
     for file in Path.iterdir(locales_dir):
