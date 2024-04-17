@@ -27,10 +27,18 @@ add-book-name-book-incorrect =
     В названии книги не должно содержаться символа <b>"#"</b>!!
     Введите название книги ещё раз
 
-add-book-author =
+add-book-authors =
     <b>3/8</b>
     Введите <i><b>автора(ов)</b></i>
 
 add-book-description =
     <b>4/8</b>
     Введите <i><b>описание</b></i> книги
+
+add-book-description-too-long =
+    Слишком большое описание!!
+    Сократите и введите название книги ещё раз
+
+add-book-genres =
+    <b>5/8</b>
+    Введите <i><b>жанры</b></i> книги

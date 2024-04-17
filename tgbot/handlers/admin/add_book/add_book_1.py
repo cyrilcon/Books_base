@@ -36,7 +36,7 @@ async def add_book_1(message: Message, state: FSMContext):
         reply_markup=cancel_button,
     )
 
-    await state.set_state(AddBook.select_article)  # Вход в FSM (select_article)
+    await state.set_state(AddBook.select_article)
 
 
 @add_book_router_1.message(StateFilter(AddBook.select_article))
@@ -49,12 +49,12 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
     :return: Сообщение для добавления названия книги и переход в FSM (add_name_book).
     """
 
-    await delete_keyboard(bot, message)  # Удаляются inline кнопки
+    await delete_keyboard(bot, message)
 
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
-    article = message.text  # Артикул добавляемой книги
+    article = message.text
 
     status, latest_article = await api.books.get_latest_article()
     free_article = "#{:04d}".format(latest_article["latest_article"] + 1)
@@ -69,7 +69,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
             reply_markup=cancel_button,
         )
     else:
-        id_book = int(article.strip("#"))  # id книги (без символа "#")
+        id_book = int(article.strip("#"))
 
         status, book = await api.books.get_book(id_book)
 
@@ -86,5 +86,5 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
                 l10n.format_value("add-book-name-book"),
                 reply_markup=back_and_cancel_buttons,
             )
-            await state.update_data(article=article)  # Сохраняется артикул
-            await state.set_state(AddBook.add_title)  # Вход в FSM (add_title)
+            await state.update_data(article=article)
+            await state.set_state(AddBook.add_title)

@@ -25,6 +25,6 @@ async def add_book_cancel(call: CallbackQuery, state: FSMContext):
     l10n = await get_user_language(id_user)
     text = l10n.format_value("add-book-cancel")
 
-    await state.clear()  # Выход из FSM
-    await call.answer(text, show_alert=True)  # Появляется окно с уведомлением
+    await state.clear()
+    await call.answer(text, show_alert=True)
     await call.message.edit_text(text)

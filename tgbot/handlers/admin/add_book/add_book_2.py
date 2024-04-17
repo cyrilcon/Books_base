@@ -35,7 +35,7 @@ async def back_to_add_book_1(call: CallbackQuery, state: FSMContext):
         l10n.format_value("add-book-article", {"free_article": free_article}),
         reply_markup=cancel_button,
     )
-    await state.set_state(AddBook.select_article)  # Вход в FSM (select_article)
+    await state.set_state(AddBook.select_article)
 
 
 @add_book_router_2.message(StateFilter(AddBook.add_title))
@@ -48,12 +48,12 @@ async def add_book_2(message: Message, bot: Bot, state: FSMContext):
     :return: Сообщение для добавления автора(ов) и переход в FSM (add_description).
     """
 
-    await delete_keyboard(bot, message)  # Удаляются inline кнопки
+    await delete_keyboard(bot, message)
 
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
-    title = message.text  # Название книги
+    title = message.text
 
     if "#" in title:
         await message.answer(
@@ -62,8 +62,8 @@ async def add_book_2(message: Message, bot: Bot, state: FSMContext):
         )
     else:
         await message.answer(
-            l10n.format_value("add-book-author"),
+            l10n.format_value("add-book-authors"),
             reply_markup=back_and_cancel_buttons,
         )
-        await state.update_data(title=title)  # Сохраняется название книги
-        await state.set_state(AddBook.add_authors)  # Вход в FSM (add_author)
+        await state.update_data(title=title)
+        await state.set_state(AddBook.add_authors)

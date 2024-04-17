@@ -31,7 +31,7 @@ async def back_to_add_book_2(call: CallbackQuery, state: FSMContext):
         l10n.format_value("add-book-name-book"),
         reply_markup=back_and_cancel_buttons,
     )
-    await state.set_state(AddBook.add_title)  # Вход в FSM (add_title)
+    await state.set_state(AddBook.add_title)
 
 
 @add_book_router_3.message(StateFilter(AddBook.add_authors))
@@ -41,19 +41,19 @@ async def add_book_3(message: Message, bot: Bot, state: FSMContext):
     :param message: Сообщение с ожидаемым(и) автором(ами).
     :param bot: Экземпляр бота.
     :param state: FSM (AddBook).
-    :return: Сообщение для добавления описания и переход в FSM (add_author).
+    :return: Сообщение для добавления описания и переход в FSM (add_authors).
     """
 
-    await delete_keyboard(bot, message)  # Удаляются inline кнопки
+    await delete_keyboard(bot, message)
 
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
-    authors = message.text.lower().split(", ")  # Список с авторами
+    authors = message.text.lower().split(", ")
 
     await message.answer(
         l10n.format_value("add-book-description"),
         reply_markup=back_and_cancel_buttons,
     )
-    await state.update_data(authors=authors)  # Сохраняется список авторов
-    await state.set_state(AddBook.add_description)  # Вход в FSM (add_description)
+    await state.update_data(authors=authors)
+    await state.set_state(AddBook.add_description)
