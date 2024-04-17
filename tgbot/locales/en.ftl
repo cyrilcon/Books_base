@@ -42,3 +42,13 @@ add-book-description-too-long =
 add-book-genres =
     <b>5/8</b>
     Введите <i><b>жанры</b></i> книги
+
+add-book-genres-example =
+    <b>Пример:</b>
+    { $ready_made_genres }
+
+    Введите ещё <i><b>жанры</b></i> или нажмите <i>"Готово"</i>
+
+add-book-cover =
+    <b>6/8</b>
+    Отправьте <i><b>фото обложки</b></i> книги

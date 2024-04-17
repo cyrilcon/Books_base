@@ -9,3 +9,4 @@ class AddBook(StatesGroup):
     add_authors = State()  # Авторы
     add_description = State()  # Описание
     add_genres = State()  # Жанры
+    add_cover = State()  # Обложка
