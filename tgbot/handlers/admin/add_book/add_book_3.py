@@ -13,9 +13,7 @@ add_book_router_3 = Router()
 add_book_router_3.message.filter(AdminFilter())
 
 
-@add_book_router_3.callback_query(
-    StateFilter(AddBook.add_authors), F.data == "BACK_and_cancel"
-)
+@add_book_router_3.callback_query(StateFilter(AddBook.add_authors), F.data == "back")
 async def back_to_add_book_2(call: CallbackQuery, state: FSMContext):
     """
     Возвращение назад к добавлению названия книги.

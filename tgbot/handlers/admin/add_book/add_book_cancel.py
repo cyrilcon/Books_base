@@ -11,9 +11,7 @@ add_book_cancel_router = Router()
 add_book_cancel_router.message.filter(AdminFilter())
 
 
-@add_book_cancel_router.callback_query(
-    StateFilter(AddBook), F.data == "back_and_CANCEL"
-)
+@add_book_cancel_router.callback_query(StateFilter(AddBook), F.data == "cancel")
 async def add_book_cancel(call: CallbackQuery, state: FSMContext):
     """
     Отмена добавления книги.

@@ -14,9 +14,7 @@ add_book_router_2 = Router()
 add_book_router_2.message.filter(AdminFilter())
 
 
-@add_book_router_2.callback_query(
-    StateFilter(AddBook.add_title), F.data == "BACK_and_cancel"
-)
+@add_book_router_2.callback_query(StateFilter(AddBook.add_title), F.data == "back")
 async def back_to_add_book_1(call: CallbackQuery, state: FSMContext):
     """
     Возвращение назад к выбору артикула.

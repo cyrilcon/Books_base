@@ -7,7 +7,10 @@ from aiogram.types import Message, CallbackQuery
 
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
-from tgbot.keyboards.inline import back_and_cancel_buttons, done_clear_cancel_buttons
+from tgbot.keyboards.inline import (
+    back_and_cancel_buttons,
+    ready_clear_back_cancel_buttons,
+)
 from tgbot.services import get_user_language
 from tgbot.states import AddBook
 
@@ -15,9 +18,7 @@ add_book_router_5 = Router()
 add_book_router_5.message.filter(AdminFilter())
 
 
-@add_book_router_5.callback_query(
-    StateFilter(AddBook.add_genres), F.data == "BACK_and_cancel"
-)
+@add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "back")
 async def back_to_add_book_4(call: CallbackQuery, state: FSMContext):
     """
     Возвращение назад к добавлению описания.
@@ -66,13 +67,11 @@ async def add_book_5(message: Message, bot: Bot, state: FSMContext):
             "add-book-genres-example",
             {"ready_made_genres": ready_made_genres},
         ),
-        reply_markup=done_clear_cancel_buttons,
+        reply_markup=ready_clear_back_cancel_buttons,
     )
 
 
-@add_book_router_5.callback_query(
-    StateFilter(AddBook.add_genres), F.data == "DONE_clear_cancel"
-)
+@add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "done")
 async def done_add_book_5(call: CallbackQuery, state: FSMContext):
     """
     Добавление обложки.
@@ -91,9 +90,7 @@ async def done_add_book_5(call: CallbackQuery, state: FSMContext):
     await state.set_state(AddBook.add_cover)
 
 
-@add_book_router_5.callback_query(
-    StateFilter(AddBook.add_genres), F.data == "done_CLEAR_cancel"
-)
+@add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "clear")
 async def clear_add_book_5(call: CallbackQuery, state: FSMContext):
     """
     Очистка списка всех жанров.

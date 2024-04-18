@@ -44,10 +44,10 @@ add-book-genres =
     Введите <i><b>жанры</b></i> книги
 
 add-book-genres-example =
+    Введите ещё <i><b>жанры</b></i> или нажмите <i>"Готово"</i>
+
     <b>Пример:</b>
     { $ready_made_genres }
-
-    Введите ещё <i><b>жанры</b></i> или нажмите <i>"Готово"</i>
 
 add-book-cover =
     <b>6/8</b>
@@ -56,3 +56,20 @@ add-book-cover =
 add-book-files =
     <b>7/8</b>
     Отправьте <i><b>файл</b></i> книги
+
+add-book-files-send-more =
+    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+
+    <b>Форматы:</b>
+    { $formats }
+
+add-book-files-already-sent =
+    Вы уже отправляли файл этого формата!!
+    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+
+    <b>Форматы:</b>
+    { $formats }
+
+add-book-price =
+    <b>8/8</b>
+    Выберите <i><b>цену</b></i> книги

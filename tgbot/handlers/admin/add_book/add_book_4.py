@@ -5,7 +5,10 @@ from aiogram.types import Message, CallbackQuery
 
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
-from tgbot.keyboards.inline import back_and_cancel_buttons
+from tgbot.keyboards.inline import (
+    back_and_cancel_buttons,
+    ready_clear_back_cancel_buttons,
+)
 from tgbot.services import get_user_language
 from tgbot.states import AddBook
 
@@ -14,7 +17,7 @@ add_book_router_4.message.filter(AdminFilter())
 
 
 @add_book_router_4.callback_query(
-    StateFilter(AddBook.add_description), F.data == "BACK_and_cancel"
+    StateFilter(AddBook.add_description), F.data == "back"
 )
 async def back_to_add_book_3(call: CallbackQuery, state: FSMContext):
     """
@@ -57,9 +60,23 @@ async def add_book_4(message: Message, bot: Bot, state: FSMContext):
             reply_markup=back_and_cancel_buttons,
         )
     else:
-        await message.answer(
-            l10n.format_value("add-book-genres"),
-            reply_markup=back_and_cancel_buttons,
-        )
+        data = await state.get_data()
+        genres = data.get("genres")
+
+        if genres:
+            ready_made_genres = " ".join(["#" + genre for genre in genres])
+            await message.answer(
+                l10n.format_value(
+                    "add-book-genres-example",
+                    {"ready_made_genres": ready_made_genres},
+                ),
+                reply_markup=ready_clear_back_cancel_buttons,
+            )
+        else:
+            await message.answer(
+                l10n.format_value("add-book-genres"),
+                reply_markup=back_and_cancel_buttons,
+            )
+
         await state.update_data(description=description)
         await state.set_state(AddBook.add_genres)

@@ -1,16 +1,15 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-cancel_button = InlineKeyboardMarkup(
-    row_width=1,
-    inline_keyboard=[[InlineKeyboardButton(text="Отмена", callback_data="cancel")]],
-)
-
-back_and_cancel_buttons = InlineKeyboardMarkup(
+ready_clear_back_cancel_buttons = InlineKeyboardMarkup(
     row_width=2,
     inline_keyboard=[
         [
+            InlineKeyboardButton(text="Готово", callback_data="done"),
+            InlineKeyboardButton(text="Стереть", callback_data="clear"),
+        ],
+        [
             InlineKeyboardButton(text="« Назад", callback_data="back"),
             InlineKeyboardButton(text="Отмена", callback_data="cancel"),
-        ]
+        ],
     ],
 )

@@ -5,7 +5,10 @@ from aiogram.types import Message, CallbackQuery
 
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
-from tgbot.keyboards.inline import back_and_cancel_buttons, done_clear_cancel_buttons
+from tgbot.keyboards.inline import (
+    back_and_cancel_buttons,
+    ready_clear_back_cancel_buttons,
+)
 from tgbot.services import get_user_language
 from tgbot.states import AddBook
 
@@ -13,9 +16,7 @@ add_book_router_6 = Router()
 add_book_router_6.message.filter(AdminFilter())
 
 
-@add_book_router_6.callback_query(
-    StateFilter(AddBook.add_cover), F.data == "BACK_and_cancel"
-)
+@add_book_router_6.callback_query(StateFilter(AddBook.add_cover), F.data == "back")
 async def back_to_add_book_5(call: CallbackQuery, state: FSMContext):
     """
     Возвращение назад к добавлению жанров.
@@ -37,7 +38,7 @@ async def back_to_add_book_5(call: CallbackQuery, state: FSMContext):
             "add-book-genres-example",
             {"ready_made_genres": ready_made_genres},
         ),
-        reply_markup=done_clear_cancel_buttons,
+        reply_markup=ready_clear_back_cancel_buttons,
     )
     await state.set_state(AddBook.add_genres)
 
@@ -49,7 +50,7 @@ async def add_book_6(message: Message, bot: Bot, state: FSMContext):
     :param message: Сообщение с ожидаемой фотографией обложки.
     :param bot: Экземпляр бота.
     :param state: FSM (AddBook).
-    :return: Сообщение для добавления обложки и переход в FSM (add_cover).
+    :return: Сообщение для добавления обложки и переход в FSM (add_files).
     """
 
     await delete_keyboard(bot, message)
@@ -64,8 +65,5 @@ async def add_book_6(message: Message, bot: Bot, state: FSMContext):
         reply_markup=back_and_cancel_buttons,
     )
 
-    files = {}
-
     await state.update_data(cover=cover)
-    await state.update_data(files=files)
     await state.set_state(AddBook.add_files)
