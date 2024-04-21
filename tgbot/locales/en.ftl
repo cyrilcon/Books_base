@@ -21,8 +21,6 @@ add-book-name-book =
     <b>2/8</b>
     Введите <i><b>название</b></i> книги
 
-add-book-cancel = Вы отменили добавление книги
-
 add-book-name-book-incorrect =
     В названии книги не должно содержаться символа <b>"#"</b>!!
     Введите название книги ещё раз
@@ -73,3 +71,13 @@ add-book-files-already-sent =
 add-book-price =
     <b>8/8</b>
     Выберите <i><b>цену</b></i> книги
+
+add-book-too-long-text =
+    Слишком большой текст!!
+    Сократите описание
+
+    <code>{ $description }</code>
+
+    (У вас <b>{ $text_length }</b>/1000 символов)
+
+add-book-cancel = Вы отменили добавление книги

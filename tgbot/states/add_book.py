@@ -12,3 +12,5 @@ class AddBook(StatesGroup):
     add_cover = State()
     add_files = State()
     select_price = State()
+    reduce_description = State()
+    preview = State()

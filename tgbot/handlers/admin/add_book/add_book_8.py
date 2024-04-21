@@ -1,0 +1,239 @@
+from aiogram import Router, F, Bot
+from aiogram.filters import StateFilter
+from aiogram.fsm.context import FSMContext
+from aiogram.types import CallbackQuery, Message
+
+from tgbot.filters import AdminFilter
+from tgbot.keyboards import delete_keyboard
+from tgbot.keyboards.inline import (
+    ready_clear_back_cancel_buttons,
+    cancel_button,
+    demo_post_buttons,
+)
+from tgbot.services import get_user_language
+from tgbot.states import AddBook
+
+add_book_router_8 = Router()
+add_book_router_8.message.filter(AdminFilter())
+
+
+@add_book_router_8.callback_query(StateFilter(AddBook.select_price), F.data == "back")
+async def back_to_add_book_7(call: CallbackQuery, state: FSMContext):
+    """
+    Возвращение назад к добавлению файлов.
+    :param call: Нажатая кнопка "« Назад".
+    :param state: FSM (AddBook).
+    """
+
+    id_user = call.from_user.id
+    l10n = await get_user_language(id_user)
+
+    await call.answer(cache_time=1)
+
+    data = await state.get_data()
+    files = data.get("files")
+    formats = ", ".join([format for format in files])
+
+    await call.message.edit_text(
+        l10n.format_value(
+            "add-book-files-send-more",
+            {"formats": formats},
+        ),
+        reply_markup=ready_clear_back_cancel_buttons,
+    )
+    await state.set_state(AddBook.add_files)
+
+
+@add_book_router_8.callback_query(
+    StateFilter(AddBook.select_price),
+    F.data.in_({"85", "50", "do_not_publish", "not_from_a_user"}),
+)
+async def add_book_8(call: CallbackQuery, bot: Bot, state: FSMContext):
+    """
+    Выбор цены.
+    :param call: Нажатая кнопка.
+    :param message: Объект сообщения.
+    :param bot: Экземпляр бота.
+    :param state: FSM (AddBook).
+    :return: Сообщение для демо просмотра публикации и переход в FSM (preview).
+    """
+
+    id_user = call.from_user.id
+    l10n = await get_user_language(id_user)
+
+    data = await state.get_data()
+    article = data.get("article")
+    title = data.get("title")
+    authors = data.get("authors")
+    description = data.get("description")
+    genres = data.get("genres")
+    cover = data.get("cover")
+    files = data.get("files")
+    price = call.data
+    await state.update_data(price=price)
+
+    introductory_text = ""
+    if price == "50":
+        price = 50
+        introductory_text = "Акция дня!!\n" "Только сегодня книга <b>50₽</b>"
+    elif price == "85":
+        price = 85
+        introductory_text = "Добавлена новая книга по заказу пользователя!!"
+
+    text = await forming_text(
+        article,
+        title,
+        authors,
+        description,
+        genres,
+        files,
+        price,
+        introductory_text,
+    )
+    text_length = len(text)
+
+    if text_length <= 1000:
+        # Добавление книги в бд
+        # Безопасная рассылка
+        # await bot.send_photo(
+        #     chat_id=CHANNEL_BOOKS_BASEBOT_TOKEN, photo=cover, caption=text
+        # )
+        await call.message.delete()
+
+        await call.message.answer_photo(
+            cover,
+            text,
+            reply_markup=demo_post_buttons,
+        )
+    else:
+        await call.message.edit_text(
+            l10n.format_value(
+                "add-book-too-long-text",
+                {
+                    "description": description,
+                    "text_length": text_length,
+                },
+            ),
+            reply_markup=cancel_button,
+        )
+        await state.set_state(AddBook.reduce_description)
+
+
+@add_book_router_8.message(StateFilter(AddBook.reduce_description))
+async def reduce_description(message: Message, bot: Bot, state: FSMContext):
+    """
+    Сокращение описания.
+    :param message: Сообщение с ожидаемым сокращённым описанием.
+    :param bot: Экземпляр бота.
+    :param state: FSM (AddBook).
+    :return: Сообщение для демо просмотра публикации и переход в FSM (preview).
+    """
+
+    await delete_keyboard(bot, message)
+
+    id_user = message.from_user.id
+    l10n = await get_user_language(id_user)
+
+    reduced_description = message.text
+    await state.update_data(description=reduced_description)
+
+    data = await state.get_data()
+    article = data.get("article")
+    title = data.get("title")
+    authors = data.get("authors")
+    genres = data.get("genres")
+    cover = data.get("cover")
+    files = data.get("files")
+    price = data.get("price")
+
+    introductory_text = ""
+    if price == "50":
+        price = 50
+        introductory_text = "Акция дня!!\n" "Только сегодня книга <b>50₽</b>"
+    elif price == "85":
+        price = 85
+        introductory_text = "Добавлена новая книга по заказу пользователя!!"
+
+    text = await forming_text(
+        article,
+        title,
+        authors,
+        reduced_description,
+        genres,
+        files,
+        price,
+        introductory_text,
+    )
+    text_length = len(text)
+
+    if text_length <= 1000:
+        # Добавление книги в бд
+        # Безопасная рассылка
+        # await bot.send_photo(
+        #     chat_id=CHANNEL_BOOKS_BASEBOT_TOKEN, photo=cover, caption=text
+        # )
+        await delete_keyboard(bot, message)
+
+        await message.answer_photo(
+            cover,
+            text,
+            reply_markup=demo_post_buttons,
+        )
+        await state.set_state(AddBook.select_price)
+    else:
+        await message.answer(
+            l10n.format_value(
+                "add-book-too-long-text",
+                {
+                    "description": reduced_description,
+                    "text_length": text_length,
+                },
+            ),
+            reply_markup=cancel_button,
+        )
+
+
+async def forming_text(
+    article: int,
+    title: str,
+    authors: str,
+    description: str,
+    genres: list,
+    files: dict,
+    price: int = 85,
+    introductory_text: str = "",
+):
+    """
+    Формируется текст поста для телеграм канала.
+    :param article: Артикул.
+    :param title: Название книги.
+    :param authors: Автор(ы).
+    :param description: Описание.
+    :param genres: Жанр(ы).
+    :param files: Файлы.
+    :param price: Цена.
+    :param introductory_text: Вступительный текст поста для телеграм канала.
+    :return: Готовый текст поста для телеграм канала.
+    """
+
+    authors = ", ".join(author.title() for author in authors)
+    formats = ", ".join(list(files.keys()))
+    price = "50₽ <s>85₽</s>" if price == 50 else "85₽"
+    genres = " ".join("#" + genre for genre in genres)
+
+    text = (
+        f"{introductory_text}\n"
+        f"\n"
+        f'"<code><b>{title}</b></code>"\n'
+        f"<i>{authors}</i>\n"
+        f"\n"
+        f"{description}\n"
+        f"\n"
+        f"Доступные форматы: {formats}\n"
+        f"\n"
+        f"<b>Цена:</b> {price}\n"
+        f"\n"
+        f"Артикул: <code>{article}</code>\n"
+        f"""{genres}"""
+    )
+    return text

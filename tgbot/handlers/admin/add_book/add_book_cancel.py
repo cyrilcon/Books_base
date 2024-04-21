@@ -1,4 +1,5 @@
 from aiogram import Router, F
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
@@ -25,4 +26,7 @@ async def add_book_cancel(call: CallbackQuery, state: FSMContext):
 
     await state.clear()
     await call.answer(text, show_alert=True)
-    await call.message.edit_text(text)
+    try:
+        await call.message.edit_text(text)
+    except TelegramBadRequest:
+        await call.message.edit_reply_markup()
