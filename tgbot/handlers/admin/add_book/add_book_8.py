@@ -52,7 +52,6 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
     """
     Выбор цены.
     :param call: Нажатая кнопка.
-    :param bot: Экземпляр бота.
     :param state: FSM (AddBook).
     :return: Сообщение для демо просмотра публикации и переход в FSM (preview).
     """
@@ -82,6 +81,7 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
             text,
             reply_markup=demo_post_buttons,
         )
+        await state.set_state(AddBook.preview)
     else:
         await call.message.edit_text(
             l10n.format_value(
@@ -134,7 +134,7 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
             text,
             reply_markup=demo_post_buttons,
         )
-        await state.set_state(AddBook.select_price)
+        await state.set_state(AddBook.preview)
     else:
         await message.answer(
             l10n.format_value(

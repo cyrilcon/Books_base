@@ -19,12 +19,15 @@ class TgBot:
     :type use_redis: Bool.
     :param support_chat: Чат тех-поддержки.
     :type support_chat: Int.
+    :param channel: Telegram канал.
+    :type channel: Int.
     """
 
     token: str
     admins: list[int]
     use_redis: bool
     support_chat: int
+    channel: int
 
     @staticmethod
     def from_env(env: Env):
@@ -36,8 +39,13 @@ class TgBot:
         admins = list(map(int, env.list("ADMINS")))  # Список админов
         use_redis = env.bool("USE_REDIS")  # Использование Redis
         support_chat = env.int("SUPPORT_CHAT")  # Чат тех-поддержки
+        channel = env.int("CHANNEL")  # Telegram канал
         return TgBot(
-            token=token, admins=admins, use_redis=use_redis, support_chat=support_chat
+            token=token,
+            admins=admins,
+            use_redis=use_redis,
+            support_chat=support_chat,
+            channel=channel,
         )
 
 

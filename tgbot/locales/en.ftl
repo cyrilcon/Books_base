@@ -80,4 +80,6 @@ add-book-too-long-text =
 
     (У вас <b>{ $text_length }</b>/1000 символов)
 
+add-book-complete = Книга добавлена!!
+
 add-book-cancel = Вы отменили добавление книги

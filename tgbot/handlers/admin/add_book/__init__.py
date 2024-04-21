@@ -8,6 +8,7 @@ from .add_book_5 import add_book_router_5
 from .add_book_6 import add_book_router_6
 from .add_book_7 import add_book_router_7
 from .add_book_8 import add_book_router_8
+from .add_book_9 import add_book_router_9
 from .add_book_cancel import add_book_cancel_router
 
 add_book_routers = Router()
@@ -21,4 +22,5 @@ add_book_routers.include_routers(
     add_book_router_6,
     add_book_router_7,
     add_book_router_8,
+    add_book_router_9,
 )
