@@ -10,7 +10,7 @@ from tgbot.keyboards.inline import (
     cancel_button,
     demo_post_buttons,
 )
-from tgbot.services import get_user_language
+from tgbot.services import get_user_language, forming_text
 from tgbot.states import AddBook
 
 add_book_router_8 = Router()
@@ -48,11 +48,10 @@ async def back_to_add_book_7(call: CallbackQuery, state: FSMContext):
     StateFilter(AddBook.select_price),
     F.data.in_({"85", "50", "do_not_publish", "not_from_a_user"}),
 )
-async def add_book_8(call: CallbackQuery, bot: Bot, state: FSMContext):
+async def add_book_8(call: CallbackQuery, state: FSMContext):
     """
     Выбор цены.
     :param call: Нажатая кнопка.
-    :param message: Объект сообщения.
     :param bot: Экземпляр бота.
     :param state: FSM (AddBook).
     :return: Сообщение для демо просмотра публикации и переход в FSM (preview).
@@ -62,34 +61,12 @@ async def add_book_8(call: CallbackQuery, bot: Bot, state: FSMContext):
     l10n = await get_user_language(id_user)
 
     data = await state.get_data()
-    article = data.get("article")
-    title = data.get("title")
-    authors = data.get("authors")
-    description = data.get("description")
-    genres = data.get("genres")
     cover = data.get("cover")
-    files = data.get("files")
+    description = data.get("description")
     price = call.data
     await state.update_data(price=price)
 
-    introductory_text = ""
-    if price == "50":
-        price = 50
-        introductory_text = "Акция дня!!\n" "Только сегодня книга <b>50₽</b>"
-    elif price == "85":
-        price = 85
-        introductory_text = "Добавлена новая книга по заказу пользователя!!"
-
-    text = await forming_text(
-        article,
-        title,
-        authors,
-        description,
-        genres,
-        files,
-        price,
-        introductory_text,
-    )
+    text = await forming_text(state, price)
     text_length = len(text)
 
     if text_length <= 1000:
@@ -138,32 +115,10 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
     await state.update_data(description=reduced_description)
 
     data = await state.get_data()
-    article = data.get("article")
-    title = data.get("title")
-    authors = data.get("authors")
-    genres = data.get("genres")
     cover = data.get("cover")
-    files = data.get("files")
     price = data.get("price")
 
-    introductory_text = ""
-    if price == "50":
-        price = 50
-        introductory_text = "Акция дня!!\n" "Только сегодня книга <b>50₽</b>"
-    elif price == "85":
-        price = 85
-        introductory_text = "Добавлена новая книга по заказу пользователя!!"
-
-    text = await forming_text(
-        article,
-        title,
-        authors,
-        reduced_description,
-        genres,
-        files,
-        price,
-        introductory_text,
-    )
+    text = await forming_text(state, price)
     text_length = len(text)
 
     if text_length <= 1000:
@@ -191,49 +146,3 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
             ),
             reply_markup=cancel_button,
         )
-
-
-async def forming_text(
-    article: int,
-    title: str,
-    authors: str,
-    description: str,
-    genres: list,
-    files: dict,
-    price: int = 85,
-    introductory_text: str = "",
-):
-    """
-    Формируется текст поста для телеграм канала.
-    :param article: Артикул.
-    :param title: Название книги.
-    :param authors: Автор(ы).
-    :param description: Описание.
-    :param genres: Жанр(ы).
-    :param files: Файлы.
-    :param price: Цена.
-    :param introductory_text: Вступительный текст поста для телеграм канала.
-    :return: Готовый текст поста для телеграм канала.
-    """
-
-    authors = ", ".join(author.title() for author in authors)
-    formats = ", ".join(list(files.keys()))
-    price = "50₽ <s>85₽</s>" if price == 50 else "85₽"
-    genres = " ".join("#" + genre for genre in genres)
-
-    text = (
-        f"{introductory_text}\n"
-        f"\n"
-        f'"<code><b>{title}</b></code>"\n'
-        f"<i>{authors}</i>\n"
-        f"\n"
-        f"{description}\n"
-        f"\n"
-        f"Доступные форматы: {formats}\n"
-        f"\n"
-        f"<b>Цена:</b> {price}\n"
-        f"\n"
-        f"Артикул: <code>{article}</code>\n"
-        f"""{genres}"""
-    )
-    return text
