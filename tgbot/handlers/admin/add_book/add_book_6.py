@@ -6,8 +6,8 @@ from aiogram.types import Message, CallbackQuery
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
-    back_and_cancel_buttons,
-    ready_clear_back_cancel_buttons,
+    back_and_cancel_keyboard,
+    ready_clear_back_cancel_keyboard,
 )
 from tgbot.services import get_user_language
 from tgbot.states import AddBook
@@ -38,7 +38,7 @@ async def back_to_add_book_5(call: CallbackQuery, state: FSMContext):
             "add-book-genres-example",
             {"ready_made_genres": ready_made_genres},
         ),
-        reply_markup=ready_clear_back_cancel_buttons,
+        reply_markup=ready_clear_back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_genres)
 
@@ -62,7 +62,7 @@ async def add_book_6(message: Message, bot: Bot, state: FSMContext):
 
     await message.answer(
         l10n.format_value("add-book-files"),
-        reply_markup=back_and_cancel_buttons,
+        reply_markup=back_and_cancel_keyboard(l10n),
     )
 
     await state.update_data(cover=cover)

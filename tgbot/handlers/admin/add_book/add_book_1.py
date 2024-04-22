@@ -8,7 +8,10 @@ from aiogram.types import Message
 from infrastructure.books_base_api import api
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
-from tgbot.keyboards.inline import cancel_button, back_and_cancel_buttons
+from tgbot.keyboards.inline import (
+    cancel_keyboard,
+    back_and_cancel_keyboard,
+)
 from tgbot.services import get_user_language
 from tgbot.states import AddBook
 
@@ -33,7 +36,7 @@ async def add_book_1(message: Message, state: FSMContext):
 
     await message.answer(
         l10n.format_value("add-book-article", {"free_article": free_article}),
-        reply_markup=cancel_button,
+        reply_markup=cancel_keyboard(l10n),
     )
 
     await state.set_state(AddBook.select_article)
@@ -66,7 +69,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
                 "add-book-incorrect-article",
                 {"free_article": free_article},
             ),
-            reply_markup=cancel_button,
+            reply_markup=cancel_keyboard(l10n),
         )
     else:
         id_book = int(article.strip("#"))
@@ -79,12 +82,12 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
                     "add-book-article-already-exist",
                     {"free_article": free_article},
                 ),
-                reply_markup=cancel_button,
+                reply_markup=cancel_keyboard(l10n),
             )
         else:
             await message.answer(
                 l10n.format_value("add-book-name-book"),
-                reply_markup=back_and_cancel_buttons,
+                reply_markup=back_and_cancel_keyboard(l10n),
             )
             await state.update_data(article=article)
             await state.set_state(AddBook.add_title)

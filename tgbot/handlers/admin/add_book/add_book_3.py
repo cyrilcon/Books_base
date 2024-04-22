@@ -5,7 +5,7 @@ from aiogram.types import Message, CallbackQuery
 
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
-from tgbot.keyboards.inline import back_and_cancel_buttons
+from tgbot.keyboards.inline import back_and_cancel_keyboard
 from tgbot.services import get_user_language
 from tgbot.states import AddBook
 
@@ -27,7 +27,7 @@ async def back_to_add_book_2(call: CallbackQuery, state: FSMContext):
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-name-book"),
-        reply_markup=back_and_cancel_buttons,
+        reply_markup=back_and_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_title)
 
@@ -51,7 +51,7 @@ async def add_book_3(message: Message, bot: Bot, state: FSMContext):
 
     await message.answer(
         l10n.format_value("add-book-description"),
-        reply_markup=back_and_cancel_buttons,
+        reply_markup=back_and_cancel_keyboard(l10n),
     )
     await state.update_data(authors=authors)
     await state.set_state(AddBook.add_description)

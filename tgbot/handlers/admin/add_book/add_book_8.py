@@ -6,9 +6,9 @@ from aiogram.types import CallbackQuery, Message
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
-    ready_clear_back_cancel_buttons,
-    cancel_button,
-    demo_post_buttons,
+    ready_clear_back_cancel_keyboard,
+    cancel_keyboard,
+    demo_post_keyboard,
 )
 from tgbot.services import get_user_language, forming_text
 from tgbot.states import AddBook
@@ -39,7 +39,7 @@ async def back_to_add_book_7(call: CallbackQuery, state: FSMContext):
             "add-book-files-send-more",
             {"formats": formats},
         ),
-        reply_markup=ready_clear_back_cancel_buttons,
+        reply_markup=ready_clear_back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_files)
 
@@ -79,7 +79,7 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
         await call.message.answer_photo(
             cover,
             text,
-            reply_markup=demo_post_buttons,
+            reply_markup=demo_post_keyboard(l10n),
         )
         await state.set_state(AddBook.preview)
     else:
@@ -91,7 +91,7 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
                     "text_length": text_length,
                 },
             ),
-            reply_markup=cancel_button,
+            reply_markup=cancel_keyboard(l10n),
         )
         await state.set_state(AddBook.reduce_description)
 
@@ -132,7 +132,7 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
         await message.answer_photo(
             cover,
             text,
-            reply_markup=demo_post_buttons,
+            reply_markup=demo_post_keyboard(l10n),
         )
         await state.set_state(AddBook.preview)
     else:
@@ -144,5 +144,5 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
                     "text_length": text_length,
                 },
             ),
-            reply_markup=cancel_button,
+            reply_markup=cancel_keyboard(l10n),
         )

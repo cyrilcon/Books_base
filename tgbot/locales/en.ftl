@@ -83,3 +83,20 @@ add-book-too-long-text =
 add-book-complete = Книга добавлена!!
 
 add-book-cancel = Вы отменили добавление книги
+
+
+
+
+button-back = « Назад
+
+button-cancel = Отмена
+
+button-post = Опубликовать
+
+button-done = Готово
+
+button-clear = Стереть
+
+button-do-not-publish = Не публиковать
+
+button-not-from-a-user = Не от пользователя
