@@ -3,6 +3,7 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 
+from infrastructure.books_base_api import api
 from tgbot.config import Config
 from tgbot.filters import AdminFilter
 from tgbot.services import get_user_language, send_message
@@ -26,17 +27,37 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     l10n = await get_user_language(id_user)
 
     data = await state.get_data()
+    article = int(data.get("article")[1:])
+    title = data.get("title")
+    description = data.get("description")
     cover = data.get("cover")
     price = data.get("price")
+    authors = data.get("authors")
+    genres = data.get("genres")
+    # files = [{"format": key, "file": value} for key, value in data.get("files").items()]
+    files = data.get("files")
+    post_text = data.get("post_text")
+
+    # print(f"\n\n{article}\n\n")
+    # print(f"\n\n{title}\n\n")
+    # print(f"\n\n{description}\n\n")
+    # print(f"\n\n{cover}\n\n")
+    # print(f"\n\n{price}\n\n")
+    # print(f"\n\n{authors}\n\n")
+    # print(f"\n\n{genres}\n\n")
+    # print(f"\n\n{files}\n\n")
 
     # Добавить книгу в бд
+    await api.books.add_book(
+        article, title, description, cover, price, authors, genres, files
+    )
 
     if price != "do_not_publish":
         await send_message(
             config=config,
             bot=bot,
             user_id=config.tg_bot.channel,
-            text=call.message.caption,
+            text=post_text,
             photo=cover,
         )
 

@@ -78,7 +78,7 @@ add-book-too-long-text =
 
     <code>{ $description }</code>
 
-    (У вас <b>{ $text_length }</b>/1000 символов)
+    (У вас <b>{ $post_text_length }</b>/1000 символов)
 
 add-book-complete = Книга добавлена!!
 

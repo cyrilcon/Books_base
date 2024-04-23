@@ -65,10 +65,10 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
     price = call.data
     await state.update_data(price=price)
 
-    text = await forming_text(state, price)
-    text_length = len(text)
+    post_text = await forming_text(state, price)
+    post_text_length = len(post_text)
 
-    if text_length <= 1000:
+    if post_text_length <= 1000:
         # Добавление книги в бд
         # Безопасная рассылка
         # await bot.send_photo(
@@ -78,9 +78,10 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
 
         await call.message.answer_photo(
             cover,
-            text,
+            post_text,
             reply_markup=demo_post_keyboard(l10n),
         )
+        await state.update_data(post_text=post_text)
         await state.set_state(AddBook.preview)
     else:
         await call.message.edit_text(
@@ -88,7 +89,7 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
                 "add-book-too-long-text",
                 {
                     "description": description,
-                    "text_length": text_length,
+                    "post_text_length": post_text_length,
                 },
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -118,10 +119,10 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
     cover = data.get("cover")
     price = data.get("price")
 
-    text = await forming_text(state, price)
-    text_length = len(text)
+    post_text = await forming_text(state, price)
+    post_text_length = len(post_text)
 
-    if text_length <= 1000:
+    if post_text_length <= 1000:
         # Добавление книги в бд
         # Безопасная рассылка
         # await bot.send_photo(
@@ -131,9 +132,10 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
 
         await message.answer_photo(
             cover,
-            text,
+            post_text,
             reply_markup=demo_post_keyboard(l10n),
         )
+        await state.update_data(post_text=post_text)
         await state.set_state(AddBook.preview)
     else:
         await message.answer(
@@ -141,7 +143,7 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
                 "add-book-too-long-text",
                 {
                     "description": reduced_description,
-                    "text_length": text_length,
+                    "post_text_length": post_text_length,
                 },
             ),
             reply_markup=cancel_keyboard(l10n),
