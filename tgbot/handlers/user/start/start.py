@@ -1,5 +1,7 @@
-from aiogram import Router
-from aiogram.filters import CommandStart, StateFilter
+import re
+
+from aiogram import Router, F
+from aiogram.filters import CommandStart, StateFilter, CommandObject
 from aiogram.types import Message
 
 from infrastructure.books_base_api import api
@@ -7,6 +9,14 @@ from tgbot.services import get_fluent_localization
 from tgbot.states import all_states
 
 start_router = Router()
+
+
+@start_router.message(
+    CommandStart(deep_link=True, magic=F.args.regexp(re.compile(r"book_(\d+)")))
+)
+async def cmd_start_book(message: Message, command: CommandObject):
+    book_number = command.args.split("_")[1]
+    await message.answer(f"Sending book №{book_number}")
 
 
 @start_router.message(CommandStart())

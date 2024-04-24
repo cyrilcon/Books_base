@@ -2,10 +2,12 @@ from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
+from aiogram.utils.deep_linking import create_start_link
 
 from infrastructure.books_base_api import api
 from tgbot.config import Config
 from tgbot.filters import AdminFilter
+from tgbot.keyboards.inline import deep_link_buy_keyboard
 from tgbot.services import get_user_language, send_message
 from tgbot.states import AddBook
 
@@ -34,23 +36,14 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     price = data.get("price")
     authors = data.get("authors")
     genres = data.get("genres")
-    # files = [{"format": key, "file": value} for key, value in data.get("files").items()]
     files = data.get("files")
     post_text = data.get("post_text")
 
-    # print(f"\n\n{article}\n\n")
-    # print(f"\n\n{title}\n\n")
-    # print(f"\n\n{description}\n\n")
-    # print(f"\n\n{cover}\n\n")
-    # print(f"\n\n{price}\n\n")
-    # print(f"\n\n{authors}\n\n")
-    # print(f"\n\n{genres}\n\n")
-    # print(f"\n\n{files}\n\n")
-
-    # Добавить книгу в бд
     await api.books.add_book(
         article, title, description, cover, price, authors, genres, files
     )
+
+    deep_link = await create_start_link(bot, f"book_{article}")
 
     if price != "do_not_publish":
         await send_message(
@@ -59,6 +52,7 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
             user_id=config.tg_bot.channel,
             text=post_text,
             photo=cover,
+            reply_markup=deep_link_buy_keyboard(deep_link),
         )
 
     await state.clear()
