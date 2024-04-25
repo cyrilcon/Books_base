@@ -42,11 +42,7 @@ class UsersApi:
 
         return status, result
 
-    async def get_user(
-        self,
-        id_user: int,
-        **kwargs,
-    ):
+    async def get_user(self, id_user: int, **kwargs):
         """
         Get a user by id with all the information
 
@@ -62,11 +58,7 @@ class UsersApi:
 
         return status, result
 
-    async def update_user(
-        self,
-        id_user: int,
-        **kwargs,
-    ):
+    async def update_user(self, id_user: int, **kwargs):
         """
         Update a user by id
 

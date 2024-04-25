@@ -34,10 +34,7 @@ class BooksApi:
 
         return status, result
 
-    async def get_latest_article(
-        self,
-        **kwargs,
-    ):
+    async def get_latest_article(self, **kwargs):
         """
         Get the latest article of the book
 
@@ -52,11 +49,7 @@ class BooksApi:
 
         return status, result
 
-    async def get_book(
-        self,
-        id_book: int,
-        **kwargs,
-    ):
+    async def get_book(self, id_book: int, **kwargs):
         """
         Get a book by id with all the information
 

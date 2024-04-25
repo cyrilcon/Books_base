@@ -56,7 +56,7 @@ async def start(message: Message, bot: Bot, command: CommandObject, config: Conf
                 id_user=id_user,
                 text=post_text,
                 photo=book["cover"],
-                # reply_markup=deep_link_buy_keyboard(deep_link),
+                # reply_markup=deep_link_buy_keyboard(deep_link),  # добавить кнопку "Купить"
             )
 
         else:
