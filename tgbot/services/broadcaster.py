@@ -11,7 +11,7 @@ from tgbot.config import Config
 async def send_message(
     config: Config,
     bot: Bot,
-    user_id: Union[int, str],
+    id_user: Union[int, str],
     text: str,
     photo: str = None,
     disable_notification: bool = False,
@@ -22,7 +22,7 @@ async def send_message(
 
     :param config: Config с параметрами бота.
     :param bot: Экземпляр бота.
-    :param user_id: ID пользователя. Если str - должно содержать только цифры.
+    :param id_user: ID пользователя. Если str - должно содержать только цифры.
     :param text: Текст сообщения.
     :param photo: ID фото.
     :param disable_notification: Отключать уведомление или нет.
@@ -33,7 +33,7 @@ async def send_message(
     try:
         if photo:
             await bot.send_photo(
-                user_id,
+                id_user,
                 photo=photo,
                 caption=text,
                 disable_notification=disable_notification,
@@ -41,7 +41,7 @@ async def send_message(
             )
         else:
             await bot.send_message(
-                user_id,
+                id_user,
                 text,
                 disable_notification=disable_notification,
                 reply_markup=reply_markup,
@@ -49,24 +49,24 @@ async def send_message(
     except exceptions.TelegramBadRequest as e:
         logging.error("Telegram server says - Bad Request: chat not found")
     except exceptions.TelegramForbiddenError:
-        logging.error(f"Target [ID:{user_id}]: got TelegramForbiddenError")
+        logging.error(f"Target [ID:{id_user}]: got TelegramForbiddenError")
     except exceptions.TelegramMigrateToChat:
         logging.error(
-            f"Target [ID:{user_id}]: group chat was upgraded to a supergroup chat"
+            f"Target [ID:{id_user}]: group chat was upgraded to a supergroup chat"
         )
         # await delete_chat(config, user_id)  # Удаляется чат
     except exceptions.TelegramRetryAfter as e:
         logging.error(
-            f"Target [ID:{user_id}]: Flood limit is exceeded. Sleep {e.retry_after} seconds."
+            f"Target [ID:{id_user}]: Flood limit is exceeded. Sleep {e.retry_after} seconds."
         )
         await asyncio.sleep(e.retry_after)
         return await send_message(
-            config, bot, user_id, text, photo, disable_notification, reply_markup
+            config, bot, id_user, text, photo, disable_notification, reply_markup
         )  # Рекурсивный вызов
     except exceptions.TelegramAPIError:
-        logging.exception(f"Target [ID:{user_id}]: failed")
+        logging.exception(f"Target [ID:{id_user}]: failed")
     else:
-        logging.info(f"Target [ID:{user_id}]: success")
+        logging.info(f"Target [ID:{id_user}]: success")
         return True
     return False
 

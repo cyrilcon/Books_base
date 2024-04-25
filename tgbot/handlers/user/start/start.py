@@ -6,7 +6,7 @@ from aiogram.types import Message
 
 from infrastructure.books_base_api import api
 from tgbot.config import Config
-from tgbot.services import get_fluent_localization, send_message
+from tgbot.services import get_fluent_localization, send_message, forming_text
 from tgbot.states import all_states
 
 start_router = Router()
@@ -47,29 +47,17 @@ async def start(message: Message, bot: Bot, command: CommandObject, config: Conf
         article = command.args.split("_")[1]
         status, book = await api.books.get_book(article)
         if status != 404:
-            ...
-            # text = (
-            #     f'"<code><b>{name}</b></code>"\n'
-            #     f"<i>{', '.join(author.title() for author in authors)}</i>\n"
-            #     f"\n"
-            #     f"{description}\n"
-            #     f"\n"
-            #     f"Доступные форматы: {', '.join(formats)}\n"
-            #     f"\n"
-            #     f"{price_text}\n"
-            #     f"\n"
-            #     f"Артикул: <code>{'#{:04d}'.format(article)}</code>\n"
-            #     f"{' '.join('#' + genre for genre in genres)}"
-            # )
-            #
-            # await send_message(
-            #     config=config,
-            #     bot=bot,
-            #     user_id=config.tg_bot.channel,
-            #     text=text,
-            #     photo=cover,
-            #     reply_markup=deep_link_buy_keyboard(deep_link),
-            # )
+
+            post_text = await forming_text(book, post=False)
+
+            await send_message(
+                config=config,
+                bot=bot,
+                id_user=id_user,
+                text=post_text,
+                photo=book["cover"],
+                # reply_markup=deep_link_buy_keyboard(deep_link),
+            )
 
         else:
             await message.answer(

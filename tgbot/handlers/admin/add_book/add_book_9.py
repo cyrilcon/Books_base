@@ -42,7 +42,7 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
         await send_message(
             config=config,
             bot=bot,
-            user_id=config.tg_bot.channel,
+            id_user=config.tg_bot.channel,
             text=post_text,
             photo=cover,
             reply_markup=deep_link_buy_keyboard(deep_link),

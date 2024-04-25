@@ -6,11 +6,13 @@ from tgbot.services import get_fluent_localization
 async def forming_text(
     data: dict,
     l10n: FluentLocalization = get_fluent_localization("ru"),  # ПОМЕНЯТЬ НА RU
+    post: bool = True,
 ):
     """
     Формируется текст поста для телеграм канала.
     :param data: Словарь с данными о книге.
     :param l10n: Язык установленный у пользователя.
+    :param post: True – текст формируется для поста.
     :return: Готовый текст поста для телеграм канала.
     """
 
@@ -24,7 +26,8 @@ async def forming_text(
 
     introductory_text = ""
     if price == 50:
-        introductory_text = l10n.format_value("daily-action")
+        if post:
+            introductory_text = l10n.format_value("daily-action")
         price = "50₽ <s>85₽</s>"
     elif price == 85:
         introductory_text = l10n.format_value("new-book-from-user")
