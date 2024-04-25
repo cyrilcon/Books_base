@@ -57,6 +57,7 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
     """
 
     price = 50 if call.data == "50" else 85
+    from_user = False if call.data == "not_from_a_user" else True
     await state.update_data(price=price)
 
     id_user = call.from_user.id
@@ -66,7 +67,7 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
     cover = data.get("cover")
     description = data.get("description")
 
-    post_text = await forming_text(data)
+    post_text = await forming_text(data, from_user=from_user)
     post_text_length = len(post_text)
 
     if post_text_length <= 1000:

@@ -7,12 +7,14 @@ async def forming_text(
     data: dict,
     l10n: FluentLocalization = get_fluent_localization("ru"),  # ПОМЕНЯТЬ НА RU
     post: bool = True,
+    from_user: bool = False,
 ):
     """
     Формируется текст поста для телеграм канала.
     :param data: Словарь с данными о книге.
     :param l10n: Язык установленный у пользователя.
     :param post: True – текст формируется для поста.
+    :param from_user: True – книга от пользователя.
     :return: Готовый текст поста для телеграм канала.
     """
 
@@ -30,10 +32,11 @@ async def forming_text(
             introductory_text = l10n.format_value("daily-action")
         price = "50₽ <s>85₽</s>"
     elif price == 85:
-        introductory_text = l10n.format_value("new-book-from-user")
+        if from_user:
+            introductory_text = l10n.format_value("new-book-from-user")
         price = "85₽"
 
-    authors = " ".join([author["author"] for author in authors])
+    authors = " ".join([author["author"].title() for author in authors])
     formats = ", ".join(f"{file['format']}" for file in files)
     genres = " ".join(["#" + genre["genre"] for genre in genres])
     id_book = "#{:04d}".format(id_book)

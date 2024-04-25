@@ -64,3 +64,19 @@ class BooksApi:
         )
 
         return status, result
+
+    async def delete_book(self, id_book: int, **kwargs):
+        """
+        ...
+
+        :param id_book: unique book identifier
+        :param kwargs: additional arguments
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="DELETE",
+            url=f"{self.endpoint}/{id_book}",
+        )
+
+        return status, result

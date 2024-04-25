@@ -47,6 +47,12 @@ menu-spin = Показать клавиатуру и сделать бросок
 menu-stop = Убрать клавиатуру
 menu-help = Справочная информация
 
+daily-action =
+    Акция дня!!
+    Только сегодня книга <b>50₽</b>
+
+new-book-from-user = Добавлена новая книга по заказу пользователя!!
+
 full-book-description =
     { $introductory_text }
 
