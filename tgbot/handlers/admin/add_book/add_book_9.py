@@ -29,21 +29,14 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     l10n = await get_user_language(id_user)
 
     data = await state.get_data()
-    article = int(data.get("article")[1:])
-    title = data.get("title")
-    description = data.get("description")
+    id_book = data.get("id_book")
     cover = data.get("cover")
     price = data.get("price")
-    authors = data.get("authors")
-    genres = data.get("genres")
-    files = data.get("files")
     post_text = data.get("post_text")
 
-    await api.books.add_book(
-        article, title, description, cover, price, authors, genres, files
-    )
+    await api.books.add_book(data)
 
-    deep_link = await create_start_link(bot, f"book_{article}")
+    deep_link = await create_start_link(bot, f"book_{id_book}")
 
     if price != "do_not_publish":
         await send_message(

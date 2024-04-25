@@ -1,51 +1,52 @@
-from aiogram.fsm.context import FSMContext
+from fluent.runtime import FluentLocalization
+
+from tgbot.services import get_fluent_localization
 
 
 async def forming_text(
-    state: FSMContext,
-    price: int | str,
+    data: dict,
+    l10n: FluentLocalization = get_fluent_localization("ru"),  # ПОМЕНЯТЬ НА RU
 ):
     """
     Формируется текст поста для телеграм канала.
-    :param state: FSM (AddBook).
-    :param price: Цена.
+    :param data: Словарь с данными о книге.
+    :param l10n: Язык установленный у пользователя.
     :return: Готовый текст поста для телеграм канала.
     """
 
-    data = await state.get_data()
-    article = data.get("article")
+    id_book = data.get("id_book")
     title = data.get("title")
     authors = data.get("authors")
     description = data.get("description")
     genres = data.get("genres")
     files = data.get("files")
+    price = data.get("price")
 
     introductory_text = ""
-    if price == "50":
-        price = 50
-        introductory_text = "Акция дня!!\n" "Только сегодня книга <b>50₽</b>"
-    elif price == "85":
-        price = 85
-        introductory_text = "Добавлена новая книга по заказу пользователя!!"
+    if price == 50:
+        introductory_text = l10n.format_value("daily-action")
+        price = "50₽ <s>85₽</s>"
+    elif price == 85:
+        introductory_text = l10n.format_value("new-book-from-user")
+        price = "85₽"
 
-    authors = ", ".join(author.title() for author in authors)
-    formats = ", ".join(list(files.keys()))
-    price = "50₽ <s>85₽</s>" if price == 50 else "85₽"
-    genres = " ".join("#" + genre for genre in genres)
+    authors = " ".join([author["author"] for author in authors])
+    formats = ", ".join(f"{file['format']}" for file in files)
+    genres = " ".join(["#" + genre["genre"] for genre in genres])
+    id_book = "#{:04d}".format(id_book)
 
-    text = (
-        f"{introductory_text}\n"
-        f"\n"
-        f'"<code><b>{title}</b></code>"\n'
-        f"<i>{authors}</i>\n"
-        f"\n"
-        f"{description}\n"
-        f"\n"
-        f"Доступные форматы: {formats}\n"
-        f"\n"
-        f"<b>Цена:</b> {price}\n"
-        f"\n"
-        f"Артикул: <code>{article}</code>\n"
-        f"""{genres}"""
+    text = l10n.format_value(
+        "full-book-description",
+        {
+            "introductory_text": introductory_text,
+            "title": title,
+            "authors": authors,
+            "description": description,
+            "formats": formats,
+            "price": price,
+            "id_book": id_book,
+            "genres": genres,
+        },
     )
+
     return text

@@ -32,7 +32,8 @@ async def add_book_1(message: Message, state: FSMContext):
     l10n = await get_user_language(id_user)
 
     status, latest_article = await api.books.get_latest_article()
-    free_article = "#{:04d}".format(latest_article["latest_article"] + 1)
+    id_book = latest_article["latest_article"] + 1
+    free_article = "#{:04d}".format(id_book)
 
     await message.answer(
         l10n.format_value("add-book-article", {"free_article": free_article}),
@@ -51,6 +52,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
     :param state: FSM (AddBook).
     :return: Сообщение для добавления названия книги и переход в FSM (add_name_book).
     """
+    await state.clear()
 
     await delete_keyboard(bot, message)
 
@@ -60,7 +62,8 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
     article = message.text
 
     status, latest_article = await api.books.get_latest_article()
-    free_article = "#{:04d}".format(latest_article["latest_article"] + 1)
+    id_book = latest_article["latest_article"] + 1
+    free_article = "#{:04d}".format(id_book)
 
     # Проверка формата артикула
     if not article.startswith("#") or not re.fullmatch(r"#\d{4}", article):
@@ -72,8 +75,6 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
             reply_markup=cancel_keyboard(l10n),
         )
     else:
-        id_book = int(article.strip("#"))
-
         status, book = await api.books.get_book(id_book)
 
         if status == 200:
@@ -89,5 +90,5 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
                 l10n.format_value("add-book-name-book"),
                 reply_markup=back_and_cancel_keyboard(l10n),
             )
-            await state.update_data(article=article)
+            await state.update_data(id_book=id_book)
             await state.set_state(AddBook.add_title)

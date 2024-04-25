@@ -6,42 +6,24 @@ class BooksApi:
         self.base_client = base_client
         self.endpoint = "/books"
 
-    async def add_book(
-        self,
-        id_book: int,
-        title: str,
-        cover: str,
-        description: str,
-        price: int,
-        authors: list,
-        genres: list,
-        files: dict,
-        **kwargs,
-    ):
+    async def add_book(self, data: dict, **kwargs):
         """
         Get the latest article of the book
 
-        :param id_book: unique book identifier
-        :param title: book title
-        :param cover: cover of the book is in the form of a telegram token
-        :param description: book description
-        :param price: book price
-        :param authors: list of authors of the book
-        :param genres: list of genres of the book
-        :param files: dict of files of the book
+        :param data: dictionary with book data
         :param kwargs: additional arguments
         :return: status code and result
         """
 
         data = {
-            "id_book": id_book,
-            "title": title,
-            "cover": cover,
-            "description": description,
-            "price": price,
-            "authors": [{"author": author} for author in authors],
-            "genres": [{"genre": genre} for genre in genres],
-            "files": [{"format": key, "file": value} for key, value in files.items()],
+            "id_book": data.get("id_book"),
+            "title": data.get("title"),
+            "description": data.get("description"),
+            "cover": data.get("cover"),
+            "price": data.get("price"),
+            "authors": data.get("authors"),
+            "genres": data.get("genres"),
+            "files": data.get("files"),
         }
 
         status, result = await self.base_client.make_request(

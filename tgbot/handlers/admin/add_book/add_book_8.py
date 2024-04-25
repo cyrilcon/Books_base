@@ -32,7 +32,7 @@ async def back_to_add_book_7(call: CallbackQuery, state: FSMContext):
 
     data = await state.get_data()
     files = data.get("files")
-    formats = ", ".join([format for format in files])
+    formats = ", ".join(f"{file['format']}" for file in files)
 
     await call.message.edit_text(
         l10n.format_value(
@@ -56,24 +56,20 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
     :return: Сообщение для демо просмотра публикации и переход в FSM (preview).
     """
 
+    price = 50 if call.data == "50" else 85
+    await state.update_data(price=price)
+
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
     data = await state.get_data()
     cover = data.get("cover")
     description = data.get("description")
-    price = call.data
-    await state.update_data(price=price)
 
-    post_text = await forming_text(state, price)
+    post_text = await forming_text(data)
     post_text_length = len(post_text)
 
     if post_text_length <= 1000:
-        # Добавление книги в бд
-        # Безопасная рассылка
-        # await bot.send_photo(
-        #     chat_id=CHANNEL_BOOKS_BASEBOT_TOKEN, photo=cover, caption=text
-        # )
         await call.message.delete()
 
         await call.message.answer_photo(
@@ -117,17 +113,11 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
 
     data = await state.get_data()
     cover = data.get("cover")
-    price = data.get("price")
 
-    post_text = await forming_text(state, price)
+    post_text = await forming_text(data)
     post_text_length = len(post_text)
 
     if post_text_length <= 1000:
-        # Добавление книги в бд
-        # Безопасная рассылка
-        # await bot.send_photo(
-        #     chat_id=CHANNEL_BOOKS_BASEBOT_TOKEN, photo=cover, caption=text
-        # )
         await delete_keyboard(bot, message)
 
         await message.answer_photo(

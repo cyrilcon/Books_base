@@ -94,11 +94,11 @@ async def clear_add_book_7(call: CallbackQuery, state: FSMContext):
         l10n.format_value("add-book-files"),
         reply_markup=back_and_cancel_keyboard(l10n),
     )
-    files = {}
+    files = []
     await state.update_data(files=files)
 
 
-async def add_formats_to_dict(files, message) -> (dict, str):
+async def add_formats_to_dict(files, message) -> (list, str):
     """
     Добавляются файлы и их форматы в словарь.
     :param files: (Файл: формат) словарь.
@@ -113,15 +113,16 @@ async def add_formats_to_dict(files, message) -> (dict, str):
     file_format = message.document.file_name.split(".")[-1]
 
     if files is None:
-        files = {}
+        files = []
 
-    if file_format not in files:
-        files[file_format] = file
-        selected_text = "add-book-files-send-more"
-    else:
+    if any(file["format"] == file_format for file in files):
         selected_text = "add-book-files-already-sent"
+    else:
+        file_dict = {"format": file_format, "file": file}
+        files.append(file_dict)
+        selected_text = "add-book-files-send-more"
 
-    formats = ", ".join(f"{format}" for format in files)
+    formats = ", ".join(f"{file['format']}" for file in files)
     text = l10n.format_value(selected_text, {"formats": formats})
 
     return files, text

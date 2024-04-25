@@ -48,6 +48,7 @@ async def add_book_3(message: Message, bot: Bot, state: FSMContext):
     l10n = await get_user_language(id_user)
 
     authors = message.text.lower().split(", ")
+    authors = [{"author": author} for author in authors]
 
     await message.answer(
         l10n.format_value("add-book-description"),

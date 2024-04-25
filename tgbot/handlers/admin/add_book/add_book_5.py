@@ -59,8 +59,7 @@ async def add_book_5(message: Message, bot: Bot, state: FSMContext):
 
     genres = await genres_to_list(genres_from_message, genres)
     await state.update_data(genres=genres)
-
-    ready_made_genres = " ".join(["#" + genre for genre in genres])
+    ready_made_genres = " ".join(["#" + genre["genre"] for genre in genres])
 
     await message.answer(
         l10n.format_value(
@@ -112,7 +111,7 @@ async def clear_add_book_5(call: CallbackQuery, state: FSMContext):
 
 async def genres_to_list(
     genres_from_message: str, genres: list[str] = None
-) -> list[str]:
+) -> list[dict]:
     """
     Превращает жанры в список.
     :param genres_from_message: Жанры книг.
@@ -124,7 +123,12 @@ async def genres_to_list(
         genres = []
 
     new_genres = re.findall(r"\b(\w+(?:\s+\w+)*)\b", genres_from_message)
-    new_genres = [genre.strip().replace(" ", "_").lower() for genre in new_genres]
-    genres.extend(set(new_genres) - set(genres))
+    new_genres = [
+        {"genre": genre.strip().replace(" ", "_").lower()} for genre in new_genres
+    ]
+
+    for genre in new_genres:
+        if genre["genre"] not in [g["genre"] for g in genres]:
+            genres.append(genre)
 
     return genres

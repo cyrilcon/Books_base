@@ -2,13 +2,18 @@ start-text =
     Hi{ $additional_text }!!
     Write the title or article of the book to buy or familiarize yourself with the product
 
+book-does-not-exist =
+    Запрашиваемая вами книга с артикулом <b>{ $article }</b> больше не доступна :(
+
 add-book-article =
     <b>1/8</b>
     Введите <i><b>артикул</b></i> книги, чтобы добавить её в бд
+
     Свободный артикул: <code>{ $free_article }</code>
 
 add-book-incorrect-article =
     Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+
     Свободный артикул: <code>{ $free_article }</code>
 
 add-book-article-already-exist =
@@ -84,7 +89,27 @@ add-book-complete = Книга добавлена!!
 
 add-book-cancel = Вы отменили добавление книги
 
+daily-action =
+    Акция дня!!
+    Только сегодня книга <b>50₽</b>
 
+new-book-from-user = Добавлена новая книга по заказу пользователя!!
+
+
+full-book-description =
+    { $introductory_text }
+
+    "<code><b>{ $title }</b></code>"
+    <i>{ $authors }</i>
+
+    { $description }
+
+    Доступные форматы: { $formats }
+
+    <b>Цена:</b> { $price }
+
+    Артикул: <code>{ $id_book }</code>
+    { $genres }
 
 
 button-back = « Назад

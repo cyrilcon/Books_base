@@ -31,7 +31,7 @@ async def back_to_add_book_5(call: CallbackQuery, state: FSMContext):
 
     data = await state.get_data()
     genres = data.get("genres")
-    ready_made_genres = " ".join(["#" + genre for genre in genres])
+    ready_made_genres = " ".join(["#" + genre["genre"] for genre in genres])
 
     await call.message.edit_text(
         l10n.format_value(

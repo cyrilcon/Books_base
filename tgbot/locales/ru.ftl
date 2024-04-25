@@ -46,3 +46,18 @@ menu-start = Перезапустить казино
 menu-spin = Показать клавиатуру и сделать бросок
 menu-stop = Убрать клавиатуру
 menu-help = Справочная информация
+
+full-book-description =
+    { $introductory_text }
+
+    "<code><b>{ $title }</b></code>"
+    <i>{ $authors }</i>
+
+    { $description }
+
+    Доступные форматы: { $formats }
+
+    <b>Цена:</b> { $price }
+
+    Артикул: <code>{ $id_book }</code>
+    { $genres }
