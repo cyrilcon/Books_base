@@ -32,7 +32,7 @@ async def add_book_1(message: Message, state: FSMContext):
     l10n = await get_user_language(id_user)
 
     status, latest_article = await api.books.get_latest_article()
-    id_book = latest_article["latest_article"] + 1
+    id_book = latest_article + 1
     free_article = "#{:04d}".format(id_book)
 
     await message.answer(
@@ -60,7 +60,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
     article = message.text
 
     status, latest_article = await api.books.get_latest_article()
-    id_book = latest_article["latest_article"] + 1
+    id_book = latest_article + 1
     free_article = "#{:04d}".format(id_book)
 
     if not article.startswith("#") or not re.fullmatch(r"#\d{4}", article):

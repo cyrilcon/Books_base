@@ -44,7 +44,41 @@ class BooksApi:
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/latestArticle",
+            url=f"{self.endpoint}/latest-article",
+        )
+
+        return status, result
+
+    async def get_all_titles(self, **kwargs):
+        """
+        Get all titles
+
+        :param kwargs: additional arguments
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/titles",
+        )
+
+        return status, result
+
+    async def get_books_by_titles(self, titles, **kwargs):
+        """
+        Get articles, titles, authors of books, by the titles
+
+        :param titles: list of titles
+        :param kwargs: additional arguments
+        :return: status code and result
+        """
+
+        data = {"titles": titles}
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/books-by-titles",
+            json=data,
         )
 
         return status, result

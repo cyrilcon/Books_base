@@ -13,7 +13,12 @@ class BooksBaseApi(BaseClient):
 
         self.users = UsersApi(self)
         self.books = BooksApi(self)
-        # self.orders = OrdersApi(self)
+
+
+class ApiResponse:
+    def __init__(self, status: int, result):
+        self.status = status
+        self.result = result
 
 
 env = Env()  # Создаётся объект Env
