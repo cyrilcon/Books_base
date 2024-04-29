@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from infrastructure.books_base_api import ApiResponse
+from infrastructure.books_base_api.api_response import ApiResponse
 from infrastructure.books_base_api.base import BaseClient
 
 

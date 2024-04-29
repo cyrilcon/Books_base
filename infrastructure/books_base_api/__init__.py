@@ -1,6 +1,3 @@
-__all__ = (
-    "api",
-    "ApiResponse",
-)
+__all__ = ("api",)
 
-from .books_base_api import api, ApiResponse
+from .books_base_api import api

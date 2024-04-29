@@ -16,7 +16,9 @@ async def process_search(message, page, title_from_message=None):
     if title_from_message is None:
         title_from_message = message.text
 
-    all_titles = await api.books.get_all_titles().result
+    response = await api.books.get_all_titles()
+    all_titles = response.result
+
     founded_titles = await levenshtein_search(title_from_message.lower(), all_titles)
 
     response = await api.books.get_books_by_titles(founded_titles)
