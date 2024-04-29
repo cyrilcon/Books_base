@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-def demo_post_keyboard(l10n):
+def demo_post_keyboard(l10n) -> InlineKeyboardMarkup:
     """
     Формируются кнопки "Опубликовать" и "Отмена".
     :param l10n: Язык установленный у пользователя.

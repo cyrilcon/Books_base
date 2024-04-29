@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-def back_and_cancel_keyboard(l10n):
+def back_and_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
     """
     Формируются кнопки "« Назад" и "Отмена".
     :param l10n: Язык установленный у пользователя.

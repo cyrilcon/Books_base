@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-def prices_keyboard(l10n):
+def prices_keyboard(l10n) -> InlineKeyboardMarkup:
     """
     Формируются кнопки "50₽", "85₽", "Не публиковать", "Не от пользователя", "« Назад" и "Отмена".
     :param l10n: Язык установленный у пользователя.

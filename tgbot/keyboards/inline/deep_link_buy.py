@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-def deep_link_buy_keyboard(deep_link_url: str):
+def deep_link_buy_keyboard(deep_link_url: str) -> InlineKeyboardMarkup:
     """
     Формируется дип-линк кнопка "Купить".
     :param deep_link_url: Ссылка на покупку книги.

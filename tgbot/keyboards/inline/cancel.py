@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-def cancel_keyboard(l10n):
+def cancel_keyboard(l10n) -> InlineKeyboardMarkup:
     """
     Формируется кнопка "Отмена".
     :param l10n: Язык установленный у пользователя.
