@@ -121,6 +121,16 @@ delete-book-successful-deleted = Книга <i>"{ $title }"</i> (<code>{ $id_boo
 
 delete-book-cancel = Вы отменили удаление книги
 
+edit-book-select = Введите <i><b>артикул</b></i>, чтобы изменить данные о книге
+
+edit-book-incorrect-article =
+    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+
+edit-book-does-not-exist =
+    Книги с артикулом <b>{ $article }</b> не существует!!
+
+update-book-cancel = Вы отменили изменение данных о книге
+
 
 button-back = « Назад
 

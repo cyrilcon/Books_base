@@ -45,7 +45,7 @@ async def start(message: Message, bot: Bot, command: CommandObject, config: Conf
     l10n = get_fluent_localization(language)
     text = f", <b>{fullname}</b>" if fullname else None
 
-    try:
+    if command.args is not None:
         article = command.args.split("_")[1]
 
         response = await api.books.get_book(article)
@@ -61,7 +61,7 @@ async def start(message: Message, bot: Bot, command: CommandObject, config: Conf
                 id_user=id_user,
                 text=post_text,
                 photo=book["cover"],
-                # reply_markup=deep_link_buy_keyboard(deep_link),  # добавить кнопку "Купить"
+                # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
             )
 
         else:
@@ -71,5 +71,5 @@ async def start(message: Message, bot: Bot, command: CommandObject, config: Conf
                     {"article": "#{:04d}".format(int(article))},
                 )
             )
-    except AttributeError:
+    else:
         await message.answer(l10n.format_value("start-text", {"additional_text": text}))

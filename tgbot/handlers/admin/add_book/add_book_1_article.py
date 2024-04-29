@@ -54,6 +54,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
     :param state: FSM (AddBook).
     :return: Сообщение для добавления названия книги и переход в FSM (add_name_book).
     """
+
     await delete_keyboard(bot, message)
 
     id_user = message.from_user.id
