@@ -31,7 +31,7 @@ async def add_book_1(message: Message, state: FSMContext):
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
-    status, latest_article = await api.books.get_latest_article()
+    latest_article = await api.books.get_latest_article().result
     id_book = latest_article + 1
     free_article = "#{:04d}".format(id_book)
 
@@ -59,7 +59,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
 
     article = message.text
 
-    status, latest_article = await api.books.get_latest_article()
+    latest_article = await api.books.get_latest_article().result
     id_book = latest_article + 1
     free_article = "#{:04d}".format(id_book)
 
@@ -72,7 +72,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
             reply_markup=cancel_keyboard(l10n),
         )
     else:
-        status, book = await api.books.get_book(id_book)
+        status = await api.books.get_book(id_book).status
 
         if status == 200:
             await message.answer(

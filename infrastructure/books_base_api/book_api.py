@@ -1,3 +1,4 @@
+from infrastructure.books_base_api import ApiResponse
 from infrastructure.books_base_api.base import BaseClient
 
 
@@ -6,12 +7,11 @@ class BooksApi:
         self.base_client = base_client
         self.endpoint = "/books"
 
-    async def add_book(self, data: dict, **kwargs):
+    async def add_book(self, data: dict) -> ApiResponse:
         """
         Get the latest article of the book
 
         :param data: dictionary with book data
-        :param kwargs: additional arguments
         :return: status code and result
         """
 
@@ -32,13 +32,12 @@ class BooksApi:
             json=data,
         )
 
-        return status, result
+        return ApiResponse(status, result)
 
-    async def get_latest_article(self, **kwargs):
+    async def get_latest_article(self) -> ApiResponse:
         """
         Get the latest article of the book
 
-        :param kwargs: additional arguments
         :return: status code and result
         """
 
@@ -47,13 +46,12 @@ class BooksApi:
             url=f"{self.endpoint}/latest-article",
         )
 
-        return status, result
+        return ApiResponse(status, result)
 
-    async def get_all_titles(self, **kwargs):
+    async def get_all_titles(self) -> ApiResponse:
         """
         Get all titles
 
-        :param kwargs: additional arguments
         :return: status code and result
         """
 
@@ -62,14 +60,13 @@ class BooksApi:
             url=f"{self.endpoint}/titles",
         )
 
-        return status, result
+        return ApiResponse(status, result)
 
-    async def get_books_by_titles(self, titles, **kwargs):
+    async def get_books_by_titles(self, titles) -> ApiResponse:
         """
         Get articles, titles, authors of books, by the titles
 
         :param titles: list of titles
-        :param kwargs: additional arguments
         :return: status code and result
         """
 
@@ -81,14 +78,13 @@ class BooksApi:
             json=data,
         )
 
-        return status, result
+        return ApiResponse(status, result)
 
-    async def get_book(self, id_book: int, **kwargs):
+    async def get_book(self, id_book: int) -> ApiResponse:
         """
         Get a book by id with all the information
 
         :param id_book: unique book identifier
-        :param kwargs: additional arguments
         :return: status code and result
         """
 
@@ -97,14 +93,13 @@ class BooksApi:
             url=f"{self.endpoint}/{id_book}",
         )
 
-        return status, result
+        return ApiResponse(status, result)
 
-    async def delete_book(self, id_book: int, **kwargs):
+    async def delete_book(self, id_book: int) -> ApiResponse:
         """
-        ...
+        Delete a book
 
         :param id_book: unique book identifier
-        :param kwargs: additional arguments
         :return: status code and result
         """
 
@@ -113,4 +108,4 @@ class BooksApi:
             url=f"{self.endpoint}/{id_book}",
         )
 
-        return status, result
+        return ApiResponse(status, result)

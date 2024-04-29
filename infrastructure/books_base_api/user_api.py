@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from infrastructure.books_base_api import ApiResponse
 from infrastructure.books_base_api.base import BaseClient
 
 
@@ -14,8 +15,7 @@ class UsersApi:
         language: str,
         fullname: str = None,
         username: str = None,
-        **kwargs,
-    ):
+    ) -> ApiResponse:
         """
         Add a user
 
@@ -23,7 +23,6 @@ class UsersApi:
         :param language: user selected language
         :param fullname: user's fullname (user's first name and last name)
         :param username: user's username (begins with the @ symbol)
-        :param kwargs: additional arguments
         :return:
         """
 
@@ -40,14 +39,13 @@ class UsersApi:
             json=data,
         )
 
-        return status, result
+        return ApiResponse(status, result)
 
-    async def get_user(self, id_user: int, **kwargs):
+    async def get_user(self, id_user: int) -> ApiResponse:
         """
         Get a user by id with all the information
 
         :param id_user: unique user identifier
-        :param kwargs: additional arguments
         :return:
         """
 
@@ -56,9 +54,9 @@ class UsersApi:
             url=f"{self.endpoint}/{id_user}",
         )
 
-        return status, result
+        return ApiResponse(status, result)
 
-    async def update_user(self, id_user: int, **kwargs):
+    async def update_user(self, id_user: int, **kwargs) -> ApiResponse:
         """
         Update a user by id
 
@@ -76,4 +74,4 @@ class UsersApi:
             json=data,
         )
 
-        return status, result
+        return ApiResponse(status, result)

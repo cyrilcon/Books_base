@@ -31,7 +31,9 @@ async def start(message: Message, bot: Bot, command: CommandObject, config: Conf
     fullname = message.from_user.full_name
     username = message.from_user.username
 
-    status, user = await api.users.get_user(id_user)
+    response = await api.users.get_user(id_user)
+    status = response.status
+    user = response.result
 
     if status != 404:
         language = user["language"]
@@ -45,9 +47,12 @@ async def start(message: Message, bot: Bot, command: CommandObject, config: Conf
 
     try:
         article = command.args.split("_")[1]
-        status, book = await api.books.get_book(article)
-        if status != 404:
 
+        response = await api.books.get_book(article)
+        status = response.status
+        book = response.result
+
+        if status != 404:
             post_text = await forming_text(book, post=False)
 
             await send_message(

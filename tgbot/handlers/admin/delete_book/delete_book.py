@@ -61,10 +61,14 @@ async def delete_book_process(message: Message, bot: Bot, state: FSMContext):
         )
     else:
         id_book = int(article[1:])
-        status, book = await api.books.get_book(id_book)
+
+        response = await api.books.get_book(id_book)
+        status = response.status
+        book = response.result
 
         if status == 200:
             await api.books.delete_book(id_book)
+
             await message.answer(
                 l10n.format_value(
                     "delete-book-successful-deleted",

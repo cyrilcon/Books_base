@@ -25,7 +25,7 @@ async def back_to_add_book_1(call: CallbackQuery, state: FSMContext):
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
-    status, latest_article = await api.books.get_latest_article()
+    latest_article = await api.books.get_latest_article().result
     free_article = "#{:04d}".format(latest_article + 1)
 
     await call.answer(cache_time=1)

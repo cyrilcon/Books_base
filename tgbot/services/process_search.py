@@ -16,10 +16,12 @@ async def process_search(message, page, title_from_message=None):
     if title_from_message is None:
         title_from_message = message.text
 
-    status, all_titles = await api.books.get_all_titles()
+    all_titles = await api.books.get_all_titles().result
     founded_titles = await levenshtein_search(title_from_message.lower(), all_titles)
 
-    status, books = await api.books.get_books_by_titles(founded_titles)
+    response = await api.books.get_books_by_titles(founded_titles)
+    status = response.status
+    books = response.result
 
     if status == 200:
         text = f'Найдено несколько книг по запросу <b>"{title_from_message}"</b>:\n\n'

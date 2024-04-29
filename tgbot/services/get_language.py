@@ -10,7 +10,14 @@ async def get_user_language(id_user: int) -> FluentLocalization:
     :param id_user: ID пользователя.
     :return: Выбранный язык пользователя.
     """
-    status, user = await api.users.get_user(id_user)
-    language = user["language"]
-    l10n = get_fluent_localization(language)
+    response = await api.users.get_user(id_user)
+    status = response.status
+    user = response.result
+
+    if status == 200:
+        language = user["language"]
+        l10n = get_fluent_localization(language)
+        return l10n
+
+    l10n = get_fluent_localization("ru")
     return l10n
