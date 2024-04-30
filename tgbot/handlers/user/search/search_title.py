@@ -25,8 +25,8 @@ async def search_echo(message: types.Message):
 async def search_flipping(call: CallbackQuery):
     """
     Обработка кнопок вперёд и назад для поиска.
-    :param call: Кнопка вперёд или назад
-    :return: Следующую/предыдущую страницу поиска
+    :param call: Кнопка вперёд или назад.
+    :return: Следующую/предыдущую страницу поиска.
     """
 
     await call.answer(cache_time=1)

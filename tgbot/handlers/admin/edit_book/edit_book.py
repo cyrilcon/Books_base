@@ -62,7 +62,9 @@ async def edit_book_process(
             reply_markup=cancel_keyboard(l10n),
         )
     else:
-        response = await api.books.get_book(int(article[1:]))
+        id_book = int(article[1:])
+
+        response = await api.books.get_book(id_book)
         status = response.status
         book = response.result
 
@@ -75,7 +77,7 @@ async def edit_book_process(
                 id_user=id_user,
                 text=post_text,
                 photo=book["cover"],
-                reply_markup=edit_keyboard(l10n),
+                reply_markup=edit_keyboard(l10n, id_book),
             )
             await state.clear()
         else:

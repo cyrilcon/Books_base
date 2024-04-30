@@ -19,7 +19,7 @@ add-book-incorrect-article =
     Свободный артикул: <code>{ $free_article }</code>
 
 add-book-article-already-exist =
-    Книга с таким артикулом уже есть!!
+    Книга с таким артикулом уже существует!!
     Введите артикул ещё раз
 
     Свободный артикул: <code>{ $free_article }</code>
@@ -130,13 +130,25 @@ delete-book-cancel = Вы отменили удаление книги
 
 edit-book-select = Введите <i><b>артикул</b></i>, чтобы изменить данные о книге
 
-edit-book-incorrect-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+edit-book-incorrect-article = Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
 
 edit-book-does-not-exist =
     Книги с артикулом <b>{ $article }</b> не существует!!
 
 edit-book-cancel = Вы отменили изменение данных о книге
+
+edit-book-article =
+    Введите новый <i><b>артикул</b></i>
+
+    Текущий артикул: <code>{ $article }</code>
+
+edit-book-article-already-exist =
+    Книга с таким артикулом уже существует!!
+    Введите артикул ещё раз
+
+edit-book-article-successfully-changed = Артикул успешно изменён!!
+
+
 
 
 pagination-info =

@@ -95,6 +95,25 @@ class BooksApi:
 
         return ApiResponse(status, result)
 
+    async def update_book(self, id_book: int, **kwargs) -> ApiResponse:
+        """
+        Update a book by id
+
+        :param id_book: unique book identifier
+        :param kwargs: additional arguments
+        :return:
+        """
+
+        data = {key: value for key, value in kwargs.items()}
+
+        status, result = await self.base_client.make_request(
+            method="PATCH",
+            url=f"{self.endpoint}/{id_book}",
+            json=data,
+        )
+
+        return ApiResponse(status, result)
+
     async def delete_book(self, id_book: int) -> ApiResponse:
         """
         Delete a book
