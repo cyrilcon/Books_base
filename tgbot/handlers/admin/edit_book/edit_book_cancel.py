@@ -8,21 +8,21 @@ from tgbot.filters import AdminFilter
 from tgbot.services import get_user_language
 from tgbot.states import EditBook
 
-update_book_cancel_router = Router()
-update_book_cancel_router.message.filter(AdminFilter())
+edit_book_cancel_router = Router()
+edit_book_cancel_router.message.filter(AdminFilter())
 
 
-@update_book_cancel_router.callback_query(StateFilter(EditBook), F.data == "cancel")
-async def update_book_cancel(call: CallbackQuery, state: FSMContext):
+@edit_book_cancel_router.callback_query(StateFilter(EditBook), F.data == "cancel")
+async def edit_book_cancel(call: CallbackQuery, state: FSMContext):
     """
     Отмена изменения книги.
     :param call: Нажатая кнопка "Отмена".
-    :param state: FSM (UpdateBook).
+    :param state: FSM (EditBook).
     """
 
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
-    text = l10n.format_value("update-book-cancel")
+    text = l10n.format_value("edit-book-cancel")
 
     await state.clear()
     await call.answer(text, show_alert=True)

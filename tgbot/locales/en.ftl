@@ -5,6 +5,8 @@ start-text =
 book-does-not-exist =
     Запрашиваемая вами книга с артикулом <b>{ $article }</b> больше не доступна :(
 
+
+
 add-book-article =
     <b>1/8</b>
     Введите <i><b>артикул</b></i> книги, чтобы добавить её в бд
@@ -89,12 +91,13 @@ add-book-complete = Книга добавлена!!
 
 add-book-cancel = Вы отменили добавление книги
 
+
+
 daily-action =
     Акция дня!!
     Только сегодня книга <b>50₽</b>
 
 new-book-from-user = Добавлена новая книга по заказу пользователя!!
-
 
 full-book-description =
     { $introductory_text }
@@ -111,6 +114,8 @@ full-book-description =
     Артикул: <code>{ $id_book }</code>
     { $genres }
 
+
+
 delete-book = Введите <i><b>артикул</b></i>, чтобы удалить книгу
 
 delete-book-incorrect-article = Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
@@ -121,6 +126,8 @@ delete-book-successful-deleted = Книга <i>"{ $title }"</i> (<code>{ $id_boo
 
 delete-book-cancel = Вы отменили удаление книги
 
+
+
 edit-book-select = Введите <i><b>артикул</b></i>, чтобы изменить данные о книге
 
 edit-book-incorrect-article =
@@ -129,9 +136,15 @@ edit-book-incorrect-article =
 edit-book-does-not-exist =
     Книги с артикулом <b>{ $article }</b> не существует!!
 
-update-book-cancel = Вы отменили изменение данных о книге
+edit-book-cancel = Вы отменили изменение данных о книге
 
 
+pagination-info =
+    Это страница { $page } из { $all_pages } результатов поиска.
+
+    Используйте стрелки вправо/влево для навигации между страницами.
+
+    Чтобы ознакомиться с конкретной книгой, нажмите на её номер.
 
 button-back = « Назад
 

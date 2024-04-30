@@ -34,7 +34,7 @@ def pagination_keyboard(books: list, page: int = 1) -> InlineKeyboardMarkup:
         bottom_buttons.append(
             InlineKeyboardButton(
                 text=f"{page}/{all_pages}",
-                callback_data=f"pagination_info",
+                callback_data=f"pagination_info:{page}:{all_pages}",
             )
         )
 
