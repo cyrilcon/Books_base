@@ -9,7 +9,7 @@ from infrastructure.books_base_api import api
 from tgbot.config import Config
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
-from tgbot.keyboards.inline import cancel_keyboard
+from tgbot.keyboards.inline import cancel_keyboard, edit_keyboard
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
@@ -75,7 +75,7 @@ async def edit_book_process(
                 id_user=id_user,
                 text=post_text,
                 photo=book["cover"],
-                # reply_markup=edit_keyboard(l10n),  # TODO: Добавить клаву
+                reply_markup=edit_keyboard(l10n),
             )
             await state.clear()
         else:

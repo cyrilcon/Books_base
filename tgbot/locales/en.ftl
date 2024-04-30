@@ -132,6 +132,7 @@ edit-book-does-not-exist =
 update-book-cancel = Вы отменили изменение данных о книге
 
 
+
 button-back = « Назад
 
 button-cancel = Отмена
@@ -145,3 +146,19 @@ button-clear = Стереть
 button-do-not-publish = Не публиковать
 
 button-not-from-a-user = Не от пользователя
+
+button-edit-book-article = Артикул
+
+button-edit-book-title = Название
+
+button-edit-book-authors = Авторов
+
+button-edit-book-descriptions = Описание
+
+button-edit-book-genres = Жанры
+
+button-edit-book-cover = Обложку
+
+button-edit-book-files = Файлы
+
+button-edit-book-price = Цену
