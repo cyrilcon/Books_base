@@ -31,14 +31,14 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     data = await state.get_data()
     id_book = data.get("id_book")
     cover = data.get("cover")
-    price = data.get("price")
     post_text = data.get("post_text")
+    is_fasting = data.get("is_fasting")
 
     await api.books.add_book(data)
 
     deep_link = await create_start_link(bot, f"book_{id_book}")
 
-    if price != "do_not_publish":
+    if not is_fasting:
         await send_message(
             config=config,
             bot=bot,

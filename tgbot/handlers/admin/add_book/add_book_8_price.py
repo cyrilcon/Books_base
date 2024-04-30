@@ -56,8 +56,13 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
     :return: Сообщение для демо просмотра публикации и переход в FSM (preview).
     """
 
-    price = 50 if call.data == "50" else 85
-    from_user = False if call.data == "not_from_a_user" else True
+    button_pressed = call.data
+
+    if button_pressed == "do_not_publish":
+        await state.update_data(is_fasting=button_pressed)
+
+    price = 50 if button_pressed == "50" else 85
+    from_user = False if button_pressed == "not_from_a_user" else True
     await state.update_data(price=price)
 
     id_user = call.from_user.id
