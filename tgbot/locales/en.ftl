@@ -7,6 +7,15 @@ book-does-not-exist =
 
 
 
+search-found = Найдено несколько книг по запросу <b>"{ $request }"</b>:
+
+search-not-found =
+    По запросу <b>"{ $request }"</b> ничего не найдено
+
+    Введите более точное название книги или выберите другой способ поиска
+
+
+
 add-book-article =
     <b>1/8</b>
     Введите <i><b>артикул</b></i> книги, чтобы добавить её в бд
@@ -24,12 +33,12 @@ add-book-article-already-exist =
 
     Свободный артикул: <code>{ $free_article }</code>
 
-add-book-name-book =
+add-book-title =
     <b>2/8</b>
     Введите <i><b>название</b></i> книги
 
-add-book-name-book-incorrect =
-    В названии книги не должно содержаться символа <b>"#"</b>!!
+add-book-title-incorrect =
+    В названии книги не должно содержаться символов <b>"#"</b> и <b>"кавычек"</b>!!
     Введите название книги ещё раз
 
 add-book-authors =
@@ -147,7 +156,6 @@ edit-book-article-already-exist =
     Введите артикул ещё раз
 
 edit-book-article-successfully-changed = Артикул успешно изменён!!
-
 
 
 

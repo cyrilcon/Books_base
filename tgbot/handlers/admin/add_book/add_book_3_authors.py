@@ -26,7 +26,7 @@ async def back_to_add_book_2(call: CallbackQuery, state: FSMContext):
 
     await call.answer(cache_time=1)
     await call.message.edit_text(
-        l10n.format_value("add-book-name-book"),
+        l10n.format_value("add-book-title"),
         reply_markup=back_and_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_title)

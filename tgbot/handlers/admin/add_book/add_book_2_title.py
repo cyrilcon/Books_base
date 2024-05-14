@@ -54,9 +54,9 @@ async def add_book_2(message: Message, bot: Bot, state: FSMContext):
 
     title = message.text
 
-    if "#" in title:
+    if any(char in title for char in {"#", '"'}):
         await message.answer(
-            l10n.format_value("add-book-name-book-incorrect"),
+            l10n.format_value("add-book-title-incorrect"),
             reply_markup=back_and_cancel_keyboard(l10n),
         )
     else:

@@ -3,10 +3,10 @@ from fuzzywuzzy import fuzz
 
 async def levenshtein_search(search_text, list_of_values):
     """
-    Поиск книги по расстоянию Левенштейна
-    :param search_text: текст, который вводится для поиска
-    :param list_of_values: список со всеми значениями
-    :return: список с наилучшими совпадениями
+    Поиск книги по расстоянию Левенштейна.
+    :param search_text: Текст, который вводится для поиска.
+    :param list_of_values: Список со всеми значениями.
+    :return: Список с наилучшими совпадениями.
     """
 
     matching = []
