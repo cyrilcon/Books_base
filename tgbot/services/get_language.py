@@ -1,7 +1,7 @@
 from fluent.runtime import FluentLocalization
 
 from infrastructure.books_base_api import api
-from tgbot.services import get_fluent_localization
+from . import get_fluent_localization
 
 
 async def get_user_language(id_user: int) -> FluentLocalization:

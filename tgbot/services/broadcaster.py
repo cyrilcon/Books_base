@@ -1,6 +1,5 @@
 import asyncio
 import logging
-from typing import Union
 
 from aiogram import Bot, exceptions
 from aiogram.types import InlineKeyboardMarkup
@@ -11,7 +10,7 @@ from tgbot.config import Config
 async def send_message(
     config: Config,
     bot: Bot,
-    id_user: Union[int, str],
+    id_user: int | str,
     text: str,
     photo: str = None,
     disable_notification: bool = False,
@@ -74,7 +73,7 @@ async def send_message(
 async def broadcast(
     config: Config,
     bot: Bot,
-    users: list[Union[str, int]],
+    users: list[str | int],
     text: str,
     photo: str = None,
     disable_notification: bool = False,

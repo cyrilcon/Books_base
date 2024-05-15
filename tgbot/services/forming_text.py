@@ -5,7 +5,7 @@ from tgbot.services import get_fluent_localization
 
 async def forming_text(
     data: dict,
-    l10n: FluentLocalization = get_fluent_localization("ru"),  # ПОМЕНЯТЬ НА RU
+    l10n: FluentLocalization = get_fluent_localization("ru"),
     post: bool = True,
     from_user: bool = False,
 ):
