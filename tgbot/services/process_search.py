@@ -32,11 +32,9 @@ async def process_search(
         title_from_message = message.text
 
     response = await api.books.get_all_titles()
-    all_titles = response.result["titles"]
+    all_titles = response.result
 
-    founded_titles = await levenshtein_search(
-        title_from_message.lower(), all_titles
-    )  # TODO: убрать нижний регистр
+    founded_titles = await levenshtein_search(title_from_message, all_titles)
 
     response = await api.books.get_books_by_titles(founded_titles)
     status = response.status
@@ -85,5 +83,5 @@ async def process_search(
     elif status == 404:
         await message.answer(
             l10n.format_value("search-not-found", {"request": title_from_message}),
-            # reply_markup=pagination_keyboard(books, page)  # TODO: Добавит клавиатуру с поиском по жанру или автору
+            # reply_markup=pagination_keyboard(books, page)  # TODO: Добавить клавиатуру с поиском по жанру или автору
         )

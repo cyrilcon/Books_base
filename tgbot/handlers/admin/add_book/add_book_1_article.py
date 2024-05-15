@@ -90,7 +90,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
             )
         else:
             await message.answer(
-                l10n.format_value("add-book-name-book"),
+                l10n.format_value("add-book-title"),
                 reply_markup=back_and_cancel_keyboard(l10n),
             )
             await state.update_data(id_book=id_book)
