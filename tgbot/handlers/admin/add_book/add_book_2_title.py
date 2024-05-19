@@ -58,34 +58,40 @@ async def add_book_2(message: Message, bot: Bot, state: FSMContext):
 
     title = message.text
 
-    if any(char in title for char in {"#", '"'}):
+    if len(title) > 250:
         await message.answer(
-            l10n.format_value("add-book-title-incorrect"),
+            l10n.format_value("add-book-title-too-long"),
             reply_markup=back_and_cancel_keyboard(l10n),
         )
     else:
-        response = await api.books.get_book_by_title(title)
-        status = response.status
-        book = response.result
-
-        if status == 200:
+        if any(char in title for char in {"#", '"'}):
             await message.answer(
-                l10n.format_value(
-                    "add-book-title-already-exists",
-                    {
-                        "title": title,
-                        "article": "#{:04d}".format(book["id_book"] + 1),
-                    },
-                ),
-                reply_markup=yes_and_cancel_keyboard(l10n),
-            )
-        else:
-            await message.answer(
-                l10n.format_value("add-book-authors"),
+                l10n.format_value("add-book-title-incorrect"),
                 reply_markup=back_and_cancel_keyboard(l10n),
             )
-            await state.update_data(title=title)
-            await state.set_state(AddBook.add_authors)
+        else:
+            response = await api.books.get_book_by_title(title)
+            status = response.status
+            book = response.result
+
+            if status == 200:
+                await message.answer(
+                    l10n.format_value(
+                        "add-book-title-already-exists",
+                        {
+                            "title": title,
+                            "article": "#{:04d}".format(book["id_book"] + 1),
+                        },
+                    ),
+                    reply_markup=yes_and_cancel_keyboard(l10n),
+                )
+            else:
+                await message.answer(
+                    l10n.format_value("add-book-authors"),
+                    reply_markup=back_and_cancel_keyboard(l10n),
+                )
+                await state.update_data(title=title)
+                await state.set_state(AddBook.add_authors)
 
 
 @add_book_router_2.callback_query(StateFilter(AddBook.add_title), F.data == "yes")

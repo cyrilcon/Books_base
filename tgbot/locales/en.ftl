@@ -41,6 +41,10 @@ add-book-title-incorrect =
     В названии книги не должно содержаться символов <b>"#"</b> и <b>"кавычек"</b>!!
     Введите название книги ещё раз
 
+add-book-title-too-long =
+    Слишком длинное название!!
+    Сократите и введите название книги ещё раз
+
 add-book-title-already-exists =
     Книга с названием <b>"{ $title }"</b> (<code>{ $article }</code>) уже существует!!
     Вы уверены, что хотите добавить книгу??
@@ -55,7 +59,7 @@ add-book-description =
 
 add-book-description-too-long =
     Слишком большое описание!!
-    Сократите и введите название книги ещё раз
+    Сократите и введите описание книги ещё раз
 
 add-book-genres =
     <b>5/8</b>
@@ -162,6 +166,10 @@ edit-book-title =
 
     Текущее название: <code>{ $title }</code>
 
+edit-book-title-too-long =
+    Слишком длинное название!!
+    Сократите и введите название книги ещё раз
+
 edit-book-authors =
     Введите нового <i><b>автора</b></i>
 
@@ -172,6 +180,14 @@ edit-book-description =
 
     Текущее описание:
     <code>{ $description }</code>
+
+edit-book-description-too-long =
+    Слишком большое описание!!
+    Сократите и введите описание книги ещё раз
+
+edit-book-too-long-text =
+    Слишком большой текст!!
+    (У вас <b>{ $post_text_length }</b>/1000 символов)
 
 edit-book-successfully-changed = Данные успешно изменены!!
 

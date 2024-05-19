@@ -68,25 +68,43 @@ async def edit_description_process(
 
     description = message.text
 
-    data = await state.get_data()
-    article = data.get("id_book")
-
-    response = await api.books.update_book(article, description=description)
-    status = response.status
-    book = response.result
-
-    if status == 200:
-        await message.answer(l10n.format_value("edit-book-successfully-changed"))
-
-        post_text = await forming_text(book, l10n, post=False)
-
-        await send_message(
-            config=config,
-            bot=bot,
-            id_user=id_user,
-            text=post_text,
-            photo=book["cover"],
-            reply_markup=edit_keyboard(l10n, book["id_book"]),
+    if len(description) > 850:
+        await message.answer(
+            l10n.format_value("edit-book-description-too-long"),
+            reply_markup=cancel_keyboard(l10n),
         )
+    else:
+        data = await state.get_data()
+        article = data.get("id_book")
 
-    await state.clear()
+        response = await api.books.update_book(article, description=description)
+        status = response.status
+        book = response.result
+
+        if status == 200:
+            post_text = await forming_text(book, l10n, post=False)
+            post_text_length = len(post_text)
+
+            if post_text_length <= 1000:
+                await message.answer(
+                    l10n.format_value("edit-book-successfully-changed")
+                )
+                await send_message(
+                    config=config,
+                    bot=bot,
+                    id_user=id_user,
+                    text=post_text,
+                    photo=book["cover"],
+                    reply_markup=edit_keyboard(l10n, book["id_book"]),
+                )
+                await state.clear()
+            else:
+                await message.answer(
+                    l10n.format_value(
+                        "edit-book-too-long-text",
+                        {
+                            "post_text_length": post_text_length,
+                        },
+                    ),
+                    reply_markup=cancel_keyboard(l10n),
+                )

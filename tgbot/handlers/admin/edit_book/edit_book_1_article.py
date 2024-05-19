@@ -87,19 +87,29 @@ async def edit_article_process(
             book = response.result
 
             if status == 200:
-                await message.answer(
-                    l10n.format_value("edit-book-successfully-changed")
-                )
-
                 post_text = await forming_text(book, l10n, post=False)
+                post_text_length = len(post_text)
 
-                await send_message(
-                    config=config,
-                    bot=bot,
-                    id_user=id_user,
-                    text=post_text,
-                    photo=book["cover"],
-                    reply_markup=edit_keyboard(l10n, id_book),
-                )
-
-            await state.clear()
+                if post_text_length <= 1000:
+                    await message.answer(
+                        l10n.format_value("edit-book-successfully-changed")
+                    )
+                    await send_message(
+                        config=config,
+                        bot=bot,
+                        id_user=id_user,
+                        text=post_text,
+                        photo=book["cover"],
+                        reply_markup=edit_keyboard(l10n, book["id_book"]),
+                    )
+                    await state.clear()
+                else:
+                    await message.answer(
+                        l10n.format_value(
+                            "edit-book-too-long-text",
+                            {
+                                "post_text_length": post_text_length,
+                            },
+                        ),
+                        reply_markup=cancel_keyboard(l10n),
+                    )

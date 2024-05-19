@@ -66,53 +66,69 @@ async def edit_title_process(
 
     title = message.text
 
-    if any(char in title for char in {"#", '"'}):
+    if len(title) > 250:
         await message.answer(
-            l10n.format_value("add-book-title-incorrect"),
+            l10n.format_value("edit-book-title-too-long"),
             reply_markup=cancel_keyboard(l10n),
         )
     else:
-        response = await api.books.get_book_by_title(title)
-        status = response.status
-        book = response.result
-
-        if status == 200:
+        if any(char in title for char in {"#", '"'}):
             await message.answer(
-                l10n.format_value(
-                    "add-book-title-already-exists",
-                    {
-                        "title": title,
-                        "article": "#{:04d}".format(book["id_book"] + 1),
-                    },
-                ),
-                reply_markup=yes_and_cancel_keyboard(l10n),
+                l10n.format_value("add-book-title-incorrect"),
+                reply_markup=cancel_keyboard(l10n),
             )
-            await state.update_data(title=title)
         else:
-            data = await state.get_data()
-            article = data.get("id_book")
-
-            response = await api.books.update_book(article, title=title)
+            response = await api.books.get_book_by_title(title)
             status = response.status
             book = response.result
 
             if status == 200:
                 await message.answer(
-                    l10n.format_value("edit-book-successfully-changed")
+                    l10n.format_value(
+                        "add-book-title-already-exists",
+                        {
+                            "title": title,
+                            "article": "#{:04d}".format(book["id_book"] + 1),
+                        },
+                    ),
+                    reply_markup=yes_and_cancel_keyboard(l10n),
                 )
+                await state.update_data(title=title)
+            else:
+                data = await state.get_data()
+                article = data.get("id_book")
 
-                post_text = await forming_text(book, l10n, post=False)
+                response = await api.books.update_book(article, title=title)
+                status = response.status
+                book = response.result
 
-                await send_message(
-                    config=config,
-                    bot=bot,
-                    id_user=id_user,
-                    text=post_text,
-                    photo=book["cover"],
-                    reply_markup=edit_keyboard(l10n, book["id_book"]),
-                )
+                if status == 200:
+                    post_text = await forming_text(book, l10n, post=False)
+                    post_text_length = len(post_text)
 
-            await state.clear()
+                    if post_text_length <= 1000:
+                        await message.answer(
+                            l10n.format_value("edit-book-successfully-changed")
+                        )
+                        await send_message(
+                            config=config,
+                            bot=bot,
+                            id_user=id_user,
+                            text=post_text,
+                            photo=book["cover"],
+                            reply_markup=edit_keyboard(l10n, book["id_book"]),
+                        )
+                        await state.clear()
+                    else:
+                        await message.answer(
+                            l10n.format_value(
+                                "edit-book-too-long-text",
+                                {
+                                    "post_text_length": post_text_length,
+                                },
+                            ),
+                            reply_markup=cancel_keyboard(l10n),
+                        )
 
 
 @edit_book_2_title_router.callback_query(
