@@ -15,17 +15,17 @@ from tgbot.keyboards.inline import (
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_3_authors_router = Router()
-edit_book_3_authors_router.message.filter(IsPrivate())
+edit_book_4_description_router = Router()
+edit_book_4_description_router.message.filter(IsPrivate())
 
 
-@edit_book_3_authors_router.callback_query(F.data.startswith("edit_authors"))
-async def edit_authors(call: CallbackQuery, state: FSMContext):
+@edit_book_4_description_router.callback_query(F.data.startswith("edit_description"))
+async def edit_description(call: CallbackQuery, state: FSMContext):
     """
-    Обработка кнопок "Авторы".
-    :param call: Кнопка "Авторы".
+    Обработка кнопок "Описание".
+    :param call: Кнопка "Описание".
     :param state: FSM (EditBook).
-    :return: Сообщение для изменения авторов книги и переход в FSM (edit_authors).
+    :return: Сообщение для изменения описания книги и переход в FSM (edit_description).
     """
 
     id_user = call.from_user.id
@@ -36,28 +36,29 @@ async def edit_authors(call: CallbackQuery, state: FSMContext):
     response = await api.books.get_book(id_book)
     book = response.result
 
-    authors = ", ".join([author["author"].title() for author in book["authors"]])
-
     await call.message.answer(
-        l10n.format_value("edit-book-authors", {"authors": f"<code>{authors}</code>"}),
+        l10n.format_value(
+            "edit-book-description",
+            {"description": f"<code>{book["description"]}</code>"},
+        ),
         reply_markup=cancel_keyboard(l10n),
     )
 
     await state.update_data(id_book=id_book)
-    await state.set_state(EditBook.edit_authors)
+    await state.set_state(EditBook.edit_description)
 
 
-@edit_book_3_authors_router.message(StateFilter(EditBook.edit_authors))
-async def edit_authors_process(
+@edit_book_4_description_router.message(StateFilter(EditBook.edit_description))
+async def edit_description_process(
     message: Message, bot: Bot, state: FSMContext, config: Config
 ):
     """
-    Изменение автора(ов) книги.
-    :param message: Сообщение с ожидаемым автором книги.
+    Изменение описания книги.
+    :param message: Сообщение с ожидаемым описанием книги.
     :param bot: Экземпляр бота.
     :param state: FSM (EditBook).
     :param config: Config с параметрами бота.
-    :return: Сообщение об успешном изменении автора.
+    :return: Сообщение об успешном изменении описания.
     """
 
     await delete_keyboard(bot, message)
@@ -65,13 +66,12 @@ async def edit_authors_process(
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
-    authors = message.text.lower().split(", ")
-    authors = [{"author": author} for author in authors]
+    description = message.text
 
     data = await state.get_data()
     article = data.get("id_book")
 
-    response = await api.books.update_book(article, authors=authors)
+    response = await api.books.update_book(article, description=description)
     status = response.status
     book = response.result
 

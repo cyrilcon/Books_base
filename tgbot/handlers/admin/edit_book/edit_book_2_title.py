@@ -26,7 +26,7 @@ async def edit_title(call: CallbackQuery, state: FSMContext):
     Обработка кнопок "Название".
     :param call: Кнопка "Название".
     :param state: FSM (EditBook).
-    :return: Сообщение для выбора названия книги и переход в FSM (edit_title).
+    :return: Сообщение для изменения названия книги и переход в FSM (edit_title).
     """
 
     id_user = call.from_user.id

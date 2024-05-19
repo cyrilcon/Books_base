@@ -167,6 +167,12 @@ edit-book-authors =
 
     Текущий автор: <code>{ $authors }</code>
 
+edit-book-description =
+    Введите новое <i><b>описание</b></i>
+
+    Текущее описание:
+    <code>{ $description }</code>
+
 edit-book-successfully-changed = Данные успешно изменены!!
 
 edit-book-cancel = Вы отменили изменение данных о книге

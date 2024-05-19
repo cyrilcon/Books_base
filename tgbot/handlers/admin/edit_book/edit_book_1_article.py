@@ -24,7 +24,7 @@ async def edit_article(call: CallbackQuery, state: FSMContext):
     Обработка кнопок "Артикул".
     :param call: Кнопка "Артикул".
     :param state: FSM (EditBook).
-    :return: Сообщение для выбора артикула и переход в FSM (edit_article).
+    :return: Сообщение для изменения артикула и переход в FSM (edit_article).
     """
 
     id_user = call.from_user.id
