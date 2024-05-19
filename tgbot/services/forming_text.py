@@ -36,7 +36,7 @@ async def forming_text(
             introductory_text = l10n.format_value("new-book-from-user")
         price = "85₽"
 
-    authors = " ".join([author["author"].title() for author in authors])
+    authors = ", ".join([author["author"].title() for author in authors])
     formats = ", ".join(f"{file['format']}" for file in files)
     genres = " ".join(["#" + genre["genre"] for genre in genres])
     id_book = "#{:04d}".format(id_book)

@@ -162,6 +162,11 @@ edit-book-title =
 
     Текущее название: <code>{ $title }</code>
 
+edit-book-authors =
+    Введите нового <i><b>автора</b></i>
+
+    Текущий автор: <code>{ $authors }</code>
+
 edit-book-successfully-changed = Данные успешно изменены!!
 
 edit-book-cancel = Вы отменили изменение данных о книге
@@ -193,17 +198,17 @@ button-edit-book-article = Артикул
 
 button-edit-book-title = Название
 
-button-edit-book-authors = Авторов
+button-edit-book-authors = Авторы
 
 button-edit-book-descriptions = Описание
 
 button-edit-book-genres = Жанры
 
-button-edit-book-cover = Обложку
+button-edit-book-cover = Обложка
 
 button-edit-book-files = Файлы
 
-button-edit-book-price = Цену
+button-edit-book-price = Цена
 
 button-yes = Да
 
