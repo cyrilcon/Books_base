@@ -95,11 +95,11 @@ class BooksApi:
 
         return ApiResponse(status, result)
 
-    async def update_book(self, id_book: int, **kwargs) -> ApiResponse:
+    async def update_book(self, article: int, **kwargs) -> ApiResponse:
         """
         Update a book by id
 
-        :param id_book: unique book identifier
+        :param article: unique book identifier
         :param kwargs: additional arguments
         :return:
         """
@@ -108,7 +108,7 @@ class BooksApi:
 
         status, result = await self.base_client.make_request(
             method="PATCH",
-            url=f"{self.endpoint}/{id_book}",
+            url=f"{self.endpoint}/{article}",
             json=data,
         )
 

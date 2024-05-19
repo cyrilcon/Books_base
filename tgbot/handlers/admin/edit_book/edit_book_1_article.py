@@ -7,10 +7,11 @@ from aiogram.types import CallbackQuery
 from aiogram.types import Message
 
 from infrastructure.books_base_api import api
+from tgbot.config import Config
 from tgbot.filters.private_chat import IsPrivate
 from tgbot.keyboards import delete_keyboard
-from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import get_user_language
+from tgbot.keyboards.inline import cancel_keyboard, edit_keyboard
+from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
 edit_book_1_article_router = Router()
@@ -37,16 +38,20 @@ async def edit_article(call: CallbackQuery, state: FSMContext):
         reply_markup=cancel_keyboard(l10n),
     )
 
+    await state.update_data(id_book=id_book)
     await state.set_state(EditBook.edit_article)
 
 
 @edit_book_1_article_router.message(StateFilter(EditBook.edit_article))
-async def edit_article_process(message: Message, bot: Bot, state: FSMContext):
+async def edit_article_process(
+    message: Message, bot: Bot, state: FSMContext, config: Config
+):
     """
     Изменение артикула книги.
     :param message: Сообщение с ожидаемым артикулом книги.
     :param bot: Экземпляр бота.
     :param state: FSM (EditBook).
+    :param config: Config с параметрами бота.
     :return: Сообщение об успешном изменении артикула.
     """
 
@@ -74,11 +79,31 @@ async def edit_article_process(message: Message, bot: Bot, state: FSMContext):
                 reply_markup=cancel_keyboard(l10n),
             )
         else:
-            # TODO: Реализовать обновление данных о книге
-            # response = await api.books.update_book(id_book, id_book=id_book)
+            data = await state.get_data()
+            article = data.get("id_book")
 
-            await message.answer(
-                l10n.format_value("edit-book-article-successfully-changed")
-            )
+            response = await api.books.update_book(article, id_book=id_book)
+            status = response.status
+            book = response.result
+
+            if status == 200:
+                await message.answer(
+                    l10n.format_value("edit-book-article-successfully-changed")
+                )
+
+                post_text = await forming_text(book, l10n, post=False)
+
+                await send_message(
+                    config=config,
+                    bot=bot,
+                    id_user=id_user,
+                    text=post_text,
+                    photo=book["cover"],
+                    reply_markup=edit_keyboard(l10n, id_book),
+                )
+                await state.clear()
+
+            else:
+                await message.answer(l10n.format_value("error"))
 
             await state.clear()

@@ -195,3 +195,6 @@ button-edit-book-cover = Обложку
 button-edit-book-files = Файлы
 
 button-edit-book-price = Цену
+
+
+error = Произошла ошибка :(
