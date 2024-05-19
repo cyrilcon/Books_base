@@ -83,7 +83,7 @@ async def add_book_1_process(message: Message, bot: Bot, state: FSMContext):
         if status == 200:
             await message.answer(
                 l10n.format_value(
-                    "add-book-article-already-exist",
+                    "add-book-article-already-exists",
                     {"free_article": free_article},
                 ),
                 reply_markup=cancel_keyboard(l10n),

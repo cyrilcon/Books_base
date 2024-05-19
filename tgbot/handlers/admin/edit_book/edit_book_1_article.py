@@ -75,7 +75,7 @@ async def edit_article_process(
 
         if status == 200:
             await message.answer(
-                l10n.format_value("edit-book-article-already-exist"),
+                l10n.format_value("edit-book-article-already-exists"),
                 reply_markup=cancel_keyboard(l10n),
             )
         else:
@@ -88,7 +88,7 @@ async def edit_article_process(
 
             if status == 200:
                 await message.answer(
-                    l10n.format_value("edit-book-article-successfully-changed")
+                    l10n.format_value("edit-book-successfully-changed")
                 )
 
                 post_text = await forming_text(book, l10n, post=False)
@@ -101,7 +101,6 @@ async def edit_article_process(
                     photo=book["cover"],
                     reply_markup=edit_keyboard(l10n, id_book),
                 )
-                await state.clear()
 
             else:
                 await message.answer(l10n.format_value("error"))

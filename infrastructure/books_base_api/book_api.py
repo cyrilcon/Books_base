@@ -80,6 +80,21 @@ class BooksApi:
 
         return ApiResponse(status, result)
 
+    async def get_book_by_title(self, title: str) -> ApiResponse:
+        """
+        Get a book by title with all the information
+
+        :param title: book title
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/title/{title}",
+        )
+
+        return ApiResponse(status, result)
+
     async def get_book(self, id_book: int) -> ApiResponse:
         """
         Get a book by id with all the information
