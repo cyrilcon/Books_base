@@ -1,5 +1,3 @@
-import re
-
 from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
@@ -165,10 +163,5 @@ async def yes_edit_title(
             photo=book["cover"],
             reply_markup=edit_keyboard(l10n, book["id_book"]),
         )
-
-    else:
-        await call.message.edit_text(
-            l10n.format_value("error")
-        )  # TODO: передать ошибку
 
     await state.clear()

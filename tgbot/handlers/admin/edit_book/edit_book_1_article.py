@@ -102,7 +102,4 @@ async def edit_article_process(
                     reply_markup=edit_keyboard(l10n, id_book),
                 )
 
-            else:
-                await message.answer(l10n.format_value("error"))
-
             await state.clear()
