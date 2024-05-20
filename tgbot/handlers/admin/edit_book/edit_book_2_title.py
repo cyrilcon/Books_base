@@ -23,7 +23,7 @@ edit_book_2_title_router.message.filter(IsPrivate())
 @edit_book_2_title_router.callback_query(F.data.startswith("edit_title"))
 async def edit_title(call: CallbackQuery, state: FSMContext):
     """
-    Обработка кнопок "Название".
+    Обработка кнопки "Название".
     :param call: Кнопка "Название".
     :param state: FSM (EditBook).
     :return: Сообщение для изменения названия книги и переход в FSM (edit_title).
@@ -42,7 +42,7 @@ async def edit_title(call: CallbackQuery, state: FSMContext):
         reply_markup=cancel_keyboard(l10n),
     )
 
-    await state.update_data(id_book=id_book)
+    await state.update_data(id_edit_book=id_book)
     await state.set_state(EditBook.edit_title)
 
 
@@ -96,9 +96,9 @@ async def edit_title_process(
                 await state.update_data(title=title)
             else:
                 data = await state.get_data()
-                article = data.get("id_book")
+                id_edit_book = data.get("id_edit_book")
 
-                response = await api.books.update_book(article, title=title)
+                response = await api.books.update_book(id_edit_book, title=title)
                 status = response.status
                 book = response.result
 
@@ -152,10 +152,10 @@ async def yes_edit_title(
     await call.answer(cache_time=1)
 
     data = await state.get_data()
-    article = data.get("id_book")
+    id_edit_book = data.get("id_edit_book")
     title = data.get("title")
 
-    response = await api.books.update_book(article, title=title)
+    response = await api.books.update_book(id_edit_book, title=title)
     status = response.status
     book = response.result
 

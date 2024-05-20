@@ -1,3 +1,5 @@
+import re
+
 from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
@@ -15,17 +17,17 @@ from tgbot.keyboards.inline import (
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_3_authors_router = Router()
-edit_book_3_authors_router.message.filter(IsPrivate())
+edit_book_5_genres_router = Router()
+edit_book_5_genres_router.message.filter(IsPrivate())
 
 
-@edit_book_3_authors_router.callback_query(F.data.startswith("edit_authors"))
-async def edit_authors(call: CallbackQuery, state: FSMContext):
+@edit_book_5_genres_router.callback_query(F.data.startswith("edit_genres"))
+async def edit_genres(call: CallbackQuery, state: FSMContext):
     """
-    Обработка кнопки "Авторы".
-    :param call: Кнопка "Авторы".
+    Обработка кнопки "Жанры".
+    :param call: Кнопка "Жанры".
     :param state: FSM (EditBook).
-    :return: Сообщение для изменения авторов книги и переход в FSM (edit_authors).
+    :return: Сообщение для изменения жанров книги и переход в FSM (edit_genres).
     """
 
     id_user = call.from_user.id
@@ -36,28 +38,31 @@ async def edit_authors(call: CallbackQuery, state: FSMContext):
     response = await api.books.get_book(id_book)
     book = response.result
 
-    authors = ", ".join([author["author"].title() for author in book["authors"]])
+    genres = " ".join(["#" + genre["genre"] for genre in book["genres"]])
 
     await call.message.answer(
-        l10n.format_value("edit-book-authors", {"authors": f"<code>{authors}</code>"}),
+        l10n.format_value(
+            "edit-book-genres",
+            {"genres": f"<code>{genres}</code>"},
+        ),
         reply_markup=cancel_keyboard(l10n),
     )
 
     await state.update_data(id_edit_book=id_book)
-    await state.set_state(EditBook.edit_authors)
+    await state.set_state(EditBook.edit_genres)
 
 
-@edit_book_3_authors_router.message(StateFilter(EditBook.edit_authors))
-async def edit_authors_process(
+@edit_book_5_genres_router.message(StateFilter(EditBook.edit_genres))
+async def edit_genres_process(
     message: Message, bot: Bot, state: FSMContext, config: Config
 ):
     """
-    Изменение автора(ов) книги.
-    :param message: Сообщение с ожидаемым автором книги.
+    Изменение жанров книги.
+    :param message: Сообщение с ожидаемыми жанрами книги.
     :param bot: Экземпляр бота.
     :param state: FSM (EditBook).
     :param config: Config с параметрами бота.
-    :return: Сообщение об успешном изменении автора.
+    :return: Сообщение об успешном изменении жанров.
     """
 
     await delete_keyboard(bot, message)
@@ -65,13 +70,18 @@ async def edit_authors_process(
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
-    authors = message.text.lower().split(", ")
-    authors = [{"author": author} for author in authors]
+    genres_message = message.text
+
+    genres_list = re.findall(r"\b(\w+(?:\s+\w+)*)\b", genres_message)
+    genres = [
+        {"genre": genre.strip().replace(" ", "_").lower()} for genre in genres_list
+    ]
+    genres_text = " ".join([f"#{genre['genre']}" for genre in genres])
 
     data = await state.get_data()
     id_edit_book = data.get("id_edit_book")
 
-    response = await api.books.update_book(id_edit_book, authors=authors)
+    response = await api.books.update_book(id_edit_book, genres=genres)
     status = response.status
     book = response.result
 

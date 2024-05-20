@@ -22,7 +22,7 @@ edit_book_4_description_router.message.filter(IsPrivate())
 @edit_book_4_description_router.callback_query(F.data.startswith("edit_description"))
 async def edit_description(call: CallbackQuery, state: FSMContext):
     """
-    Обработка кнопок "Описание".
+    Обработка кнопки "Описание".
     :param call: Кнопка "Описание".
     :param state: FSM (EditBook).
     :return: Сообщение для изменения описания книги и переход в FSM (edit_description).
@@ -44,7 +44,7 @@ async def edit_description(call: CallbackQuery, state: FSMContext):
         reply_markup=cancel_keyboard(l10n),
     )
 
-    await state.update_data(id_book=id_book)
+    await state.update_data(id_edit_book=id_book)
     await state.set_state(EditBook.edit_description)
 
 
@@ -75,9 +75,9 @@ async def edit_description_process(
         )
     else:
         data = await state.get_data()
-        article = data.get("id_book")
+        id_edit_book = data.get("id_edit_book")
 
-        response = await api.books.update_book(article, description=description)
+        response = await api.books.update_book(id_edit_book, description=description)
         status = response.status
         book = response.result
 

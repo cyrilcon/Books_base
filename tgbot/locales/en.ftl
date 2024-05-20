@@ -185,6 +185,12 @@ edit-book-description-too-long =
     Слишком большое описание!!
     Сократите и введите описание книги ещё раз
 
+edit-book-genres =
+    Введите новые <i><b>жанры</b></i>
+
+    Текущие жанры:
+    <code>{ $genres }</code>
+
 edit-book-too-long-text =
     Слишком большой текст!!
     (У вас <b>{ $post_text_length }</b>/1000 символов)

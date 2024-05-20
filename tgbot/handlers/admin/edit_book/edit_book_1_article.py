@@ -21,7 +21,7 @@ edit_book_1_article_router.message.filter(IsPrivate())
 @edit_book_1_article_router.callback_query(F.data.startswith("edit_article"))
 async def edit_article(call: CallbackQuery, state: FSMContext):
     """
-    Обработка кнопок "Артикул".
+    Обработка кнопки "Артикул".
     :param call: Кнопка "Артикул".
     :param state: FSM (EditBook).
     :return: Сообщение для изменения артикула и переход в FSM (edit_article).
@@ -38,7 +38,7 @@ async def edit_article(call: CallbackQuery, state: FSMContext):
         reply_markup=cancel_keyboard(l10n),
     )
 
-    await state.update_data(id_book=id_book)
+    await state.update_data(id_edit_book=id_book)
     await state.set_state(EditBook.edit_article)
 
 
@@ -80,9 +80,9 @@ async def edit_article_process(
             )
         else:
             data = await state.get_data()
-            article = data.get("id_book")
+            id_edit_book = data.get("id_edit_book")
 
-            response = await api.books.update_book(article, id_book=id_book)
+            response = await api.books.update_book(id_edit_book, id_book=id_book)
             status = response.status
             book = response.result
 
