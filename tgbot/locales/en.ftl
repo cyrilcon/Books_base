@@ -191,6 +191,8 @@ edit-book-genres =
     Текущие жанры:
     <code>{ $genres }</code>
 
+edit-book-cover = Отправьте новое <i><b>фото обложки</b></i> книги
+
 edit-book-too-long-text =
     Слишком большой текст!!
     (У вас <b>{ $post_text_length }</b>/1000 символов)
