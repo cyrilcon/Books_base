@@ -103,7 +103,7 @@ async def edit_title_process(
                 book = response.result
 
                 if status == 200:
-                    post_text = await forming_text(book, l10n, post=False)
+                    post_text = await forming_text(book, l10n)
                     post_text_length = len(post_text)
 
                     if post_text_length <= 1000:
@@ -164,7 +164,7 @@ async def yes_edit_title(
             l10n.format_value("edit-book-successfully-changed")
         )
 
-        post_text = await forming_text(book, l10n, post=False)
+        post_text = await forming_text(book, l10n)
 
         await send_message(
             config=config,

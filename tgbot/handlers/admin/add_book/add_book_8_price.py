@@ -72,7 +72,7 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
     cover = data.get("cover")
     description = data.get("description")
 
-    post_text = await forming_text(data, from_user=from_user)
+    post_text = await forming_text(data, from_user=from_user, post=True)
     post_text_length = len(post_text)
 
     if post_text_length <= 1000:
@@ -120,7 +120,7 @@ async def reduce_description(message: Message, bot: Bot, state: FSMContext):
     data = await state.get_data()
     cover = data.get("cover")
 
-    post_text = await forming_text(data)
+    post_text = await forming_text(data, post=True)
     post_text_length = len(post_text)
 
     if post_text_length <= 1000:

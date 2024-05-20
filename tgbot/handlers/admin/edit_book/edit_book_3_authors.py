@@ -76,7 +76,7 @@ async def edit_authors_process(
     book = response.result
 
     if status == 200:
-        post_text = await forming_text(book, l10n, post=False)
+        post_text = await forming_text(book, l10n)
         post_text_length = len(post_text)
 
         if post_text_length <= 1000:

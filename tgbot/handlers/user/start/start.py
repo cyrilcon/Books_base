@@ -53,7 +53,7 @@ async def start(message: Message, bot: Bot, command: CommandObject, config: Conf
         book = response.result
 
         if status != 404:
-            post_text = await forming_text(book, l10n, post=False)
+            post_text = await forming_text(book, l10n)
 
             await send_message(
                 config=config,

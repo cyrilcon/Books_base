@@ -44,7 +44,7 @@ async def process_search(
         if len(books) == 1:
             response = await api.books.get_book(books[0]["id_book"])
             book = response.result
-            post_text = await forming_text(book, l10n, post=False)
+            post_text = await forming_text(book, l10n)
 
             await send_message(
                 config=config,

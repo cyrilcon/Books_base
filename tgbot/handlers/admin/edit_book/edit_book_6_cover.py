@@ -79,7 +79,7 @@ async def edit_cover_process(
     book = response.result
 
     if status == 200:
-        post_text = await forming_text(book, l10n, post=False)
+        post_text = await forming_text(book, l10n)
 
         await message.answer(l10n.format_value("edit-book-successfully-changed"))
         await send_message(

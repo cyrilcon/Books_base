@@ -69,7 +69,7 @@ async def edit_book_process(
         book = response.result
 
         if status == 200:
-            post_text = await forming_text(book, l10n, post=False)
+            post_text = await forming_text(book, l10n)
 
             await send_message(
                 config=config,
