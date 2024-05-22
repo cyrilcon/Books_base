@@ -47,6 +47,7 @@ add-book-title-too-long =
 
 add-book-title-already-exists =
     Книга с названием <b>"{ $title }"</b> (<code>{ $article }</code>) уже существует!!
+
     Вы уверены, что хотите добавить книгу??
 
 add-book-authors =

@@ -64,7 +64,7 @@ async def add_book_4(message: Message, bot: Bot, state: FSMContext):
         genres = data.get("genres")
 
         if genres:
-            ready_made_genres = " ".join(["#" + genre for genre in genres])
+            ready_made_genres = " ".join(["#" + genre["genre"] for genre in genres])
             await message.answer(
                 l10n.format_value(
                     "add-book-genres-example",

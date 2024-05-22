@@ -56,6 +56,8 @@ async def add_book_8(call: CallbackQuery, state: FSMContext):
     :return: Сообщение для демо просмотра публикации и переход в FSM (preview).
     """
 
+    await call.answer(cache_time=1)
+
     button_pressed = call.data
 
     if button_pressed == "do_not_publish":

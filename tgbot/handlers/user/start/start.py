@@ -2,6 +2,7 @@ import re
 
 from aiogram import Router, F, Bot
 from aiogram.filters import CommandStart, StateFilter, CommandObject
+from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from infrastructure.books_base_api import api
@@ -17,15 +18,24 @@ start_router = Router()
 @start_router.message(
     CommandStart(deep_link=True, magic=F.args.regexp(re.compile(r"book_(\d+)")))
 )
-async def start(message: Message, bot: Bot, command: CommandObject, config: Config):
+async def start(
+    message: Message,
+    bot: Bot,
+    state: FSMContext,
+    command: CommandObject,
+    config: Config,
+):
     """
     Обработка команды /start.
     :param message: Команда /start.
     :param bot: Экземпляр бота.
+    :param state: Любое FSM состояние для аварийного сброса.
     :param command: Встроенная команда на получение книги по артикулу.
     :param config: Config с параметрами бота.
     :return: Приветственное сообщение бота | Найденная книга.
     """
+
+    await state.clear()
 
     id_user = message.from_user.id
     fullname = message.from_user.full_name

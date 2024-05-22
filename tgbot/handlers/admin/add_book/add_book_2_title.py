@@ -85,6 +85,7 @@ async def add_book_2(message: Message, bot: Bot, state: FSMContext):
                     ),
                     reply_markup=yes_and_cancel_keyboard(l10n),
                 )
+                await state.update_data(title=title)
             else:
                 await message.answer(
                     l10n.format_value("add-book-authors"),

@@ -28,6 +28,8 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
+    await call.answer(cache_time=1)
+
     data = await state.get_data()
     id_book = data.get("id_book")
     cover = data.get("cover")
