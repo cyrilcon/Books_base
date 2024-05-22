@@ -7,7 +7,7 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
     back_and_cancel_keyboard,
-    ready_clear_back_cancel_keyboard,
+    done_clear_back_cancel_keyboard,
 )
 from tgbot.services import get_user_language
 from tgbot.states import AddBook
@@ -38,7 +38,7 @@ async def back_to_add_book_5(call: CallbackQuery, state: FSMContext):
             "add-book-genres-example",
             {"ready_made_genres": ready_made_genres},
         ),
-        reply_markup=ready_clear_back_cancel_keyboard(l10n),
+        reply_markup=done_clear_back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_genres)
 

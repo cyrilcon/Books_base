@@ -33,8 +33,9 @@ async def edit_cover(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
-    id_book = int(call.data.split(":")[-1])
+    await call.answer(cache_time=1)
 
+    id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book(id_book)
     book = response.result
 
@@ -90,4 +91,4 @@ async def edit_cover_process(
             photo=book["cover"],
             reply_markup=edit_keyboard(l10n, book["id_book"]),
         )
-        await state.clear()
+    await state.clear()

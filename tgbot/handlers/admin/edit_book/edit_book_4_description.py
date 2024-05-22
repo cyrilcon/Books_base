@@ -31,8 +31,9 @@ async def edit_description(call: CallbackQuery, state: FSMContext):
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
-    id_book = int(call.data.split(":")[-1])
+    await call.answer(cache_time=1)
 
+    id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book(id_book)
     book = response.result
 

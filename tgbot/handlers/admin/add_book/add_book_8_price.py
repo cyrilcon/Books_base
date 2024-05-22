@@ -6,7 +6,7 @@ from aiogram.types import CallbackQuery, Message
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
-    ready_clear_back_cancel_keyboard,
+    done_clear_back_cancel_keyboard,
     cancel_keyboard,
     demo_post_keyboard,
 )
@@ -39,7 +39,7 @@ async def back_to_add_book_7(call: CallbackQuery, state: FSMContext):
             "add-book-files-send-more",
             {"formats": formats},
         ),
-        reply_markup=ready_clear_back_cancel_keyboard(l10n),
+        reply_markup=done_clear_back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_files)
 

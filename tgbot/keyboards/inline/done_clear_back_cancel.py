@@ -1,14 +1,14 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-def ready_clear_back_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
+def done_clear_back_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
     """
     Формируются кнопки "Готово", "Стереть", "« Назад" и "Отмена".
     :param l10n: Язык установленный у пользователя.
     :return: Кнопки "Готово", "Стереть", "« Назад" и "Отмена".
     """
 
-    ready_clear_back_cancel_buttons = InlineKeyboardMarkup(
+    done_clear_back_cancel_buttons = InlineKeyboardMarkup(
         row_width=2,
         inline_keyboard=[
             [
@@ -29,4 +29,4 @@ def ready_clear_back_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
             ],
         ],
     )
-    return ready_clear_back_cancel_buttons
+    return done_clear_back_cancel_buttons

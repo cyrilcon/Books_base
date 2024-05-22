@@ -33,8 +33,9 @@ async def edit_genres(call: CallbackQuery, state: FSMContext):
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
-    id_book = int(call.data.split(":")[-1])
+    await call.answer(cache_time=1)
 
+    id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book(id_book)
     book = response.result
 
@@ -76,7 +77,6 @@ async def edit_genres_process(
     genres = [
         {"genre": genre.strip().replace(" ", "_").lower()} for genre in genres_list
     ]
-    genres_text = " ".join([f"#{genre['genre']}" for genre in genres])
 
     data = await state.get_data()
     id_edit_book = data.get("id_edit_book")

@@ -30,6 +30,8 @@ async def edit_article(call: CallbackQuery, state: FSMContext):
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
+    await call.answer(cache_time=1)
+
     id_book = int(call.data.split(":")[-1])
     article = "#{:04d}".format(id_book)
 

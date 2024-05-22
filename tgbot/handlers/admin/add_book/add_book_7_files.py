@@ -7,7 +7,7 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
     back_and_cancel_keyboard,
-    ready_clear_back_cancel_keyboard,
+    done_clear_back_cancel_keyboard,
     prices_keyboard,
 )
 from tgbot.services import get_user_language
@@ -56,7 +56,7 @@ async def add_book_7(message: Message, bot: Bot, state: FSMContext):
     files, text = await add_formats_to_dict(files, message)
 
     await state.update_data(files=files)
-    await message.answer(text, reply_markup=ready_clear_back_cancel_keyboard(l10n))
+    await message.answer(text, reply_markup=done_clear_back_cancel_keyboard(l10n))
 
 
 @add_book_router_7.callback_query(StateFilter(AddBook.add_files), F.data == "done")
@@ -71,6 +71,7 @@ async def done_add_book_7(call: CallbackQuery, state: FSMContext):
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
+    await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-price"),
         reply_markup=prices_keyboard(l10n),
@@ -90,6 +91,7 @@ async def clear_add_book_7(call: CallbackQuery, state: FSMContext):
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
 
+    await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-files"),
         reply_markup=back_and_cancel_keyboard(l10n),
