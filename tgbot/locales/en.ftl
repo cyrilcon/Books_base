@@ -205,6 +205,8 @@ edit-book-files-send-more =
     <b>Изменённые форматы:</b>
     { $formats }
 
+edit-book-price = Выберите новую <i><b>цену</b></i> книги
+
 edit-book-successfully-changed = Данные успешно изменены!!
 
 edit-book-cancel = Вы отменили изменение данных о книге

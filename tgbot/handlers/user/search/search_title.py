@@ -5,8 +5,8 @@ from aiogram.filters import StateFilter
 from aiogram.types import CallbackQuery
 
 from tgbot.config import Config
-from tgbot.filters.private_chat import IsPrivate
-from tgbot.services import process_search, get_user_language
+from tgbot.filters import IsPrivate
+from tgbot.services import process_search
 
 search_title_router = Router()
 search_title_router.message.filter(IsPrivate())

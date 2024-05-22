@@ -7,7 +7,7 @@ from aiogram.utils.media_group import MediaGroupBuilder
 
 from infrastructure.books_base_api import api
 from tgbot.config import Config
-from tgbot.filters.private_chat import IsPrivate
+from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
     cancel_keyboard,
@@ -18,7 +18,7 @@ from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
 edit_book_7_files_router = Router()
-edit_book_7_files_router.message.filter(IsPrivate())
+edit_book_7_files_router.message.filter(AdminFilter())
 
 
 @edit_book_7_files_router.callback_query(F.data.startswith("edit_files"))
@@ -99,7 +99,6 @@ async def done_edit_files(
     """
 
     await call.answer(cache_time=1)
-    await call.message.edit_reply_markup(reply_markup=None)
 
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
@@ -114,31 +113,19 @@ async def done_edit_files(
 
     if status == 200:
         post_text = await forming_text(book, l10n)
-        post_text_length = len(post_text)
 
-        if post_text_length <= 1000:
-            await call.message.answer(
-                l10n.format_value("edit-book-successfully-changed")
-            )
-            await send_message(
-                config=config,
-                bot=bot,
-                id_user=id_user,
-                text=post_text,
-                photo=book["cover"],
-                reply_markup=edit_keyboard(l10n, book["id_book"]),
-            )
-            await state.clear()
-        else:
-            await call.message.answer(
-                l10n.format_value(
-                    "edit-book-too-long-text",
-                    {
-                        "post_text_length": post_text_length,
-                    },
-                ),
-                reply_markup=cancel_keyboard(l10n),
-            )
+        await call.message.edit_text(
+            l10n.format_value("edit-book-successfully-changed"), reply_markup=None
+        )
+        await send_message(
+            config=config,
+            bot=bot,
+            id_user=id_user,
+            text=post_text,
+            photo=book["cover"],
+            reply_markup=edit_keyboard(l10n, book["id_book"]),
+        )
+        await state.clear()
 
 
 async def add_formats_to_dict(files, message) -> (list, str):

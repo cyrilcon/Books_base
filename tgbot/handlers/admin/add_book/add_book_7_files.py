@@ -8,7 +8,7 @@ from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
     back_and_cancel_keyboard,
     done_clear_back_cancel_keyboard,
-    prices_keyboard,
+    prices_post_keyboard,
 )
 from tgbot.services import get_user_language
 from tgbot.states import AddBook
@@ -74,7 +74,7 @@ async def done_add_book_7(call: CallbackQuery, state: FSMContext):
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-price"),
-        reply_markup=prices_keyboard(l10n),
+        reply_markup=prices_post_keyboard(l10n),
     )
     await state.set_state(AddBook.select_price)
 

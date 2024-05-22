@@ -8,7 +8,7 @@ from aiogram.types import Message
 
 from infrastructure.books_base_api import api
 from tgbot.config import Config
-from tgbot.filters.private_chat import IsPrivate
+from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
     cancel_keyboard,
@@ -18,7 +18,7 @@ from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
 edit_book_5_genres_router = Router()
-edit_book_5_genres_router.message.filter(IsPrivate())
+edit_book_5_genres_router.message.filter(AdminFilter())
 
 
 @edit_book_5_genres_router.callback_query(F.data.startswith("edit_genres"))
