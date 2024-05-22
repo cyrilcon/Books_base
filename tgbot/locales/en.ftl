@@ -197,6 +197,14 @@ edit-book-too-long-text =
     Слишком большой текст!!
     (У вас <b>{ $post_text_length }</b>/1000 символов)
 
+edit-book-files = Отправьте новый <i><b>файл</b></i> книги
+
+edit-book-files-send-more =
+    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+
+    <b>Изменённые форматы:</b>
+    { $formats }
+
 edit-book-successfully-changed = Данные успешно изменены!!
 
 edit-book-cancel = Вы отменили изменение данных о книге
