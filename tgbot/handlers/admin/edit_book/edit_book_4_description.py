@@ -15,11 +15,11 @@ from tgbot.keyboards.inline import (
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_4_description_router = Router()
-edit_book_4_description_router.message.filter(AdminFilter())
+edit_book_router_4 = Router()
+edit_book_router_4.message.filter(AdminFilter())
 
 
-@edit_book_4_description_router.callback_query(F.data.startswith("edit_description"))
+@edit_book_router_4.callback_query(F.data.startswith("edit_description"))
 async def edit_description(call: CallbackQuery, state: FSMContext):
     """
     Обработка кнопки "Описание".
@@ -49,7 +49,7 @@ async def edit_description(call: CallbackQuery, state: FSMContext):
     await state.set_state(EditBook.edit_description)
 
 
-@edit_book_4_description_router.message(StateFilter(EditBook.edit_description))
+@edit_book_router_4.message(StateFilter(EditBook.edit_description))
 async def edit_description_process(
     message: Message, bot: Bot, state: FSMContext, config: Config
 ):

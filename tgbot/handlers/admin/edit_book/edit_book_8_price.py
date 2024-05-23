@@ -10,11 +10,11 @@ from tgbot.keyboards.inline import (
 )
 from tgbot.services import get_user_language, forming_text, send_message
 
-edit_book_8_price_router = Router()
-edit_book_8_price_router.message.filter(AdminFilter())
+edit_book_router_8 = Router()
+edit_book_router_8.message.filter(AdminFilter())
 
 
-@edit_book_8_price_router.callback_query(F.data.startswith("edit_price"))
+@edit_book_router_8.callback_query(F.data.startswith("edit_price"))
 async def edit_price(call: CallbackQuery):
     """
     Обработка кнопки "Цена".
@@ -28,8 +28,6 @@ async def edit_price(call: CallbackQuery):
     await call.answer(cache_time=1)
 
     id_book = int(call.data.split(":")[-1])
-    response = await api.books.get_book(id_book)
-    book = response.result
 
     await call.message.answer(
         l10n.format_value("edit-book-price"),
@@ -37,7 +35,7 @@ async def edit_price(call: CallbackQuery):
     )
 
 
-@edit_book_8_price_router.callback_query(F.data.startswith("update_price"))
+@edit_book_router_8.callback_query(F.data.startswith("update_price"))
 async def update_price(call: CallbackQuery, bot: Bot, config: Config):
     """
     Обработка кнопки "85₽" или "85₽".

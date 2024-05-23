@@ -14,11 +14,11 @@ from tgbot.keyboards.inline import cancel_keyboard, edit_keyboard
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_1_article_router = Router()
-edit_book_1_article_router.message.filter(AdminFilter())
+edit_book_router_1 = Router()
+edit_book_router_1.message.filter(AdminFilter())
 
 
-@edit_book_1_article_router.callback_query(F.data.startswith("edit_article"))
+@edit_book_router_1.callback_query(F.data.startswith("edit_article"))
 async def edit_article(call: CallbackQuery, state: FSMContext):
     """
     Обработка кнопки "Артикул".
@@ -44,7 +44,7 @@ async def edit_article(call: CallbackQuery, state: FSMContext):
     await state.set_state(EditBook.edit_article)
 
 
-@edit_book_1_article_router.message(StateFilter(EditBook.edit_article))
+@edit_book_router_1.message(StateFilter(EditBook.edit_article))
 async def edit_article_process(
     message: Message, bot: Bot, state: FSMContext, config: Config
 ):

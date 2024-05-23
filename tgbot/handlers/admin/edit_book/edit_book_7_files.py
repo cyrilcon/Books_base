@@ -17,11 +17,11 @@ from tgbot.keyboards.inline import (
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_7_files_router = Router()
-edit_book_7_files_router.message.filter(AdminFilter())
+edit_book_router_7 = Router()
+edit_book_router_7.message.filter(AdminFilter())
 
 
-@edit_book_7_files_router.callback_query(F.data.startswith("edit_files"))
+@edit_book_router_7.callback_query(F.data.startswith("edit_files"))
 async def edit_files(call: CallbackQuery, state: FSMContext):
     """
     Обработка кнопки "Файлы".
@@ -60,7 +60,7 @@ async def edit_files(call: CallbackQuery, state: FSMContext):
     await state.set_state(EditBook.edit_files)
 
 
-@edit_book_7_files_router.message(StateFilter(EditBook.edit_files), F.document)
+@edit_book_router_7.message(StateFilter(EditBook.edit_files), F.document)
 async def edit_files_file_sent(message: Message, bot: Bot, state: FSMContext):
     """
     Добавление файлов.
@@ -83,9 +83,7 @@ async def edit_files_file_sent(message: Message, bot: Bot, state: FSMContext):
     await message.answer(text, reply_markup=done_cancel_keyboard(l10n))
 
 
-@edit_book_7_files_router.callback_query(
-    StateFilter(EditBook.edit_files), F.data == "done"
-)
+@edit_book_router_7.callback_query(StateFilter(EditBook.edit_files), F.data == "done")
 async def done_edit_files(
     call: CallbackQuery, bot: Bot, state: FSMContext, config: Config
 ):

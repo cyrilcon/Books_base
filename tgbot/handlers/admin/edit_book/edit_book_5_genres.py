@@ -17,11 +17,11 @@ from tgbot.keyboards.inline import (
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_5_genres_router = Router()
-edit_book_5_genres_router.message.filter(AdminFilter())
+edit_book_router_5 = Router()
+edit_book_router_5.message.filter(AdminFilter())
 
 
-@edit_book_5_genres_router.callback_query(F.data.startswith("edit_genres"))
+@edit_book_router_5.callback_query(F.data.startswith("edit_genres"))
 async def edit_genres(call: CallbackQuery, state: FSMContext):
     """
     Обработка кнопки "Жанры".
@@ -53,7 +53,7 @@ async def edit_genres(call: CallbackQuery, state: FSMContext):
     await state.set_state(EditBook.edit_genres)
 
 
-@edit_book_5_genres_router.message(StateFilter(EditBook.edit_genres))
+@edit_book_router_5.message(StateFilter(EditBook.edit_genres))
 async def edit_genres_process(
     message: Message, bot: Bot, state: FSMContext, config: Config
 ):

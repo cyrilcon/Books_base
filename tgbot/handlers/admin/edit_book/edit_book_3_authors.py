@@ -15,11 +15,11 @@ from tgbot.keyboards.inline import (
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_3_authors_router = Router()
-edit_book_3_authors_router.message.filter(AdminFilter())
+edit_book_router_3 = Router()
+edit_book_router_3.message.filter(AdminFilter())
 
 
-@edit_book_3_authors_router.callback_query(F.data.startswith("edit_authors"))
+@edit_book_router_3.callback_query(F.data.startswith("edit_authors"))
 async def edit_authors(call: CallbackQuery, state: FSMContext):
     """
     Обработка кнопки "Авторы".
@@ -48,7 +48,7 @@ async def edit_authors(call: CallbackQuery, state: FSMContext):
     await state.set_state(EditBook.edit_authors)
 
 
-@edit_book_3_authors_router.message(StateFilter(EditBook.edit_authors))
+@edit_book_router_3.message(StateFilter(EditBook.edit_authors))
 async def edit_authors_process(
     message: Message, bot: Bot, state: FSMContext, config: Config
 ):

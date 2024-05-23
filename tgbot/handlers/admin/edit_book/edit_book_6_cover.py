@@ -15,11 +15,11 @@ from tgbot.keyboards.inline import (
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_6_cover_router = Router()
-edit_book_6_cover_router.message.filter(AdminFilter())
+edit_book_router_6 = Router()
+edit_book_router_6.message.filter(AdminFilter())
 
 
-@edit_book_6_cover_router.callback_query(F.data.startswith("edit_cover"))
+@edit_book_router_6.callback_query(F.data.startswith("edit_cover"))
 async def edit_cover(call: CallbackQuery, bot: Bot, state: FSMContext, config: Config):
     """
     Обработка кнопки "Обложка".
@@ -52,7 +52,7 @@ async def edit_cover(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     await state.set_state(EditBook.edit_cover)
 
 
-@edit_book_6_cover_router.message(StateFilter(EditBook.edit_cover), F.photo)
+@edit_book_router_6.message(StateFilter(EditBook.edit_cover), F.photo)
 async def edit_cover_process(
     message: Message, bot: Bot, state: FSMContext, config: Config
 ):

@@ -16,11 +16,11 @@ from tgbot.keyboards.inline import (
 from tgbot.services import get_user_language, forming_text, send_message
 from tgbot.states import EditBook
 
-edit_book_2_title_router = Router()
-edit_book_2_title_router.message.filter(AdminFilter())
+edit_book_router_2 = Router()
+edit_book_router_2.message.filter(AdminFilter())
 
 
-@edit_book_2_title_router.callback_query(F.data.startswith("edit_title"))
+@edit_book_router_2.callback_query(F.data.startswith("edit_title"))
 async def edit_title(call: CallbackQuery, state: FSMContext):
     """
     Обработка кнопки "Название".
@@ -47,7 +47,7 @@ async def edit_title(call: CallbackQuery, state: FSMContext):
     await state.set_state(EditBook.edit_title)
 
 
-@edit_book_2_title_router.message(StateFilter(EditBook.edit_title))
+@edit_book_router_2.message(StateFilter(EditBook.edit_title))
 async def edit_title_process(
     message: Message, bot: Bot, state: FSMContext, config: Config
 ):
@@ -132,9 +132,7 @@ async def edit_title_process(
                         )
 
 
-@edit_book_2_title_router.callback_query(
-    StateFilter(EditBook.edit_title), F.data == "yes"
-)
+@edit_book_router_2.callback_query(StateFilter(EditBook.edit_title), F.data == "yes")
 async def yes_edit_title(
     call: CallbackQuery, bot: Bot, state: FSMContext, config: Config
 ):
