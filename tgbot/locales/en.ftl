@@ -129,7 +129,7 @@ full-book-description =
 
     <b>Цена:</b> { $price }
 
-    Артикул: <code>{ $id_book }</code>
+    Артикул: <code>{ $article }</code>
     { $genres }
 
 
@@ -214,6 +214,44 @@ edit-book-cancel = Вы отменили изменение данных о кн
 
 
 
+booking-title =
+    <b>1/2</b>
+    Введите <i><b>название</b></i> книги, которой хотите заказать
+
+booking-title-too-long =
+    Слишком большое название книги!!
+    Введите <i><b>название</b></i> книги ещё раз
+
+booking-title-already-exists = В нашей библиотеке уже есть книга со схожим названием по вашему запросу: "<code>{ $title }</code>" <i>{ $authors }</i> (<code>{ $article }</code>)
+
+booking-author =
+    <b>2/2</b>
+    Теперь введите <i><b>автора</b></i> книги, которой хотите заказать
+
+booking-author-too-long =
+    Слишком длинное имя у автора!!
+    Введите <i><b>автора</b></i> книги ещё раз
+
+booking-complete =
+    Вы заказали книгу "<code>{ $title }</code>" от автора <i>{ $author }</i>, спасибо за заказ!!
+    Номер вашего заказа: <code>№{ $id_booking }</code>
+
+    Благодаря <b>Вам</b> наша библиотека Books_Base расширяется!!
+    Мы обработаем ваш заказ за 24 часа, обычно это происходит гораздо быстрее.
+
+booking-from-user =
+    Вы получили заказ от пользователя
+    { $url_user } (<code>{ $id_user }</code>)
+
+    <b>Книга:</b> <code>{ $title }</code>
+    <b>Автор:</b> <code>{ $author }</code>
+
+    <b>Номер заказа:</b> <code>№{ $id_booking }</code>
+
+booking-cancel = Вы отменили заказ
+
+
+
 pagination-info =
     Это страница { $page } из { $all_pages } результатов поиска.
 
@@ -252,6 +290,17 @@ button-edit-book-files = Файлы
 button-edit-book-price = Цена
 
 button-yes = Да
+
+button-show-book = Показать книгу
+
+button-booking = Всё равно заказать
+
+button-service = Обслужить
+
+button-not-available = Нет в наличии
+
+button-booking-again = Заказать ещё
+
 
 
 error = Произошла ошибка :(

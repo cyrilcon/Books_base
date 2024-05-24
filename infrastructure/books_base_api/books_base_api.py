@@ -3,6 +3,7 @@ from environs import Env
 from infrastructure.books_base_api.base import BaseClient
 from .book_api import BooksApi
 from .user_api import UsersApi
+from .booking_api import BookingApi
 
 
 class BooksBaseApi(BaseClient):
@@ -13,6 +14,7 @@ class BooksBaseApi(BaseClient):
 
         self.users = UsersApi(self)
         self.books = BooksApi(self)
+        self.booking = BookingApi(self)
 
 
 env = Env()  # Создаётся объект Env

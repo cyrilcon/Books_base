@@ -9,7 +9,7 @@ class BooksApi:
 
     async def add_book(self, data: dict) -> ApiResponse:
         """
-        Get the latest article of the book
+        Add a book
 
         :param data: dictionary with book data
         :return: status code and result

@@ -39,7 +39,7 @@ async def forming_text(
     authors = ", ".join([author["author"].title() for author in authors])
     formats = ", ".join(f"{file['format']}" for file in files)
     genres = " ".join(["#" + genre["genre"] for genre in genres])
-    id_book = "#{:04d}".format(id_book)
+    article = "#{:04d}".format(id_book)
 
     text = l10n.format_value(
         "full-book-description",
@@ -50,7 +50,7 @@ async def forming_text(
             "description": description,
             "formats": formats,
             "price": price,
-            "id_book": id_book,
+            "article": article,
             "genres": genres,
         },
     )

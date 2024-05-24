@@ -45,7 +45,7 @@ async def start(
     status = response.status
     user = response.result
 
-    if status != 404:
+    if status == 200:
         language = user["language"]
         await api.users.update_user(id_user, fullname=fullname, username=username)
     else:
@@ -62,7 +62,7 @@ async def start(
         status = response.status
         book = response.result
 
-        if status != 404:
+        if status == 200:
             post_text = await forming_text(book, l10n)
 
             await send_message(

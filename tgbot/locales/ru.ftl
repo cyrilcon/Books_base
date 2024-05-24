@@ -65,5 +65,5 @@ full-book-description =
 
     <b>Цена:</b> { $price }
 
-    Артикул: <code>{ $id_book }</code>
+    Артикул: <code>{ $article }</code>
     { $genres }
