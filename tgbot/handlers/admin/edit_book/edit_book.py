@@ -58,7 +58,7 @@ async def edit_book_process(
 
     if not article.startswith("#") or not re.fullmatch(r"#\d{4}", article):
         await message.answer(
-            l10n.format_value("edit-book-incorrect-article"),
+            l10n.format_value("edit-book-article-incorrect"),
             reply_markup=cancel_keyboard(l10n),
         )
     else:

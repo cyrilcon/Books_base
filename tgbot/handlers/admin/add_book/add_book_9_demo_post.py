@@ -52,4 +52,4 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
 
     await state.clear()
     await call.message.edit_reply_markup()
-    await call.message.answer(l10n.format_value("add-book-complete"))
+    await call.message.answer(l10n.format_value("add-book-completed"))

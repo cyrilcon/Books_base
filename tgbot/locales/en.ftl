@@ -22,7 +22,7 @@ add-book-article =
 
     Свободный артикул: <code>{ $free_article }</code>
 
-add-book-incorrect-article =
+add-book-article-incorrect =
     Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
 
     Свободный артикул: <code>{ $free_article }</code>
@@ -105,7 +105,7 @@ add-book-too-long-text =
 
     (У вас <b>{ $post_text_length }</b>/1000 символов)
 
-add-book-complete = Книга добавлена!!
+add-book-completed = Книга добавлена!!
 
 add-book-cancel = Вы отменили добавление книги
 
@@ -136,7 +136,7 @@ full-book-description =
 
 delete-book = Введите <i><b>артикул</b></i>, чтобы удалить книгу
 
-delete-book-incorrect-article = Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+delete-book-article-incorrect = Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
 
 delete_book-not-found = Книга не найдена
 
@@ -148,7 +148,7 @@ delete-book-cancel = Вы отменили удаление книги
 
 edit-book-select = Введите <i><b>артикул</b></i>, чтобы изменить данные о книге
 
-edit-book-incorrect-article = Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+edit-book-article-incorrect = Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
 
 edit-book-does-not-exist =
     Книги с артикулом <b>{ $article }</b> не существует!!
@@ -232,7 +232,7 @@ booking-author-too-long =
     Слишком длинное имя у автора!!
     Введите <i><b>автора</b></i> книги ещё раз
 
-booking-complete =
+booking-completed =
     Вы заказали книгу "<code>{ $title }</code>" от автора <i>{ $author }</i>, спасибо за заказ!!
     Номер вашего заказа: <code>№{ $id_booking }</code>
 
@@ -249,6 +249,22 @@ booking-from-user =
     <b>Номер заказа:</b> <code>№{ $id_booking }</code>
 
 booking-cancel = Вы отменили заказ
+
+
+
+cancel-booking-select = Введите <i><b>Ваш номер заказа</b></i>, который хотите отменить
+
+cancel-booking-incorrect =
+    Номер заказа некорректен!!
+    Введите <i><b>Ваш номер заказа</b></i> ещё раз
+
+cancel-booking-does-not-exist =
+    Такого заказа не существует!!
+    Введите <i><b>Ваш номер заказа</b></i> ещё раз
+
+cancel-booking-completed = Заказ успешно отменён!!
+
+cancel-booking-cancel = Вы не отменили заказ
 
 
 

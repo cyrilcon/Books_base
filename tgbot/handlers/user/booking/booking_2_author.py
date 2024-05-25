@@ -70,7 +70,7 @@ async def booking_2(message: Message, bot: Bot, state: FSMContext, config: Confi
 
         await message.answer(
             l10n.format_value(
-                "booking-complete",
+                "booking-completed",
                 {"title": title, "author": author, "id_booking": str(id_booking)},
             ),
             reply_markup=booking_again_keyboard(l10n),

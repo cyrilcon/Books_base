@@ -56,7 +56,7 @@ async def delete_book_process(message: Message, bot: Bot, state: FSMContext):
 
     if not article.startswith("#") or not re.fullmatch(r"#\d{4}", article):
         await message.answer(
-            l10n.format_value("delete-book-incorrect-article"),
+            l10n.format_value("delete-book-article-incorrect"),
             reply_markup=cancel_keyboard(l10n),
         )
     else:

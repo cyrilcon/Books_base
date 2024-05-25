@@ -34,3 +34,33 @@ class BookingApi:
         )
 
         return ApiResponse(status, result)
+
+    async def get_booking(self, id_booking: int) -> ApiResponse:
+        """
+        Get a booking by id
+
+        :param id_booking: unique booking identifier
+        :return:
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_booking}",
+        )
+
+        return ApiResponse(status, result)
+
+    async def delete_booking(self, id_booking: int) -> ApiResponse:
+        """
+        Delete a booking
+
+        :param id_booking: unique booking identifier
+        :return:
+        """
+
+        status, result = await self.base_client.make_request(
+            method="DELETE",
+            url=f"{self.endpoint}/{id_booking}",
+        )
+
+        return ApiResponse(status, result)
