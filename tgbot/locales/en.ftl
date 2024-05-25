@@ -120,7 +120,7 @@ new-book-from-user = Добавлена новая книга по заказу 
 full-book-description =
     { $introductory_text }
 
-    "<code><b>{ $title }</b></code>"
+    <b>"<code>{ $title }</code>"</b>
     <i>{ $authors }</i>
 
     { $description }
@@ -140,7 +140,7 @@ delete-book-article-incorrect = Артикул должен начинаться
 
 delete_book-not-found = Книга не найдена
 
-delete-book-successful-deleted = Книга <i>"{ $title }"</i> (<code>{ $id_book }</code>) успешно удалена
+delete-book-successful-deleted = Книга <b>"{ $title }"</b> (<code>{ $id_book }</code>) успешно удалена
 
 delete-book-cancel = Вы отменили удаление книги
 
@@ -222,7 +222,7 @@ booking-title-too-long =
     Слишком большое название книги!!
     Введите <i><b>название</b></i> книги ещё раз
 
-booking-title-already-exists = В нашей библиотеке уже есть книга со схожим названием по вашему запросу: "<code>{ $title }</code>" <i>{ $authors }</i> (<code>{ $article }</code>)
+booking-title-already-exists = В нашей библиотеке уже есть книга со схожим названием по вашему запросу: <b>"<code>{ $title }</code>"</b> <i>{ $authors }</i> (<code>{ $article }</code>)
 
 booking-author =
     <b>2/2</b>
@@ -233,7 +233,7 @@ booking-author-too-long =
     Введите <i><b>автора</b></i> книги ещё раз
 
 booking-completed =
-    Вы заказали книгу "<code>{ $title }</code>" от автора <i>{ $author }</i>, спасибо за заказ!!
+    Вы заказали книгу <b>"<code>{ $title }</code>"</b> от автора <i>{ $author }</i>, спасибо за заказ!!
     Номер вашего заказа: <code>№{ $id_booking }</code>
 
     Благодаря <b>Вам</b> наша библиотека Books_Base расширяется!!
@@ -262,7 +262,7 @@ cancel-booking-does-not-exist =
     Такого заказа не существует!!
     Введите <i><b>Ваш номер заказа</b></i> ещё раз
 
-cancel-booking-completed = Заказ успешно отменён!!
+cancel-booking-completed = Заказ <code>№{ $id_booking }</code> с книгой <b>"{ $title }"</b> успешно отменён!!
 
 cancel-booking-cancel = Вы не отменили заказ
 

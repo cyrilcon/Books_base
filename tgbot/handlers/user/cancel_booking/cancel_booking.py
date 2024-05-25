@@ -68,7 +68,10 @@ async def cancel_booking_process(message: Message, bot: Bot, state: FSMContext):
 
             await state.clear()
             await message.answer(
-                l10n.format_value("cancel-booking-completed"),
+                l10n.format_value(
+                    "cancel-booking-completed",
+                    {"id_booking": str(id_booking), "title": booking["title"]},
+                ),
             )
         else:
             await message.answer(
