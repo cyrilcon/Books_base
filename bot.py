@@ -20,7 +20,7 @@ async def on_startup(config: Config, bot: Bot, admins: list[int]):
     Установка команд из меню бота и уведомление админов о запуске бота.
     """
 
-    await set_default_commands(bot)  # Команды из меню бота
+    await set_default_commands(bot, admins)  # Команды из меню бота
     await broadcaster.broadcast(
         config, bot, admins, "Бот перезапущен!!"
     )  # Уведомление админов о запуске бота
