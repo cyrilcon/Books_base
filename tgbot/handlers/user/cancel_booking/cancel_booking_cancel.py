@@ -3,12 +3,10 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 
-from tgbot.filters import AdminFilter
 from tgbot.services import get_user_language
 from tgbot.states import CancelBooking
 
 cancel_booking_cancel_router = Router()
-cancel_booking_cancel_router.message.filter(AdminFilter())
 
 
 @cancel_booking_cancel_router.callback_query(

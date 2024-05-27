@@ -12,6 +12,7 @@ __all__ = (
     "prices_keyboard",
     "prices_post_keyboard",
     "show_booking_cancel_keyboard",
+    "support_answer_keyboard",
     "yes_and_cancel_keyboard",
 )
 
@@ -28,4 +29,5 @@ from .pagination import pagination_keyboard
 from .prices import prices_keyboard
 from .prices_post import prices_post_keyboard
 from .show_booking_cancel import show_booking_cancel_keyboard
+from .support_answer import support_answer_keyboard
 from .yes_and_cancel import yes_and_cancel_keyboard
