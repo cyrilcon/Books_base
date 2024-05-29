@@ -9,7 +9,6 @@ def deep_link_buy_keyboard(deep_link_url: str) -> InlineKeyboardMarkup:
     """
 
     deep_link_buy_button = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(

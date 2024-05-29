@@ -66,7 +66,7 @@ async def booking_2(message: Message, bot: Bot, state: FSMContext, config: Confi
         data = await state.get_data()
         title = data["title"]
 
-        await api.booking.create_booking(id_user, id_booking, title, author)
+        await api.bookings.create_booking(id_user, id_booking, title, author)
 
         await message.answer(
             l10n.format_value(
