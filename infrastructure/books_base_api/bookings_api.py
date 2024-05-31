@@ -2,7 +2,7 @@ from infrastructure.books_base_api.api_response import ApiResponse
 from infrastructure.books_base_api.base import BaseClient
 
 
-class BookingApi:
+class BookingsApi:
     def __init__(self, base_client: BaseClient):
         self.base_client = base_client
         self.endpoint = "/booking"

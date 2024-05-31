@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import ssl
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Union
 
 import backoff
 from aiohttp import ClientError, ClientSession, TCPConnector, FormData
@@ -46,9 +46,9 @@ class BaseClient:
         self,
         method: str,
         url: str | URL,
-        params: Mapping[str, str] | None = None,
-        json: Mapping[str, str] | None = None,
-        headers: Mapping[str, str] | None = None,
+        params: Mapping[str, Union[str, int]] | None = None,
+        json: Mapping[str, Union[str, int]] | None = None,
+        headers: Mapping[str, Union[str, int]] | None = None,
         data: FormData | None = None,
     ) -> tuple[int, dict[str, Any]]:
         """Make request and return decoded json response."""

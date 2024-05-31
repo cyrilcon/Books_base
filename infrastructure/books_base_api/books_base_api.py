@@ -2,8 +2,8 @@ from environs import Env
 
 from infrastructure.books_base_api.base import BaseClient
 from .book_api import BooksApi
+from .bookings_api import BookingsApi
 from .user_api import UsersApi
-from .booking_api import BookingApi
 
 
 class BooksBaseApi(BaseClient):
@@ -12,9 +12,9 @@ class BooksBaseApi(BaseClient):
         self.base_url = env.str("API_URL")
         super().__init__(base_url=self.base_url)
 
-        self.users = UsersApi(self)
         self.books = BooksApi(self)
-        self.booking = BookingApi(self)
+        self.bookings = BookingsApi(self)
+        self.users = UsersApi(self)
 
 
 env = Env()  # Создаётся объект Env

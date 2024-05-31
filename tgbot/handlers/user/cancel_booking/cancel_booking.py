@@ -59,12 +59,12 @@ async def cancel_booking_process(message: Message, bot: Bot, state: FSMContext):
     if booking_number.isdigit():
         id_booking = int(booking_number)
 
-        response = await api.booking.get_booking(id_booking)
+        response = await api.bookings.get_booking(id_booking)
         status = response.status
         booking = response.result
 
         if status == 200 and booking["id_user"] == id_user:
-            await api.booking.delete_booking(id_booking)
+            await api.bookings.delete_booking(id_booking)
 
             await state.clear()
             await message.answer(
