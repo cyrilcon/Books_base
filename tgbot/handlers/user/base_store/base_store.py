@@ -1,25 +1,15 @@
-from aiogram import Router, Bot, F
-from aiogram.filters import Command, StateFilter
-from aiogram.fsm.context import FSMContext
+from aiogram import Router, F
+from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 
 from infrastructure.books_base_api import api
-from tgbot.config import Config
-from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
-    cancel_keyboard,
-    back_and_cancel_keyboard,
-    show_booking_cancel_keyboard,
     exchange_base_keyboard,
     discounts_keyboard,
 )
 from tgbot.services import (
     get_user_language,
-    levenshtein_search_one_book,
-    forming_text,
-    send_message,
 )
-from tgbot.states import Booking
 
 base_store_router = Router()
 
@@ -35,31 +25,65 @@ async def base_store(message: Message):
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
-    response = await api.users.get_discount(id_user)
+    response = await api.users.get_premium(id_user)
     status = response.status
-    discount = response.result
 
+    # Если пользователь имеет PREMIUM
     if status == 200:
-        if discount == 100:
-            discount_of_user = "\nУ вас действует купон на <b>бесплатную книгу</b>!!"
-        else:
-            discount_of_user = f"\nУ вас действует <b>скидка {discount}%</b>!!"
+        account_information = l10n.format_value("user-has-premium")
+        await message.answer(
+            l10n.format_value(
+                "welcome-to-base-store",
+                {"account_information": f"<i>{account_information}</i>"},
+            )
+        )
+
+    # Если пользователь не имеет PREMIUM
     else:
-        discount_of_user = ""
+        response = await api.users.get_discount(id_user)
+        status = response.status
 
-    response = await api.users.get_bases(id_user)
-    bases = response.result
+        # Если пользователь имеет какую-либо скидку
+        if status == 200:
+            discount = response.result["discount"]
 
-    await message.answer(
-        l10n.format_value(
-            "welcome-to-base-store",
-            {"discount_of_user": discount_of_user, "bases": bases},
-        ),
-        reply_markup=exchange_base_keyboard(l10n),
-    )
+            # Если пользователь имеет 100% скидку
+            if discount == 100:
+                discount_of_user = l10n.format_value("user-has-free-book") + "\n\n"
+
+            # Если пользователь имеет любую другую скидку
+            else:
+                discount_of_user = (
+                    l10n.format_value("user-has-discount", {"discount": discount})
+                    + "\n\n"
+                )
+            keyboard = None
+
+        # Если пользователь не имеет никакую скидку
+        else:
+            discount_of_user = ""
+            keyboard = exchange_base_keyboard(l10n)
+
+        response = await api.users.get_user(id_user)
+        bases = response.result["base"]
+
+        amount_base = l10n.format_value(
+            "base-store-account-amount-base",
+            {"bases": bases},
+        )
+
+        account_information = f"<i>{discount_of_user}</i>" + amount_base
+
+        await message.answer(
+            l10n.format_value(
+                "welcome-to-base-store",
+                {"account_information": account_information},
+            ),
+            reply_markup=keyboard,
+        )
 
 
-@base_store_router.callback_query(F.data == "exchange")
+@base_store_router.callback_query(F.data.in_({"exchange", "back-to-exchange"}))
 async def exchange(call: CallbackQuery):
     """
     Обмен base на скидки.
@@ -71,10 +95,12 @@ async def exchange(call: CallbackQuery):
 
     await call.answer(cache_time=1)
 
-    response = await api.users.get_bases(id_user)
-    bases = response.result
+    response = await api.users.get_user(id_user)
+    bases = response.result["base"]
+
+    amount_base = l10n.format_value("base-store-account-amount-base", {"bases": bases})
 
     await call.message.edit_text(
-        l10n.format_value("exchange-bases", {"bases": bases}),
+        l10n.format_value("exchange-bases", {"amount_base": amount_base}),
         reply_markup=discounts_keyboard(l10n),
     )

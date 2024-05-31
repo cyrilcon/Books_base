@@ -3,6 +3,7 @@ __all__ = (
     "booking_again_keyboard",
     "booking_from_user_keyboard",
     "cancel_keyboard",
+    "confirm_exchange_keyboard",
     "deep_link_buy_keyboard",
     "discounts_keyboard",
     "demo_post_keyboard",
@@ -22,6 +23,7 @@ from .back_and_cancel import back_and_cancel_keyboard
 from .booking_again import booking_again_keyboard
 from .booking_from_user import booking_from_user_keyboard
 from .cancel import cancel_keyboard
+from .confirm_exchange import confirm_exchange_keyboard
 from .deep_link_buy import deep_link_buy_keyboard
 from .demo_post import demo_post_keyboard
 from .discounts import discounts_keyboard

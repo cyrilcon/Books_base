@@ -76,17 +76,24 @@ class UsersApi:
 
         return ApiResponse(status, result)
 
-    async def get_bases(self, id_user: int) -> ApiResponse:
+    async def create_discount(self, id_user: int, discount: int) -> ApiResponse:
         """
-        Get the count of user's bases
+        Create a discount for a user
 
         :param id_user: unique user identifier
+        :param discount: discount value
         :return: status code and result
         """
 
+        data = {
+            "id_user": id_user,
+            "discount": discount,
+        }
+
         status, result = await self.base_client.make_request(
-            method="GET",
-            url=f"{self.endpoint}/{id_user}/bases",
+            method="POST",
+            url=f"{self.endpoint}/{id_user}/discount",
+            json=data,
         )
 
         return ApiResponse(status, result)
@@ -102,6 +109,21 @@ class UsersApi:
         status, result = await self.base_client.make_request(
             method="GET",
             url=f"{self.endpoint}/{id_user}/discount",
+        )
+
+        return ApiResponse(status, result)
+
+    async def get_premium(self, id_user: int) -> ApiResponse:
+        """
+        Get premium information of the user
+
+        :param id_user: unique user identifier
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_user}/premium",
         )
 
         return ApiResponse(status, result)
