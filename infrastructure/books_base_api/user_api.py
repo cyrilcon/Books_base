@@ -41,6 +41,21 @@ class UsersApi:
 
         return ApiResponse(status, result)
 
+    async def get_user_by_username(self, username: str) -> ApiResponse:
+        """
+        Get a user by username with all the information
+
+        :param username: unique user identifier
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/username/{username}",
+        )
+
+        return ApiResponse(status, result)
+
     async def get_user(self, id_user: int) -> ApiResponse:
         """
         Get a user by id with all the information
