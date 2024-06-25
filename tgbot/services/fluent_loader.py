@@ -20,22 +20,20 @@ def get_fluent_localization(language: str) -> FluentLocalization:
 
     locales_dir = locales_dir.absolute()
 
-    if language not in [x.stem for x in locales_dir.iterdir()]:
+    # If the requested language directory doesn't exist, fallback to "ru"
+    language_dir = locales_dir / language
+    if not language_dir.exists() or not language_dir.is_dir():
         language = "ru"
+        language_dir = locales_dir / language
 
-    # locale_dir_found = False
-    # for directory in Path.iterdir(locales_dir):
-    #     if directory.stem == language:
-    #         locale_dir_found = True
-    #         break
-    # if not locale_dir_found:
-    #     err = f'Directory for "{language}" locale not found'
-    #     raise FileNotFoundError(err)
-
+    # Load all .ftl files from the language directory
     locale_files = list()
-    for file in Path.iterdir(locales_dir):
-        if file.suffix == ".ftl" and file.stem == language:
-            locale_files.append(str(file.absolute()))
+    for file in language_dir.glob("*.ftl"):
+        locale_files.append(str(file.absolute()))
+
+    if not locale_files:
+        err = f'No .ftl files found for "{language}" locale'
+        raise FileNotFoundError(err)
 
     l10n_loader = FluentResourceLoader(str(locales_dir / "{locale}"))
 

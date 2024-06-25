@@ -81,6 +81,6 @@ async def delete_book_process(message: Message, bot: Bot, state: FSMContext):
             await state.clear()
         else:
             await message.answer(
-                l10n.format_value("delete_book-not-found"),
+                l10n.format_value("delete-book-not-found"),
                 reply_markup=cancel_keyboard(l10n),
             )

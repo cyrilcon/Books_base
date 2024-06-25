@@ -77,7 +77,7 @@ async def start(
         else:
             await message.answer(
                 l10n.format_value(
-                    "book-does-not-exist",
+                    "search-book-does-not-exist",
                     {"article": "#{:04d}".format(int(article))},
                 )
             )
