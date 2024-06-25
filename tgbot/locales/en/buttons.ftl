@@ -52,3 +52,5 @@ button-support-reply = Ответить
 button-exchange = 💎 Обменять 💎
 
 button-free-book = Бесплатная книга
+
+button-share-our-store = Поделиться нашим магазином

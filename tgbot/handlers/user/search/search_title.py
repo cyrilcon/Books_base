@@ -40,7 +40,8 @@ async def search_flipping(call: CallbackQuery, bot: Bot, config: Config):
 
     await call.answer(cache_time=1)
 
-    title_from_message = re.findall(r'"([^"]*)"', call.message.text)[0]
+    # title_from_message = re.findall(r'"([^"]*)"', call.message.text)[0]
+    title_from_message = re.search(r'"([^"]*)"', call.message.text).group(1)
     page = int(call.data.split(":")[-1])
 
     await process_search(config, bot, id_user, call.message, page, title_from_message)

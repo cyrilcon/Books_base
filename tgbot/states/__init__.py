@@ -3,6 +3,7 @@ from .booking import Booking
 from .cancel_booking import CancelBooking
 from .delete_book import DeleteBook
 from .edit_book import EditBook
+from .share_base import ShareBase
 from .support import Support
 
 all_states = [
@@ -11,6 +12,7 @@ all_states = [
     CancelBooking,
     DeleteBook,
     EditBook,
+    ShareBase,
     Support,
     None,
 ]
