@@ -10,7 +10,8 @@ def check_username(text: str) -> str | None:
     """
 
     pattern = r"^@([a-zA-Z](?!_)(?!.*?_{2})\w{2,30}[a-zA-Z0-9])$|^(https?:\/\/)?t\.me\/([a-zA-Z](?!_)(?!.*?_{2})\w{2,30}[a-zA-Z0-9])$|^(https?:\/\/)?([a-zA-Z](?!_)(?!.*?_{2})\w{2,30}[a-zA-Z0-9])\.t\.me\/?$"
-    return re.match(pattern, text) is not None
+    match = re.search(pattern, text)
 
-
-"Ваше сообщение не содержит username пользователя или ссылки на него"
+    if match:
+        return next((group for group in match.groups() if group), None)
+    return None
