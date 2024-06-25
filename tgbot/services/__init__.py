@@ -1,6 +1,7 @@
 __all__ = (
     "send_message",
     "broadcast",
+    "check_username",
     "get_fluent_localization",
     "forming_text",
     "get_user_language",
@@ -12,6 +13,7 @@ __all__ = (
 )
 
 from .broadcaster import send_message, broadcast
+from .check_username import check_username
 from .fluent_loader import get_fluent_localization
 from .forming_text import forming_text
 from .get_language import get_user_language
