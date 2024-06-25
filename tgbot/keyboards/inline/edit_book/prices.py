@@ -9,7 +9,6 @@ def prices_keyboard(id_book: int) -> InlineKeyboardMarkup:
     """
 
     prices_buttons = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(

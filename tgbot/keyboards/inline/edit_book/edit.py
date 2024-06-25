@@ -10,7 +10,6 @@ def edit_keyboard(l10n, id_book: int) -> InlineKeyboardMarkup:
     """
 
     edit_buttons = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(

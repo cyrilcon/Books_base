@@ -9,7 +9,6 @@ def discounts_keyboard(l10n) -> InlineKeyboardMarkup:
     """
 
     discounts_buttons = InlineKeyboardMarkup(
-        row_width=3,
         inline_keyboard=[
             [
                 InlineKeyboardButton(text="15%", callback_data="discount:15:20"),

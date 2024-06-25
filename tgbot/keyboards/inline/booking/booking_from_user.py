@@ -9,7 +9,6 @@ def booking_from_user_keyboard(l10n) -> InlineKeyboardMarkup:
     """
 
     booking_from_user_buttons = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(

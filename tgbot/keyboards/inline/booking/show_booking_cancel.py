@@ -10,7 +10,6 @@ def show_booking_cancel_keyboard(l10n, id_book: int) -> InlineKeyboardMarkup:
     """
 
     show_booking_cancel_buttons = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(

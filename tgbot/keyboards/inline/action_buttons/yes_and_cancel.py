@@ -9,7 +9,6 @@ def yes_and_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
     """
 
     yes_and_cancel_buttons = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(

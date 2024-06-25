@@ -9,7 +9,6 @@ def prices_post_keyboard(l10n) -> InlineKeyboardMarkup:
     """
 
     prices_post_buttons = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(text="85₽", callback_data="85"),

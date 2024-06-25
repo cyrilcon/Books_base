@@ -9,7 +9,6 @@ def demo_post_keyboard(l10n) -> InlineKeyboardMarkup:
     """
 
     demo_post_buttons = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(

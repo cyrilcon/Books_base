@@ -16,6 +16,7 @@ __all__ = (
     "edit_keyboard",
     "prices_keyboard",
     "pagination_keyboard",
+    "share_base_keyboard",
     "support_answer_keyboard",
 )
 
@@ -43,4 +44,5 @@ from .booking import (
 from .buy import deep_link_buy_keyboard
 from .edit_book import edit_keyboard, prices_keyboard
 from .search import pagination_keyboard
+from .share_base import share_base_keyboard
 from .support import support_answer_keyboard

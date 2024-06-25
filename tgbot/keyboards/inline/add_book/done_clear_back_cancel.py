@@ -9,7 +9,6 @@ def done_clear_back_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
     """
 
     done_clear_back_cancel_buttons = InlineKeyboardMarkup(
-        row_width=2,
         inline_keyboard=[
             [
                 InlineKeyboardButton(

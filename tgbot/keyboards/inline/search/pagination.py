@@ -43,8 +43,6 @@ def pagination_keyboard(books: list, page: int = 1) -> InlineKeyboardMarkup:
                 InlineKeyboardButton(text=f"➡️", callback_data=f"page:{page+1}")
             )
 
-    pagination_buttons = InlineKeyboardMarkup(
-        row_width=5, inline_keyboard=[buttons, bottom_buttons]
-    )
+    pagination_buttons = InlineKeyboardMarkup(inline_keyboard=[buttons, bottom_buttons])
 
     return pagination_buttons
