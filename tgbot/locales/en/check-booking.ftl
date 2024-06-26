@@ -1,1 +1,0 @@
-check-booking-absent =  Заказы отсутствуют

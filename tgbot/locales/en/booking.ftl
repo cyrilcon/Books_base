@@ -37,3 +37,5 @@ booking-from-user =
     { $booking_information }
 
 booking-cancel = Вы отменили заказ
+
+booking-absent =  Заказы отсутствуют

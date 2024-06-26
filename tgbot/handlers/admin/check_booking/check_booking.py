@@ -25,7 +25,7 @@ async def check_booking(message: Message):
     text, booking_count = await get_booking_info(l10n, 1, id_user)
 
     if booking_count == 0:
-        await message.answer(l10n.format_value("check-booking-absent"))
+        await message.answer(l10n.format_value("booking-absent"))
     else:
         await message.answer(
             text, reply_markup=check_booking_pagination_keyboard(1, booking_count)
@@ -50,7 +50,7 @@ async def check_booking_flipping(call: CallbackQuery):
     text, booking_count = await get_booking_info(l10n, page, id_user)
 
     if booking_count == 0:
-        await call.message.edit_text(l10n.format_value("check-booking-absent"))
+        await call.message.edit_text(l10n.format_value("booking-absent"))
     else:
         await call.message.edit_text(
             text, reply_markup=check_booking_pagination_keyboard(page, booking_count)
