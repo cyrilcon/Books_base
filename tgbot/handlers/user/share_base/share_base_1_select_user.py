@@ -82,7 +82,7 @@ async def share_base_1_process(message: Message, bot: Bot, state: FSMContext):
                         "share-base-select-amount-base",
                         {"username": selected_user, "amount_base": amount_base},
                     ),
-                    reply_markup=share_base_keyboard(l10n),
+                    reply_markup=share_base_keyboard(l10n, bases),
                 )
                 await state.clear()
 
