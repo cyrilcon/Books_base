@@ -78,14 +78,20 @@ async def booking_2(message: Message, bot: Bot, state: FSMContext, config: Confi
 
         url_user = await get_url_user(fullname, username)
 
-        text = l10n.format_value(
-            "booking-from-user",
+        booking_information = l10n.format_value(
+            "booking-information",
             {
                 "url_user": url_user,
                 "id_user": str(id_user),
                 "title": title,
                 "author": author,
                 "id_booking": str(id_booking),
+            },
+        )
+        text = l10n.format_value(
+            "booking-from-user",
+            {
+                "booking_information": booking_information,
             },
         )
 

@@ -18,18 +18,22 @@ booking-author-too-long =
 
 booking-completed =
     Вы заказали книгу <b>"<code>{ $title }</code>"</b> от автора <i>{ $author }</i>, спасибо за заказ!!
+
     Номер вашего заказа: <code>№{ $id_booking }</code>
 
     Благодаря <b>Вам</b> наша библиотека Books_Base расширяется!!
     Мы обработаем ваш заказ за 24 часа, обычно это происходит гораздо быстрее.
 
-booking-from-user =
-    Вы получили заказ от пользователя
+booking-information =
     { $url_user } (<code>{ $id_user }</code>)
 
     <b>Книга:</b> <code>{ $title }</code>
     <b>Автор:</b> <code>{ $author }</code>
 
     <b>Номер заказа:</b> <code>№{ $id_booking }</code>
+
+booking-from-user =
+    Вы получили заказ от пользователя
+    { $booking_information }
 
 booking-cancel = Вы отменили заказ

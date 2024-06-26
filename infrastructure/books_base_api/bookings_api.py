@@ -35,12 +35,41 @@ class BookingsApi:
 
         return ApiResponse(status, result)
 
+    async def get_booking_count(self) -> ApiResponse:
+        """
+        Get booking count
+
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/count",
+        )
+
+        return ApiResponse(status, result)
+
+    async def get_booking_by_position(self, position: int) -> ApiResponse:
+        """
+        Get a booking by position
+
+        :param position: booking position in the database
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/position/{position}",
+        )
+
+        return ApiResponse(status, result)
+
     async def get_booking(self, id_booking: int) -> ApiResponse:
         """
         Get a booking by id
 
         :param id_booking: unique booking identifier
-        :return:
+        :return: status code and result
         """
 
         status, result = await self.base_client.make_request(
@@ -55,7 +84,7 @@ class BookingsApi:
         Delete a booking
 
         :param id_booking: unique booking identifier
-        :return:
+        :return: status code and result
         """
 
         status, result = await self.base_client.make_request(

@@ -10,6 +10,7 @@ __all__ = (
     "discounts_keyboard",
     "exchange_base_keyboard",
     "deep_link_buy_keyboard",
+    "check_booking_pagination_keyboard",
     "booking_again_keyboard",
     "booking_from_user_keyboard",
     "show_booking_cancel_keyboard",
@@ -42,6 +43,7 @@ from .booking import (
     show_booking_cancel_keyboard,
 )
 from .buy import deep_link_buy_keyboard
+from .check_booking import check_booking_pagination_keyboard
 from .edit_book import edit_keyboard, prices_keyboard
 from .search import pagination_keyboard
 from .share_base import share_base_keyboard
