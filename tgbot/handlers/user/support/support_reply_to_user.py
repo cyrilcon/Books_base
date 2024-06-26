@@ -59,12 +59,15 @@ async def support_reply_to_user_process(
 
     reply = message.html_text
 
-    await send_message(  # TODO: Добавить проверку, если пользователь заблокирует бота
+    is_sent = await send_message(
         config=config,
         bot=bot,
         id_user=id_user,
         text=l10n.format_value("support-message-from-admin", {"reply": reply}),
         reply_markup=support_answer_keyboard(l10n),
     )
-    await message.answer(l10n.format_value("support-message-sent-to-user"))
+    if is_sent:
+        await message.answer(l10n.format_value("support-message-sent-to-user"))
+    else:
+        await message.answer(l10n.format_value("support-message-user-blocked-bot"))
     await state.clear()
