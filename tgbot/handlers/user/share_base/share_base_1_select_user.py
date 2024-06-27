@@ -25,7 +25,7 @@ async def share_base_1(message: Message, state: FSMContext):
     Обработка команды /share_base.
     :param message: Команда /share_base.
     :param state: FSM (ShareBase).
-    :return: Сообщение для написания ника пользователя и переход в FSM (select_user).
+    :return: Сообщение для написания имени пользователя и переход в FSM (select_user).
     """
 
     id_user = message.from_user.id

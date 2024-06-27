@@ -11,7 +11,7 @@ share-base-cannot-yourself =
 share-base-username-not-found = Пользователь <b>@{ $username }</b> ещё не посещал наш магазин!!
 
 share-base-username-incorrect =
-    Ваше сообщение не содержит имя пользователя или ссылки на него!!
+    Ваше сообщение не содержит <i><b>имени пользователя</b></i> или <i><b>ссылки</b></i> на него!!
     Введите ещё раз <i><b>имя пользователя</b> (начинается с символа "<code>@</code>")</i> или <i><b>ссылку</b></i> на вашего друга в Telegram
 
 share-base-select-amount-base =

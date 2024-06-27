@@ -19,7 +19,7 @@ support-message-from-admin =
 
 support-message-sent-to-admin = Напишите ваш ответ <b>Администратору</b> Books_base
 
-support-message-user-blocked-bot = Пользователь заблокировал бота
+support-message-user-blocked-bot = Пользователь заблокировал бота!!
 
 support-cancel-for-admin = Вы отменили отправку сообщения пользвоателю
 

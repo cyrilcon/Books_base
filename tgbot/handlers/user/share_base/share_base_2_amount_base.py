@@ -69,7 +69,10 @@ async def share_base_2(call: CallbackQuery, bot: Bot, config: Config):
         if residue >= 0:
             await call.answer(cache_time=1)
 
-            amount_base = l10n.format_value(
+            id_user_recipient = user_recipient["id_user"]
+            l10n_recipient = await get_user_language(id_user_recipient)
+
+            amount_base = l10n_recipient.format_value(
                 "base-store-account-amount-base",
                 {"bases": user_recipient["base"] + bases},
             )
@@ -77,8 +80,8 @@ async def share_base_2(call: CallbackQuery, bot: Bot, config: Config):
             is_sent = await send_message(
                 config=config,
                 bot=bot,
-                id_user=user_recipient["id_user"],
-                text=l10n.format_value(
+                id_user=id_user_recipient,
+                text=l10n_recipient.format_value(
                     "share-base-came-in",
                     {
                         "bases": bases,
@@ -93,7 +96,7 @@ async def share_base_2(call: CallbackQuery, bot: Bot, config: Config):
                     base=residue,
                 )
                 await api.users.update_user(
-                    id_user=user_recipient["id_user"],
+                    id_user=id_user_recipient,
                     base=user_recipient["base"] + bases,
                 )
 
