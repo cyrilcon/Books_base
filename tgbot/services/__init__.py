@@ -10,6 +10,7 @@ __all__ = (
     "process_search",
     "set_default_commands",
     "get_url_user",
+    "select_user",
 )
 
 from .broadcaster import send_message, broadcast
@@ -21,3 +22,4 @@ from .levenshtein_search import levenshtein_search, levenshtein_search_one_book
 from .process_search import process_search
 from .set_bot_commands import set_default_commands
 from .url_user import get_url_user
+from .user_selection import select_user

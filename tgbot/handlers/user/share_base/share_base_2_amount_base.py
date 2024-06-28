@@ -35,7 +35,7 @@ async def back_to_share_base_1(call: CallbackQuery, state: FSMContext):
         reply_markup=cancel_keyboard(l10n),
         link_preview_options=LinkPreviewOptions(is_disabled=True),
     )
-    await state.set_state(ShareBase.select_user)
+    await state.set_state(ShareBase.select_recipient)
 
 
 @share_base_router_2.callback_query(F.data.startswith("share_base"))

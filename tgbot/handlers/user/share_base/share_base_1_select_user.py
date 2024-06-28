@@ -36,10 +36,10 @@ async def share_base_1(message: Message, state: FSMContext):
         reply_markup=cancel_keyboard(l10n),
         link_preview_options=LinkPreviewOptions(is_disabled=True),
     )
-    await state.set_state(ShareBase.select_user)
+    await state.set_state(ShareBase.select_recipient)
 
 
-@share_base_router_1.message(StateFilter(ShareBase.select_user))
+@share_base_router_1.message(StateFilter(ShareBase.select_recipient))
 async def share_base_1_process(message: Message, bot: Bot, state: FSMContext):
     """
     Выбор пользователя, которому будут отправлены base.
