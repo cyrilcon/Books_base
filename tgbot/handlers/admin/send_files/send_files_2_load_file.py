@@ -104,7 +104,7 @@ async def done_send_files_2(
                 )
         await call.message.edit_text(l10n.format_value("send-files-done"))
     else:
-        await call.message.edit_text(l10n.format_value("send-files-user-blocked-bot"))
+        await call.message.edit_text(l10n.format_value("user-blocked-bot"))
 
     await call.answer(cache_time=1)
     await state.clear()

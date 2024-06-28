@@ -6,6 +6,7 @@ from .check_booking import check_booking_router
 from .delete_book import delete_book_routers
 from .edit_book import edit_book_routers
 from .send_files import send_files_routers
+from .send_message import send_message_routers
 
 admin_routers = Router()
 admin_routers.include_routers(
@@ -15,4 +16,5 @@ admin_routers.include_routers(
     delete_book_routers,
     edit_book_routers,
     send_files_routers,
+    send_message_routers,
 )
