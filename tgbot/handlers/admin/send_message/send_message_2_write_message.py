@@ -1,5 +1,4 @@
 from aiogram import Router, F, Bot
-from aiogram.exceptions import AiogramError
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
@@ -8,9 +7,7 @@ from tgbot.config import Config
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import (
-    back_and_cancel_keyboard,
     cancel_keyboard,
-    done_clear_back_cancel_keyboard,
 )
 from tgbot.services import get_user_language, safe_send_message, send_message
 from tgbot.states import SendMessage
