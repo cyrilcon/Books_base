@@ -5,7 +5,7 @@ from aiogram.types import Message
 from infrastructure.books_base_api import api
 from tgbot.config import Config
 from tgbot.keyboards.inline import pagination_keyboard
-from . import levenshtein_search, forming_text, send_message, get_user_language
+from . import levenshtein_search, forming_text, safe_send_message, get_user_language
 
 
 async def process_search(
@@ -46,7 +46,7 @@ async def process_search(
             book = response.result
             post_text = await forming_text(book, l10n)
 
-            await send_message(
+            await safe_send_message(
                 config=config,
                 bot=bot,
                 id_user=id_user,

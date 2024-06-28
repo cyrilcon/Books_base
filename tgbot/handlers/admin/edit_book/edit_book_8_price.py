@@ -8,7 +8,7 @@ from tgbot.keyboards.inline import (
     edit_keyboard,
     prices_keyboard,
 )
-from tgbot.services import get_user_language, forming_text, send_message
+from tgbot.services import get_user_language, forming_text, safe_send_message
 
 edit_book_router_8 = Router()
 edit_book_router_8.message.filter(AdminFilter())
@@ -63,7 +63,7 @@ async def update_price(call: CallbackQuery, bot: Bot, config: Config):
         await call.message.edit_text(
             l10n.format_value("edit-book-successfully-changed")
         )
-        await send_message(
+        await safe_send_message(
             config=config,
             bot=bot,
             id_user=id_user,

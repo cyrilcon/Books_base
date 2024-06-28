@@ -10,7 +10,7 @@ from tgbot.keyboards.inline import (
 )
 from tgbot.services import (
     get_user_language,
-    send_message,
+    safe_send_message,
 )
 from tgbot.states import Support
 
@@ -59,7 +59,7 @@ async def support_reply_to_user_process(
 
     reply = message.html_text
 
-    is_sent = await send_message(
+    is_sent = await safe_send_message(
         config=config,
         bot=bot,
         id_user=id_user,

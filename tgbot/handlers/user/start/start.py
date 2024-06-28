@@ -7,7 +7,7 @@ from aiogram.types import Message
 
 from infrastructure.books_base_api import api
 from tgbot.config import Config
-from tgbot.services import get_fluent_localization, send_message, forming_text
+from tgbot.services import get_fluent_localization, safe_send_message, forming_text
 from tgbot.states import all_states
 
 start_router = Router()
@@ -65,7 +65,7 @@ async def start(
         if status == 200:
             post_text = await forming_text(book, l10n)
 
-            await send_message(
+            await safe_send_message(
                 config=config,
                 bot=bot,
                 id_user=id_user,

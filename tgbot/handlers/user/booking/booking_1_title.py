@@ -15,7 +15,7 @@ from tgbot.services import (
     get_user_language,
     levenshtein_search_one_book,
     forming_text,
-    send_message,
+    safe_send_message,
 )
 from tgbot.states import Booking
 
@@ -148,7 +148,7 @@ async def booking_1_show_book(
     if status == 200:
         post_text = await forming_text(book, l10n)
 
-        await send_message(
+        await safe_send_message(
             config=config,
             bot=bot,
             id_user=id_user,

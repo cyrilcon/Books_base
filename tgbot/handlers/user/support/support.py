@@ -11,7 +11,7 @@ from tgbot.keyboards.inline import (
 )
 from tgbot.services import (
     get_user_language,
-    send_message,
+    safe_send_message,
     get_url_user,
 )
 from tgbot.states import Support
@@ -67,7 +67,7 @@ async def support_process(
         message_id=message.message_id,
     )
 
-    await send_message(
+    await safe_send_message(
         config=config,
         bot=bot,
         id_user=config.tg_bot.support_chat,

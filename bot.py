@@ -11,7 +11,7 @@ from aiogram.fsm.strategy import FSMStrategy
 from tgbot.config import load_config, Config
 from tgbot.handlers import routers_list
 from tgbot.middlewares import ConfigMiddleware
-from tgbot.services import set_default_commands, broadcaster
+from tgbot.services import set_default_commands, safe_sending_message
 
 
 async def on_startup(config: Config, bot: Bot, admins: list[int]):
@@ -21,7 +21,7 @@ async def on_startup(config: Config, bot: Bot, admins: list[int]):
     """
 
     await set_default_commands(bot, admins)  # Команды из меню бота
-    await broadcaster.broadcast(
+    await safe_sending_message.safe_broadcast(
         config, bot, admins, "Бот перезапущен!!"
     )  # Уведомление админов о запуске бота
 

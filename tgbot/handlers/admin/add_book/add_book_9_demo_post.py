@@ -8,7 +8,7 @@ from infrastructure.books_base_api import api
 from tgbot.config import Config
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import deep_link_buy_keyboard
-from tgbot.services import get_user_language, send_message
+from tgbot.services import get_user_language, safe_send_message
 from tgbot.states import AddBook
 
 add_book_router_9 = Router()
@@ -41,7 +41,7 @@ async def add_book_9(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     deep_link = await create_start_link(bot, f"book_{id_book}")
 
     if not is_fasting:
-        await send_message(
+        await safe_send_message(
             config=config,
             bot=bot,
             id_user=config.tg_bot.channel,

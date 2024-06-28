@@ -13,7 +13,7 @@ from tgbot.keyboards.inline import (
     booking_from_user_keyboard,
     booking_again_keyboard,
 )
-from tgbot.services import get_user_language, send_message, get_url_user
+from tgbot.services import get_user_language, safe_send_message, get_url_user
 from tgbot.states import Booking
 
 booking_router_2 = Router()
@@ -95,7 +95,7 @@ async def booking_2(message: Message, bot: Bot, state: FSMContext, config: Confi
             },
         )
 
-        await send_message(
+        await safe_send_message(
             config=config,
             bot=bot,
             id_user=config.tg_bot.booking_chat,

@@ -10,7 +10,7 @@ from tgbot.config import Config
 from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import cancel_keyboard, edit_keyboard
-from tgbot.services import get_user_language, forming_text, send_message
+from tgbot.services import get_user_language, forming_text, safe_send_message
 from tgbot.states import EditBook
 
 edit_book_router = Router()
@@ -71,7 +71,7 @@ async def edit_book_process(
         if status == 200:
             post_text = await forming_text(book, l10n)
 
-            await send_message(
+            await safe_send_message(
                 config=config,
                 bot=bot,
                 id_user=id_user,

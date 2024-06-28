@@ -12,7 +12,7 @@ from tgbot.keyboards.inline import (
     cancel_keyboard,
     edit_keyboard,
 )
-from tgbot.services import get_user_language, forming_text, send_message
+from tgbot.services import get_user_language, forming_text, safe_send_message
 from tgbot.states import EditBook
 
 edit_book_router_4 = Router()
@@ -90,7 +90,7 @@ async def edit_description_process(
                 await message.answer(
                     l10n.format_value("edit-book-successfully-changed")
                 )
-                await send_message(
+                await safe_send_message(
                     config=config,
                     bot=bot,
                     id_user=id_user,

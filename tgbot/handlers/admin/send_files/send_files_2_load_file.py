@@ -12,7 +12,7 @@ from tgbot.keyboards.inline import (
     cancel_keyboard,
     done_clear_back_cancel_keyboard,
 )
-from tgbot.services import get_user_language, send_message
+from tgbot.services import get_user_language, safe_send_message
 from tgbot.states import SendFiles
 
 send_files_router_2 = Router()
@@ -87,7 +87,7 @@ async def done_send_files_2(
     id_user_recipient = data.get("id_user_recipient")
     l10n_recipient = await get_user_language(id_user_recipient)
 
-    is_sent = await send_message(
+    is_sent = await safe_send_message(
         config=config,
         bot=bot,
         id_user=id_user_recipient,

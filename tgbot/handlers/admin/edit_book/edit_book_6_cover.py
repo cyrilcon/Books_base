@@ -12,7 +12,7 @@ from tgbot.keyboards.inline import (
     cancel_keyboard,
     edit_keyboard,
 )
-from tgbot.services import get_user_language, forming_text, send_message
+from tgbot.services import get_user_language, forming_text, safe_send_message
 from tgbot.states import EditBook
 
 edit_book_router_6 = Router()
@@ -39,7 +39,7 @@ async def edit_cover(call: CallbackQuery, bot: Bot, state: FSMContext, config: C
     response = await api.books.get_book(id_book)
     book = response.result
 
-    await send_message(
+    await safe_send_message(
         config=config,
         bot=bot,
         id_user=id_user,
@@ -83,7 +83,7 @@ async def edit_cover_process(
         post_text = await forming_text(book, l10n)
 
         await message.answer(l10n.format_value("edit-book-successfully-changed"))
-        await send_message(
+        await safe_send_message(
             config=config,
             bot=bot,
             id_user=id_user,
