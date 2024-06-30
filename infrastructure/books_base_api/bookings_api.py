@@ -59,7 +59,7 @@ class BookingsApi:
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/position/{position}",
+            url=f"{self.endpoint}/byPosition/{position}",
         )
 
         return ApiResponse(status, result)

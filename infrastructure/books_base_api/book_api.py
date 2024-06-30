@@ -43,7 +43,7 @@ class BooksApi:
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/latest-article",
+            url=f"{self.endpoint}/latestArticle",
         )
 
         return ApiResponse(status, result)
@@ -90,7 +90,7 @@ class BooksApi:
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/title/{title}",
+            url=f"{self.endpoint}/byTitle/{title}",
         )
 
         return ApiResponse(status, result)

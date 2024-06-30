@@ -25,11 +25,11 @@ async def base_store(message: Message):
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
-    response = await api.users.get_premium(id_user)
-    status = response.status
+    response = await api.users.get_user(id_user)
+    result = response.result
 
     # Если пользователь имеет PREMIUM
-    if status == 200:
+    if result["is_premium"]:
         account_information = l10n.format_value("user-has-premium")
         await message.answer(
             l10n.format_value(
@@ -40,12 +40,9 @@ async def base_store(message: Message):
 
     # Если пользователь не имеет PREMIUM
     else:
-        response = await api.users.get_discount(id_user)
-        status = response.status
-
         # Если пользователь имеет какую-либо скидку
-        if status == 200:
-            discount = response.result["discount"]
+        if result["has_discount"]:
+            discount = result["has_discount"]
 
             # Если пользователь имеет 100% скидку
             if discount == 100:

@@ -51,7 +51,7 @@ class UsersApi:
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/username/{username}",
+            url=f"{self.endpoint}/byUsername/{username}",
         )
 
         return ApiResponse(status, result)
@@ -91,7 +91,7 @@ class UsersApi:
 
         return ApiResponse(status, result)
 
-    async def create_discount(self, id_user: int, discount: int) -> ApiResponse:
+    async def set_discount(self, id_user: int, discount: int) -> ApiResponse:
         """
         Create a discount for a user
 
@@ -107,38 +107,8 @@ class UsersApi:
 
         status, result = await self.base_client.make_request(
             method="POST",
-            url=f"{self.endpoint}/{id_user}/discount",
+            url=f"{self.endpoint}/setDiscount/{id_user}",
             json=data,
-        )
-
-        return ApiResponse(status, result)
-
-    async def get_discount(self, id_user: int) -> ApiResponse:
-        """
-        Get a discount of the user
-
-        :param id_user: unique user identifier
-        :return: status code and result
-        """
-
-        status, result = await self.base_client.make_request(
-            method="GET",
-            url=f"{self.endpoint}/{id_user}/discount",
-        )
-
-        return ApiResponse(status, result)
-
-    async def get_premium(self, id_user: int) -> ApiResponse:
-        """
-        Get premium information of the user
-
-        :param id_user: unique user identifier
-        :return: status code and result
-        """
-
-        status, result = await self.base_client.make_request(
-            method="GET",
-            url=f"{self.endpoint}/{id_user}/premium",
         )
 
         return ApiResponse(status, result)
