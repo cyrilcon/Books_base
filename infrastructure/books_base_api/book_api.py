@@ -90,7 +90,7 @@ class BooksApi:
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/byTitle/{title}",
+            url=f"{self.endpoint}/title/{title}",
         )
 
         return ApiResponse(status, result)

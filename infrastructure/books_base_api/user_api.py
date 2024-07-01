@@ -51,7 +51,7 @@ class UsersApi:
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/byUsername/{username}",
+            url=f"{self.endpoint}/username/{username}",
         )
 
         return ApiResponse(status, result)
@@ -93,7 +93,7 @@ class UsersApi:
 
     async def set_discount(self, id_user: int, discount: int) -> ApiResponse:
         """
-        Create a discount for a user
+        Set a discount for a user
 
         :param id_user: unique user identifier
         :param discount: discount value
@@ -101,14 +101,28 @@ class UsersApi:
         """
 
         data = {
-            "id_user": id_user,
             "discount": discount,
         }
 
         status, result = await self.base_client.make_request(
             method="POST",
-            url=f"{self.endpoint}/setDiscount/{id_user}",
+            url=f"{self.endpoint}/{id_user}/discount",
             json=data,
+        )
+
+        return ApiResponse(status, result)
+
+    async def add_to_blacklist(self, id_user: int) -> ApiResponse:
+        """
+        Add user to blacklist
+
+        :param id_user: unique user identifier
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="POST",
+            url=f"{self.endpoint}/{id_user}/blacklist",
         )
 
         return ApiResponse(status, result)
