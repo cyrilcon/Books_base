@@ -5,7 +5,7 @@ from aiogram.types import Message
 
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import get_user_language, select_user
+from tgbot.services import get_user_language, search_user
 from tgbot.states import SendMessage
 
 send_message_router_1 = Router()
@@ -28,10 +28,10 @@ async def send_message_1(message: Message, state: FSMContext):
         l10n.format_value("send-message-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(SendMessage.select_recipient)
+    await state.set_state(SendMessage.select_user)
 
 
-@send_message_router_1.message(StateFilter(SendMessage.select_recipient))
+@send_message_router_1.message(StateFilter(SendMessage.select_user))
 async def send_message_1_process(message: Message, bot: Bot, state: FSMContext):
     """
     Выбор пользователя для отправки сообщения.
@@ -42,4 +42,4 @@ async def send_message_1_process(message: Message, bot: Bot, state: FSMContext):
     """
 
     text = "send-message-write-message"
-    await select_user(message, bot, state, SendMessage.write_message, text)
+    await search_user(message, bot, state, SendMessage.write_message, text)

@@ -35,7 +35,7 @@ async def back_to_send_files_1(call: CallbackQuery, state: FSMContext):
         l10n.format_value("send-files-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(SendFiles.select_recipient)
+    await state.set_state(SendFiles.select_user)
 
 
 @send_files_router_2.message(StateFilter(SendFiles.load_files), F.document)

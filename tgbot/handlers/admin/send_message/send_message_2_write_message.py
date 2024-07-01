@@ -34,7 +34,7 @@ async def back_to_send_message_1(call: CallbackQuery, state: FSMContext):
         l10n.format_value("send-message-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(SendMessage.select_recipient)
+    await state.set_state(SendMessage.select_user)
 
 
 @send_message_router_2.message(StateFilter(SendMessage.write_message))

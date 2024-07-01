@@ -5,7 +5,7 @@ from aiogram.types import Message
 
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import get_user_language, select_user
+from tgbot.services import get_user_language, search_user
 from tgbot.states import SendFiles
 
 send_files_router_1 = Router()
@@ -29,12 +29,12 @@ async def send_file_1(message: Message, state: FSMContext):
         reply_markup=cancel_keyboard(l10n),
     )
 
-    await state.set_state(SendFiles.select_recipient)
+    await state.set_state(SendFiles.select_user)
     files = []
     await state.update_data(files=files)
 
 
-@send_files_router_1.message(StateFilter(SendFiles.select_recipient))
+@send_files_router_1.message(StateFilter(SendFiles.select_user))
 async def send_file_1_process(message: Message, bot: Bot, state: FSMContext):
     """
     Выбор пользователя для отправки файлов.
@@ -45,4 +45,4 @@ async def send_file_1_process(message: Message, bot: Bot, state: FSMContext):
     """
 
     text = "send-files-load-file"
-    await select_user(message, bot, state, SendFiles.load_files, text)
+    await search_user(message, bot, state, SendFiles.load_files, text)

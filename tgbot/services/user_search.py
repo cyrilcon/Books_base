@@ -8,7 +8,7 @@ from tgbot.keyboards.inline import cancel_keyboard, back_and_cancel_keyboard
 from tgbot.services import get_user_language, check_username, get_url_user
 
 
-async def select_user(message: Message, bot: Bot, state: FSMContext, state_class, text):
+async def search_user(message: Message, bot: Bot, state: FSMContext, state_class, text):
     """
     Выбор пользователя для дальнейшей с ним коммуникацией.
     :param message: Сообщение с ожидаемым именем пользователя или его ID.
