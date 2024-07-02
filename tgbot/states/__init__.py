@@ -4,6 +4,7 @@ from .booking import Booking
 from .cancel_booking import CancelBooking
 from .delete_book import DeleteBook
 from .edit_book import EditBook
+from .remove_from_blacklist import RemoveFromBlacklist
 from .send_files import SendFiles
 from .send_message import SendMessage
 from .share_base import ShareBase
