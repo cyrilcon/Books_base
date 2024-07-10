@@ -8,39 +8,39 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import get_user_language, check_username, get_url_user
-from tgbot.states import AddToBlacklist
+from tgbot.states import AddBlacklist
 
-add_to_blacklist_router = Router()
-add_to_blacklist_router.message.filter(AdminFilter())
+add_blacklist_router = Router()
+add_blacklist_router.message.filter(AdminFilter())
 
 
-@add_to_blacklist_router.message(Command("add_to_blacklist"))
-async def add_to_blacklist(message: Message, state: FSMContext):
+@add_blacklist_router.message(Command("add_blacklist"))
+async def add_blacklist(message: Message, state: FSMContext):
     """
-    Обработка команды /add_to_blacklist.
-    :param message: Команда /add_to_blacklist.
-    :param state: FSM (AddToBlacklist).
-    :return: Сообщение для добавления пользователя в чёрный список и переход в FSM (AddToBlacklist).
+    Обработка команды /add_blacklist.
+    :param message: Команда /add_blacklist.
+    :param state: FSM (AddBlacklist).
+    :return: Сообщение для добавления пользователя в чёрный список и переход в FSM (AddBlacklist).
     """
 
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
     await message.answer(
-        l10n.format_value("add-to-blacklist-select-user"),
+        l10n.format_value("add-blacklist-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
 
-    await state.set_state(AddToBlacklist.select_user)
+    await state.set_state(AddBlacklist.select_user)
 
 
-@add_to_blacklist_router.message(StateFilter(AddToBlacklist.select_user))
-async def add_to_blacklist_process(message: Message, bot: Bot, state: FSMContext):
+@add_blacklist_router.message(StateFilter(AddBlacklist.select_user))
+async def add_blacklist_process(message: Message, bot: Bot, state: FSMContext):
     """
     Выбор пользователя для добавления его в чёрный список.
     :param message: Сообщение с ожидаемым именем пользователя или его ID.
     :param bot: Экземпляр бота.
-    :param state: FSM (AddToBlacklist).
+    :param state: FSM (AddBlacklist).
     :return: Добавление пользователя в чёрный список.
     """
 
@@ -97,7 +97,7 @@ async def user_found(id_user, message, l10n, state):
     :return: Добавление пользователя в чёрный список.
     """
 
-    await api.users.add_to_blacklist(id_user)
+    await api.users.add_blacklist(id_user)
 
     response = await api.users.get_user(id_user)
     user = response.result
@@ -106,7 +106,7 @@ async def user_found(id_user, message, l10n, state):
 
     url_user = await get_url_user(fullname, username)
 
-    text = "add-to-blacklist-user-was-added"
+    text = "add-blacklist-user-was-added"
 
     await message.answer(
         l10n.format_value(text, {"url_user": url_user, "id_user": str(id_user)}),

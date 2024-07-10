@@ -1,7 +1,7 @@
 from aiogram.fsm.state import StatesGroup, State
 
 
-class RemoveFromBlacklist(StatesGroup):
+class RemoveBlacklist(StatesGroup):
     """Класс состояний для удаления пользователя из чёрного списка."""
 
     select_user = State()

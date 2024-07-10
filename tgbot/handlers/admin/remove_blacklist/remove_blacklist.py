@@ -8,34 +8,34 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import get_user_language, check_username, get_url_user
-from tgbot.states import RemoveFromBlacklist
+from tgbot.states import RemoveBlacklist
 
-remove_from_blacklist_router = Router()
-remove_from_blacklist_router.message.filter(AdminFilter())
+remove_blacklist_router = Router()
+remove_blacklist_router.message.filter(AdminFilter())
 
 
-@remove_from_blacklist_router.message(Command("remove_from_blacklist"))
-async def remove_from_blacklist(message: Message, state: FSMContext):
+@remove_blacklist_router.message(Command("remove_blacklist"))
+async def remove_blacklist(message: Message, state: FSMContext):
     """
-    Обработка команды /remove_from_blacklist.
-    :param message: Команда /remove_from_blacklist.
-    :param state: FSM (RemoveFromBlacklist).
-    :return: Сообщение для удаления пользователя из чёрного списка и переход в FSM (RemoveFromBlacklist).
+    Обработка команды /remove_blacklist.
+    :param message: Команда /remove_blacklist.
+    :param state: FSM (RemoveBlacklist).
+    :return: Сообщение для удаления пользователя из чёрного списка и переход в FSM (RemoveBlacklist).
     """
 
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
     await message.answer(
-        l10n.format_value("remove-from-blacklist-select-user"),
+        l10n.format_value("remove-blacklist-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
 
-    await state.set_state(RemoveFromBlacklist.select_user)
+    await state.set_state(RemoveBlacklist.select_user)
 
 
-@remove_from_blacklist_router.message(StateFilter(RemoveFromBlacklist.select_user))
-async def remove_from_blacklist_process(message: Message, bot: Bot, state: FSMContext):
+@remove_blacklist_router.message(StateFilter(RemoveBlacklist.select_user))
+async def remove_blacklist_process(message: Message, bot: Bot, state: FSMContext):
     """
     Выбор пользователя для удаления его из чёрного списка.
     :param message: Сообщение с ожидаемым именем пользователя или его ID.
@@ -97,7 +97,7 @@ async def user_found(id_user, message, l10n, state):
     :return: Удаление пользователя из чёрного списка.
     """
 
-    await api.users.remove_from_blacklist(id_user)
+    await api.users.remove_blacklist(id_user)
 
     response = await api.users.get_user(id_user)
     user = response.result
@@ -106,7 +106,7 @@ async def user_found(id_user, message, l10n, state):
 
     url_user = await get_url_user(fullname, username)
 
-    text = "remove-from-blacklist-user-was-removed"
+    text = "remove-blacklist-user-was-removed"
 
     await message.answer(
         l10n.format_value(text, {"url_user": url_user, "id_user": str(id_user)}),
