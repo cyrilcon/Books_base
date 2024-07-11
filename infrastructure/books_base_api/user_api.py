@@ -155,3 +155,33 @@ class UsersApi:
         )
 
         return ApiResponse(status, result)
+
+    async def add_admin(self, id_user: int) -> ApiResponse:
+        """
+        Add user to admin list
+
+        :param id_user: unique user identifier
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="POST",
+            url=f"{self.endpoint}/{id_user}/admin",
+        )
+
+        return ApiResponse(status, result)
+
+    async def remove_admin(self, id_user: int) -> ApiResponse:
+        """
+        Remove user from admin list
+
+        :param id_user: unique user identifier
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="DELETE",
+            url=f"{self.endpoint}/{id_user}/admin",
+        )
+
+        return ApiResponse(status, result)

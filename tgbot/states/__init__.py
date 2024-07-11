@@ -1,3 +1,4 @@
+from .add_admin import AddAdmin
 from .add_blacklist import AddBlacklist
 from .add_book import AddBook
 from .booking import Booking
@@ -11,6 +12,7 @@ from .share_base import ShareBase
 from .support import Support
 
 all_states = [
+    AddAdmin,
     AddBlacklist,
     AddBook,
     Booking,

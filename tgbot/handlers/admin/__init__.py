@@ -1,5 +1,6 @@
 from aiogram import Router
 
+from .add_admin import add_admin_routers
 from .add_blacklist import add_blacklist_routers
 from .add_book import add_book_routers
 from .admin import admin_router
@@ -13,6 +14,7 @@ from .send_message import send_message_routers
 admin_routers = Router()
 admin_routers.include_routers(
     admin_router,
+    add_admin_routers,
     add_blacklist_routers,
     add_book_routers,
     check_booking_router,

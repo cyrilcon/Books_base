@@ -65,7 +65,13 @@ class BaseClient:
             method, url, params=params, json=json, headers=headers, data=data
         ) as response:
             status = response.status
-            if status not in {200, 201, 204, 404}:
+            if status not in {
+                200,
+                201,
+                204,
+                404,
+                409,
+            }:  # TODO: подумать над удалением этой строки
                 s = await response.text()
                 raise ClientError(f"Got status {status} for {method} {url}: {s}")
             try:
