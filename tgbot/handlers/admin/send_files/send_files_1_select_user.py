@@ -4,8 +4,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from tgbot.filters import AdminFilter
-from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import get_user_language, search_user
+from tgbot.keyboards import delete_keyboard
+from tgbot.keyboards.inline import cancel_keyboard, back_and_cancel_keyboard
+from tgbot.services import get_user_language, find_user, get_url_user
 from tgbot.states import SendFiles
 
 send_files_router_1 = Router()
@@ -44,5 +45,27 @@ async def send_file_1_process(message: Message, bot: Bot, state: FSMContext):
     :return: Сообщение для загрузки файлов и переход в FSM (load_files).
     """
 
-    text = "send-files-load-file"
-    await search_user(message, bot, state, SendFiles.load_files, text)
+    await delete_keyboard(bot, message)
+
+    id_user = message.from_user.id
+    l10n = await get_user_language(id_user)
+
+    status, user, response_message = await find_user(message.text, l10n)
+
+    if status == 200:
+        id_user = user["id_user"]
+        fullname = user["fullname"]
+        username = user["username"]
+        url_user = await get_url_user(fullname, username)
+
+        await message.answer(
+            l10n.format_value(
+                "send-files-load-file",
+                {"url_user": url_user, "id_user": str(id_user)},
+            ),
+            reply_markup=back_and_cancel_keyboard(l10n),
+        )
+        await state.update_data(id_user_recipient=id_user)
+        await state.set_state(SendFiles.load_files)
+    else:
+        await message.answer(response_message, reply_markup=cancel_keyboard(l10n))

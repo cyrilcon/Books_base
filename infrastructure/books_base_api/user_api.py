@@ -112,7 +112,7 @@ class UsersApi:
 
         return ApiResponse(status, result)
 
-    async def add_to_blacklist(self, id_user: int) -> ApiResponse:
+    async def add_blacklist(self, id_user: int) -> ApiResponse:
         """
         Add user to blacklist
 
@@ -127,7 +127,7 @@ class UsersApi:
 
         return ApiResponse(status, result)
 
-    async def remove_from_blacklist(self, id_user: int) -> ApiResponse:
+    async def remove_blacklist(self, id_user: int) -> ApiResponse:
         """
         Remove user from blacklist
 
