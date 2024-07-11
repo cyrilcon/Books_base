@@ -13,8 +13,6 @@ class TgBot:
     ----------
     :param token: Токен бота.
     :type token: Str.
-    :param admins: Список админов.
-    :type admins: List[int].
     :param use_redis: Использование Redis.
     :type use_redis: Bool.
     :param channel: Telegram канал.
@@ -26,7 +24,6 @@ class TgBot:
     """
 
     token: str
-    admins: list[int]
     use_redis: bool
     channel: int
     support_chat: int
@@ -39,14 +36,12 @@ class TgBot:
         """
 
         token = env.str("BOT_TOKEN")  # Токен бота
-        admins = list(map(int, env.list("ADMINS")))  # Список админов
         use_redis = env.bool("USE_REDIS")  # Использование Redis
         channel = env.int("CHANNEL")  # Telegram канал
         support_chat = env.int("SUPPORT_CHAT")  # Чат тех-поддержки
         booking_chat = env.int("BOOKING_CHAT")  # Чат с заказами
         return TgBot(
             token=token,
-            admins=admins,
             use_redis=use_redis,
             channel=channel,
             support_chat=support_chat,

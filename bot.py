@@ -8,17 +8,21 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
 
+from infrastructure.books_base_api import api
 from tgbot.config import load_config, Config
 from tgbot.handlers import routers_list
 from tgbot.middlewares import ConfigMiddleware
 from tgbot.services import set_default_commands, safe_sending_message
 
 
-async def on_startup(config: Config, bot: Bot, admins: list[int]):
+async def on_startup(config: Config, bot: Bot):
     """
     Вызывается при старте бота.
     Установка команд из меню бота и уведомление админов о запуске бота.
     """
+
+    response = await api.users.get_admins()
+    admins = response.result
 
     await set_default_commands(bot, admins)  # Команды из меню бота
     await safe_sending_message.safe_broadcast(
@@ -102,7 +106,7 @@ async def main():
     register_global_middlewares(dp, config)  # Установка мидлварей
 
     # Установка команд из меню бота и уведомление админов о запуске бота
-    await on_startup(config, bot, config.tg_bot.admins)
+    await on_startup(config, bot)
     await dp.start_polling(bot)
 
 

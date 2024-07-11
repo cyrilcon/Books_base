@@ -1,6 +1,7 @@
 from aiogram.filters import BaseFilter
 from aiogram.types import Message
 
+from infrastructure.books_base_api import api
 from tgbot.config import Config
 
 
@@ -18,4 +19,7 @@ class AdminFilter(BaseFilter):
     is_admin: bool = True
 
     async def __call__(self, obj: Message, config: Config) -> bool:
-        return (obj.from_user.id in config.tg_bot.admins) == self.is_admin
+        response = await api.users.get_admins()
+        admins = response.result
+
+        return (obj.from_user.id in admins) == self.is_admin

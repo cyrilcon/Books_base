@@ -41,6 +41,20 @@ class UsersApi:
 
         return ApiResponse(status, result)
 
+    async def get_admins(self) -> ApiResponse:
+        """
+        Get a list of admins id
+
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/admins",
+        )
+
+        return ApiResponse(status, result)
+
     async def get_user_by_username(self, username: str) -> ApiResponse:
         """
         Get a user by username with all the information
