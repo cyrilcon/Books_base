@@ -57,14 +57,24 @@ async def remove_blacklist_process(message: Message, bot: Bot, state: FSMContext
         username = user["username"]
         url_user = await get_url_user(fullname, username)
 
-        await api.users.remove_blacklist(id_user)
+        response = await api.users.remove_blacklist(id_user)
+        status = response.status
 
-        await message.answer(
-            l10n.format_value(
-                "remove-blacklist-user-was-removed",
-                {"url_user": url_user, "id_user": str(id_user)},
+        if status == 204:
+            await message.answer(
+                l10n.format_value(
+                    "remove-blacklist-user-was-removed",
+                    {"url_user": url_user, "id_user": str(id_user)},
+                )
             )
-        )
-        await state.clear()
+            await state.clear()
+        else:
+            await message.answer(
+                l10n.format_value(
+                    "remove-blacklist-user-is-not-already-in-blacklist",
+                    {"url_user": url_user, "id_user": str(id_user)},
+                ),
+                reply_markup=cancel_keyboard(l10n),
+            )
     else:
         await message.answer(response_message, reply_markup=cancel_keyboard(l10n))
