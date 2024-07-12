@@ -6,7 +6,7 @@ add-admin-user-is-already-admin = Пользователь { $url_user } (<code>
 
 add-admin-cancel = Вы отменили выдачу прав администратора
 
-remove-admin-select = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которого хотиде разжаловить
+remove-admin-select = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которого хотите разжаловить
 
 remove-admin-was-removed = Пользователь { $url_user } (<code>{ $id_user }</code>) был разжалован
 

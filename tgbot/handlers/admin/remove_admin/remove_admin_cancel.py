@@ -6,25 +6,23 @@ from aiogram.types import CallbackQuery
 
 from tgbot.filters import AdminFilter
 from tgbot.services import get_user_language
-from tgbot.states import RemoveBlacklist
+from tgbot.states import RemoveAdmin
 
-remove_blacklist_cancel_router = Router()
-remove_blacklist_cancel_router.message.filter(AdminFilter())
+remove_admin_cancel_router = Router()
+remove_admin_cancel_router.message.filter(AdminFilter())
 
 
-@remove_blacklist_cancel_router.callback_query(
-    StateFilter(RemoveBlacklist), F.data == "cancel"
-)
-async def remove_blacklist_cancel(call: CallbackQuery, state: FSMContext):
+@remove_admin_cancel_router.callback_query(StateFilter(RemoveAdmin), F.data == "cancel")
+async def remove_admin_cancel(call: CallbackQuery, state: FSMContext):
     """
-    Отмена удаления пользователя из чёрного списка.
+    Отмена разжалования администратора.
     :param call: Нажатая кнопка "Отмена".
-    :param state: FSM (RemoveBlacklist).
+    :param state: FSM (RemoveAdmin).
     """
 
     id_user = call.from_user.id
     l10n = await get_user_language(id_user)
-    text = l10n.format_value("remove-blacklist-cancel")
+    text = l10n.format_value("remove-admin-cancel")
 
     await state.clear()
     await call.answer(text, show_alert=True)

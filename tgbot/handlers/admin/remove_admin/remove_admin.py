@@ -8,40 +8,40 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import get_user_language, get_url_user, find_user
-from tgbot.states import RemoveBlacklist
+from tgbot.states import RemoveAdmin
 
-remove_blacklist_router = Router()
-remove_blacklist_router.message.filter(AdminFilter())
+remove_admin_router = Router()
+remove_admin_router.message.filter(AdminFilter())
 
 
-@remove_blacklist_router.message(Command("remove_blacklist"))
-async def remove_blacklist(message: Message, state: FSMContext):
+@remove_admin_router.message(Command("remove_admin"))
+async def remove_admin(message: Message, state: FSMContext):
     """
-    Обработка команды /remove_blacklist.
-    :param message: Команда /remove_blacklist.
-    :param state: FSM (RemoveBlacklist).
-    :return: Сообщение для удаления пользователя из чёрного списка и переход в FSM (RemoveBlacklist).
+    Обработка команды /remove_admin.
+    :param message: Команда /remove_admin.
+    :param state: FSM (RemoveAdmin).
+    :return: Сообщение для разжалования администратора и переход в FSM (RemoveAdmin).
     """
 
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
     await message.answer(
-        l10n.format_value("remove-blacklist-select-user"),
+        l10n.format_value("remove-admin-select"),
         reply_markup=cancel_keyboard(l10n),
     )
 
-    await state.set_state(RemoveBlacklist.select_user)
+    await state.set_state(RemoveAdmin.select_admin)
 
 
-@remove_blacklist_router.message(StateFilter(RemoveBlacklist.select_user))
-async def remove_blacklist_process(message: Message, bot: Bot, state: FSMContext):
+@remove_admin_router.message(StateFilter(RemoveAdmin.select_admin))
+async def remove_admin_process(message: Message, bot: Bot, state: FSMContext):
     """
-    Выбор пользователя для удаления его из чёрного списка.
+    Выбор администратора для разжалования.
     :param message: Сообщение с ожидаемым именем пользователя или его ID.
     :param bot: Экземпляр бота.
-    :param state: FSM (RemoveBlacklist).
-    :return: Удаление пользователя из чёрного списка.
+    :param state: FSM (RemoveAdmin).
+    :return: Разжалование администратора.
     """
 
     await delete_keyboard(bot, message)
@@ -57,13 +57,13 @@ async def remove_blacklist_process(message: Message, bot: Bot, state: FSMContext
         username = user["username"]
         url_user = await get_url_user(fullname, username)
 
-        response = await api.users.remove_blacklist(id_user)
+        response = await api.users.remove_admin(id_user)
         status = response.status
 
         if status == 204:
             await message.answer(
                 l10n.format_value(
-                    "remove-blacklist-user-was-removed",
+                    "remove-admin-was-removed",
                     {"url_user": url_user, "id_user": str(id_user)},
                 )
             )
@@ -71,7 +71,7 @@ async def remove_blacklist_process(message: Message, bot: Bot, state: FSMContext
         else:
             await message.answer(
                 l10n.format_value(
-                    "remove-blacklist-user-is-not-already-in-blacklist",
+                    "remove-admin-is-not-already-admin",
                     {"url_user": url_user, "id_user": str(id_user)},
                 ),
                 reply_markup=cancel_keyboard(l10n),
