@@ -185,3 +185,18 @@ class UsersApi:
         )
 
         return ApiResponse(status, result)
+
+    async def give_premium(self, id_user: int) -> ApiResponse:
+        """
+        Assign a premium status to a user
+
+        :param id_user: unique user identifier
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="POST",
+            url=f"{self.endpoint}/{id_user}/premium",
+        )
+
+        return ApiResponse(status, result)

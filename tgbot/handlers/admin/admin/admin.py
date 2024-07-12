@@ -13,7 +13,7 @@ async def admin(message: Message):
     """
     Обработка команды /admin.
     :param message: Команда /admin.
-    :return: Сообщение для админа.
+    :return: Сообщение с командами для администратора.
     """
 
     await message.answer(
@@ -38,10 +38,11 @@ async def admin(message: Message):
         "\n"
         "📂 Отправить файлы — /send_files\n"
         "\n"
-        # "⚜️ Подарить PREMIUM — /give_premium\n"
-        # "\n"
-        # "♦️ Отменить PREMIUM — /cancel_premium\n"
-        # "\n"
+        "\n"
+        "⚜️ Подарить PREMIUM — /give_premium\n"
+        "\n"
+        "♦️ Отменить PREMIUM — /cancel_premium\n"
+        "\n"
         # "📚 Субботний пост — /action\n"
         # "\n"
         "\n"

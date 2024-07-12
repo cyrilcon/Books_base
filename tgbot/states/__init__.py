@@ -5,6 +5,7 @@ from .booking import Booking
 from .cancel_booking import CancelBooking
 from .delete_book import DeleteBook
 from .edit_book import EditBook
+from .give_premium import GivePremium
 from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
 from .send_files import SendFiles
@@ -20,6 +21,7 @@ all_states = [
     CancelBooking,
     DeleteBook,
     EditBook,
+    GivePremium,
     RemoveAdmin,
     RemoveBlacklist,
     SendFiles,
