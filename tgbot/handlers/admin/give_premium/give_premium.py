@@ -30,7 +30,6 @@ async def give_premium(message: Message, state: FSMContext):
         l10n.format_value("give-premium-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
-
     await state.set_state(GivePremium.select_user)
 
 

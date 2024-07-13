@@ -1,20 +1,18 @@
 import re
 
 from aiogram import Router, F, Bot
-from aiogram.filters import CommandStart, StateFilter, CommandObject
+from aiogram.filters import CommandStart, CommandObject
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from infrastructure.books_base_api import api
 from tgbot.config import Config
 from tgbot.services import get_fluent_localization, safe_send_message, forming_text
-from tgbot.states import all_states
 
 start_router = Router()
 
 
 @start_router.message(CommandStart())
-@start_router.message(StateFilter(all_states))
 @start_router.message(
     CommandStart(deep_link=True, magic=F.args.regexp(re.compile(r"book_(\d+)")))
 )

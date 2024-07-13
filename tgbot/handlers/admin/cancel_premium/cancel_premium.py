@@ -8,39 +8,39 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards import delete_keyboard
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import get_user_language, find_user, get_url_user
-from tgbot.states import AddBlacklist
+from tgbot.states import CancelPremium
 
-add_blacklist_router = Router()
-add_blacklist_router.message.filter(AdminFilter())
+cancel_premium_router = Router()
+cancel_premium_router.message.filter(AdminFilter())
 
 
-@add_blacklist_router.message(Command("add_blacklist"))
-async def add_blacklist(message: Message, state: FSMContext):
+@cancel_premium_router.message(Command("cancel_premium"))
+async def cancel_premium(message: Message, state: FSMContext):
     """
-    Обработка команды /add_blacklist.
-    :param message: Команда /add_blacklist.
-    :param state: FSM (AddBlacklist).
-    :return: Сообщение для добавления пользователя в чёрный список и переход в FSM (AddBlacklist).
+    Обработка команды /cancel_premium.
+    :param message: Команда /cancel_premium.
+    :param state: FSM (CancelPremium).
+    :return: Сообщение для выбора пользователя и переход в FSM (CancelPremium).
     """
 
     id_user = message.from_user.id
     l10n = await get_user_language(id_user)
 
     await message.answer(
-        l10n.format_value("add-blacklist-select-user"),
+        l10n.format_value("cancel-premium-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(AddBlacklist.select_user)
+    await state.set_state(CancelPremium.select_user)
 
 
-@add_blacklist_router.message(StateFilter(AddBlacklist.select_user))
-async def add_blacklist_process(message: Message, bot: Bot, state: FSMContext):
+@cancel_premium_router.message(StateFilter(CancelPremium.select_user))
+async def cancel_premium_process(message: Message, bot: Bot, state: FSMContext):
     """
-    Выбор пользователя для добавления его в чёрный список.
+    Выбор пользователя для отмены статуса Books_Base Premium.
     :param message: Сообщение с ожидаемым именем пользователя или его ID.
     :param bot: Экземпляр бота.
-    :param state: FSM (AddBlacklist).
-    :return: Добавление пользователя в чёрный список.
+    :param state: FSM (CancelPremium).
+    :return: Отмена статуса Books_Base Premium у пользователя.
     """
 
     await delete_keyboard(bot, message)
@@ -56,13 +56,13 @@ async def add_blacklist_process(message: Message, bot: Bot, state: FSMContext):
         username = user["username"]
         url_user = await get_url_user(fullname, username)
 
-        response = await api.users.add_blacklist(id_user)
+        response = await api.users.cancel_premium(id_user)
         status = response.status
 
-        if status == 201:
+        if status == 204:
             await message.answer(
                 l10n.format_value(
-                    "add-blacklist-user-was-added",
+                    "cancel-premium-success",
                     {"url_user": url_user, "id_user": str(id_user)},
                 )
             )
@@ -70,7 +70,7 @@ async def add_blacklist_process(message: Message, bot: Bot, state: FSMContext):
         else:
             await message.answer(
                 l10n.format_value(
-                    "add-blacklist-user-is-already-in-blacklist",
+                    "cancel-premium-error",
                     {"url_user": url_user, "id_user": str(id_user)},
                 ),
                 reply_markup=cancel_keyboard(l10n),

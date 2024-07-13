@@ -200,3 +200,18 @@ class UsersApi:
         )
 
         return ApiResponse(status, result)
+
+    async def cancel_premium(self, id_user: int) -> ApiResponse:
+        """
+        Cancellation of premium status for a user
+
+        :param id_user: unique user identifier
+        :return: status code and result
+        """
+
+        status, result = await self.base_client.make_request(
+            method="DELETE",
+            url=f"{self.endpoint}/{id_user}/premium",
+        )
+
+        return ApiResponse(status, result)
