@@ -9,41 +9,49 @@ from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
 
 from infrastructure.books_base_api import api
-from tgbot.config import load_config, Config
+from tgbot.config import config
 from tgbot.handlers import routers_list
-from tgbot.middlewares import ConfigMiddleware
-from tgbot.services import set_default_commands, safe_sending_message
+from tgbot.middlewares import (
+    ConfigMiddleware,
+    LocalizationMiddleware,
+    DatabaseMiddleware,
+)
+from tgbot.services import set_default_commands, messenger
 
 
-async def on_startup(config: Config, bot: Bot):
+async def on_startup(bot: Bot):
     """
-    Вызывается при старте бота.
-    Установка команд из меню бота и уведомление админов о запуске бота.
+    Called on bot startup.
     """
 
-    response = await api.users.get_admins()
+    response = await api.admins.get_admin_ids()
     admins = response.result
 
-    await set_default_commands(bot, admins)  # Команды из меню бота
-    await safe_sending_message.safe_broadcast(
-        config, bot, admins, "Бот перезапущен!!"
-    )  # Уведомление админов о запуске бота
+    await set_default_commands(bot, admins)
+    await messenger.safe_broadcast(bot, admins, "Bot restarted!!")
 
 
-def register_global_middlewares(dp: Dispatcher, config: Config):
+async def on_shutdown():
     """
-    Регистрация глобальных мидлварей.
+    Called on bot shutdown.
+    """
 
-    :param dp: Экземпляр диспатчера.
-    :type dp: Dispatcher.
-    :param config: Объект конфигурации из загруженного конфига.
-    :type config: Config.
+    await api.close()
+
+
+def register_global_middlewares(dp: Dispatcher):
+    """
+    Register global middlewares for the given dispatcher.
+
+    :param dp: The dispatcher instance.
+    :type dp: Dispatcher
     :return: None
     """
 
     middleware_types = [
         ConfigMiddleware(config),
-        # DatabaseMiddleware(session_pool),
+        DatabaseMiddleware(),
+        LocalizationMiddleware(),
     ]
 
     for middleware_type in middleware_types:
@@ -53,29 +61,26 @@ def register_global_middlewares(dp: Dispatcher, config: Config):
 
 def setup_logging():
     """
-    Настройка логирования.
+    Set up logging configuration for the application.
     """
 
     log_level = logging.INFO
     bl.basic_colorized_config(level=log_level)
 
     logging.basicConfig(
-        level=logging.INFO,
+        level=config.tg_bot.logging_level,
         format="%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s",
     )
     logger = logging.getLogger(__name__)
     logger.info("Starting the bot")
 
 
-def get_storage(config):
+def get_storage():
     """
-    Выбор хранилища на основе конфигурации.
-
-    Args:
-        config (Config): Объект конфигурации.
+    Return storage based on the provided configuration.
 
     Returns:
-        Storage: Объект хранения на основе конфигурации.
+        Storage: The storage object based on the configuration.
     """
 
     if config.tg_bot.use_redis:
@@ -88,26 +93,28 @@ def get_storage(config):
 
 
 async def main():
-    setup_logging()  # Установка логирования
+    setup_logging()  # Set logging
 
-    config = load_config(".env")
-    storage = get_storage(config)
+    storage = get_storage()
 
     bot = Bot(
-        token=config.tg_bot.token, default=DefaultBotProperties(parse_mode="HTML")
+        token=config.tg_bot.token,
+        default=DefaultBotProperties(parse_mode="HTML"),
     )
     dp = Dispatcher(
-        storage=storage, fsm_strategy=FSMStrategy.CHAT
-    )  # CHAT — стейт и данные общие для всего чата.
-    # В ЛС разница незаметна, но в группе у всех участников будет один стейт и общие данные.
+        storage=storage,
+        fsm_strategy=FSMStrategy.CHAT,  # CHAT - state and data common for the whole chat
+    )
 
-    dp.include_routers(*routers_list)  # Установка роутеров
+    dp.include_routers(*routers_list)  # Installing routers
 
-    register_global_middlewares(dp, config)  # Установка мидлварей
+    register_global_middlewares(dp)  # Installing middlewares
 
-    # Установка команд из меню бота и уведомление админов о запуске бота
-    await on_startup(config, bot)
-    await dp.start_polling(bot)
+    await on_startup(bot)
+    try:
+        await dp.start_polling(bot)
+    finally:
+        await on_shutdown()
 
 
 if __name__ == "__main__":

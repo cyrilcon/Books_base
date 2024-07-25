@@ -1,16 +1,14 @@
 from typing import Callable, Dict, Any, Awaitable
-
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 
+from tgbot.services import get_user_language
 
-class ConfigMiddleware(BaseMiddleware):
-    """
-    Middleware to retrieve config data about the bot.
-    """
 
-    def __init__(self, config) -> None:
-        self.config = config
+class LocalizationMiddleware(BaseMiddleware):
+    """
+    Middleware to retrieve and inject the user's preferred language for localization purposes.
+    """
 
     async def __call__(
         self,
@@ -18,5 +16,7 @@ class ConfigMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
-        data["config"] = self.config
+        id_user = event.from_user.id
+        l10n = await get_user_language(id_user)
+        data["l10n"] = l10n
         return await handler(event, data)

@@ -6,12 +6,12 @@ from tgbot.config import Config
 
 class IsPrivate(BaseFilter):
     """
-    Фильтр на проверку приватности чата.
+    A filter to check the privacy of a chat room.
 
-    Атрибуты
+    Attributes
     ----------
-    :param is_private: Проверка приватности чата.
-    :type is_private: Bool.
+    :param is_private: Check if the chat is private.
+    :type is_private: bool
     :return: True/False
     """
 

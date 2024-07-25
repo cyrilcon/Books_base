@@ -7,12 +7,12 @@ from tgbot.config import Config
 
 class AdminFilter(BaseFilter):
     """
-    Фильтр для проверки подлинности админа.
+    A filter to authenticate an admin.
 
-    Атрибуты
+    Attributes
     ----------
-    :param is_admin: Проверка подлинности админа.
-    :type is_admin: Bool.
+    :param is_admin: Admin authentication.
+    :type is_admin: bool
     :return: True/False
     """
 

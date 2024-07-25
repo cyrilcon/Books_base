@@ -4,9 +4,9 @@ from fluent.runtime import FluentLocalization, FluentResourceLoader
 
 def get_fluent_localization(language: str) -> FluentLocalization:
     """
-    Загружает файлы FTL для выбранного языка
-    :param language: название языка, передаваемое из конфигурации
-    :return: Объект FluentLocalization с загруженными файлами FTL для выбранного языка
+    Loads FTL files for the selected language.
+    :param language: Language name passed from the configuration.
+    :return: FluentLocalisation object with loaded FTL files for the selected language.
     """
 
     # Check "locales" directory on the same level as this file

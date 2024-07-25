@@ -7,43 +7,33 @@ from environs import Env
 @dataclass
 class TgBot:
     """
-    Создается объект TgBot из переменных окружения.
-
-    Атрибуты
-    ----------
-    :param token: Токен бота.
-    :type token: Str.
-    :param use_redis: Использование Redis.
-    :type use_redis: Bool.
-    :param channel: Telegram канал.
-    :type channel: Int.
-    :param support_chat: Чат тех-поддержки.
-    :type support_chat: Int.
-    :param booking_chat: Чат с заказами.
-    :type booking_chat: Int.
+    Creates the TgBot object from environment variables.
     """
 
     token: str
     use_redis: bool
-    channel: int
+    logging_level: str
+    tg_channel: int
     support_chat: int
     booking_chat: int
 
     @staticmethod
     def from_env(env: Env):
         """
-        Создается объект TgBot из переменных окружения.
+        Creates the TgBot object from environment variables.
         """
 
-        token = env.str("BOT_TOKEN")  # Токен бота
-        use_redis = env.bool("USE_REDIS")  # Использование Redis
-        channel = env.int("CHANNEL")  # Telegram канал
-        support_chat = env.int("SUPPORT_CHAT")  # Чат тех-поддержки
-        booking_chat = env.int("BOOKING_CHAT")  # Чат с заказами
+        token = env.str("BOT_TOKEN")
+        use_redis = env.bool("USE_REDIS")
+        logging_level = env.str("LOGGING_LEVEL")
+        tg_channel = env.int("TG_CHANNEL")
+        support_chat = env.int("SUPPORT_CHAT")
+        booking_chat = env.int("BOOKING_CHAT")
         return TgBot(
             token=token,
             use_redis=use_redis,
-            channel=channel,
+            logging_level=logging_level,
+            tg_channel=tg_channel,
             support_chat=support_chat,
             booking_chat=booking_chat,
         )
@@ -52,16 +42,16 @@ class TgBot:
 @dataclass
 class RedisConfig:
     """
-    Класс конфигурации Redis.
+    Redis configuration class.
 
     Attributes
     ----------
     redis_pass : Optional(str)
-        Пароль, используемый для аутентификации в Redis.
+        The password used to authenticate with Redis.
     redis_port : Optional(int)
-        Порт, на котором прослушивается сервер Redis.
+        The port where Redis server is listening.
     redis_host : Optional(str)
-        Хост, на котором расположен сервер Redis.
+        The host where Redis server is located.
     """
 
     redis_pass: Optional[str]
@@ -70,7 +60,7 @@ class RedisConfig:
 
     def dsn(self) -> str:
         """
-        Создает и возвращает Redis DSN (имя источника данных) для данной конфигурации базы данных.
+        Constructs and returns a Redis DSN (Data Source Name) for this database configuration.
         """
 
         if self.redis_pass:
@@ -81,7 +71,7 @@ class RedisConfig:
     @staticmethod
     def from_env(env: Env):
         """
-        Создает объект RedisConfig из переменных окружения.
+        Creates the RedisConfig object from environment variables.
         """
 
         redis_pass = env.str("REDIS_PASSWORD")
@@ -94,17 +84,50 @@ class RedisConfig:
 
 
 @dataclass
+class Api:
+    """
+    API configuration class.
+
+    This class holds the configuration for the external API used by the application.
+
+    Attributes
+    ----------
+    url : str
+        The base URL of the external API.
+    prefix : str
+        ...
+    """
+
+    url: str
+    prefix: str = "/api/v1"
+
+    @staticmethod
+    def from_env(env: Env):
+        """
+        Creates the Api object from environment variables.
+        """
+
+        url = env.str("API_URL")
+        prefix = env.str("API_PREFIX")
+
+        return Api(
+            url=url,
+            prefix=prefix,
+        )
+
+
+@dataclass
 class Miscellaneous:
     """
-    Класс различных конфигураций.
+    Miscellaneous configuration class.
 
-    Этот класс содержит настройки для различных других параметров.
-    Он просто служит вместилищем для параметров, которые не входят в другие категории.
+    This class holds settings for various other parameters.
+    It merely serves as a placeholder for settings that are not part of other categories.
 
-    Атрибуты
+    Attributes
     ----------
     other_params : str, optional
-        Строка, используемая для хранения других различных параметров по мере необходимости (по умолчанию None).
+        A string used to hold other various parameters as required (default is None).
     """
 
     other_params: str = None
@@ -113,42 +136,47 @@ class Miscellaneous:
 @dataclass
 class Config:
     """
-    Основной класс конфигурации, объединяющий все остальные классы конфигурации.
+    The main configuration class that integrates all the other configuration classes.
 
-    Этот класс содержит другие классы конфигурации, обеспечивая централизованный доступ ко всем настройкам.
+    This class holds the other configuration classes, providing a centralized point of access for all settings.
 
-    Атрибуты
+    Attributes
     ----------
     tg_bot : TgBot
-        Содержит настройки, связанные с ботом Telegram.
-    Misc : Miscellaneous
-        Хранит значения различных настроек.
-    DB : Optional[DbConfig]
-        Содержит настройки, специфичные для базы данных (по умолчанию - None).
-    Redis : Optional[RedisConfig]
-        Содержит настройки, специфичные для Redis (по умолчанию - None).
+        Holds the settings related to the Telegram Bot.
+    api : Api
+        Holds the settings specific to the external API.
+    misc : Miscellaneous
+        Holds the values for miscellaneous settings.
+    redis : Optional[RedisConfig]
+        Holds the settings specific to Redis (default is None).
     """
 
     tg_bot: TgBot
+    api: Api
     misc: Miscellaneous
     redis: Optional[RedisConfig] = None
 
 
 def load_config(path: str = ".env") -> Config:
     """
-    Эта функция принимает на вход необязательный путь к файлу и возвращает объект Config.
-    :param path: Путь к env-файлу, из которого загружаются конфигурационные переменные.
-    Он считывает переменные окружения из файла .env, если он указан, в противном случае - из окружения процесса.
-    :return: Объект конфигурации с атрибутами, установленными в соответствии с переменными окружения.
+    This function takes an optional file path as input and returns a Config object.
+    :param path: The path of env file from where to load the configuration variables.
+    It reads environment variables from a .env file if provided, else from the process environment.
+    :return: Config object with attributes set as per environment variables.
     """
 
-    env = Env()  # Создаётся объект Env
-    env.read_env(
-        path
-    )  # Объект Env будет использоваться для чтения переменных окружения
+    # Create an Env object.
+    # The Env object will be used to read environment variables.
+    env = Env()
+    env.read_env(path)
 
     return Config(
         tg_bot=TgBot.from_env(env),
         redis=RedisConfig.from_env(env),
+        api=Api.from_env(env),
         misc=Miscellaneous(),
     )
+
+
+config = load_config(".env")

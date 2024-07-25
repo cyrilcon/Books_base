@@ -3,25 +3,20 @@ import logging
 
 from aiogram import Bot, exceptions
 
-from tgbot.config import Config
-
 
 async def send_message(
-    config: Config,
     bot: Bot,
     chat_id: int,
     from_chat_id: int,
     message_id: int,
 ) -> bool:
     """
-    Безопасное отправление сообщений.
-
-    :param config: Config с параметрами бота.
-    :param bot: Экземпляр бота.
-    :param chat_id: ID пользователя.
-    :param from_chat_id: ID пользователя, от которого отправляется сообщение.
-    :param message_id: ID сообщения.
-    :return: True/False
+    Safe messages sender.
+    :param bot: Bot instance.
+    :param chat_id: Recipient ID.
+    :param from_chat_id: Sender ID.
+    :param message_id: ID of the forwarded message.
+    :return: Success.
     """
 
     try:
@@ -34,15 +29,14 @@ async def send_message(
         logging.error(
             f"Target [ID:{chat_id}]: group chat was upgraded to a supergroup chat"
         )
-        # await delete_chat(config, user_id)  # Удаляется чат
     except exceptions.TelegramRetryAfter as e:
         logging.error(
             f"Target [ID:{chat_id}]: Flood limit is exceeded. Sleep {e.retry_after} seconds."
         )
         await asyncio.sleep(e.retry_after)
         return await send_message(
-            config, bot, chat_id, from_chat_id, message_id
-        )  # Рекурсивный вызов
+            bot, chat_id, from_chat_id, message_id
+        )  # Recursive call
     except exceptions.TelegramAPIError:
         logging.exception(f"Target [ID:{chat_id}]: failed")
     else:
@@ -52,31 +46,28 @@ async def send_message(
 
 
 async def broadcast(
-    config: Config,
     bot: Bot,
     users: list[str | int],
     from_chat_id: int,
     message_id: int,
 ) -> int:
     """
-    Простая рассылка.
-
-    :param config: Config с параметрами бота.
-    :param bot: Экземпляр бота.
-    :param users: Список пользователей.
-    :param from_chat_id: ID пользователя, от которого отправляется сообщение.
-    :param message_id: ID сообщения.
-    :return: К-во отправленных сообщений.
+    Simple broadcaster.
+    :param bot: Bot instance.
+    :param users: List of users.
+    :param from_chat_id: Sender ID.
+    :param message_id: ID of the forwarded message.
+    :return: Count of messages.
     """
 
     count = 0
     try:
         for chat_id in users:
-            if await send_message(config, bot, chat_id, from_chat_id, message_id):
+            if await send_message(bot, chat_id, from_chat_id, message_id):
                 count += 1
             await asyncio.sleep(
                 0.05
-            )  # 20 сообщений в секунду (Ограничение: 30 сообщений в секунду)
+            )  # 20 messages per second (Limit: 30 messages per second)
     finally:
         logging.info(f"{count} messages successful sent.")
 

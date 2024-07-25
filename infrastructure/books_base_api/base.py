@@ -14,6 +14,8 @@ if TYPE_CHECKING:
 
     from yarl import URL
 
+ACCEPTABLE_STATUS_CODES = {200, 201, 204, 404, 409}
+
 
 # Taken from here: https://github.com/Olegt0rr/WebServiceTemplate/blob/main/app/core/base_client.py
 class BaseClient:
@@ -65,13 +67,7 @@ class BaseClient:
             method, url, params=params, json=json, headers=headers, data=data
         ) as response:
             status = response.status
-            if status not in {
-                200,
-                201,
-                204,
-                404,
-                409,
-            }:  # TODO: подумать над удалением этой строки
+            if status not in ACCEPTABLE_STATUS_CODES:
                 s = await response.text()
                 raise ClientError(f"Got status {status} for {method} {url}: {s}")
             try:
@@ -106,3 +102,9 @@ class BaseClient:
         # Wait 250 ms for the underlying SSL connections to close
         # https://docs.aiohttp.org/en/stable/client_advanced.html#graceful-shutdown
         await asyncio.sleep(0.25)
+
+
+class ApiResponse:
+    def __init__(self, status: int, result):
+        self.status = status
+        self.result = result
