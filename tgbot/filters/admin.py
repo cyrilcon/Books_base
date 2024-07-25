@@ -19,7 +19,7 @@ class AdminFilter(BaseFilter):
     is_admin: bool = True
 
     async def __call__(self, obj: Message, config: Config) -> bool:
-        response = await api.users.get_admins()
+        response = await api.admins.get_admin_ids()
         admins = response.result
 
         return (obj.from_user.id in admins) == self.is_admin
