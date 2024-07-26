@@ -21,8 +21,6 @@ class DatabaseMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
-        result = await handler(event, data)
-
         id_user = event.from_user.id
 
         response = await api.users.get_user_by_id(id_user)
@@ -31,8 +29,8 @@ class DatabaseMiddleware(BaseMiddleware):
         if status == 200:
             await api.users.update_user(id_user)
         else:
-            fullname = event.from_user.id
-            username = event.from_user.id
+            fullname = event.from_user.full_name
+            username = event.from_user.username
             language = event.from_user.language_code
 
             await api.users.create_user(
@@ -41,4 +39,5 @@ class DatabaseMiddleware(BaseMiddleware):
                 fullname=fullname,
                 username=username,
             )
-        return result
+
+        return await handler(event, data)

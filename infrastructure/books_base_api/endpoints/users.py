@@ -39,6 +39,19 @@ class UsersApi:
 
         return ApiResponse(status, result)
 
+    async def get_user_by_username(self, username: str) -> ApiResponse:
+        """
+        Get a user by username.
+
+        :param username: User's username.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/username/{username}",
+        )
+        return ApiResponse(status, result)
+
     async def get_user_by_id(self, id_user: int) -> ApiResponse:
         """
         Get a user by ID.

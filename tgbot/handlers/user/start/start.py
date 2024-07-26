@@ -14,7 +14,7 @@ async def start(
     """
     Processing of the /start command.
     :param message: /start command.
-    :param l10n: Config with bot parameters.
+    :param l10n: Language set by the user.
     :return: A welcome message or a found book.
     """
 

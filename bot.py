@@ -15,6 +15,7 @@ from tgbot.middlewares import (
     ConfigMiddleware,
     LocalizationMiddleware,
     DatabaseMiddleware,
+    ClearKeyboardMiddleware,
 )
 from tgbot.services import set_default_commands, messenger
 
@@ -39,16 +40,19 @@ async def on_shutdown():
     await api.close()
 
 
-def register_global_middlewares(dp: Dispatcher):
+def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
     """
     Register global middlewares for the given dispatcher.
 
     :param dp: The dispatcher instance.
     :type dp: Dispatcher
+    :param storage: Storage for FSM.
+    :type storage: RedisStorage
     :return: None
     """
 
     middleware_types = [
+        ClearKeyboardMiddleware(storage),
         ConfigMiddleware(config),
         DatabaseMiddleware(),
         LocalizationMiddleware(),
@@ -108,7 +112,7 @@ async def main():
 
     dp.include_routers(*routers_list)  # Installing routers
 
-    register_global_middlewares(dp)  # Installing middlewares
+    register_global_middlewares(dp, storage)  # Installing middlewares
 
     await on_startup(bot)
     try:

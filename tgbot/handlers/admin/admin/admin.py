@@ -12,9 +12,9 @@ admin_router.message.filter(AdminFilter())
 @admin_router.message(Command("admin"))
 async def admin(message: Message, l10n: FluentLocalization):
     """
-    Processing of the /start command.
-    :param message: /start command.
-    :param l10n: Config with bot parameters.
+    Processing of the /admin command.
+    :param message: /admin command.
+    :param l10n: Language set by the user.
     :return: A message with commands for the administrator.
     """
 

@@ -16,3 +16,21 @@ class AdminsApi:
             url=f"{self.endpoint}",
         )
         return ApiResponse(status, result)
+
+    async def create_admin(self, id_user: int) -> ApiResponse:
+        """
+        Create an admin.
+
+        :param id_user: Unique user identifier.
+        """
+
+        data = {
+            "id_user": id_user,
+        }
+
+        status, result = await self.base_client.make_request(
+            method="POST",
+            url=f"{self.endpoint}",
+            json=data,
+        )
+        return ApiResponse(status, result)

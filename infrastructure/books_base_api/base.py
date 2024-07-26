@@ -105,6 +105,6 @@ class BaseClient:
 
 
 class ApiResponse:
-    def __init__(self, status: int, result):
+    def __init__(self, status: int, result: dict[str, Any]):
         self.status = status
         self.result = result

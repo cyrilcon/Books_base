@@ -19,4 +19,5 @@ class LocalizationMiddleware(BaseMiddleware):
         id_user = event.from_user.id
         l10n = await get_user_language(id_user)
         data["l10n"] = l10n
+
         return await handler(event, data)
