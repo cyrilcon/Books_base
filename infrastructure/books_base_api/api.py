@@ -1,5 +1,10 @@
 from infrastructure.books_base_api.base import BaseClient
-from infrastructure.books_base_api.endpoints import AdminsApi, PremiumApi, UsersApi
+from infrastructure.books_base_api.endpoints import (
+    AdminsApi,
+    BlacklistApi,
+    PremiumApi,
+    UsersApi,
+)
 from tgbot.config import config
 
 
@@ -11,6 +16,7 @@ class BooksBaseApi(BaseClient):
         super().__init__(base_url=self.base_url)
 
         self.admins = AdminsApi(self, self.prefix)
+        self.blacklist = BlacklistApi(self, self.prefix)
         self.premium = PremiumApi(self, self.prefix)
         self.users = UsersApi(self, self.prefix)
 
