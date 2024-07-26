@@ -23,3 +23,16 @@ class BlacklistApi:
             json=data,
         )
         return ApiResponse(status, result)
+
+    async def delete_blacklist(self, id_user: int) -> ApiResponse:
+        """
+        Remove a user from the blacklist.
+
+        :param id_user: Unique user identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="DELETE",
+            url=f"{self.endpoint}/{id_user}",
+        )
+        return ApiResponse(status, result)
