@@ -68,7 +68,7 @@ async def remove_admin_process(
             if status == 204:
                 await message.answer(
                     l10n.format_value(
-                        "remove-admin-was-removed",
+                        "remove-admin-success",
                         {"url_user": url_user, "id_user": str(id_user)},
                     )
                 )

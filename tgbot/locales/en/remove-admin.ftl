@@ -1,6 +1,6 @@
 remove-admin-select = Введите <i><b>имя пользователя</b></i> администратора или его <i><b>ID</b></i>, которого хотите разжаловить
 
-remove-admin-was-removed = Администратор { $url_user } (<code>{ $id_user }</code>) был разжалован
+remove-admin-success = Администратор { $url_user } (<code>{ $id_user }</code>) был разжалован
 
 remove-admin-error-not-admin = Пользователь { $url_user } (<code>{ $id_user }</code>) не был администратором
 

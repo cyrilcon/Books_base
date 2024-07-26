@@ -1,5 +1,6 @@
 from aiogram import Router
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
@@ -10,12 +11,14 @@ admin_router.message.filter(AdminFilter())
 
 
 @admin_router.message(Command("admin"))
-async def admin(message: Message, l10n: FluentLocalization):
+async def admin(message: Message, l10n: FluentLocalization, state: FSMContext):
     """
     Processing of the /admin command.
     :param message: /admin command.
     :param l10n: Language set by the user.
+    :param state: FSM (For emergency discharge).
     :return: A message with commands for the administrator.
     """
 
     await message.answer(l10n.format_value("admin-commands"))
+    await state.clear()
