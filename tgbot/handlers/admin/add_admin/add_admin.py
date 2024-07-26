@@ -29,7 +29,7 @@ async def add_admin(message: Message, l10n: FluentLocalization, state: FSMContex
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(AddAdmin.select_user)
-    await state.update_data(new_message_id=sent_message.message_id)
+    await state.update_data(sent_message_id=sent_message.message_id)
 
 
 @add_admin_router.message(StateFilter(AddAdmin.select_user))
@@ -71,9 +71,9 @@ async def add_admin_process(
                 ),
                 reply_markup=cancel_keyboard(l10n),
             )
-            await state.update_data(new_message_id=sent_message.message_id)
+            await state.update_data(sent_message_id=sent_message.message_id)
     else:
         sent_message = await message.answer(
             response_message, reply_markup=cancel_keyboard(l10n)
         )
-        await state.update_data(new_message_id=sent_message.message_id)
+        await state.update_data(sent_message_id=sent_message.message_id)

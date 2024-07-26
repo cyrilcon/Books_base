@@ -29,7 +29,7 @@ async def remove_admin(message: Message, l10n: FluentLocalization, state: FSMCon
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(RemoveAdmin.select_admin)
-    await state.update_data(new_message_id=sent_message.message_id)
+    await state.update_data(sent_message_id=sent_message.message_id)
 
 
 @remove_admin_router.message(StateFilter(RemoveAdmin.select_admin))
@@ -56,7 +56,7 @@ async def remove_admin_process(
                 ),
                 reply_markup=cancel_keyboard(l10n),
             )
-            await state.update_data(new_message_id=sent_message.message_id)
+            await state.update_data(sent_message_id=sent_message.message_id)
         else:
             fullname = user["fullname"]
             username = user["username"]
@@ -81,9 +81,9 @@ async def remove_admin_process(
                     ),
                     reply_markup=cancel_keyboard(l10n),
                 )
-                await state.update_data(new_message_id=sent_message.message_id)
+                await state.update_data(sent_message_id=sent_message.message_id)
     else:
         sent_message = await message.answer(
             response_message, reply_markup=cancel_keyboard(l10n)
         )
-        await state.update_data(new_message_id=sent_message.message_id)
+        await state.update_data(sent_message_id=sent_message.message_id)

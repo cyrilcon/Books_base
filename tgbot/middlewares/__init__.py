@@ -6,8 +6,10 @@ __all__ = (
     "LocalizationMiddleware",
 )
 
-from .cancel_command import CancelCommandMiddleware
-from .clear_keyboard import ClearKeyboardMiddleware
-from .config import ConfigMiddleware
-from .database import DatabaseMiddleware
-from .localization import LocalizationMiddleware
+from .inner import CancelCommandMiddleware
+from .outer import (
+    ClearKeyboardMiddleware,
+    ConfigMiddleware,
+    DatabaseMiddleware,
+    LocalizationMiddleware,
+)

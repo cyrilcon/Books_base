@@ -2,7 +2,7 @@ from typing import Callable, Dict, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.types import TelegramObject
+from aiogram.types import Message
 
 
 class ClearKeyboardMiddleware(BaseMiddleware):
@@ -21,8 +21,8 @@ class ClearKeyboardMiddleware(BaseMiddleware):
 
     async def __call__(
         self,
-        handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
-        event: TelegramObject,
+        handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
+        event: Message,
         data: Dict[str, Any],
     ) -> Any:
         user_id = event.from_user.id
@@ -42,9 +42,9 @@ class ClearKeyboardMiddleware(BaseMiddleware):
 
         state: FSMContext = data["state"]
         data = await state.get_data()
-        new_message_id = data.get("new_message_id")
+        sent_message_id = data.get("sent_message_id")
 
-        if new_message_id:
-            await self.storage.redis.set(f"last_message_id:{user_id}", new_message_id)
+        if sent_message_id:
+            await self.storage.redis.set(f"last_message_id:{user_id}", sent_message_id)
 
         return result
