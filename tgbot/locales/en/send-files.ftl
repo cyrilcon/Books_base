@@ -18,7 +18,7 @@ send-files-write-caption-error =
     Сообщение слишком длинное!!
     Сократите сообщение или нажмите кнопку <i>"Готово"</i>
 
-send-files-from-admin = Вы получили файлы от <b>администатора Books_base</b>!!
+send-files-from-admin = Вы получили файлы от <b>администатора Books_base</b>:
 
 send-files-success = Файлы отправлены пользователю!!
 

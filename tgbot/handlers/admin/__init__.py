@@ -8,6 +8,7 @@ from .give_premium import give_premium_routers
 from .remove_admin import remove_admin_routers
 from .remove_blacklist import remove_blacklist_routers
 from .send_files import send_files_routers
+from .send_message import send_message_routers
 
 admin_routers = Router()
 admin_routers.include_routers(
@@ -19,4 +20,5 @@ admin_routers.include_routers(
     remove_admin_routers,
     remove_blacklist_routers,
     send_files_routers,
+    send_message_routers,
 )
