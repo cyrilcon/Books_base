@@ -5,52 +5,52 @@ pagination-info =
 
     Чтобы ознакомиться с конкретной книгой, нажмите на её номер.
 
-btn-back = « Назад
+button-back = ⬅️ Назад
 
-btn-cancel = Отмена
+button-cancel = ❌ Отмена
 
-btn-post = Опубликовать
+button-post = 📤 Опубликовать
 
-btn-done = Готово
+button-done = ✅ Готово
 
-btn-clear = Стереть
+button-clear = 🗑️ Стереть
 
-btn-do-not-publish = Не публиковать
+button-do-not-publish = 🚫 Не публиковать
 
-btn-not-from-a-user = Не от пользователя
+button-not-from-a-user = 👤 Не от пользователя
 
-btn-edit-book-article = Артикул
+button-edit-book-article = 📄 Артикул
 
-btn-edit-book-title = Название
+button-edit-book-title = 📚 Название
 
-btn-edit-book-authors = Авторы
+button-edit-book-authors = ✍️ Авторы
 
-btn-edit-book-descriptions = Описание
+button-edit-book-descriptions = 📝 Описание
 
-btn-edit-book-genres = Жанры
+button-edit-book-genres = 🦄 Жанры
 
-btn-edit-book-cover = Обложка
+button-edit-book-cover = 🖼️ Обложка
 
-btn-edit-book-files = Файлы
+button-edit-book-files = 📁 Файлы
 
-btn-edit-book-price = Цена
+button-edit-book-price = 💵 Цена
 
-btn-yes = Да
+button-yes = ✅ Да
 
-btn-show-book = Показать книгу
+button-show-book = 📖 Показать книгу
 
-btn-booking = Всё равно заказать
+button-booking = 🛒 Всё равно заказать
 
-btn-service = Обслужить
+button-service = 🛠️ Обслужить
 
-btn-not-available = Нет в наличии
+button-not-available = 🚫 Нет в наличии
 
-btn-booking-again = Заказать ещё
+button-booking-again = 🔄 Заказать ещё
 
-btn-support-reply = Ответить
+button-support-reply = 💬 Ответить
 
-btn-exchange = 💎 Обменять 💎
+button-exchange = 💎 Обменять 💎
 
-btn-free-book = Бесплатная книга
+button-free-book = 🎁 Бесплатная книга
 
-btn-share-our-store = Поделиться нашим магазином
+button-share-our-store = 📤 Поделиться нашим магазином

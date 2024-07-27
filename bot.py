@@ -15,9 +15,9 @@ from tgbot.middlewares import (
     ConfigMiddleware,
     LocalizationMiddleware,
     DatabaseMiddleware,
-    ClearKeyboardMiddleware,
 )
-from tgbot.services import set_default_commands, messenger
+from tgbot.middlewares.outer import StorageMiddleware
+from tgbot.services import set_default_commands, Messenger
 
 
 async def on_startup(bot: Bot):
@@ -29,7 +29,7 @@ async def on_startup(bot: Bot):
     admins = response.result
 
     await set_default_commands(bot, admins)
-    await messenger.safe_broadcast(bot, admins, "Bot restarted!!")
+    await Messenger.safe_broadcast(bot, admins, "Bot restarted!!")
 
 
 async def on_shutdown():
@@ -52,10 +52,10 @@ def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
     """
 
     middleware_types = [
-        ClearKeyboardMiddleware(storage),
         ConfigMiddleware(config),
         DatabaseMiddleware(),
         LocalizationMiddleware(),
+        StorageMiddleware(storage),
     ]
 
     for middleware_type in middleware_types:

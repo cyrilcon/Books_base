@@ -1,4 +1,4 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import StateFilter
 
 from tgbot.filters import AdminFilter
@@ -12,7 +12,9 @@ add_blacklist_cancel_router.callback_query.middleware(
 )
 
 
-@add_blacklist_cancel_router.callback_query(StateFilter(AddBlacklist))
+@add_blacklist_cancel_router.callback_query(
+    StateFilter(AddBlacklist), F.data == "cancel"
+)
 async def add_blacklist_cancel():
     """
     Cancel adding a user to the blacklist.

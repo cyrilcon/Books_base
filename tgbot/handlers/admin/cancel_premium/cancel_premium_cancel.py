@@ -1,4 +1,4 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import StateFilter
 
 from tgbot.filters import AdminFilter
@@ -12,7 +12,9 @@ cancel_premium_cancel_router.callback_query.middleware(
 )
 
 
-@cancel_premium_cancel_router.callback_query(StateFilter(CancelPremium))
+@cancel_premium_cancel_router.callback_query(
+    StateFilter(CancelPremium), F.data == "cancel"
+)
 async def cancel_premium_cancel():
     """
     Cancellation of Books_base Premium status.

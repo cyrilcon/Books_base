@@ -1,4 +1,4 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import StateFilter
 
 from tgbot.filters import SuperAdminFilter
@@ -12,7 +12,7 @@ add_admin_cancel_router.callback_query.middleware(
 )
 
 
-@add_admin_cancel_router.callback_query(StateFilter(AddAdmin))
+@add_admin_cancel_router.callback_query(StateFilter(AddAdmin), F.data == "cancel")
 async def add_admin_cancel():
     """
     Cancels adding a user to the administrator list.

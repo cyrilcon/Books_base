@@ -1,4 +1,4 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import StateFilter
 
 from tgbot.filters import SuperAdminFilter
@@ -12,7 +12,7 @@ remove_admin_cancel_router.callback_query.middleware(
 )
 
 
-@remove_admin_cancel_router.callback_query(StateFilter(RemoveAdmin))
+@remove_admin_cancel_router.callback_query(StateFilter(RemoveAdmin), F.data == "cancel")
 async def remove_admin_cancel():
     """
     Repeal of administrator demotion.
