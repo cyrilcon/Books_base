@@ -8,6 +8,4 @@ routers_list = [
     admin_routers,
 ]
 
-__all__ = [
-    "routers_list",
-]
+__all__ = ("routers_list",)

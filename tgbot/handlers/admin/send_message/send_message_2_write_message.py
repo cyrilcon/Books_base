@@ -24,7 +24,6 @@ async def back_to_send_message_1(
 ):
     """
     Returns back to the user's selection.
-    Go back to uploading files.
     :param call: Pressed "Back" button.
     :param l10n: Language set by the user.
     :param state: FSM (SendFiles).

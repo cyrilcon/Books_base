@@ -2,6 +2,7 @@ from infrastructure.books_base_api.base import BaseClient
 from infrastructure.books_base_api.endpoints import (
     AdminsApi,
     BlacklistApi,
+    BooksApi,
     PremiumApi,
     UsersApi,
 )
@@ -17,6 +18,7 @@ class BooksBaseApi(BaseClient):
 
         self.admins = AdminsApi(self, self.prefix)
         self.blacklist = BlacklistApi(self, self.prefix)
+        self.books = BooksApi(self, self.prefix)
         self.premium = PremiumApi(self, self.prefix)
         self.users = UsersApi(self, self.prefix)
 

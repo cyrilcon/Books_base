@@ -15,9 +15,13 @@ button-done = ✅ Готово
 
 button-clear = 🗑️ Стереть
 
+button-price-85 = 85₽
+
+button-price-50 = 50₽
+
 button-do-not-publish = 🚫 Не публиковать
 
-button-not-from-a-user = 👤 Не от пользователя
+button-not-from-user = 👤 Не от пользователя
 
 button-edit-book-article = 📄 Артикул
 
