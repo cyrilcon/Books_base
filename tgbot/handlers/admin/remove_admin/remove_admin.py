@@ -84,9 +84,7 @@ async def remove_admin_process(
         else:
             fullname = user["fullname"]
             username = user["username"]
-            url_user = await create_user_link(
-                fullname, username
-            )  # TODO: rename user_link
+            user_link = await create_user_link(fullname, username)
 
             response = await api.admins.delete_admin(id_user)
             status = response.status
@@ -95,7 +93,7 @@ async def remove_admin_process(
                 await message.answer(
                     l10n.format_value(
                         "remove-admin-success",
-                        {"url_user": url_user, "id_user": str(id_user)},
+                        {"user_link": user_link, "id_user": str(id_user)},
                     )
                 )
                 await state.clear()
@@ -103,7 +101,7 @@ async def remove_admin_process(
                 sent_message = await message.answer(
                     l10n.format_value(
                         "remove-admin-error-not-admin",
-                        {"url_user": url_user, "id_user": str(id_user)},
+                        {"user_link": user_link, "id_user": str(id_user)},
                     ),
                     reply_markup=cancel_keyboard(l10n),
                 )

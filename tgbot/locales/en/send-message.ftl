@@ -4,7 +4,7 @@ send-message-select-user =
 
 send-message-write-message =
     <b>2/2</b>
-    Напишите <i><b>сообщение</b></i>, которое хотите отправить пользователю { $url_user } (<code>{ $id_user }</code>)
+    Напишите <i><b>сообщение</b></i>, которое хотите отправить пользователю { $user_link } (<code>{ $id_user }</code>)
 
 send-message-received = Вы получили сообщение от <b>администатора Books_base</b>:
 

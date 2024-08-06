@@ -70,7 +70,7 @@ async def give_premium_process(
         id_user = user["id_user"]
         fullname = user["fullname"]
         username = user["username"]
-        url_user = await create_user_link(fullname, username)
+        user_link = await create_user_link(fullname, username)
 
         response = await api.premium.create_premium(id_user)
         status = response.status
@@ -79,7 +79,7 @@ async def give_premium_process(
             await message.answer(
                 l10n.format_value(
                     "give-premium-success",
-                    {"url_user": url_user, "id_user": str(id_user)},
+                    {"user_link": user_link, "id_user": str(id_user)},
                 )
             )
             await state.clear()
@@ -87,7 +87,7 @@ async def give_premium_process(
             sent_message = await message.answer(
                 l10n.format_value(
                     "give-premium-error",
-                    {"url_user": url_user, "id_user": str(id_user)},
+                    {"user_link": user_link, "id_user": str(id_user)},
                 ),
                 reply_markup=cancel_keyboard(l10n),
             )

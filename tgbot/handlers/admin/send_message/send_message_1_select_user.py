@@ -69,12 +69,12 @@ async def send_message_1_process(
         id_user = user["id_user"]
         fullname = user["fullname"]
         username = user["username"]
-        url_user = await create_user_link(fullname, username)
+        user_link = await create_user_link(fullname, username)
 
         sent_message = await message.answer(
             l10n.format_value(
                 "send-message-write-message",
-                {"url_user": url_user, "id_user": str(id_user)},
+                {"user_link": user_link, "id_user": str(id_user)},
             ),
             reply_markup=back_cancel_keyboard(l10n),
         )

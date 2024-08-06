@@ -4,7 +4,7 @@ send-files-select-user =
 
 send-files-upload-files =
     <b>2/3</b>
-    Отправьте <i><b>файл</b></i>, который хотите отправить пользователю { $url_user } (<code>{ $id_user }</code>)
+    Отправьте <i><b>файл</b></i>, который хотите отправить пользователю { $user_link } (<code>{ $id_user }</code>)
 
 send-files-upload-files-more = Отправьте ещё <i><b>файл</b></i> или нажмите кнопку <i>"Готово"</i>
 
