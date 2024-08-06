@@ -13,5 +13,4 @@ def yes_button(l10n: FluentLocalization) -> InlineKeyboardButton:
         text=l10n.format_value("button-yes"),
         callback_data="yes",
     )
-
     return yes

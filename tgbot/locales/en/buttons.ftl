@@ -45,9 +45,9 @@ button-show-book = 📖 Показать книгу
 
 button-booking = 🛒 Всё равно заказать
 
-button-service = 🛠️ Обслужить
+button-serve = 📩 Обслужить
 
-button-not-available = 🚫 Нет в наличии
+button-unavailable = 🚫 Нет в наличии
 
 button-booking-again = 🔄 Заказать ещё
 

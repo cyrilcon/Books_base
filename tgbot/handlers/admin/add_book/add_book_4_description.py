@@ -58,12 +58,7 @@ async def add_book_4(
 
     description = message.text
 
-    if len(description) > 850:
-        sent_message = await message.answer(
-            l10n.format_value("add-book-description-too-long"),
-            reply_markup=back_cancel_keyboard(l10n),
-        )
-    else:
+    if len(description) < 850:
         data = await state.get_data()
         genres = data.get("genres")
 
@@ -84,6 +79,11 @@ async def add_book_4(
 
         await state.update_data(description=description)
         await state.set_state(AddBook.add_genres)
+    else:
+        sent_message = await message.answer(
+            l10n.format_value("add-book-description-too-long"),
+            reply_markup=back_cancel_keyboard(l10n),
+        )
 
     await ClearKeyboard.safe_message(
         storage=storage,

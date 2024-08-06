@@ -10,7 +10,7 @@ from tgbot.keyboards.inline.buttons import (
 
 def back_yes_cancel_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
     """
-    The "Back", "Yes" and "Cancel" keyboard are formed.
+    The "Back", "Yes" and "Cancel" keyboard is formed.
     :param l10n: Language set by the user.
     :return: The "Back", "Yes" and "Cancel" keyboard.
     """

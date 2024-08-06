@@ -23,8 +23,8 @@ class Broadcaster:
 
         try:
             await bot.copy_message(chat_id, from_chat_id, message_id)
-        except exceptions.TelegramBadRequest:
-            logging.error("Telegram server says - Bad Request: chat not found")
+        except exceptions.TelegramBadRequest as e:
+            logging.error(e)
         except exceptions.TelegramForbiddenError:
             logging.error(f"Target [ID:{chat_id}]: got TelegramForbiddenError")
         except exceptions.TelegramMigrateToChat:

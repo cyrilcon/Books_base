@@ -13,5 +13,4 @@ def price_50_button(l10n: FluentLocalization) -> InlineKeyboardButton:
         text=l10n.format_value("button-price-50"),
         callback_data="price_50",
     )
-
     return price_50

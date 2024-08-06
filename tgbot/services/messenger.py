@@ -42,8 +42,8 @@ class Messenger:
                     disable_notification=disable_notification,
                     reply_markup=reply_markup,
                 )
-        except exceptions.TelegramBadRequest:
-            logging.error("Telegram server says - Bad Request: chat not found")
+        except exceptions.TelegramBadRequest as e:
+            logging.error(e)
         except exceptions.TelegramForbiddenError:
             logging.error(f"Target [ID:{user_id}]: got TelegramForbiddenError")
         except exceptions.TelegramMigrateToChat:

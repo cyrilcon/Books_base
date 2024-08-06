@@ -13,5 +13,4 @@ def back_button(l10n: FluentLocalization) -> InlineKeyboardButton:
         text=l10n.format_value("button-back"),
         callback_data="back",
     )
-
     return back

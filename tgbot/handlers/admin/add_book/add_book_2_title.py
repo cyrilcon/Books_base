@@ -65,12 +65,7 @@ async def add_book_2(
 
     title = message.text
 
-    if len(title) > 255:
-        sent_message = await message.answer(
-            l10n.format_value("add-book-title-too-long"),
-            reply_markup=back_cancel_keyboard(l10n),
-        )
-    else:
+    if len(title) <= 255:
         if '"' in title:
             sent_message = await message.answer(
                 l10n.format_value("add-book-title-incorrect"),
@@ -103,6 +98,11 @@ async def add_book_2(
                 await state.set_state(AddBook.add_authors)
 
             await state.update_data(title=title)
+    else:
+        sent_message = await message.answer(
+            l10n.format_value("add-book-title-too-long"),
+            reply_markup=back_cancel_keyboard(l10n),
+        )
 
     await ClearKeyboard.safe_message(
         storage=storage,

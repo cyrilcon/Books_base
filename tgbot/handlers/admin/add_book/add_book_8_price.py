@@ -9,9 +9,9 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import (
     done_clear_back_cancel_keyboard,
     cancel_keyboard,
-    post_keyboard,
+    post_cancel_keyboard,
 )
-from tgbot.services import ClearKeyboard, generate_post_caption
+from tgbot.services import ClearKeyboard, generate_book_caption
 from tgbot.states import AddBook
 
 add_book_router_8 = Router()
@@ -79,7 +79,7 @@ async def add_book_8(
     cover = data.get("cover")
     description = data.get("description")
 
-    caption = await generate_post_caption(data, post=True, from_user=from_user)
+    caption = await generate_book_caption(data, post=True, from_user=from_user)
     caption_length = len(caption)
 
     if caption_length < 1024:
@@ -87,7 +87,7 @@ async def add_book_8(
         sent_message = await call.message.answer_photo(
             photo=cover,
             caption=caption,
-            reply_markup=post_keyboard(l10n),
+            reply_markup=post_cancel_keyboard(l10n),
         )
         await state.update_data(caption=caption)
         await state.set_state(AddBook.preview)
@@ -110,7 +110,7 @@ async def add_book_8(
         await state.set_state(AddBook.reduce_description)
 
 
-@add_book_router_8.message(StateFilter(AddBook.reduce_description))
+@add_book_router_8.message(StateFilter(AddBook.reduce_description), F.text)
 async def abbreviation_of_description(
     message: Message,
     l10n: FluentLocalization,
@@ -135,14 +135,14 @@ async def abbreviation_of_description(
     cover = data.get("cover")
     from_user = data.get("from_user")
 
-    caption = await generate_post_caption(data, post=True, from_user=from_user)
+    caption = await generate_book_caption(data, post=True, from_user=from_user)
     caption_length = len(caption)
 
     if caption_length < 1024:
         sent_message = await message.answer_photo(
             photo=cover,
             caption=caption,
-            reply_markup=post_keyboard(l10n),
+            reply_markup=post_cancel_keyboard(l10n),
         )
         await state.update_data(caption=caption)
         await state.set_state(AddBook.preview)

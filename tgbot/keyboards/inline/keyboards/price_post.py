@@ -12,7 +12,7 @@ from tgbot.keyboards.inline.buttons import (
 
 def price_post_keyboard(l10n) -> InlineKeyboardMarkup:
     """
-    The "85₽", "50₽", "Don't publish", "Not from user", "Back" and "Cancel" keyboard are formed.
+    The "85₽", "50₽", "Don't publish", "Not from user", "Back" and "Cancel" keyboard is formed.
     :param l10n: Language set by the user.
     :return: The "85₽", "50₽", "Don't publish", "Not from user", "Back" and "Cancel" keyboard.
     """

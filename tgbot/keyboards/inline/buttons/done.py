@@ -13,5 +13,4 @@ def done_button(l10n: FluentLocalization) -> InlineKeyboardButton:
         text=l10n.format_value("button-done"),
         callback_data="done",
     )
-
     return done

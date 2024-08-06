@@ -13,5 +13,4 @@ def post_button(l10n: FluentLocalization) -> InlineKeyboardButton:
         text=l10n.format_value("button-post"),
         callback_data="post",
     )
-
     return post

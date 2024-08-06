@@ -6,7 +6,7 @@ from tgbot.keyboards.inline.buttons import cancel_button, back_button
 
 def back_cancel_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
     """
-    The "Back" and "Cancel" keyboard are formed.
+    The "Back" and "Cancel" keyboard is formed.
     :param l10n: Language set by the user.
     :return: The "Back" and "Cancel" keyboard.
     """

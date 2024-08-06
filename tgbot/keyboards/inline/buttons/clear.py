@@ -13,5 +13,4 @@ def clear_button(l10n: FluentLocalization) -> InlineKeyboardButton:
         text=l10n.format_value("button-clear"),
         callback_data="clear",
     )
-
     return clear

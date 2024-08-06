@@ -13,5 +13,4 @@ def deep_link_buy_button(deep_link_url: str) -> InlineKeyboardButton:
         callback_data=f"deep_link_buy",
         url=f"{deep_link_url}",
     )
-
     return deep_link_buy

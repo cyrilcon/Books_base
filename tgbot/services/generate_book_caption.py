@@ -5,7 +5,7 @@ from fluent.runtime import FluentLocalization
 from tgbot.services import get_fluent_localization
 
 
-async def generate_post_caption(
+async def generate_book_caption(
     data: Dict[str, Any],
     l10n: FluentLocalization = get_fluent_localization("ru"),
     post: bool = False,
