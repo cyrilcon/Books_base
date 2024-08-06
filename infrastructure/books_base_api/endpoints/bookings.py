@@ -37,6 +37,28 @@ class BookingsApi:
         )
         return ApiResponse(status, result)
 
+    async def get_booking_count(self) -> ApiResponse:
+        """
+        Get the total number of bookings.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/count",
+        )
+        return ApiResponse(status, result)
+
+    async def get_booking_by_position(self, position: int) -> ApiResponse:
+        """
+        Get a booking by position.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/position/{position}",
+        )
+        return ApiResponse(status, result)
+
     async def get_booking_by_id(self, id_booking: int) -> ApiResponse:
         """
         Get a booking by ID.

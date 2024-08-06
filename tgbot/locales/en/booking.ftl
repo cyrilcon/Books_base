@@ -26,7 +26,7 @@ booking-success =
     Мы обработаем ваш заказ за 24 часа, обычно это происходит гораздо быстрее.
 
 booking-information =
-    { $url_user } (<code>{ $id_user }</code>)
+    { $user_link } (<code>{ $id_user }</code>)
 
     <b>Книга:</b> <code>{ $title }</code>
     <b>Автор:</b> <code>{ $author }</code>

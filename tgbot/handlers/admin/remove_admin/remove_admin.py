@@ -84,7 +84,9 @@ async def remove_admin_process(
         else:
             fullname = user["fullname"]
             username = user["username"]
-            url_user = await create_user_link(fullname, username)
+            url_user = await create_user_link(
+                fullname, username
+            )  # TODO: rename user_link
 
             response = await api.admins.delete_admin(id_user)
             status = response.status
