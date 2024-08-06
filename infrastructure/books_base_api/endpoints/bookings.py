@@ -36,3 +36,29 @@ class BookingsApi:
             json=data,
         )
         return ApiResponse(status, result)
+
+    async def get_booking_by_id(self, id_booking: int) -> ApiResponse:
+        """
+        Get a booking by ID.
+
+        :param id_booking: Unique booking identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_booking}",
+        )
+        return ApiResponse(status, result)
+
+    async def delete_booking(self, id_booking: int) -> ApiResponse:
+        """
+        Cancel a booking.
+
+        :param id_booking: Unique booking identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="DELETE",
+            url=f"{self.endpoint}/{id_booking}",
+        )
+        return ApiResponse(status, result)

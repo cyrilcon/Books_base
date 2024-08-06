@@ -3,6 +3,7 @@ __all__ = (
     "AddBlacklist",
     "AddBook",
     "Booking",
+    "CancelBooking",
     "CancelPremium",
     "GivePremium",
     "RemoveAdmin",
@@ -15,6 +16,7 @@ from .add_admin import AddAdmin
 from .add_blacklist import AddBlacklist
 from .add_book import AddBook
 from .booking import Booking
+from .cancel_booking import CancelBooking
 from .cancel_premium import CancelPremium
 from .give_premium import GivePremium
 from .remove_admin import RemoveAdmin
