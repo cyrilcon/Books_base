@@ -10,6 +10,7 @@ __all__ = (
     "RemoveBlacklist",
     "SendFiles",
     "SendMessage",
+    "Serve",
 )
 
 from .add_admin import AddAdmin
@@ -23,3 +24,4 @@ from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
 from .send_files import SendFiles
 from .send_message import SendMessage
+from .serve import Serve

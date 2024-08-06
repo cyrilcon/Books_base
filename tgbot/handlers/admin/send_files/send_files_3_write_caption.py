@@ -50,16 +50,16 @@ async def send_files_3(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    bot: Bot,
     storage: RedisStorage,
+    bot: Bot,
 ):
     """
     Sending files to the user.
     :param message: Message with an expected caption.
     :param l10n: Language set by the user.
     :param state: FSM (SendFiles).
-    :param bot: Bot instance.
     :param storage: Storage for FSM.
+    :param bot: Bot instance.
     :return: Sending files to the user with a caption.
     """
 

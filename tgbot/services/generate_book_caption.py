@@ -44,7 +44,7 @@ async def generate_book_caption(
     article = "#{:04d}".format(id_book)
 
     caption = l10n.format_value(
-        "post-caption",
+        "book-caption",
         {
             "introductory_text": introductory_text,
             "title": title,

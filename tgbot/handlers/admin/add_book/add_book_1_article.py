@@ -1,5 +1,3 @@
-import re
-
 from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -13,7 +11,7 @@ from tgbot.keyboards.inline import (
     cancel_keyboard,
     back_cancel_keyboard,
 )
-from tgbot.services import ClearKeyboard
+from tgbot.services import ClearKeyboard, is_book_article
 from tgbot.states import AddBook
 
 add_book_router_1 = Router()
@@ -86,15 +84,7 @@ async def add_book_1_process(
     id_book = latest_article + 1
     free_article = "#{:04d}".format(id_book)
 
-    if not article.startswith("#") or not re.fullmatch(r"#\d{4}", article):
-        sent_message = await message.answer(
-            l10n.format_value(
-                "add-book-article-incorrect",
-                {"free_article": free_article},
-            ),
-            reply_markup=cancel_keyboard(l10n),
-        )
-    else:
+    if is_book_article(article):
         id_book_from_message = int(article.lstrip("#"))
 
         response = await api.books.get_book_by_id(id_book_from_message)
@@ -115,6 +105,14 @@ async def add_book_1_process(
             )
             await state.update_data(id_book=id_book_from_message)
             await state.set_state(AddBook.add_title)
+    else:
+        sent_message = await message.answer(
+            l10n.format_value(
+                "add-book-article-incorrect",
+                {"free_article": free_article},
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
 
     await ClearKeyboard.safe_message(
         storage=storage,
