@@ -25,15 +25,6 @@ async def send_file_1(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /send_files command.
-    :param message: /send_files command.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    :param storage: Storage for FSM.
-    :return: Message to send files to the user and go to FSM (SendFiles).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -58,15 +49,6 @@ async def send_file_1_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selects the user to send the files to.
-    :param message: A message with the expected username or user ID.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    :param storage: Storage for FSM.
-    :return: Message to upload files and go to FSM (load_files).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     user, response_message = await find_user(message.text, l10n)

@@ -12,8 +12,4 @@ serve_cancel_router.callback_query.middleware(CancelCommandMiddleware("serve-can
 
 @serve_cancel_router.callback_query(StateFilter(Serve), F.data == "cancel")
 async def serve_cancel():
-    """
-    Cancellation of booking service.
-    """
-
     pass

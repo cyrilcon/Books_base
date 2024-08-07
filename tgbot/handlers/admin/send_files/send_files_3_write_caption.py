@@ -26,15 +26,10 @@ send_files_router_3.message.filter(AdminFilter())
     StateFilter(SendFiles.write_caption), F.data == "back"
 )
 async def back_to_send_files_2(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Go back to uploading files.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("send-files-upload-files-clear"),
@@ -53,16 +48,6 @@ async def send_files_3(
     storage: RedisStorage,
     bot: Bot,
 ):
-    """
-    Sending files to the user.
-    :param message: Message with an expected caption.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    :param storage: Storage for FSM.
-    :param bot: Bot instance.
-    :return: Sending files to the user with a caption.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     data = await state.get_data()
@@ -94,17 +79,11 @@ async def send_files_3(
     StateFilter(SendFiles.upload_files), F.data == "done"
 )
 async def done_send_files_3(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext, bot: Bot
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    bot: Bot,
 ):
-    """
-    Sending files to the user.
-    :param call: Pressed "Done" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    :param bot: Bot instance.
-    :return: Sending files to the user without a caption.
-    """
-
     data = await state.get_data()
     files = data.get("files")
     id_user_recipient = data.get("id_user_recipient")

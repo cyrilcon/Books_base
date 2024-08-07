@@ -21,15 +21,6 @@ async def cancel_booking(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /cancel_booking command.
-    :param message: /cancel_booking command.
-    :param l10n: Language set by the user.
-    :param state: FSM (CancelBooking).
-    :param storage: Storage for FSM.
-    :return: Message to cancel the order and go to FSM (select_booking).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -52,15 +43,6 @@ async def cancel_booking_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Booking cancellation.
-    :param message: Message with expected order number.
-    :param l10n: Language set by the user.
-    :param state: FSM (CancelBooking).
-    :param storage: Storage for FSM.
-    :return: Message with successful booking cancellation.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     booking_number = message.text

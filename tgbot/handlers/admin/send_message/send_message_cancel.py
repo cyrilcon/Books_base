@@ -14,8 +14,4 @@ send_message_cancel_router.callback_query.middleware(
 
 @send_message_cancel_router.callback_query(StateFilter(SendFiles), F.data == "cancel")
 async def send_message_cancel():
-    """
-    Cancel sending a message to a user.
-    """
-
     pass

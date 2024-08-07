@@ -16,8 +16,4 @@ cancel_premium_cancel_router.callback_query.middleware(
     StateFilter(CancelPremium), F.data == "cancel"
 )
 async def cancel_premium_cancel():
-    """
-    Cancellation of Books_base Premium status.
-    """
-
     pass

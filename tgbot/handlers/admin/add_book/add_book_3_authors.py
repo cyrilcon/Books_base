@@ -16,15 +16,10 @@ add_book_router_3.message.filter(AdminFilter())
 
 @add_book_router_3.callback_query(StateFilter(AddBook.add_authors), F.data == "back")
 async def back_to_add_book_2(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Going back to add the title of the book.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-title"),
@@ -40,15 +35,6 @@ async def add_book_3(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Addition of author(s).
-    :param message: A message with the expected author(s) of the book.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to add a description and go to the FSM (add_authors).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     authors = message.text.lower().split(", ")

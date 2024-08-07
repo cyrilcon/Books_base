@@ -14,8 +14,4 @@ add_admin_cancel_router.callback_query.middleware(
 
 @add_admin_cancel_router.callback_query(StateFilter(AddAdmin), F.data == "cancel")
 async def add_admin_cancel():
-    """
-    Cancels adding a user to the administrator list.
-    """
-
     pass

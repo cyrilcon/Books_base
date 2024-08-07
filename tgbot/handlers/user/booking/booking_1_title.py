@@ -24,15 +24,6 @@ async def booking_1(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /booking command.
-    :param message: /booking command.
-    :param l10n: Language set by the user.
-    :param state: FSM (Booking).
-    :param storage: Storage for FSM.
-    :return: Message to write the title of the book and go to FSM (send_title).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -55,15 +46,6 @@ async def booking_1_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Indicating the title of the book.
-    :param message: A message with the expected title of the book.
-    :param l10n: Language set by the user.
-    :param state: FSM (Booking).
-    :param storage: Storage for FSM.
-    :return: Message to specify the author of the book and go to FSM (send_author).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     title = message.text
@@ -114,15 +96,10 @@ async def booking_1_process(
 
 @booking_router_1.callback_query(StateFilter(Booking.send_title), F.data == "booking")
 async def booking_1_booking(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Still order a book with that title.
-    :param call: Pressed "Booking" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (Booking).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("booking-author"),
@@ -140,14 +117,6 @@ async def booking_1_show_book(
     state: FSMContext,
     bot: Bot,
 ):
-    """
-    Book Review.
-    :param call: Pressed "Show book" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (Booking).
-    :param bot: Bot instance.
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_reply_markup()
     await state.clear()

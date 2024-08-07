@@ -22,15 +22,10 @@ add_book_router_5.message.filter(AdminFilter())
 
 @add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "back")
 async def back_to_add_book_4(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Going back to add a description.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-description"),
@@ -46,15 +41,6 @@ async def add_book_5(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Adding Genres.
-    :param message: A message with the expected genres of the book.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to add cover and go to FSM (add_cover).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     genres_from_message = message.text
@@ -94,16 +80,10 @@ async def add_book_5(
 
 @add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "done")
 async def done_add_book_5(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Adding cover.
-    :param call: Pressed "Done" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :return: Message to add cover and go to FSM (add_cover).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-cover"),
@@ -114,16 +94,10 @@ async def done_add_book_5(
 
 @add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "clear")
 async def clear_add_book_5(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Clearing the list of all genres.
-    :param call: Pressed "Clear" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :return: Message to add genres again.
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-genres"),

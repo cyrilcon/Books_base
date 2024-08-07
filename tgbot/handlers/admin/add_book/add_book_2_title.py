@@ -21,15 +21,10 @@ add_book_router_2.message.filter(AdminFilter())
 
 @add_book_router_2.callback_query(StateFilter(AddBook.add_title), F.data == "back")
 async def back_to_add_book_1(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Going back to the article selection.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    """
-
     response = await api.books.get_latest_article()
     latest_article = response.result
     free_article = "#{:04d}".format(latest_article + 1)
@@ -52,15 +47,6 @@ async def add_book_2(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Adding a book title.
-    :param message: A message with the expected title of the book.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to add author(s) and go to FSM (add_description).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     title = message.text
@@ -113,16 +99,10 @@ async def add_book_2(
 
 @add_book_router_2.callback_query(StateFilter(AddBook.add_title), F.data == "yes")
 async def yes_add_book_2(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Confirmation of the addition of the title.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :return: Message to add author(s) and go to FSM (add_description).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-authors"),

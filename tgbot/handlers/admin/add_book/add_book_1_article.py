@@ -25,15 +25,6 @@ async def add_book_1(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /add_book command.
-    :param message: /add_book command.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to select an article and go to FSM (select_article).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     response = await api.books.get_latest_article()
@@ -65,15 +56,6 @@ async def add_book_1_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selecting an article for the book.
-    :param message: A message with the expected book article.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to add book title and go to FSM (add_name_book).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     article = message.text

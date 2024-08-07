@@ -22,15 +22,10 @@ add_book_router_7.message.filter(AdminFilter())
 
 @add_book_router_7.callback_query(StateFilter(AddBook.add_files), F.data == "back")
 async def back_to_add_book_6(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Going back to adding the cover.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-cover"),
@@ -46,15 +41,6 @@ async def add_book_7(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Adding files.
-    :param message: A message with the expected files of the book.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to select price and go to FSM (select_price).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     data = await state.get_data()
@@ -74,16 +60,10 @@ async def add_book_7(
 
 @add_book_router_7.callback_query(StateFilter(AddBook.add_files), F.data == "done")
 async def done_add_book_7(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Price choice.
-    :param call: Pressed "Done" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :return: Message to select price and go to FSM (select_price).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-price"),
@@ -94,16 +74,10 @@ async def done_add_book_7(
 
 @add_book_router_7.callback_query(StateFilter(AddBook.add_files), F.data == "clear")
 async def clear_add_book_7(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Clears the list of all files.
-    :param call: Pressed "Clear" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :return: Message to add files again.
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-files"),
@@ -114,7 +88,9 @@ async def clear_add_book_7(
 
 
 async def add_formats_to_dict(
-    message: Message, l10n: FluentLocalization, files: List[Dict[str, str]]
+    message: Message,
+    l10n: FluentLocalization,
+    files: List[Dict[str, str]],
 ) -> Tuple[List[Dict[str, str]], str]:
     """
     Adds files and their formats to the dictionary.

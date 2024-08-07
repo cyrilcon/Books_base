@@ -23,14 +23,6 @@ async def add_book_9(
     state: FSMContext,
     bot: Bot,
 ):
-    """
-    Adding a book to the database, publishing a post in the channel.
-    :param call: Pressed "Post" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param bot: Bot instance.
-    """
-
     await call.answer(cache_time=1)
 
     data = await state.get_data()

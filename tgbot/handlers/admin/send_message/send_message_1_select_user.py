@@ -21,15 +21,6 @@ async def send_message_1(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /send_message command.
-    :param message: /send_message command.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendMessage).
-    :param storage: Storage for FSM.
-    :return: Message to send a message to the user and go to FSM (SendMessage).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -52,15 +43,6 @@ async def send_message_1_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selects the user to send the message to.
-    :param message: A message with the expected username or user ID.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendMessage).
-    :param storage: Storage for FSM.
-    :return: Message to write a message to the user and go to FSM (write_message).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     user, response_message = await find_user(message.text, l10n)

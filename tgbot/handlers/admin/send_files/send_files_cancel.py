@@ -14,8 +14,4 @@ send_files_cancel_router.callback_query.middleware(
 
 @send_files_cancel_router.callback_query(StateFilter(SendFiles), F.data == "cancel")
 async def send_files_cancel():
-    """
-    Cancel sending files to the user.
-    """
-
     pass

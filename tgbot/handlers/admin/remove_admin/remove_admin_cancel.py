@@ -14,8 +14,4 @@ remove_admin_cancel_router.callback_query.middleware(
 
 @remove_admin_cancel_router.callback_query(StateFilter(RemoveAdmin), F.data == "cancel")
 async def remove_admin_cancel():
-    """
-    Repeal of administrator demotion.
-    """
-
     pass

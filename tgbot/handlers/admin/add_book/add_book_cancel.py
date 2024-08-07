@@ -14,8 +14,4 @@ add_book_cancel_router.callback_query.middleware(
 
 @add_book_cancel_router.callback_query(StateFilter(AddBook), F.data == "cancel")
 async def add_book_cancel():
-    """
-    Cancel adding a book.
-    """
-
     pass

@@ -18,15 +18,6 @@ async def booking_again(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Re-booking the book.
-    :param call: Pressed "Booking again" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (Booking).
-    :param storage: Storage for FSM.
-    :return: Message to write the title of the book and go to FSM (send_title).
-    """
-
     await call.answer(cache_time=1)
     sent_message = await call.message.answer(
         l10n.format_value("booking-title"),

@@ -22,15 +22,6 @@ async def add_admin(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /add_admin command.
-    :param message: /add_admin command.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddAdmin).
-    :param storage: Storage for FSM.
-    :return: Message to add a user to the admin list and go to FSM (AddAdmin).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -53,15 +44,6 @@ async def add_admin_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selects the user to add to the admin list.
-    :param message: A message with the expected username or user ID.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddAdmin).
-    :param storage: Storage for FSM.
-    :return: Adding a user to the blacklist.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     user, response_message = await find_user(message.text, l10n)

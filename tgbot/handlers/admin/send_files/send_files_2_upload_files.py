@@ -22,15 +22,10 @@ send_files_router_2.message.filter(AdminFilter())
     StateFilter(SendFiles.upload_files), F.data == "back"
 )
 async def back_to_send_files_1(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Returns back to the user's selection.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("send-files-select-user"),
@@ -46,15 +41,6 @@ async def send_files_2(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    File upload.
-    :param message: Message with expected file(s).
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    :param storage: Storage for FSM.
-    :return: File to be sent to the user.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -78,16 +64,10 @@ async def send_files_2(
     StateFilter(SendFiles.upload_files), F.data == "done"
 )
 async def done_send_files_2(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Write a caption.
-    :param call: Pressed "Done" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    :return: Message for writing the caption.
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("send-files-write-caption"),
@@ -100,16 +80,10 @@ async def done_send_files_2(
     StateFilter(SendFiles.upload_files), F.data == "clear"
 )
 async def clear_send_files_2(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Clears the list of all files.
-    :param call: Pressed "Clear" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    :return: Message to add files again.
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("send-files-upload-files-clear"),

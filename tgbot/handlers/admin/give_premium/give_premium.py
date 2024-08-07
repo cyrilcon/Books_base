@@ -22,15 +22,6 @@ async def give_premium(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /give_premium command.
-    :param message: /give_premium command.
-    :param l10n: Language set by the user.
-    :param state: FSM (GivePremium).
-    :param storage: Storage for FSM.
-    :return: Message to select the user and go to FSM (GivePremium).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -53,15 +44,6 @@ async def give_premium_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selects the user to issue Books_Base Premium status.
-    :param message: A message with the expected username or user ID.
-    :param l10n: Language set by the user.
-    :param state: FSM (GivePremium).
-    :param storage: Storage for FSM.
-    :return: Issuing Books_Base Premium status to the user.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     user, response_message = await find_user(message.text, l10n)

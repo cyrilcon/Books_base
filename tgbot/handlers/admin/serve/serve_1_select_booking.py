@@ -22,15 +22,6 @@ async def serve_1(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /serve command.
-    :param message: /serve command.
-    :param l10n: Language set by the user.
-    :param state: FSM (Serve).
-    :param storage: Storage for FSM.
-    :return: Message for selecting a booking and go to FSM (select_booking).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -53,15 +44,6 @@ async def serve_1_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selects the booking to send the book.
-    :param message: A message with the expected booking number.
-    :param l10n: Language set by the user.
-    :param state: FSM (Serve).
-    :param storage: Storage for FSM.
-    :return: Message to write a book article to the user and go to FSM (send_book).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     booking_number = message.text

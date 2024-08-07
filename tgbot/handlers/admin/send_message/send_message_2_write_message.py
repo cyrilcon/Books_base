@@ -20,15 +20,10 @@ send_message_router_2.message.filter(AdminFilter())
     StateFilter(SendMessage.write_message), F.data == "back"
 )
 async def back_to_send_message_1(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Returns back to the user's selection.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendFiles).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("send-message-select-user"),
@@ -45,16 +40,6 @@ async def send_message_2(
     storage: RedisStorage,
     bot: Bot,
 ):
-    """
-    Sending a message to a user.
-    :param message: Message to send.
-    :param l10n: Language set by the user.
-    :param state: FSM (SendMessage).
-    :param storage: Storage for FSM.
-    :param bot: Bot instance.
-    :return: A message informing you that the message has been successfully sent.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     from_chat_id = message.from_user.id

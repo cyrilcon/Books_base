@@ -22,15 +22,6 @@ async def remove_admin(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /remove_admin command.
-    :param message: /remove_admin command.
-    :param l10n: Language set by the user.
-    :param state: FSM (RemoveAdmin).
-    :param storage: Storage for FSM.
-    :return: Message to demote the administrator and go to FSM (RemoveAdmin).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -53,15 +44,6 @@ async def remove_admin_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selecting an administrator for demotion.
-    :param message: A message with the expected username or user ID.
-    :param l10n: Language set by the user.
-    :param state: FSM (RemoveAdmin).
-    :param storage: Storage for FSM.
-    :return: Administrator demotion.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     user, response_message = await find_user(message.text, l10n)

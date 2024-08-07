@@ -19,15 +19,10 @@ add_book_router_6.message.filter(AdminFilter())
 
 @add_book_router_6.callback_query(StateFilter(AddBook.add_cover), F.data == "back")
 async def back_to_add_book_5(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Going back to adding genres.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    """
-
     await call.answer(cache_time=1)
 
     data = await state.get_data()
@@ -51,15 +46,6 @@ async def add_book_6(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Adding cover.
-    :param message: A message with the expected cover photo of the book.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to add files and go to FSM (add_files).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     cover = message.photo[-1].file_id

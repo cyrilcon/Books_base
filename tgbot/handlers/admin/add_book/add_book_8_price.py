@@ -20,15 +20,10 @@ add_book_router_8.message.filter(AdminFilter())
 
 @add_book_router_8.callback_query(StateFilter(AddBook.select_price), F.data == "back")
 async def back_to_add_book_7(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Go back to adding files.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    """
-
     await call.answer(cache_time=1)
 
     data = await state.get_data()
@@ -55,15 +50,6 @@ async def add_book_8(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Price choice.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to demo preview the publication and go to FSM (preview).
-    """
-
     await call.answer(cache_time=1)
 
     button_pressed = call.data
@@ -117,15 +103,6 @@ async def abbreviation_of_description(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Abbreviation of description.
-    :param message: A message with the expected abbreviated description.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBook).
-    :param storage: Storage for FSM.
-    :return: Message to demo preview the publication and go to FSM (preview).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     abbreviated_description = message.text

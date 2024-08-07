@@ -16,8 +16,4 @@ add_blacklist_cancel_router.callback_query.middleware(
     StateFilter(AddBlacklist), F.data == "cancel"
 )
 async def add_blacklist_cancel():
-    """
-    Cancel adding a user to the blacklist.
-    """
-
     pass

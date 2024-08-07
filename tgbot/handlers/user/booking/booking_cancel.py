@@ -12,8 +12,4 @@ booking_cancel_router.callback_query.middleware(
 
 @booking_cancel_router.callback_query(StateFilter(Booking), F.data == "cancel")
 async def booking_cancel():
-    """
-    Cancel adding an order.
-    """
-
     pass

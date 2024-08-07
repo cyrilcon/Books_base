@@ -22,15 +22,10 @@ booking_router_2 = Router()
 
 @booking_router_2.callback_query(StateFilter(Booking.send_author), F.data == "back")
 async def back_to_booking_1(
-    call: CallbackQuery, l10n: FluentLocalization, state: FSMContext
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
 ):
-    """
-    Going back to indicating the title of the book.
-    :param call: Pressed "Back" button.
-    :param l10n: Language set by the user.
-    :param state: FSM (Booking).
-    """
-
     await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("booking-title"),
@@ -47,16 +42,6 @@ async def booking_2(
     storage: RedisStorage,
     bot: Bot,
 ):
-    """
-    Adding an order.
-    :param message: Message with expected author.
-    :param l10n: Language set by the user.
-    :param state: FSM (Booking).
-    :param storage: Storage for FSM.
-    :param bot: Bot instance.
-    :return: Successful order message.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     id_user = message.from_user.id

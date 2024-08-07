@@ -14,8 +14,4 @@ cancel_booking_cancel_router.callback_query.middleware(
     StateFilter(CancelBooking), F.data == "cancel"
 )
 async def cancel_booking_cancel():
-    """
-    Cancellation of booking cancellation.
-    """
-
     pass

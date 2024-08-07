@@ -22,15 +22,6 @@ async def cancel_premium(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /cancel_premium command.
-    :param message: /cancel_premium command.
-    :param l10n: Language set by the user.
-    :param state: FSM (CancelPremium).
-    :param storage: Storage for FSM.
-    :return: Message to select the user and go to FSM (GivePremium).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -53,15 +44,6 @@ async def cancel_premium_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selects the user to cancel the Books_Base Premium status.
-    :param message: A message with the expected username or user ID.
-    :param l10n: Language set by the user.
-    :param state: FSM (CancelPremium).
-    :param storage: Storage for FSM.
-    :return: Cancel the Books_Base Premium status of a user.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     user, response_message = await find_user(message.text, l10n)

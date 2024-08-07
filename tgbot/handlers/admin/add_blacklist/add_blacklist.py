@@ -22,15 +22,6 @@ async def add_blacklist(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /add_blacklist command.
-    :param message: /add_blacklist command.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBlacklist).
-    :param storage: Storage for FSM.
-    :return: Message to add a user to the blacklist and go to FSM (AddBlacklist).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -53,15 +44,6 @@ async def add_blacklist_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selects a user to add to the blacklist.
-    :param message: A message with the expected username or user ID.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBlacklist).
-    :param storage: Storage for FSM.
-    :return: Adding a user to the blacklist.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     user, response_message = await find_user(message.text, l10n)

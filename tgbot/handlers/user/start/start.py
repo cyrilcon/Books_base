@@ -10,15 +10,11 @@ start_router = Router()
 
 
 @start_router.message(CommandStart())
-async def start(message: Message, l10n: FluentLocalization, storage: RedisStorage):
-    """
-    Processing of the /start command.
-    :param message: /start command.
-    :param l10n: Language set by the user.
-    :param storage: Storage for FSM.
-    :return: A welcome message or a found book.
-    """
-
+async def start(
+    message: Message,
+    l10n: FluentLocalization,
+    storage: RedisStorage,
+):
     await ClearKeyboard.clear(message, storage)
 
     fullname = message.from_user.full_name

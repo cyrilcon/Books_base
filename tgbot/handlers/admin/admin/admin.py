@@ -19,15 +19,6 @@ async def admin(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /admin command.
-    :param message: /admin command.
-    :param l10n: Language set by the user.
-    :param state: FSM (For emergency discharge).
-    :param storage: Storage for FSM.
-    :return: A message with commands for the administrator.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     await message.answer(l10n.format_value("admin-commands"))

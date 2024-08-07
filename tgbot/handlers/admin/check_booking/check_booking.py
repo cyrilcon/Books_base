@@ -16,13 +16,6 @@ check_booking_router.message.filter(AdminFilter())
 
 @check_booking_router.message(Command("check_booking"))
 async def check_booking(message: Message, l10n: FluentLocalization):
-    """
-    Processing of the /check_booking command.
-    :param message: /check_booking command.
-    :param l10n: Language set by the user.
-    :return: Message with incoming bookings.
-    """
-
     booking_count, id_booking, text = await get_booking_info(l10n)
 
     if booking_count == 0:
@@ -35,13 +28,6 @@ async def check_booking(message: Message, l10n: FluentLocalization):
 
 @check_booking_router.callback_query(F.data.startswith("booking_position"))
 async def check_booking_flipping(call: CallbackQuery, l10n: FluentLocalization):
-    """
-    Handling forward and back buttons for viewing orders.
-    :param call: Pressed "Back" or "Forward" button.
-    :param l10n: Language set by the user.
-    :return: Next or previous order page.
-    """
-
     await call.answer(cache_time=1)
     position = int(call.data.split(":")[-1])
 

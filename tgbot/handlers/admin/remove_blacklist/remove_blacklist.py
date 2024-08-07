@@ -22,15 +22,6 @@ async def remove_blacklist(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Processing of the /remove_blacklist command.
-    :param message: /remove_blacklist command.
-    :param l10n: Language set by the user.
-    :param state: FSM (RemoveBlacklist).
-    :param storage: Storage for FSM.
-    :return: Message to remove a user from the blacklist and go to FSM (RemoveBlacklist).
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
@@ -53,15 +44,6 @@ async def remove_blacklist_process(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    """
-    Selects the user to remove from the blacklist.
-    :param message: A message with the expected username or user ID.
-    :param l10n: Language set by the user.
-    :param state: FSM (AddBlacklist).
-    :param storage: Storage for FSM.
-    :return: Удаление пользователя из чёрного списка.
-    """
-
     await ClearKeyboard.clear(message, storage)
 
     user, response_message = await find_user(message.text, l10n)
