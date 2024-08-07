@@ -86,12 +86,12 @@ async def serve_1_process(
             await state.set_state(Serve.send_book)
         else:
             sent_message = await message.answer(
-                l10n.format_value("serve-booking-does-not-exist"),
+                l10n.format_value("booking-not-found"),
                 reply_markup=cancel_keyboard(l10n),
             )
     else:
         sent_message = await message.answer(
-            l10n.format_value("serve-booking-incorrect"),
+            l10n.format_value("booking-incorrect"),
             reply_markup=cancel_keyboard(l10n),
         )
 

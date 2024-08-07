@@ -72,7 +72,7 @@ async def cancel_booking_process(
             )
         else:
             sent_message = await message.answer(
-                l10n.format_value("cancel-booking-does-not-exist"),
+                l10n.format_value("booking-not-found"),
                 reply_markup=cancel_keyboard(l10n),
             )
             await ClearKeyboard.safe_message(
@@ -82,7 +82,7 @@ async def cancel_booking_process(
             )
     else:
         sent_message = await message.answer(
-            l10n.format_value("cancel-booking-incorrect"),
+            l10n.format_value("booking-incorrect"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(

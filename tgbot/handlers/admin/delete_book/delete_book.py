@@ -60,7 +60,7 @@ async def delete_book_process(
             await state.clear()
         else:
             sent_message = await message.answer(
-                l10n.format_value("delete-book-does-not-exist"),
+                l10n.format_value("article-not-found"),
                 reply_markup=cancel_keyboard(l10n),
             )
             await ClearKeyboard.safe_message(
@@ -70,7 +70,7 @@ async def delete_book_process(
             )
     else:
         sent_message = await message.answer(
-            l10n.format_value("delete-book-article-incorrect"),
+            l10n.format_value("article-incorrect"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(

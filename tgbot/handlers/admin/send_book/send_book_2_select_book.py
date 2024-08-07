@@ -78,7 +78,7 @@ async def send_book_2(
 
         else:
             sent_message = await message.answer(
-                l10n.format_value("send-book-does-not-exist"),
+                l10n.format_value("article-not-found"),
                 reply_markup=cancel_keyboard(l10n),
             )
             await ClearKeyboard.safe_message(
@@ -88,7 +88,7 @@ async def send_book_2(
             )
     else:
         sent_message = await message.answer(
-            l10n.format_value("send-book-article-incorrect"),
+            l10n.format_value("article-incorrect"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
