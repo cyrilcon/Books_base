@@ -3,9 +3,9 @@ admin-commands =
 
     — ♻️ Изменить данные о книге — /edit_book
 
-    — 📕 Удалить книгу — /delete_book
+    📕 Удалить книгу — /delete_book
 
-    — 📙 Отправить книгу — /send_book
+    📙 Отправить книгу — /send_book
 
     — 📗 Подарить книгу — /give_book
 
@@ -33,4 +33,4 @@ admin-commands =
 
     🙅🏼 Удалить администратора — /remove_admin
 
-    — 🧑🏼‍💻 Сообщение от админа — /send_message
+    🧑🏼‍💻 Сообщение от админа — /send_message

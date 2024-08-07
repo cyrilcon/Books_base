@@ -85,3 +85,16 @@ class BooksApi:
             url=f"{self.endpoint}/{id_book}",
         )
         return ApiResponse(status, result)
+
+    async def delete_book(self, id_book: int) -> ApiResponse:
+        """
+        Delete a book.
+
+        :param id_book: Unique book identifier (article of the book).
+        """
+
+        status, result = await self.base_client.make_request(
+            method="DELETE",
+            url=f"{self.endpoint}/{id_book}",
+        )
+        return ApiResponse(status, result)
