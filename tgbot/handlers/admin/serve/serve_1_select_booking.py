@@ -59,7 +59,7 @@ async def serve_1_process(
     :param l10n: Language set by the user.
     :param state: FSM (Serve).
     :param storage: Storage for FSM.
-    :return: Message to write a message to the user and go to FSM (send_book).
+    :return: Message to write a book article to the user and go to FSM (send_book).
     """
 
     await ClearKeyboard.clear(message, storage)
@@ -100,7 +100,7 @@ async def serve_1_process(
                 ),
                 reply_markup=back_cancel_keyboard(l10n),
             )
-            await state.update_data(id_booking=id_booking, id_user_recipient=id_user)
+            await state.update_data(id_booking=id_booking)
             await state.set_state(Serve.send_book)
         else:
             sent_message = await message.answer(

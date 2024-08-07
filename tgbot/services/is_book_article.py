@@ -15,5 +15,5 @@ def is_book_article(article: str):
         bool: True if the string is the article of the book, otherwise False.
     """
 
-    if article.startswith("#") or re.fullmatch(r"#\d{4}", article):
+    if article.startswith("#") and re.fullmatch(r"#\d{4}", article):
         return True

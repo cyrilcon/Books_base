@@ -43,6 +43,40 @@ async def back_to_serve_1(
     await state.set_state(Serve.select_booking)
 
 
+@serve_router_2.callback_query(F.data.startswith("serve"))
+async def serve_from_button(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    id_booking = int(call.data.split(":")[-1])
+
+    response = await api.bookings.get_booking_by_id(id_booking)
+    status = response.status
+
+    await call.answer(cache_time=1)
+
+    if status == 200:
+        booking = response.result
+        await state.update_data(id_booking=booking["id_booking"])
+
+        sent_message = await call.message.answer(
+            l10n.format_value("serve-send-book-from-button"),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await state.set_state(Serve.send_book)
+
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            user_id=call.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+    else:
+        await call.message.edit_reply_markup()
+        await call.message.answer(l10n.format_value("serve-is-already-serviced"))
+
+
 @serve_router_2.message(StateFilter(Serve.send_book), F.text)
 async def serve_2(
     message: Message,
@@ -76,7 +110,11 @@ async def serve_2(
 
             data = await state.get_data()
             id_booking = data.get("id_booking")
-            id_user_recipient = data.get("id_user_recipient")
+
+            response = await api.bookings.get_booking_by_id(id_booking)
+            booking = response.result
+            id_user_recipient = booking["id_user"]
+
             l10n_recipient = await get_user_language(id_user_recipient)
 
             is_sent = await Messenger.safe_send_message(

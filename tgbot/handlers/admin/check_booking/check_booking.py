@@ -23,12 +23,14 @@ async def check_booking(message: Message, l10n: FluentLocalization):
     :return: Message with incoming bookings.
     """
 
-    text, booking_count = await get_booking_info(l10n)
+    booking_count, id_booking, text = await get_booking_info(l10n)
 
     if booking_count == 0:
         await message.answer(l10n.format_value("booking-absent"))
     else:
-        await message.answer(text, reply_markup=check_booking_keyboard(booking_count))
+        await message.answer(
+            text, reply_markup=check_booking_keyboard(l10n, id_booking, booking_count)
+        )
 
 
 @check_booking_router.callback_query(F.data.startswith("booking_position"))
@@ -43,35 +45,42 @@ async def check_booking_flipping(call: CallbackQuery, l10n: FluentLocalization):
     await call.answer(cache_time=1)
     position = int(call.data.split(":")[-1])
 
-    text, booking_count = await get_booking_info(l10n, position=position)
+    booking_count, id_booking, text = await get_booking_info(l10n, position=position)
 
     if booking_count == 0:
         await call.message.edit_text(l10n.format_value("booking-absent"))
     else:
         await call.message.edit_text(
-            text, reply_markup=check_booking_keyboard(booking_count, position=position)
+            text=text,
+            reply_markup=check_booking_keyboard(
+                l10n=l10n,
+                id_booking=id_booking,
+                count=booking_count,
+                position=position,
+            ),
         )
 
 
 async def get_booking_info(
     l10n: FluentLocalization, position: int = 1
-) -> Tuple[Optional[str], int]:
+) -> Tuple[int, Optional[int], Optional[str]]:
     """
     Receive order information and total number of orders.
 
     :param l10n: Language set by the user.
     :param position: Order position among the total number of orders.
-    :return: A tuple containing text with order information and the number of orders.
+    :return: A tuple containing the number of orders, unique booking identifier and text with order information.
     """
 
     response = await api.bookings.get_booking_count()
     booking_count = response.result
 
     if booking_count == 0:
-        return None, booking_count
+        return booking_count, None, None
 
     response = await api.bookings.get_booking_by_position(position)
     booking = response.result
+    id_booking = booking["id_booking"]
 
     response = await api.users.get_user_by_id(booking["id_user"])
     user = response.result
@@ -85,8 +94,8 @@ async def get_booking_info(
             "id_user": str(user["id_user"]),
             "title": booking["title"],
             "author": booking["author"],
-            "id_booking": str(booking["id_booking"]),
+            "id_booking": str(id_booking),
         },
     )
 
-    return text, booking_count
+    return booking_count, id_booking, text

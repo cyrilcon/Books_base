@@ -107,7 +107,7 @@ async def booking_2(
             bot=bot,
             user_id=config.tg_bot.booking_chat,
             text=text,
-            reply_markup=serve_unavailable_keyboard(language_code),
+            reply_markup=serve_unavailable_keyboard(language_code, id_booking),
         )
     else:
         sent_message = await message.answer(
