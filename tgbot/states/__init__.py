@@ -8,6 +8,7 @@ __all__ = (
     "GivePremium",
     "RemoveAdmin",
     "RemoveBlacklist",
+    "SendBook",
     "SendFiles",
     "SendMessage",
     "Serve",
@@ -22,6 +23,7 @@ from .cancel_premium import CancelPremium
 from .give_premium import GivePremium
 from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
+from .send_book import SendBook
 from .send_files import SendFiles
 from .send_message import SendMessage
 from .serve import Serve

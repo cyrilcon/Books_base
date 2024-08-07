@@ -20,7 +20,6 @@ serve-send-book-from-button = Введите <i><b>артикул</b></i> кни
 
 serve-article-incorrect =
     Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
-
     Введите артикул книги ещё раз
 
 serve-book-does-not-exist =
@@ -30,8 +29,6 @@ serve-book-does-not-exist =
 serve-is-already-serviced = Заказ уже обслужен!!
 
 serve-serviced = Ваш заказ <code>№{ $id_booking }</code>:
-
-serve-error = Произошла ошибка отправки заказа!!
 
 serve-success = Заказ обслужен!!
 

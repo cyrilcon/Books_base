@@ -1,5 +1,4 @@
 from aiogram import Router, F, Bot
-from aiogram.exceptions import AiogramError
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -112,19 +111,16 @@ async def serve_2(
             )
 
             if is_sent:
-                try:
-                    caption = await generate_book_caption(data=book, l10n=l10n)
+                caption = await generate_book_caption(data=book, l10n=l10n)
 
-                    await Messenger.safe_send_message(
-                        bot=bot,
-                        user_id=id_user_recipient,
-                        text=caption,
-                        photo=book["cover"],
-                        # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
-                    )
-                    await message.answer(l10n.format_value("serve-success"))
-                except AiogramError:
-                    await message.answer(l10n.format_value("serve-error"))
+                await Messenger.safe_send_message(
+                    bot=bot,
+                    user_id=id_user_recipient,
+                    text=caption,
+                    photo=book["cover"],
+                    # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
+                )
+                await message.answer(l10n.format_value("serve-success"))
             else:
                 await message.answer(l10n.format_value("user-blocked-bot"))
 
