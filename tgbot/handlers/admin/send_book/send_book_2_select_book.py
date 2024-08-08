@@ -71,7 +71,12 @@ async def send_book_2(
             )
 
             if is_sent:
-                await message.answer(l10n.format_value("send-book-success"))
+                await message.answer(
+                    l10n.format_value(
+                        "send-book-success",
+                        {"title": book["title"]},
+                    )
+                )
             else:
                 await message.answer(l10n.format_value("user-blocked-bot"))
             await state.clear()

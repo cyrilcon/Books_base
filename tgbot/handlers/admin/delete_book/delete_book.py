@@ -55,8 +55,14 @@ async def delete_book_process(
         status = response.status
 
         if status == 200:
+            book = response.result
             await api.books.delete_book(id_book)
-            await message.answer(l10n.format_value("delete-book-success"))
+            await message.answer(
+                l10n.format_value(
+                    "delete-book-success",
+                    {"title": book["title"]},
+                )
+            )
             await state.clear()
         else:
             sent_message = await message.answer(

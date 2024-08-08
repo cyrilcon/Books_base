@@ -47,6 +47,7 @@ async def send_message_2(
 
     data = await state.get_data()
     id_user_recipient = data.get("id_user_recipient")
+    user_link = data.get("user_link")
     l10n_recipient = await get_user_language(id_user_recipient)
 
     is_sent = await Messenger.safe_send_message(
@@ -62,7 +63,12 @@ async def send_message_2(
             from_chat_id=from_chat_id,
             message_id=message_id,
         )
-        await message.answer(l10n.format_value("send-message-success"))
+        await message.answer(
+            l10n.format_value(
+                "send-message-success",
+                {"user_link": user_link, "id_user": str(id_user_recipient)},
+            )
+        )
     else:
         await message.answer(l10n.format_value("user-blocked-bot"))
 

@@ -8,14 +8,14 @@ from fluent.runtime import FluentLocalization
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
 from tgbot.services import find_user, ClearKeyboard, create_user_link
-from tgbot.states import SendMessage
+from tgbot.states import GiveBase
 
-send_message_router_1 = Router()
-send_message_router_1.message.filter(AdminFilter())
+give_base_router_1 = Router()
+give_base_router_1.message.filter(AdminFilter())
 
 
-@send_message_router_1.message(Command("send_message"))
-async def send_message_1(
+@give_base_router_1.message(Command("give_base"))
+async def give_base_1(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -24,10 +24,10 @@ async def send_message_1(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("send-message-select-user"),
+        l10n.format_value("give-base-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(SendMessage.select_user)
+    await state.set_state(GiveBase.select_user)
 
     await ClearKeyboard.safe_message(
         storage=storage,
@@ -36,8 +36,8 @@ async def send_message_1(
     )
 
 
-@send_message_router_1.message(StateFilter(SendMessage.select_user), F.text)
-async def send_message_1_process(
+@give_base_router_1.message(StateFilter(GiveBase.select_user), F.text)
+async def give_base_1_process(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -55,13 +55,13 @@ async def send_message_1_process(
 
         sent_message = await message.answer(
             l10n.format_value(
-                "send-message-write-message",
+                "give-base-send-base",
                 {"user_link": user_link, "id_user": str(id_user)},
             ),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await state.update_data(id_user_recipient=id_user, user_link=user_link)
-        await state.set_state(SendMessage.write_message)
+        await state.set_state(GiveBase.send_base)
     else:
         sent_message = await message.answer(
             response_message, reply_markup=cancel_keyboard(l10n)

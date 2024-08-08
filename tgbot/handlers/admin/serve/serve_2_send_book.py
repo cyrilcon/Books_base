@@ -120,7 +120,12 @@ async def serve_2(
                     photo=book["cover"],
                     # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
                 )
-                await message.answer(l10n.format_value("serve-success"))
+                await message.answer(
+                    l10n.format_value(
+                        "serve-success",
+                        {"id_booking": str(id_booking)},
+                    )
+                )
             else:
                 await message.answer(l10n.format_value("user-blocked-bot"))
 

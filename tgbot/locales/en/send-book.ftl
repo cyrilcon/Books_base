@@ -6,6 +6,6 @@ send-book-select-book =
     <b>2/2</b>
     Введите <i><b>артикул</b></i> книги, которой хотите отправить пользователю { $user_link } (<code>{ $id_user }</code>).
 
-send-book-success = Книга отправлена пользователю!!
+send-book-success = Книга "<code>{ $title }</code>" отправлена пользователю!!
 
 send-book-cancel = Вы не отправили книгу пользователю

@@ -14,6 +14,6 @@ serve-is-already-serviced = Заказ уже обслужен!!
 
 serve-serviced = Ваш заказ <code>№{ $id_booking }</code>:
 
-serve-success = Заказ обслужен!!
+serve-success = Заказ <code>№{ $id_booking }</code> обслужен!!
 
 serve-cancel = Вы не обслужили заказ
