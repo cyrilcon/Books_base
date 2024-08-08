@@ -51,7 +51,7 @@ button-unavailable = 🚫 Нет в наличии
 
 button-booking-again = 🔄 Заказать ещё
 
-button-support-reply = 💬 Ответить
+button-reply = 💬 Ответить
 
 button-exchange = 💎 Обменять 💎
 

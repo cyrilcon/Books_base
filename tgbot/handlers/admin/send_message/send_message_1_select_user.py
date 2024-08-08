@@ -8,7 +8,7 @@ from fluent.runtime import FluentLocalization
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
 from tgbot.services import find_user, ClearKeyboard, create_user_link
-from tgbot.states import SendMessage
+from tgbot.states import SendMessage, Support
 
 send_message_router_1 = Router()
 send_message_router_1.message.filter(AdminFilter())
@@ -61,7 +61,7 @@ async def send_message_1_process(
             reply_markup=back_cancel_keyboard(l10n),
         )
         await state.update_data(id_user_recipient=id_user, user_link=user_link)
-        await state.set_state(SendMessage.write_message)
+        await state.set_state(Support.reply_to_user)
     else:
         sent_message = await message.answer(
             response_message, reply_markup=cancel_keyboard(l10n)

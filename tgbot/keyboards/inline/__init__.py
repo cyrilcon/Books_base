@@ -8,6 +8,7 @@ __all__ = (
     "done_clear_back_cancel_keyboard",
     "post_cancel_keyboard",
     "price_post_keyboard",
+    "reply_keyboard",
     "serve_unavailable_keyboard",
     "show_book_booking_cancel_keyboard",
 )
@@ -22,6 +23,7 @@ from .keyboards import (
     done_clear_back_cancel_keyboard,
     post_cancel_keyboard,
     price_post_keyboard,
+    reply_keyboard,
     serve_unavailable_keyboard,
     show_book_booking_cancel_keyboard,
 )
