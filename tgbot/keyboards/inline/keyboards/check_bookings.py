@@ -4,7 +4,7 @@ from fluent.runtime import FluentLocalization
 from tgbot.keyboards.inline.buttons import serve_button
 
 
-def check_booking_keyboard(
+def check_bookings_keyboard(
     l10n: FluentLocalization,
     id_booking: int,
     count: int,
@@ -42,7 +42,7 @@ def check_booking_keyboard(
                 )
             )
 
-    check_booking_markup = InlineKeyboardMarkup(
+    check_bookings_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 serve_button(l10n, id_booking=id_booking),
@@ -51,4 +51,4 @@ def check_booking_keyboard(
         ]
     )
 
-    return check_booking_markup
+    return check_bookings_markup

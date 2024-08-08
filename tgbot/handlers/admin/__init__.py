@@ -15,6 +15,7 @@ from .send_book import send_book_routers
 from .send_files import send_files_routers
 from .send_message import send_message_routers
 from .serve import serve_routers
+from .take_base import take_base_routers
 
 admin_routers = Router()
 admin_routers.include_routers(
@@ -33,4 +34,5 @@ admin_routers.include_routers(
     send_files_routers,
     send_message_routers,
     serve_routers,
+    take_base_routers,
 )

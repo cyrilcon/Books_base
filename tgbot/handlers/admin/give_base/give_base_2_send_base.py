@@ -79,6 +79,7 @@ async def give_base_2(
                         "base_received": base_received,
                         "user_link": user_link,
                         "id_user": str(id_user_recipient),
+                        "user_balance": user_balance,
                     },
                 )
             )
