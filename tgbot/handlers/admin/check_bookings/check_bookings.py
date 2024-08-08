@@ -7,27 +7,27 @@ from fluent.runtime import FluentLocalization
 
 from infrastructure.books_base_api import api
 from tgbot.filters import AdminFilter
-from tgbot.keyboards.inline import check_booking_keyboard
+from tgbot.keyboards.inline import check_bookings_keyboard
 from tgbot.services import create_user_link
 
-check_booking_router = Router()
-check_booking_router.message.filter(AdminFilter())
+check_bookings_router = Router()
+check_bookings_router.message.filter(AdminFilter())
 
 
-@check_booking_router.message(Command("check_booking"))
-async def check_booking(message: Message, l10n: FluentLocalization):
+@check_bookings_router.message(Command("check_bookings"))
+async def check_bookings(message: Message, l10n: FluentLocalization):
     booking_count, id_booking, text = await get_booking_info(l10n)
 
     if booking_count == 0:
         await message.answer(l10n.format_value("booking-absent"))
     else:
         await message.answer(
-            text, reply_markup=check_booking_keyboard(l10n, id_booking, booking_count)
+            text, reply_markup=check_bookings_keyboard(l10n, id_booking, booking_count)
         )
 
 
-@check_booking_router.callback_query(F.data.startswith("booking_position"))
-async def check_booking_flipping(call: CallbackQuery, l10n: FluentLocalization):
+@check_bookings_router.callback_query(F.data.startswith("booking_position"))
+async def check_bookings_flipping(call: CallbackQuery, l10n: FluentLocalization):
     await call.answer(cache_time=1)
     position = int(call.data.split(":")[-1])
 
@@ -38,7 +38,7 @@ async def check_booking_flipping(call: CallbackQuery, l10n: FluentLocalization):
     else:
         await call.message.edit_text(
             text=text,
-            reply_markup=check_booking_keyboard(
+            reply_markup=check_bookings_keyboard(
                 l10n=l10n,
                 id_booking=id_booking,
                 count=booking_count,
