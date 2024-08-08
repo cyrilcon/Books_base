@@ -6,13 +6,13 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from infrastructure.books_base_api import api
-from tgbot.filters import AdminFilter
+from tgbot.filters import SuperAdminFilter
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import ClearKeyboard, is_book_article
 from tgbot.states import DeleteBook
 
 delete_book_router = Router()
-delete_book_router.message.filter(AdminFilter())
+delete_book_router.message.filter(SuperAdminFilter())
 
 
 @delete_book_router.message(Command("delete_book"))
