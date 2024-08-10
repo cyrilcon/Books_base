@@ -42,7 +42,7 @@ async def add_book_3(
     for author in authors:
         if len(author) > 255:
             sent_message = await message.answer(
-                l10n.format_value("add-book-authors-too-long"),
+                l10n.format_value("authors-too-long"),
                 reply_markup=back_cancel_keyboard(l10n),
             )
             await ClearKeyboard.safe_message(
