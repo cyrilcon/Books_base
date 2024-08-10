@@ -12,6 +12,6 @@ def description_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboard
 
     description = InlineKeyboardButton(
         text=l10n.format_value("button-description"),
-        callback_data=f"description:{id_book}",
+        callback_data=f"edit_description:{id_book}",
     )
     return description
