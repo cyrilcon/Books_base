@@ -13,10 +13,6 @@ edit-book-title =
 
     Текущее название: <code>{ $title }</code>
 
-edit-book-title-too-long =
-    Слишком длинное название!!
-    Сократите и введите название книги ещё раз
-
 edit-book-authors =
     Введите нового <i><b>автора</b></i>
 

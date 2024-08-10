@@ -83,7 +83,7 @@ async def booking_1_process(
         await state.update_data(title=title)
     else:
         sent_message = await message.answer(
-            l10n.format_value("booking-title-too-long"),
+            l10n.format_value("title-too-long"),
             reply_markup=cancel_keyboard(l10n),
         )
 

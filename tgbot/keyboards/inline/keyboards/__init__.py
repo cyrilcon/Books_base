@@ -12,6 +12,7 @@ __all__ = (
     "reply_keyboard",
     "serve_unavailable_keyboard",
     "show_book_booking_cancel_keyboard",
+    "yes_cancel_keyboard",
 )
 
 from .back_cancel import back_cancel_keyboard
@@ -27,3 +28,4 @@ from .price_post import price_post_keyboard
 from .reply import reply_keyboard
 from .serve_unavailable import serve_unavailable_keyboard
 from .show_book_booking_cancel import show_book_booking_cancel_keyboard
+from .yes_cancel import yes_cancel_keyboard

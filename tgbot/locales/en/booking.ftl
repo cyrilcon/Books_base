@@ -2,10 +2,6 @@ booking-title =
     <b>1/2</b>
     Введите <i><b>название</b></i> книги, которой хотите заказать
 
-booking-title-too-long =
-    Слишком большое название книги!!
-    Введите <i><b>название</b></i> книги ещё раз
-
 booking-title-already-exists = В нашей библиотеке уже есть книга со схожим названием по вашему запросу: <b>"<code>{ $title }</code>"</b> <i>{ $authors }</i> (<code>{ $article }</code>)
 
 booking-author =

@@ -72,42 +72,41 @@ async def edit_article_process(
                 reply_markup=cancel_keyboard(l10n),
             )
         else:
+            # TODO: объединить
             data = await state.get_data()
             id_book_edited = data.get("id_book_edited")
 
             response = await api.books.update_book(id_book_edited, id_book=new_id_book)
-            status = response.status
             book = response.result
 
-            if status == 200:
-                caption = await generate_book_caption(data=book, l10n=l10n)
-                caption_length = len(caption)
+            caption = await generate_book_caption(data=book, l10n=l10n)
+            caption_length = len(caption)
 
-                if caption_length <= 1024:
-                    await message.answer(l10n.format_value("edit-book-success"))
-                    await Messenger.safe_send_message(
-                        bot=bot,
-                        user_id=message.from_user.id,
-                        text=caption,
-                        photo=book["cover"],
-                        reply_markup=edit_book_keyboard(l10n, book["id_book"]),
-                    )
-                    await state.clear()
-                else:
-                    sent_message = await message.answer(
-                        l10n.format_value(
-                            "edit-book-caption-too-long",
-                            {
-                                "caption_length": caption_length,
-                            },
-                        ),
-                        reply_markup=cancel_keyboard(l10n),
-                    )
-                    await ClearKeyboard.safe_message(
-                        storage=storage,
-                        user_id=message.from_user.id,
-                        sent_message_id=sent_message.message_id,
-                    )
+            if caption_length <= 1024:
+                await message.answer(l10n.format_value("edit-book-success"))
+                await Messenger.safe_send_message(
+                    bot=bot,
+                    user_id=message.from_user.id,
+                    text=caption,
+                    photo=book["cover"],
+                    reply_markup=edit_book_keyboard(l10n, book["id_book"]),
+                )
+                await state.clear()
+            else:
+                sent_message = await message.answer(
+                    l10n.format_value(
+                        "edit-book-caption-too-long",
+                        {
+                            "caption_length": caption_length,
+                        },
+                    ),
+                    reply_markup=cancel_keyboard(l10n),
+                )
+                await ClearKeyboard.safe_message(
+                    storage=storage,
+                    user_id=message.from_user.id,
+                    sent_message_id=sent_message.message_id,
+                )
     else:
         sent_message = await message.answer(
             l10n.format_value("article-incorrect"),

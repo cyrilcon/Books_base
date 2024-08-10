@@ -68,9 +68,9 @@ async def add_book_2(
                 book = result["books"][0]["book"]
                 sent_message = await message.answer(
                     l10n.format_value(
-                        "add-book-title-already-exists",
+                        "title-already-exists",
                         {
-                            "title": title,
+                            "title": book["title"],
                             "article": "#{:04d}".format(book["id_book"] + 1),
                         },
                     ),
@@ -86,7 +86,7 @@ async def add_book_2(
             await state.update_data(title=title)
     else:
         sent_message = await message.answer(
-            l10n.format_value("add-book-title-too-long"),
+            l10n.format_value("title-too-long"),
             reply_markup=back_cancel_keyboard(l10n),
         )
 

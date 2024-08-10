@@ -23,16 +23,6 @@ add-book-title-incorrect =
 
     Введите название книги ещё раз
 
-add-book-title-too-long =
-    Слишком длинное название!!
-
-    Сократите и введите название книги ещё раз
-
-add-book-title-already-exists =
-    Книга с названием <b>"{ $title }"</b> (<code>{ $article }</code>) уже существует!!
-
-    Вы уверены, что хотите добавить книгу??
-
 add-book-authors =
     <b>3/8</b>
     Введите <i><b>автора(ов)</b></i>
