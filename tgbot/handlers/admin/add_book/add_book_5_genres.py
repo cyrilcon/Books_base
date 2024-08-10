@@ -1,6 +1,3 @@
-import re
-from typing import Tuple, List
-
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
@@ -13,7 +10,7 @@ from tgbot.keyboards.inline import (
     back_cancel_keyboard,
     done_clear_back_cancel_keyboard,
 )
-from tgbot.services import ClearKeyboard
+from tgbot.services import ClearKeyboard, genres_to_list
 from tgbot.states import AddBook
 
 add_book_router_5 = Router()
@@ -51,7 +48,7 @@ async def add_book_5(
     genres, too_long_genres = await genres_to_list(genres_from_message, genres)
     if too_long_genres:
         sent_message = await message.answer(
-            l10n.format_value("add-book-genres-too-long"),
+            l10n.format_value("genres-too-long"),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -105,32 +102,3 @@ async def clear_add_book_5(
     )
     genres = []
     await state.update_data(genres=genres)
-
-
-async def genres_to_list(
-    genres_from_message: str, genres: List[str] = None
-) -> Tuple[List[dict], bool]:
-    """
-    Turns genres into a list.
-    :param genres_from_message: Book genres.
-    :param genres: A list with genres already recorded.
-    :return: A list with genres and a flag indicating if any genre is too long.
-    """
-
-    if genres is None:
-        genres = []
-
-    new_genres = re.findall(r"\b(\w+(?:\s+\w+)*)\b", genres_from_message)
-    too_long_genres = False
-    new_genres = [
-        {"genre": genre.strip().replace(" ", "_").lower()} for genre in new_genres
-    ]
-
-    for genre in new_genres:
-        if len(genre["genre"]) > 255:
-            too_long_genres = True
-            break
-        if genre["genre"] not in [g["genre"] for g in genres]:
-            genres.append(genre)
-
-    return genres, too_long_genres
