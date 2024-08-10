@@ -6,6 +6,7 @@ __all__ = (
     "check_bookings_keyboard",
     "deep_link_buy_keyboard",
     "done_clear_back_cancel_keyboard",
+    "edit_book_keyboard",
     "post_cancel_keyboard",
     "price_post_keyboard",
     "reply_keyboard",
@@ -20,6 +21,7 @@ from .cancel import cancel_keyboard
 from .check_bookings import check_bookings_keyboard
 from .deep_link_buy import deep_link_buy_keyboard
 from .done_clear_back_cancel import done_clear_back_cancel_keyboard
+from .edit_book import edit_book_keyboard
 from .post_cancel import post_cancel_keyboard
 from .price_post import price_post_keyboard
 from .reply import reply_keyboard
