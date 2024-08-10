@@ -6,7 +6,7 @@ serve-send-book =
     <b>2/2</b>
     Введите <i><b>артикул</b></i> книги, которой хотите отправить пользователю.
 
-    { $booking_information }
+    { booking-information }
 
 serve-send-book-from-button = Введите <i><b>артикул</b></i> книги, которой хотите отправить пользователю.
 

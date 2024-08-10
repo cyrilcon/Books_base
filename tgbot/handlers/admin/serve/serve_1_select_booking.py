@@ -65,20 +65,16 @@ async def serve_1_process(
 
             user_link = await create_user_link(user["fullname"], user["username"])
 
-            booking_information = l10n.format_value(
-                "booking-information",
-                {
-                    "user_link": user_link,
-                    "id_user": str(id_user),
-                    "title": booking["title"],
-                    "author": booking["author"],
-                    "id_booking": str(id_booking),
-                },
-            )
             sent_message = await message.answer(
                 l10n.format_value(
                     "serve-send-book",
-                    {"booking_information": booking_information},
+                    {
+                        "user_link": user_link,
+                        "id_user": str(id_user),
+                        "title": booking["title"],
+                        "author": booking["author"],
+                        "id_booking": str(id_booking),
+                    },
                 ),
                 reply_markup=back_cancel_keyboard(l10n),
             )

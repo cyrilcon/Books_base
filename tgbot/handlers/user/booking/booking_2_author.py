@@ -71,20 +71,14 @@ async def booking_2(
 
         user_link = await create_user_link(fullname, username)
 
-        booking_information = l10n.format_value(
-            "booking-information",
+        text = l10n.format_value(
+            "booking-from-user",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),
                 "title": title,
                 "author": author,
                 "id_booking": str(id_booking),
-            },
-        )
-        text = l10n.format_value(
-            "booking-from-user",
-            {
-                "booking_information": booking_information,
             },
         )
         language_code = await get_user_language(config.tg_bot.super_admin)

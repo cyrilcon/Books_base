@@ -34,7 +34,7 @@ booking-information =
 
 booking-from-user =
     Вы получили заказ от пользователя
-    { $booking_information }
+    { booking-information }
 
 booking-cancel = Вы отменили заказ
 

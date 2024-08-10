@@ -86,6 +86,23 @@ class BooksApi:
         )
         return ApiResponse(status, result)
 
+    async def update_book(self, id_book_edited: int, **kwargs) -> ApiResponse:
+        """
+        Partially update book information.
+
+        :param id_book_edited:  Unique book identifier (article of the book).
+        :param kwargs: Additional arguments.
+        """
+
+        data = {key: value for key, value in kwargs.items()}
+
+        status, result = await self.base_client.make_request(
+            method="PATCH",
+            url=f"{self.endpoint}/{id_book_edited}",
+            json=data,
+        )
+        return ApiResponse(status, result)
+
     async def delete_book(self, id_book: int) -> ApiResponse:
         """
         Delete a book.

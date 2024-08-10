@@ -68,7 +68,7 @@ async def add_book_8(
     caption = await generate_book_caption(data, post=True, from_user=from_user)
     caption_length = len(caption)
 
-    if caption_length < 1024:
+    if caption_length <= 1024:
         await call.message.delete()
         sent_message = await call.message.answer_photo(
             photo=cover,

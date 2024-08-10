@@ -5,13 +5,12 @@ add-book-article =
     Свободный артикул: <code>{ $free_article }</code>
 
 add-book-article-incorrect =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+    { article-incorrect }
 
     Свободный артикул: <code>{ $free_article }</code>
 
 add-book-article-already-exists =
-    Книга с таким артикулом уже существует!!
-    Введите артикул ещё раз
+    { article-already-exists }
 
     Свободный артикул: <code>{ $free_article }</code>
 

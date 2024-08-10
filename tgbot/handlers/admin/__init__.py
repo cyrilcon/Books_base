@@ -7,6 +7,7 @@ from .admin import admin_router
 from .cancel_premium import cancel_premium_routers
 from .check_bookings import check_bookings_router
 from .delete_book import delete_book_routers
+from .edit_book import edit_book_routers
 from .give_base import give_base_routers
 from .give_premium import give_premium_routers
 from .remove_admin import remove_admin_routers
@@ -26,6 +27,7 @@ admin_routers.include_routers(
     cancel_premium_routers,
     check_bookings_router,
     delete_book_routers,
+    edit_book_routers,
     give_base_routers,
     give_premium_routers,
     remove_admin_routers,

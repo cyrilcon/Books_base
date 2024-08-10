@@ -78,7 +78,7 @@ async def take_base_2(
 
     else:
         sent_message = await message.answer(
-            l10n.format_value("take-base-incorrect"),
+            l10n.format_value("base-incorrect"),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(

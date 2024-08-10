@@ -23,21 +23,21 @@ button-do-not-publish = 🚫 Не публиковать
 
 button-not-from-user = 👤 Не от пользователя
 
-button-edit-book-article = 📄 Артикул
+button-article = 📄 Артикул
 
-button-edit-book-title = 📚 Название
+button-title = 📚 Название
 
-button-edit-book-authors = ✍️ Авторы
+button-authors = ✍️ Авторы
 
-button-edit-book-descriptions = 📝 Описание
+button-description = 📝 Описание
 
-button-edit-book-genres = 🦄 Жанры
+button-genres = 🦄 Жанры
 
-button-edit-book-cover = 🖼️ Обложка
+button-cover = 🖼️ Обложка
 
-button-edit-book-files = 📁 Файлы
+button-files = 📁 Файлы
 
-button-edit-book-price = 💵 Цена
+button-price = 💵 Цена
 
 button-yes = ✅ Да
 
