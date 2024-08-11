@@ -48,7 +48,7 @@ async def edit_article(
     )
 
 
-@edit_book_router_1.message(StateFilter(EditBook.edit_article))
+@edit_book_router_1.message(StateFilter(EditBook.edit_article), F.text)
 async def edit_article_process(
     message: Message,
     l10n: FluentLocalization,

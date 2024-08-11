@@ -57,7 +57,7 @@ async def edit_genres(
     )
 
 
-@edit_book_router_5.message(StateFilter(EditBook.edit_genres))
+@edit_book_router_5.message(StateFilter(EditBook.edit_genres), F.text)
 async def edit_genres_process(
     message: Message,
     l10n: FluentLocalization,

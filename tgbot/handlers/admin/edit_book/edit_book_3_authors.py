@@ -52,7 +52,7 @@ async def edit_authors(
     )
 
 
-@edit_book_router_3.message(StateFilter(EditBook.edit_authors))
+@edit_book_router_3.message(StateFilter(EditBook.edit_authors), F.text)
 async def edit_authors_process(
     message: Message,
     l10n: FluentLocalization,

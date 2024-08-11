@@ -50,7 +50,7 @@ async def edit_description(
     )
 
 
-@edit_book_router_4.message(StateFilter(EditBook.edit_description))
+@edit_book_router_4.message(StateFilter(EditBook.edit_description), F.text)
 async def edit_description_process(
     message: Message,
     l10n: FluentLocalization,

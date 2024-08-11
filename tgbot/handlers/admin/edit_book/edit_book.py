@@ -1,4 +1,4 @@
-from aiogram import Router, Bot
+from aiogram import Router, Bot, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -42,7 +42,7 @@ async def edit_book(
     )
 
 
-@edit_book_router.message(StateFilter(EditBook.select_book))
+@edit_book_router.message(StateFilter(EditBook.select_book), F.text)
 async def edit_book_process(
     message: Message,
     l10n: FluentLocalization,
