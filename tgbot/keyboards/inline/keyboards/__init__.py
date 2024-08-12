@@ -10,6 +10,7 @@ __all__ = (
     "edit_book_keyboard",
     "post_cancel_keyboard",
     "price_post_keyboard",
+    "price_update_keyboard",
     "reply_keyboard",
     "serve_unavailable_keyboard",
     "show_book_booking_cancel_keyboard",
@@ -27,6 +28,7 @@ from .done_clear_cancel import done_clear_cancel_keyboard
 from .edit_book import edit_book_keyboard
 from .post_cancel import post_cancel_keyboard
 from .price_post import price_post_keyboard
+from .price_update import price_update_keyboard
 from .reply import reply_keyboard
 from .serve_unavailable import serve_unavailable_keyboard
 from .show_book_booking_cancel import show_book_booking_cancel_keyboard

@@ -38,13 +38,9 @@ edit-book-cover = Отправьте новое <i><b>фото обложки</b
 
 edit-book-files = Отправьте новый <i><b>файл</b></i> книги
 
-edit-book-files-send-more =
-    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
-
-    <b>Изменённые форматы:</b>
-    { $formats }
-
 edit-book-price = Выберите новую <i><b>цену</b></i> книги
+
+edit-book-price-error = У этой книги уже установалена такая цена!!
 
 edit-book-caption-too-long =
     Слишком большой текст!!

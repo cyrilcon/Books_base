@@ -9,7 +9,7 @@ from tgbot.keyboards.inline.buttons import (
     genres_button,
     cover_button,
     files_button,
-    price_button,
+    price_edit_button,
 )
 
 
@@ -37,7 +37,7 @@ def edit_book_keyboard(l10n: FluentLocalization, id_book: int) -> InlineKeyboard
             ],
             [
                 files_button(l10n, id_book=id_book),
-                price_button(l10n, id_book=id_book),
+                price_edit_button(l10n, id_book=id_book),
             ],
         ],
     )

@@ -102,9 +102,7 @@ async def edit_authors_process(
         sent_message = await message.answer(
             l10n.format_value(
                 "edit-book-caption-too-long",
-                {
-                    "caption_length": caption_length,
-                },
+                {"caption_length": caption_length},
             ),
             reply_markup=cancel_keyboard(l10n),
         )

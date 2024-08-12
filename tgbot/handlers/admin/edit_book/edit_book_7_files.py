@@ -90,6 +90,7 @@ async def done_edit_files(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
+    storage: RedisStorage,
     bot: Bot,
 ):
     await call.answer(cache_time=1)
@@ -102,18 +103,33 @@ async def done_edit_files(
     book = response.result
 
     caption = await generate_book_caption(data=book, l10n=l10n)
+    caption_length = len(caption)
 
-    await call.message.edit_text(
-        l10n.format_value("edit-book-success"), reply_markup=None
-    )
-    await Messenger.safe_send_message(
-        bot=bot,
-        user_id=call.from_user.id,
-        text=caption,
-        photo=book["cover"],
-        reply_markup=edit_book_keyboard(l10n, book["id_book"]),
-    )
-    await state.clear()
+    if caption_length <= 1024:
+        await call.message.edit_text(
+            l10n.format_value("edit-book-success"), reply_markup=None
+        )
+        await Messenger.safe_send_message(
+            bot=bot,
+            user_id=call.from_user.id,
+            text=caption,
+            photo=book["cover"],
+            reply_markup=edit_book_keyboard(l10n, book["id_book"]),
+        )
+        await state.clear()
+    else:
+        sent_message = await call.message.answer(
+            l10n.format_value(
+                "edit-book-caption-too-long",
+                {"caption_length": caption_length},
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            user_id=call.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
 
 
 @edit_book_router_7.callback_query(StateFilter(EditBook.edit_files), F.data == "clear")

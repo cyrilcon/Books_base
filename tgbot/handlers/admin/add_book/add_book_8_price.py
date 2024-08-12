@@ -42,7 +42,7 @@ async def back_to_add_book_7(
 
 @add_book_router_8.callback_query(
     StateFilter(AddBook.select_price),
-    F.data.in_({"price_85", "price_50", "do_not_publish", "not_from_user"}),
+    F.data.in_({"price_post_85", "price_post_50", "do_not_publish", "not_from_user"}),
 )
 async def add_book_8(
     call: CallbackQuery,
@@ -54,7 +54,7 @@ async def add_book_8(
 
     button_pressed = call.data
 
-    price = 50 if button_pressed == "50" else 85
+    price = 50 if button_pressed == "price_post_50" else 85
     from_user = False if button_pressed == "not_from_user" else True
     await state.update_data(price=price, from_user=from_user)
 

@@ -15,9 +15,11 @@ __all__ = (
     "genres_button",
     "not_from_user_button",
     "post_button",
-    "price_button",
-    "price_50_button",
-    "price_85_button",
+    "price_edit_button",
+    "price_post_50_button",
+    "price_price_85_button",
+    "price_update_50_button",
+    "price_update_85_button",
     "reply_button",
     "serve_button",
     "show_book_button",
@@ -42,9 +44,11 @@ from .files import files_button
 from .genres import genres_button
 from .not_from_user import not_from_user_button
 from .post import post_button
-from .price import price_button
-from .price_50 import price_50_button
-from .price_85 import price_85_button
+from .price_edit import price_edit_button
+from .price_post_50 import price_post_50_button
+from .price_post_85 import price_price_85_button
+from .price_update_50 import price_update_50_button
+from .price_update_85 import price_update_85_button
 from .reply import reply_button
 from .serve import serve_button
 from .show_book import show_book_button
