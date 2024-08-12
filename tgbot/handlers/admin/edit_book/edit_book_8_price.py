@@ -41,7 +41,6 @@ async def edit_price_process(
 
     await call.answer(cache_time=1)
 
-    # TODO: обновляется данные а книге, а потом идёт проверка длины, такого быть не может
     response = await api.books.update_book(id_book_edited, price=price)
     book = response.result
 

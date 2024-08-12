@@ -93,7 +93,6 @@ async def edit_title_process(
                     sent_message_id=sent_message.message_id,
                 )
             else:
-                # TODO: объединить
                 data = await state.get_data()
                 id_book_edited = data.get("id_book_edited")
 

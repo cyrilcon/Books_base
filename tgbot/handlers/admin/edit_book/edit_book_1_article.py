@@ -72,7 +72,6 @@ async def edit_article_process(
                 reply_markup=cancel_keyboard(l10n),
             )
         else:
-            # TODO: объединить
             data = await state.get_data()
             id_book_edited = data.get("id_book_edited")
 

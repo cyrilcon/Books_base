@@ -44,6 +44,9 @@ async def set_default_commands(bot, admins: list[int]):
                 command="support", description=l10n.format_value("command-support")
             ),
             types.BotCommand(
+                command="settings", description=l10n.format_value("command-settings")
+            ),
+            types.BotCommand(
                 command="start", description=l10n.format_value("command-start")
             ),
             types.BotCommand(
