@@ -36,10 +36,6 @@ edit-book-genres =
 
 edit-book-cover = Отправьте новое <i><b>фото обложки</b></i> книги
 
-edit-book-caption-too-long =
-    Слишком большой текст!!
-    (У вас <b>{ $caption_length }</b>/1024 символов)
-
 edit-book-files = Отправьте новый <i><b>файл</b></i> книги
 
 edit-book-files-send-more =
@@ -49,6 +45,10 @@ edit-book-files-send-more =
     { $formats }
 
 edit-book-price = Выберите новую <i><b>цену</b></i> книги
+
+edit-book-caption-too-long =
+    Слишком большой текст!!
+    (У вас <b>{ $caption_length }</b>/1024 символов)
 
 edit-book-success = Данные успешно изменены!!
 

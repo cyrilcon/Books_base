@@ -7,8 +7,8 @@ from .edit_book_3_authors import edit_book_router_3
 from .edit_book_4_description import edit_book_router_4
 from .edit_book_5_genres import edit_book_router_5
 from .edit_book_6_cover import edit_book_router_6
+from .edit_book_7_files import edit_book_router_7
 
-# from .edit_book_7_files import edit_book_router_7
 # from .edit_book_8_price import edit_book_router_8
 from .edit_book_cancel import edit_book_cancel_router
 
@@ -22,6 +22,6 @@ edit_book_routers.include_routers(
     edit_book_router_4,
     edit_book_router_5,
     edit_book_router_6,
-    # edit_book_router_7,
+    edit_book_router_7,
     # edit_book_router_8,
 )

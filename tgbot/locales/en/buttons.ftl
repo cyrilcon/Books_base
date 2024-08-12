@@ -13,7 +13,9 @@ button-post = 📤 Опубликовать
 
 button-done = ✅ Готово
 
-button-clear = 🗑️ Стереть
+button-clear = 🧹 Стереть
+
+button-delete = 🗑️ Удалить
 
 button-price-85 = 85₽
 
@@ -53,7 +55,7 @@ button-booking-again = 🔄 Заказать ещё
 
 button-reply = 💬 Ответить
 
-button-exchange = 💎 Обменять 💎
+button-exchange = 💎 Обменять
 
 button-free-book = 🎁 Бесплатная книга
 
