@@ -14,6 +14,8 @@ __all__ = (
     "price_update_keyboard",
     "reply_keyboard",
     "serve_unavailable_keyboard",
+    "share_base_keyboard",
+    "share_our_store_keyboard",
     "show_book_booking_cancel_keyboard",
     "yes_cancel_keyboard",
 )
@@ -34,6 +36,8 @@ from .keyboards import (
     price_update_keyboard,
     reply_keyboard,
     serve_unavailable_keyboard,
+    share_base_keyboard,
+    share_our_store_keyboard,
     show_book_booking_cancel_keyboard,
     yes_cancel_keyboard,
 )

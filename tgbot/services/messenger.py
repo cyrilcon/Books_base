@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, exceptions
-from aiogram.types import InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardMarkup, LinkPreviewOptions
 
 
 class Messenger:
@@ -14,6 +14,7 @@ class Messenger:
         photo: str = None,
         disable_notification: bool = False,
         reply_markup: InlineKeyboardMarkup = None,
+        link_preview_options_is_disabled: bool = False,
     ) -> bool:
         """
         Safe message sender.
@@ -23,6 +24,7 @@ class Messenger:
         :param photo: Photo attached to the message.
         :param disable_notification: Disable notification or not.
         :param reply_markup: Reply markup.
+        :param link_preview_options_is_disabled: Link preview generation options for the message.
         :return: Success.
         """
 
@@ -41,6 +43,9 @@ class Messenger:
                     text,
                     disable_notification=disable_notification,
                     reply_markup=reply_markup,
+                    link_preview_options=LinkPreviewOptions(
+                        is_disabled=link_preview_options_is_disabled
+                    ),
                 )
         except exceptions.TelegramBadRequest as e:
             logging.error(e)

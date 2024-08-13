@@ -9,8 +9,7 @@ give-base-send-base =
 give-base-received =
     Вы получили { $base_received } <i>base</i> 💎
 
-    На вашем счету: <b>{ $user_balance } <i>base</i></b> 💎
-
+    { base-balance }
 
 give-base-success =
     Вы отправили { $base_received } <i>base</i> 💎 пользователю { $user_link } (<code>{ $id_user }</code>).

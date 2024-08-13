@@ -15,6 +15,7 @@ __all__ = (
     "SendFiles",
     "SendMessage",
     "Serve",
+    "ShareBase",
     "Support",
     "TakeBase",
 )
@@ -35,5 +36,6 @@ from .send_book import SendBook
 from .send_files import SendFiles
 from .send_message import SendMessage
 from .serve import Serve
+from .share_base import ShareBase
 from .support import Support
 from .take_base import TakeBase
