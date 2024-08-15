@@ -32,6 +32,13 @@ async def search_book_process(
 
     title_request.replace('"', "")
 
+    if len(title_request) > 255:
+        await message.answer(
+            l10n.format_value("search-title-too-long"),
+            reply_markup=search_by_author_and_genre_keyboard(l10n),
+        )
+        return
+
     response = await api.books.search_books_by_title(title_request, page=page)
     result = response.result
     found = result["found"]
