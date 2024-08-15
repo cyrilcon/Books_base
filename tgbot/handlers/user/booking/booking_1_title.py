@@ -118,23 +118,30 @@ async def booking_1_show_book(
     bot: Bot,
 ):
     await call.answer(cache_time=1)
-    await call.message.edit_reply_markup()
-    await state.clear()
 
     id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book_by_id(id_book)
     status = response.status
 
     if status == 200:
-        id_user = call.from_user.id
+        await call.message.edit_reply_markup()
+        await state.clear()
+
         book = response.result
 
         caption = await generate_book_caption(data=book, l10n=l10n)
 
         await Messenger.safe_send_message(
             bot=bot,
-            user_id=id_user,
+            user_id=call.from_user.id,
             text=caption,
             photo=book["cover"],
             # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
+        )
+    else:
+        await call.message.answer(
+            l10n.format_value(
+                "search-book-does-not-exist",
+                {"article": "#{:04d}".format(int(id_book))},
+            )
         )

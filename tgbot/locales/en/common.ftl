@@ -57,3 +57,5 @@ files-already-sent =
     { $formats }
 
 base-balance = На вашем счету: <b>{ $user_balance } <i>base</i></b> 💎
+
+page = стр.

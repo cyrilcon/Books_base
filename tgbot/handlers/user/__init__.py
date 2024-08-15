@@ -3,6 +3,7 @@ from aiogram import Router
 from .booking import booking_routers
 from .cancel_booking import cancel_booking_routers
 from .privacy import privacy_router
+from .search import search_routers
 from .settings import settings_router
 from .share_base import share_base_routers
 from .start import start_router
@@ -17,5 +18,5 @@ user_routers.include_routers(
     settings_router,
     share_base_routers,
     support_routers,
-    # search_routers,  # Must be the latest
+    search_routers,  # Must be the latest
 )

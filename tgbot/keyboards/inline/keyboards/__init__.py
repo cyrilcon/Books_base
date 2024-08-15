@@ -9,10 +9,12 @@ __all__ = (
     "done_clear_cancel_keyboard",
     "edit_book_keyboard",
     "languages_keyboard",
+    "pagination_keyboard",
     "post_cancel_keyboard",
     "price_post_keyboard",
     "price_update_keyboard",
     "reply_keyboard",
+    "search_by_author_and_genre_keyboard",
     "serve_unavailable_keyboard",
     "share_base_keyboard",
     "share_our_store_keyboard",
@@ -30,10 +32,12 @@ from .done_clear_back_cancel import done_clear_back_cancel_keyboard
 from .done_clear_cancel import done_clear_cancel_keyboard
 from .edit_book import edit_book_keyboard
 from .languages import languages_keyboard
+from .pagination import pagination_keyboard
 from .post_cancel import post_cancel_keyboard
 from .price_post import price_post_keyboard
 from .price_update import price_update_keyboard
 from .reply import reply_keyboard
+from .search_by_author_and_genre import search_by_author_and_genre_keyboard
 from .serve_unavailable import serve_unavailable_keyboard
 from .share_base import share_base_keyboard
 from .share_our_store import share_our_store_keyboard

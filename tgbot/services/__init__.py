@@ -11,6 +11,7 @@ __all__ = (
     "genres_to_list",
     "is_book_article",
     "Messenger",
+    "search_book_process",
     "get_user_language",
     "create_user_link",
 )
@@ -27,5 +28,6 @@ from .generate_book_caption import generate_book_caption
 from .genres_to_list import genres_to_list
 from .is_book_article import is_book_article
 from .messenger import Messenger
+from .search_book_process import search_book_process
 from .user_language import get_user_language
 from .user_link import create_user_link

@@ -33,7 +33,7 @@ button-authors = ✍️ Авторы
 
 button-description = 📝 Описание
 
-button-genres = 🦄 Жанры
+button-genres = 🎭 Жанры
 
 button-cover = 🖼️ Обложка
 
@@ -66,3 +66,7 @@ button-ru = 🇷🇺 RUS
 button-en = 🇬🇧 ENG
 
 button-uk = 🇺🇦 UKR
+
+button-search-by-author = 👨🏻‍🎨 Поиск по автору
+
+button-search-by-genre = 🎭 Поиск по жанру
