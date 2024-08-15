@@ -5,7 +5,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import check_bookings_keyboard
 from tgbot.services import create_user_link

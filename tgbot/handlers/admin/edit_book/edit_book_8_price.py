@@ -2,7 +2,7 @@ from aiogram import Router, F, Bot
 from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import price_update_keyboard, edit_book_keyboard
 from tgbot.services import generate_book_caption, Messenger

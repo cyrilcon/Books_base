@@ -1,6 +1,6 @@
 from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.services.fluent_loader import get_fluent_localization
 
 

@@ -6,7 +6,7 @@ from aiogram.types import CallbackQuery
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import cancel_keyboard, edit_book_keyboard
 from tgbot.services import (

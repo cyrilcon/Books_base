@@ -6,7 +6,7 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import ClearKeyboard, get_user_language, create_user_link, Messenger
 from tgbot.states import ShareBase

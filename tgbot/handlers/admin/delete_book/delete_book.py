@@ -5,7 +5,7 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.filters import SuperAdminFilter
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import ClearKeyboard, is_book_article

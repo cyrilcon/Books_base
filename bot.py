@@ -9,7 +9,7 @@ from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
 from aiogram.utils.chat_action import ChatActionMiddleware
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.config import config
 from tgbot.handlers import routers_list
 from tgbot.middlewares import (

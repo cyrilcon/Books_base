@@ -7,7 +7,7 @@ from aiogram.types import Message
 from aiogram.utils.media_group import MediaGroupBuilder
 from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import (
     cancel_keyboard,

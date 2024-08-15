@@ -1,25 +1,14 @@
-from infrastructure.books_base_api.base import BaseClient, ApiResponse
+from tgbot.api.books_base_api.base import BaseClient, ApiResponse
 
 
-class AdminsApi:
+class BlacklistApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/admins"
+        self.endpoint = f"{prefix}/blacklist"
 
-    async def get_admin_ids(self) -> ApiResponse:
+    async def create_blacklist(self, id_user: int) -> ApiResponse:
         """
-        Get a list of admin user IDs.
-        """
-
-        status, result = await self.base_client.make_request(
-            method="GET",
-            url=f"{self.endpoint}",
-        )
-        return ApiResponse(status, result)
-
-    async def create_admin(self, id_user: int) -> ApiResponse:
-        """
-        Create an admin.
+        Add a user to the blacklist.
 
         :param id_user: Unique user identifier.
         """
@@ -35,9 +24,9 @@ class AdminsApi:
         )
         return ApiResponse(status, result)
 
-    async def delete_admin(self, id_user: int) -> ApiResponse:
+    async def delete_blacklist(self, id_user: int) -> ApiResponse:
         """
-        Remove a user from the list of admins.
+        Remove a user from the blacklist.
 
         :param id_user: Unique user identifier.
         """

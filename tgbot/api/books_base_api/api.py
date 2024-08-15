@@ -1,5 +1,6 @@
-from infrastructure.books_base_api.base import BaseClient
-from infrastructure.books_base_api.endpoints import (
+from tgbot.config import config
+from .base import BaseClient
+from .endpoints import (
     AdminsApi,
     BlacklistApi,
     BookingsApi,
@@ -7,7 +8,6 @@ from infrastructure.books_base_api.endpoints import (
     PremiumApi,
     UsersApi,
 )
-from tgbot.config import config
 
 
 class BooksBaseApi(BaseClient):

@@ -1,14 +1,25 @@
-from infrastructure.books_base_api.base import BaseClient, ApiResponse
+from tgbot.api.books_base_api.base import BaseClient, ApiResponse
 
 
-class PremiumApi:
+class AdminsApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/premium"
+        self.endpoint = f"{prefix}/admins"
 
-    async def create_premium(self, id_user: int) -> ApiResponse:
+    async def get_admin_ids(self) -> ApiResponse:
         """
-        Assign a user to premium.
+        Get a list of admin user IDs.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}",
+        )
+        return ApiResponse(status, result)
+
+    async def create_admin(self, id_user: int) -> ApiResponse:
+        """
+        Create an admin.
 
         :param id_user: Unique user identifier.
         """
@@ -24,9 +35,9 @@ class PremiumApi:
         )
         return ApiResponse(status, result)
 
-    async def delete_premium(self, id_user: int) -> ApiResponse:
+    async def delete_admin(self, id_user: int) -> ApiResponse:
         """
-        Remove a user from the list of premium users.
+        Remove a user from the list of admins.
 
         :param id_user: Unique user identifier.
         """

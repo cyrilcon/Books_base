@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from infrastructure.books_base_api.base import BaseClient, ApiResponse
+from tgbot.api.books_base_api.base import BaseClient, ApiResponse
 
 
 class UsersApi:

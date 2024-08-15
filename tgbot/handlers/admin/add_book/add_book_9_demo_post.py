@@ -5,7 +5,7 @@ from aiogram.types import CallbackQuery
 from aiogram.utils.deep_linking import create_start_link
 from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
+from tgbot.api.books_base_api import api
 from tgbot.config import config
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import deep_link_buy_keyboard
