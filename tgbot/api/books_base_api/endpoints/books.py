@@ -57,7 +57,7 @@ class BooksApi:
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/search",
+            url=f"{self.endpoint}/search-by-title",
             params=params,
         )
         return ApiResponse(status, result)

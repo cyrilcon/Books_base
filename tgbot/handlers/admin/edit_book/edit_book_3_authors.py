@@ -62,7 +62,7 @@ async def edit_authors_process(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    authors = message.text.lower().split(", ")
+    authors = message.text.split(", ")
 
     for author in authors:
         if len(author) > 255:

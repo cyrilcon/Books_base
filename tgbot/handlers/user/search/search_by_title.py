@@ -2,12 +2,14 @@ import re
 
 from aiogram import Router, F, Bot
 from aiogram.types import Message, CallbackQuery
+from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.services import search_book_process, generate_book_caption, Messenger
 
 search_by_title_router = Router()
+search_by_title_router.message.middleware(ChatActionMiddleware())
 
 
 @search_by_title_router.message(F.text, flags={"chat_action": "typing"})

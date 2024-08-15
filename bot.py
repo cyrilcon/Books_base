@@ -7,17 +7,16 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
-from aiogram.utils.chat_action import ChatActionMiddleware
 
 from tgbot.api.books_base_api import api
 from tgbot.config import config
 from tgbot.handlers import routers_list
 from tgbot.middlewares import (
     ConfigMiddleware,
-    LocalizationMiddleware,
     DatabaseMiddleware,
+    LocalizationMiddleware,
+    StorageMiddleware,
 )
-from tgbot.middlewares.outer import StorageMiddleware
 from tgbot.services import set_default_commands, Messenger
 
 
@@ -53,7 +52,6 @@ def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
     """
 
     middleware_types = [
-        ChatActionMiddleware(),
         ConfigMiddleware(config),
         DatabaseMiddleware(),
         LocalizationMiddleware(),

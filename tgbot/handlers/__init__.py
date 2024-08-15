@@ -4,8 +4,8 @@ from .user import user_routers
 from .admin import admin_routers
 
 routers_list = [
-    user_routers,
     admin_routers,
+    user_routers,
 ]
 
 __all__ = ("routers_list",)
