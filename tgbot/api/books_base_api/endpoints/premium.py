@@ -1,4 +1,5 @@
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
+from tgbot.schemas import UserSchema
 
 
 class PremiumApi:
@@ -6,7 +7,7 @@ class PremiumApi:
         self.base_client = base_client
         self.endpoint = f"{prefix}/premium"
 
-    async def create_premium(self, id_user: int) -> ApiResponse:
+    async def create_premium(self, id_user: int) -> ApiResponse[UserSchema]:
         """
         Assign a user to premium.
 
@@ -22,7 +23,7 @@ class PremiumApi:
             url=f"{self.endpoint}",
             json=data,
         )
-        return ApiResponse(status, result)
+        return ApiResponse(status, result, model=UserSchema)
 
     async def delete_premium(self, id_user: int) -> ApiResponse:
         """

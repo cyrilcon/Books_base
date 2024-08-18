@@ -17,5 +17,5 @@ async def start(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    fullname = message.from_user.full_name
-    await message.answer(l10n.format_value("start", {"fullname": fullname}))
+    full_name = message.from_user.full_name
+    await message.answer(l10n.format_value("start", {"full_name": full_name}))

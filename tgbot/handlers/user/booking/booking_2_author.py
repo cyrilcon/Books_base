@@ -58,7 +58,7 @@ async def booking_2(
         data = await state.get_data()
         title = data["title"]
 
-        await api.bookings.create_booking(id_booking, id_user, title, author)
+        await api.orders.create_booking(id_booking, id_user, title, author)
 
         await message.answer(
             l10n.format_value(

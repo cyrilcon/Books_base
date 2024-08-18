@@ -54,14 +54,14 @@ async def cancel_booking_process(
     if booking_number.isdigit():
         id_booking = int(booking_number)
 
-        response = await api.bookings.get_booking_by_id(id_booking)
+        response = await api.orders.get_booking_by_id(id_booking)
         status = response.status
         booking = response.result
 
         if status == 200 and (
             id_user == config.tg_bot.super_admin or id_user == booking["id_user"]
         ):
-            await api.bookings.delete_booking(id_booking)
+            await api.orders.delete_booking(id_booking)
 
             await state.clear()
             await message.answer(

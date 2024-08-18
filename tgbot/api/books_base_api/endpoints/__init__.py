@@ -1,15 +1,15 @@
 __all__ = (
     "AdminsApi",
     "BlacklistApi",
-    "BookingsApi",
     "BooksApi",
+    "OrdersApi",
     "PremiumApi",
     "UsersApi",
 )
 
 from .admins import AdminsApi
 from .blacklist import BlacklistApi
-from .bookings import BookingsApi
 from .books import BooksApi
+from .orders import OrdersApi
 from .premium import PremiumApi
 from .users import UsersApi

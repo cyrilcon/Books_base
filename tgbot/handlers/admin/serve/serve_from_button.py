@@ -27,7 +27,7 @@ async def serve_from_button(
 ):
     id_booking = int(call.data.split(":")[-1])
 
-    response = await api.bookings.get_booking_by_id(id_booking)
+    response = await api.orders.get_booking_by_id(id_booking)
     status = response.status
 
     await call.answer(cache_time=1)

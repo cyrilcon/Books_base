@@ -61,7 +61,7 @@ async def serve_2(
             data = await state.get_data()
             id_booking = data.get("id_booking")
 
-            response = await api.bookings.get_booking_by_id(id_booking)
+            response = await api.orders.get_booking_by_id(id_booking)
             booking = response.result
             id_user_recipient = booking["id_user"]
 
@@ -95,7 +95,7 @@ async def serve_2(
             else:
                 await message.answer(l10n.format_value("user-blocked-bot"))
 
-            await api.bookings.delete_booking(id_booking)
+            await api.orders.delete_booking(id_booking)
             await state.clear()
 
         else:

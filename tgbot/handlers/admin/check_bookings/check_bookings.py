@@ -58,13 +58,13 @@ async def get_booking_info(
     :return: A tuple containing the number of orders, unique booking identifier and text with order information.
     """
 
-    response = await api.bookings.get_booking_count()
+    response = await api.orders.get_booking_count()
     booking_count = response.result
 
     if booking_count == 0:
         return booking_count, None, None
 
-    response = await api.bookings.get_booking_by_position(position)
+    response = await api.orders.get_booking_by_position(position)
     booking = response.result
     id_booking = booking["id_booking"]
 

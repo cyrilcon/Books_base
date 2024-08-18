@@ -54,7 +54,7 @@ async def serve_1_process(
     if booking_number.isdigit():
         id_booking = int(booking_number)
 
-        response = await api.bookings.get_booking_by_id(id_booking)
+        response = await api.orders.get_booking_by_id(id_booking)
         status = response.status
         booking = response.result
 

@@ -1,6 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
+from tgbot.schemas import UserSchema
 
 
 class UsersApi:
@@ -11,24 +12,24 @@ class UsersApi:
     async def create_user(
         self,
         id_user: int,
-        language: str,
-        fullname: str = None,
+        language_code: str,
+        full_name: str = None,
         username: str = None,
-    ) -> ApiResponse:
+    ) -> ApiResponse[UserSchema]:
         """
         Create a user.
 
         :param id_user: Unique user identifier.
-        :param language: User's full name (first name and last name) | None.
-        :param fullname: User's username (begins with the @ symbol) | None.
-        :param username: User-selected language (ISO 639-1 code, e.g., "en" for English).
+        :param language_code: IETF language tag of the user's language.
+        :param full_name: User's full name (first name and last name). | None.
+        :param username: User's username. | None.
         """
 
         data = {
             "id_user": id_user,
-            "fullname": fullname,
+            "full_name": full_name,
             "username": username,
-            "language": language,
+            "language_code": language_code,
         }
 
         status, result = await self.base_client.make_request(
@@ -37,9 +38,9 @@ class UsersApi:
             json=data,
         )
 
-        return ApiResponse(status, result)
+        return ApiResponse(status, result, model=UserSchema)
 
-    async def get_user_by_username(self, username: str) -> ApiResponse:
+    async def get_user_by_username(self, username: str) -> ApiResponse[UserSchema]:
         """
         Get a user by username.
 
@@ -50,9 +51,9 @@ class UsersApi:
             method="GET",
             url=f"{self.endpoint}/username/{username}",
         )
-        return ApiResponse(status, result)
+        return ApiResponse(status, result, model=UserSchema)
 
-    async def get_user_by_id(self, id_user: int) -> ApiResponse:
+    async def get_user_by_id(self, id_user: int) -> ApiResponse[UserSchema]:
         """
         Get a user by ID.
 
@@ -63,9 +64,9 @@ class UsersApi:
             method="GET",
             url=f"{self.endpoint}/{id_user}",
         )
-        return ApiResponse(status, result)
+        return ApiResponse(status, result, model=UserSchema)
 
-    async def update_user(self, id_user: int, **kwargs) -> ApiResponse:
+    async def update_user(self, id_user: int, **kwargs) -> ApiResponse[UserSchema]:
         """
         Partially update user information.
 
@@ -74,11 +75,11 @@ class UsersApi:
         """
 
         data = {key: value for key, value in kwargs.items()}
-        data["last_activity"] = datetime.now().isoformat()
+        data["last_activity_datetime"] = datetime.now(timezone.utc).isoformat()
 
         status, result = await self.base_client.make_request(
             method="PATCH",
             url=f"{self.endpoint}/{id_user}",
             json=data,
         )
-        return ApiResponse(status, result)
+        return ApiResponse(status, result, model=UserSchema)

@@ -1,4 +1,7 @@
+from typing import List
+
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
+from tgbot.schemas import UserSchema
 
 
 class AdminsApi:
@@ -6,7 +9,7 @@ class AdminsApi:
         self.base_client = base_client
         self.endpoint = f"{prefix}/admins"
 
-    async def get_admin_ids(self) -> ApiResponse:
+    async def get_admin_ids(self) -> ApiResponse[List[int]]:
         """
         Get a list of admin user IDs.
         """
@@ -17,7 +20,7 @@ class AdminsApi:
         )
         return ApiResponse(status, result)
 
-    async def create_admin(self, id_user: int) -> ApiResponse:
+    async def create_admin(self, id_user: int) -> ApiResponse[UserSchema]:
         """
         Create an admin.
 
@@ -33,7 +36,7 @@ class AdminsApi:
             url=f"{self.endpoint}",
             json=data,
         )
-        return ApiResponse(status, result)
+        return ApiResponse(status, result, model=UserSchema)
 
     async def delete_admin(self, id_user: int) -> ApiResponse:
         """

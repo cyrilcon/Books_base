@@ -13,11 +13,11 @@ async def get_user_language(id_user: int) -> FluentLocalization:
 
     response = await api.users.get_user_by_id(id_user)
     status = response.status
-    user = response.result
+    user = response.get_model()
 
     if status == 200:
-        language = user["language"]
-        l10n = get_fluent_localization(language)
+        language_code = user.language_code
+        l10n = get_fluent_localization(language_code)
         return l10n
 
     l10n = get_fluent_localization("ru")

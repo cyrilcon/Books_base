@@ -3,10 +3,12 @@ from __future__ import annotations
 import asyncio
 import logging
 import ssl
-from typing import TYPE_CHECKING, Any, Union
+from typing import TYPE_CHECKING, Any, Union, List
+from typing import Type, TypeVar, Generic, Optional
 
 import backoff
 from aiohttp import ClientError, ClientSession, TCPConnector, FormData
+from pydantic import BaseModel, TypeAdapter
 from ujson import dumps, loads
 
 if TYPE_CHECKING:
@@ -104,7 +106,35 @@ class BaseClient:
         await asyncio.sleep(0.25)
 
 
-class ApiResponse:
-    def __init__(self, status: int, result: dict[str, Any]):
+T = TypeVar("T", bound=BaseModel)
+
+
+class ApiResponse(Generic[T]):
+    def __init__(self, status: int, result: Any, model: Optional[Type[T]] = None):
         self.status = status
-        self.result = result
+        self._result = result
+        self._model = model
+        self._parsed_result = None
+
+    @property
+    def result(self) -> Any:
+        """Returns the raw data received from the API."""
+
+        return self._result
+
+    def get_model(self) -> Union[T, List[T]]:
+        """Returns the result as a Pydantic model, if a model was specified."""
+
+        if self._parsed_result is not None:
+            return self._parsed_result
+
+        if self._model:
+            if isinstance(self._result, list):
+                adapter = TypeAdapter(List[self._model])
+                self._parsed_result = adapter.validate_python(self._result)
+            else:
+                adapter = TypeAdapter(self._model)
+                self._parsed_result = adapter.validate_python(self._result)
+            return self._parsed_result
+
+        raise TypeError("Model not provided, or result is not a list or dict!!")

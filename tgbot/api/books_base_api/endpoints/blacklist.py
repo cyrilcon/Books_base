@@ -1,4 +1,5 @@
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
+from tgbot.schemas import UserSchema
 
 
 class BlacklistApi:
@@ -6,7 +7,7 @@ class BlacklistApi:
         self.base_client = base_client
         self.endpoint = f"{prefix}/blacklist"
 
-    async def create_blacklist(self, id_user: int) -> ApiResponse:
+    async def create_blacklist(self, id_user: int) -> ApiResponse[UserSchema]:
         """
         Add a user to the blacklist.
 
@@ -22,7 +23,7 @@ class BlacklistApi:
             url=f"{self.endpoint}",
             json=data,
         )
-        return ApiResponse(status, result)
+        return ApiResponse(status, result, model=UserSchema)
 
     async def delete_blacklist(self, id_user: int) -> ApiResponse:
         """

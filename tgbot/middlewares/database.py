@@ -29,14 +29,14 @@ class DatabaseMiddleware(BaseMiddleware):
         if status == 200:
             await api.users.update_user(id_user)
         else:
-            fullname = event.from_user.full_name
+            language_code = event.from_user.language_code
+            full_name = event.from_user.full_name
             username = event.from_user.username
-            language = event.from_user.language_code
 
             await api.users.create_user(
                 id_user,
-                language=language,
-                fullname=fullname,
+                language_code=language_code,
+                full_name=full_name,
                 username=username,
             )
 
