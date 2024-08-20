@@ -30,12 +30,12 @@ async def back_to_order_step_1(
     l10n: FluentLocalization,
     state: FSMContext,
 ):
-    await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("order-step-1-book-title"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Order.book_title)
+    await call.answer()
 
 
 @order_step_2_router.message(StateFilter(Order.author_name))

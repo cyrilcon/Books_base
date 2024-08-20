@@ -18,8 +18,6 @@ async def order_again(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    await call.answer(cache_time=1)
-
     await ClearKeyboard.clear(call, storage)
 
     sent_message = await call.message.answer(
@@ -33,3 +31,4 @@ async def order_again(
         id_user=call.from_user.id,
         sent_message_id=sent_message.message_id,
     )
+    await call.answer()

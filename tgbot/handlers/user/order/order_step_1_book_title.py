@@ -98,12 +98,12 @@ async def order_step_1_confirm_order(
     l10n: FluentLocalization,
     state: FSMContext,
 ):
-    await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("order-author-name"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(Order.author_name)
+    await call.answer()
 
 
 @order_step_1_router.callback_query(
@@ -115,8 +115,6 @@ async def order_step_1_display_book_details(
     state: FSMContext,
     bot: Bot,
 ):
-    await call.answer(cache_time=1)
-
     id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book_by_id(id_book)
     status = response.status
@@ -143,3 +141,4 @@ async def order_step_1_display_book_details(
         photo=book["cover"],
         # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
     )
+    await call.answer()
