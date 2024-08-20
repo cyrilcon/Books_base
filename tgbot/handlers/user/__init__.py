@@ -1,7 +1,8 @@
 from aiogram import Router
 
-from .booking import booking_routers
+from .booking import booking_router
 from .cancel_booking import cancel_booking_routers
+from .order import order_routers
 from .privacy import privacy_router
 from .search import search_routers
 from .settings import settings_router
@@ -12,8 +13,9 @@ from .support import support_routers
 user_routers = Router()
 user_routers.include_routers(
     start_router,  # Must be the first
-    # booking_routers,
+    booking_router,
     # cancel_booking_routers,
+    order_routers,
     # privacy_router,
     # settings_router,
     # share_base_routers,

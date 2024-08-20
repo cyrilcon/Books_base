@@ -105,7 +105,7 @@ async def serve_2(
             )
             await ClearKeyboard.safe_message(
                 storage=storage,
-                user_id=message.from_user.id,
+                id_user=message.from_user.id,
                 sent_message_id=sent_message.message_id,
             )
     else:
@@ -115,6 +115,6 @@ async def serve_2(
         )
         await ClearKeyboard.safe_message(
             storage=storage,
-            user_id=message.from_user.id,
+            id_user=message.from_user.id,
             sent_message_id=sent_message.message_id,
         )

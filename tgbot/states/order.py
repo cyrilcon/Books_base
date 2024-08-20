@@ -1,8 +1,8 @@
 from aiogram.fsm.state import StatesGroup, State
 
 
-class Booking(StatesGroup):
+class Order(StatesGroup):
     """A class of states for book ordering."""
 
-    send_title = State()
-    send_author = State()
+    book_title = State()
+    author_name = State()

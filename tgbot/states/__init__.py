@@ -2,13 +2,13 @@ __all__ = (
     "AddAdmin",
     "AddBlacklist",
     "AddBook",
-    "Booking",
     "CancelBooking",
     "CancelPremium",
     "DeleteBook",
     "EditBook",
     "GiveBase",
     "GivePremium",
+    "Order",
     "RemoveAdmin",
     "RemoveBlacklist",
     "SendBook",
@@ -23,13 +23,13 @@ __all__ = (
 from .add_admin import AddAdmin
 from .add_blacklist import AddBlacklist
 from .add_book import AddBook
-from .booking import Booking
 from .cancel_booking import CancelBooking
 from .cancel_premium import CancelPremium
 from .delete_book import DeleteBook
 from .edit_book import EditBook
 from .give_base import GiveBase
 from .give_premium import GivePremium
+from .order import Order
 from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
 from .send_book import SendBook

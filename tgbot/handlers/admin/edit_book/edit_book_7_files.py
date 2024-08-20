@@ -54,7 +54,7 @@ async def edit_files(
 
     await ClearKeyboard.safe_message(
         storage=storage,
-        user_id=call.from_user.id,
+        id_user=call.from_user.id,
         sent_message_id=sent_message.message_id,
     )
 
@@ -80,7 +80,7 @@ async def edit_files_process(
 
     await ClearKeyboard.safe_message(
         storage=storage,
-        user_id=message.from_user.id,
+        id_user=message.from_user.id,
         sent_message_id=sent_message.message_id,
     )
 
@@ -127,7 +127,7 @@ async def done_edit_files(
         )
         await ClearKeyboard.safe_message(
             storage=storage,
-            user_id=call.from_user.id,
+            id_user=call.from_user.id,
             sent_message_id=sent_message.message_id,
         )
 

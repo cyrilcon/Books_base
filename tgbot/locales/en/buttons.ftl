@@ -45,13 +45,13 @@ button-yes = ✅ Да
 
 button-show-book = 📖 Показать книгу
 
-button-booking = 🛒 Всё равно заказать
+button-order = 🛒 Всё равно заказать
 
 button-serve = 📩 Обслужить
 
 button-unavailable = 🚫 Нет в наличии
 
-button-booking-again = 🔄 Заказать ещё
+button-order-again = 🔄 Заказать ещё
 
 button-reply = 💬 Ответить
 

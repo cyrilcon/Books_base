@@ -37,7 +37,7 @@ async def send_file_1(
 
     await ClearKeyboard.safe_message(
         storage=storage,
-        user_id=message.from_user.id,
+        id_user=message.from_user.id,
         sent_message_id=sent_message.message_id,
     )
 
@@ -75,6 +75,6 @@ async def send_file_1_process(
 
     await ClearKeyboard.safe_message(
         storage=storage,
-        user_id=message.from_user.id,
+        id_user=message.from_user.id,
         sent_message_id=sent_message.message_id,
     )

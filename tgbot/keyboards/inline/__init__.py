@@ -1,7 +1,7 @@
 __all__ = (
     "back_cancel_keyboard",
     "back_yes_cancel_keyboard",
-    "booking_again_keyboard",
+    "order_again_keyboard",
     "cancel_keyboard",
     "check_bookings_keyboard",
     "deep_link_buy_keyboard",
@@ -15,17 +15,17 @@ __all__ = (
     "price_update_keyboard",
     "reply_keyboard",
     "search_by_author_and_genre_keyboard",
-    "serve_unavailable_keyboard",
+    "serve_keyboard",
     "share_base_keyboard",
     "share_our_store_keyboard",
-    "show_book_booking_cancel_keyboard",
+    "show_book_order_cancel_keyboard",
     "yes_cancel_keyboard",
 )
 
 from .keyboards import (
     back_cancel_keyboard,
     back_yes_cancel_keyboard,
-    booking_again_keyboard,
+    order_again_keyboard,
     cancel_keyboard,
     check_bookings_keyboard,
     deep_link_buy_keyboard,
@@ -39,9 +39,9 @@ from .keyboards import (
     price_update_keyboard,
     reply_keyboard,
     search_by_author_and_genre_keyboard,
-    serve_unavailable_keyboard,
+    serve_keyboard,
     share_base_keyboard,
     share_our_store_keyboard,
-    show_book_booking_cancel_keyboard,
+    show_book_order_cancel_keyboard,
     yes_cancel_keyboard,
 )

@@ -31,7 +31,7 @@ async def back_to_share_base_1(
 
     await ClearKeyboard.safe_message(
         storage=storage,
-        user_id=call.from_user.id,
+        id_user=call.from_user.id,
         sent_message_id=sent_message.message_id,
     )
 

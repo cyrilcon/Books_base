@@ -28,6 +28,6 @@ async def support_reply_to_admin(
 
     await ClearKeyboard.safe_message(
         storage=storage,
-        user_id=call.from_user.id,
+        id_user=call.from_user.id,
         sent_message_id=sent_message.message_id,
     )

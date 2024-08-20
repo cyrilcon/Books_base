@@ -48,7 +48,7 @@ async def edit_cover(
 
     await ClearKeyboard.safe_message(
         storage=storage,
-        user_id=id_user,
+        id_user=id_user,
         sent_message_id=sent_message.message_id,
     )
 
