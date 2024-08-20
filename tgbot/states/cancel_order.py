@@ -1,7 +1,7 @@
 from aiogram.fsm.state import StatesGroup, State
 
 
-class CancelBooking(StatesGroup):
+class CancelOrder(StatesGroup):
     """A class of states for order cancellation."""
 
-    select_booking = State()
+    select_order = State()

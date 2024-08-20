@@ -40,12 +40,6 @@ order-received-from-user =
 
 order-canceled = Вы отменили заказ
 
+
+
 orders-absent = Заказы отсутствуют
-
-order-error-incorrect-number =
-    Номер заказа некорректен!!
-    Введите <i><b>номер заказа</b></i> ещё раз
-
-order-error-not-found =
-    Такого заказа не существует!!
-    Введите <i><b>номер заказа</b></i> ещё раз

@@ -26,11 +26,11 @@ async def set_default_commands(bot, admins: list[int]):
                 command="search", description=l10n.format_value("command-search")
             ),
             types.BotCommand(
-                command="booking", description=l10n.format_value("command-booking")
+                command="order", description=l10n.format_value("command-order")
             ),
             types.BotCommand(
-                command="cancel_booking",
-                description=l10n.format_value("command-cancel-booking"),
+                command="cancel_order",
+                description=l10n.format_value("command-cancel-order"),
             ),
             types.BotCommand(
                 command="base_store",
