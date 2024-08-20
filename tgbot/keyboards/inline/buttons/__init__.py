@@ -48,9 +48,7 @@ from .do_not_publish import do_not_publish_button
 from .done import done_button
 from .files import files_button
 from .genres import genres_button
-from .language_en import language_en_button
-from .language_ru import language_ru_button
-from .language_uk import language_uk_button
+from .languages import language_en_button, language_ru_button, language_uk_button
 from .not_from_user import not_from_user_button
 from .order import order_button
 from .order_again import order_again_button

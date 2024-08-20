@@ -8,14 +8,14 @@ from tgbot.keyboards.inline.buttons import (
 )
 
 
-def languages_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
+def set_language_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
     """
-    The "RUS", "ENG" and "UKR" keyboard is formed.
+    The "set_languages" keyboard is formed.
     :param l10n: Language set by the user.
-    :return: The "RUS", "ENG" and "UKR" keyboard.
+    :return: The "languages" keyboard.
     """
 
-    languages_markup = InlineKeyboardMarkup(
+    set_languages_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 language_en_button(l10n),
@@ -24,4 +24,4 @@ def languages_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
             ],
         ],
     )
-    return languages_markup
+    return set_languages_markup
