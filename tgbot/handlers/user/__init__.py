@@ -16,7 +16,7 @@ user_routers.include_routers(
     booking_router,
     cancel_order_routers,
     order_routers,
-    # privacy_router,
+    privacy_router,
     # settings_router,
     # share_base_routers,
     # support_routers,
