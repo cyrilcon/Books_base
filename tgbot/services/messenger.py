@@ -11,9 +11,9 @@ class Messenger:
         bot: Bot,
         user_id: int,
         text: str,
-        photo: str = None,
+        photo: str | None = None,
         disable_notification: bool = False,
-        reply_markup: InlineKeyboardMarkup = None,
+        reply_markup: InlineKeyboardMarkup | None = None,
         link_preview_options_is_disabled: bool = False,
     ) -> bool:
         """
@@ -75,9 +75,9 @@ class Messenger:
         bot: Bot,
         users: list[int],
         text: str,
-        photo: str = None,
+        photo: str | None = None,
         disable_notification: bool = False,
-        reply_markup: InlineKeyboardMarkup = None,
+        reply_markup: InlineKeyboardMarkup | None = None,
     ) -> int:
         """
         Simple broadcaster.

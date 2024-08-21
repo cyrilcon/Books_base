@@ -1,5 +1,4 @@
 from aiogram import Router, F
-from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
@@ -19,13 +18,10 @@ async def support_cancel(
     current_state = await state.get_state()
 
     if current_state.split(":")[-1] == "reply_to_user":
-        text = l10n.format_value("support-cancel-for-admin")
+        text = l10n.format_value("support-admin-message-canceled")
     else:
-        text = l10n.format_value("support-cancel-for-user")
+        text = l10n.format_value("support-user-message-canceled")
 
     await state.clear()
     await call.answer(text, show_alert=True)
-    try:
-        await call.message.edit_text(text)
-    except TelegramBadRequest:
-        await call.message.edit_reply_markup()
+    await call.message.edit_text(text)

@@ -19,6 +19,6 @@ user_routers.include_routers(
     privacy_router,
     settings_router,
     # share_base_routers,
-    # support_routers,
+    support_routers,
     # search_routers,  # Must be the latest
 )
