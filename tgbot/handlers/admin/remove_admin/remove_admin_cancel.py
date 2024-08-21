@@ -1,17 +1,24 @@
 from aiogram import Router, F
 from aiogram.filters import StateFilter
+from aiogram.fsm.context import FSMContext
+from aiogram.types import CallbackQuery
+from fluent.runtime import FluentLocalization
 
 from tgbot.filters import SuperAdminFilter
-from tgbot.middlewares import CancelCommandMiddleware
 from tgbot.states import RemoveAdmin
 
 remove_admin_cancel_router = Router()
 remove_admin_cancel_router.message.filter(SuperAdminFilter())
-remove_admin_cancel_router.callback_query.middleware(
-    CancelCommandMiddleware("remove-admin-cancel")
-)
 
 
 @remove_admin_cancel_router.callback_query(StateFilter(RemoveAdmin), F.data == "cancel")
-async def remove_admin_cancel():
-    pass
+async def remove_admin_cancel(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+):
+    text = l10n.format_value("remove-admin-canceled")
+
+    await state.clear()
+    await call.answer(text, show_alert=True)
+    await call.message.edit_text(text)

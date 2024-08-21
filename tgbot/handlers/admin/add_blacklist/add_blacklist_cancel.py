@@ -12,7 +12,7 @@ add_blacklist_cancel_router = Router()
 @add_blacklist_cancel_router.callback_query(
     StateFilter(AddBlacklist), F.data == "cancel"
 )
-async def add_admin_cancel(
+async def add_blacklist_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,

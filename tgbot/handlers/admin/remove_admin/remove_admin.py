@@ -25,7 +25,7 @@ async def remove_admin(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("remove-admin-select"),
+        l10n.format_value("remove-admin-prompt-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(RemoveAdmin.select_admin)
@@ -48,51 +48,7 @@ async def remove_admin_process(
 
     user, response_message = await find_user(message.text, l10n)
 
-    if user:
-        id_user = user["id_user"]
-
-        if id_user == message.from_user.id:
-            sent_message = await message.answer(
-                l10n.format_value(
-                    "remove-admin-error-self-remove",
-                ),
-                reply_markup=cancel_keyboard(l10n),
-            )
-            await ClearKeyboard.safe_message(
-                storage=storage,
-                id_user=message.from_user.id,
-                sent_message_id=sent_message.message_id,
-            )
-        else:
-            fullname = user["fullname"]
-            username = user["username"]
-            user_link = await create_user_link(fullname, username)
-
-            response = await api.admins.delete_admin(id_user)
-            status = response.status
-
-            if status == 204:
-                await message.answer(
-                    l10n.format_value(
-                        "remove-admin-success",
-                        {"user_link": user_link, "id_user": str(id_user)},
-                    )
-                )
-                await state.clear()
-            else:
-                sent_message = await message.answer(
-                    l10n.format_value(
-                        "remove-admin-error-not-admin",
-                        {"user_link": user_link, "id_user": str(id_user)},
-                    ),
-                    reply_markup=cancel_keyboard(l10n),
-                )
-                await ClearKeyboard.safe_message(
-                    storage=storage,
-                    id_user=message.from_user.id,
-                    sent_message_id=sent_message.message_id,
-                )
-    else:
+    if not user:
         sent_message = await message.answer(
             response_message, reply_markup=cancel_keyboard(l10n)
         )
@@ -101,3 +57,50 @@ async def remove_admin_process(
             id_user=message.from_user.id,
             sent_message_id=sent_message.message_id,
         )
+        return
+
+    id_user = user.id_user
+
+    if id_user == message.from_user.id:
+        sent_message = await message.answer(
+            l10n.format_value(
+                "remove-admin-error-self-remove",
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    full_name = user.full_name
+    username = user.username
+    user_link = await create_user_link(full_name, username)
+
+    response = await api.admins.delete_admin(id_user)
+    status = response.status
+
+    if status != 204:
+        sent_message = await message.answer(
+            l10n.format_value(
+                "remove-admin-error-already-not-admin",
+                {"user_link": user_link, "id_user": str(id_user)},
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    await message.answer(
+        l10n.format_value(
+            "remove-admin-success",
+            {"user_link": user_link, "id_user": str(id_user)},
+        )
+    )
+    await state.clear()
