@@ -16,7 +16,6 @@ from tgbot.services import (
     ClearKeyboard,
     create_user_link,
     get_user_language,
-    Messenger,
     generate_id_order,
 )
 from tgbot.states import Order
@@ -89,9 +88,8 @@ async def order_step_2(
     user_link = await create_user_link(full_name, username)
     language_code = await get_user_language(config.tg_bot.super_admin)
 
-    await Messenger.safe_send_message(
-        bot=bot,
-        user_id=config.tg_bot.booking_chat,
+    await bot.send_message(
+        chat_id=config.tg_bot.booking_chat,
         text=l10n.format_value(
             "order-received-from-user",
             {

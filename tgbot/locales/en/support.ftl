@@ -10,7 +10,7 @@ support-message-from-user =
 
 support-message-from-admin = Вы получили сообщение от администратора
 
-support-user-success-message =
+support-user-success =
     Спасибо, что обратились в поддержку!!
     Мы как можно скорее решим проблему и свяжемся с вами.
 

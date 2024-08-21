@@ -74,5 +74,5 @@ async def support_process(
     if reply_from_button:
         await message.answer(l10n.format_value("support-user-message-sent"))
     else:
-        await message.answer(l10n.format_value("support-user-success-message"))
+        await message.answer(l10n.format_value("support-user-success"))
     await state.clear()

@@ -1,9 +1,9 @@
 __all__ = (
     "set_default_commands",
     "Broadcaster",
-    "check_username",
     "ClearKeyboard",
     "create_user_link",
+    "extract_username",
     "send_files_in_groups",
     "find_user",
     "get_fluent_localization",
@@ -19,9 +19,9 @@ __all__ = (
 
 from .bot_commands import set_default_commands
 from .broadcaster import Broadcaster
-from .check_username import check_username
 from .clear_keyboard import ClearKeyboard
 from .create_user_link import create_user_link
+from .extract_username import extract_username
 from .files_in_media_group import send_files_in_groups
 from .find_user import find_user
 from .fluent_loader import get_fluent_localization

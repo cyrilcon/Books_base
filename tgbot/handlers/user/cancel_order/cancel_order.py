@@ -53,7 +53,7 @@ async def cancel_order_select(
 
     if not order_number.isdigit():
         sent_message = await message.answer(
-            l10n.format_value("cancel-order-error-incorrect-number"),
+            l10n.format_value("cancel-order-error-invalid-number"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -84,7 +84,7 @@ async def cancel_order_select(
         return
 
     sent_message = await message.answer(
-        l10n.format_value("cancel-order-not-found"),
+        l10n.format_value("cancel-order-error-not-found"),
         reply_markup=cancel_keyboard(l10n),
     )
     await ClearKeyboard.safe_message(

@@ -1,7 +1,7 @@
 from typing import Any
 
 from tgbot.api.books_base_api import api
-from tgbot.services import check_username
+from tgbot.services import extract_username
 
 
 async def find_user(identifier, l10n) -> tuple[dict[str, Any] | None, str | None]:
@@ -29,7 +29,7 @@ async def find_user(identifier, l10n) -> tuple[dict[str, Any] | None, str | None
             return None, response_message
 
     else:
-        selected_user = check_username(identifier)
+        selected_user = extract_username(identifier)
 
         if selected_user:
             response = await api.users.get_user_by_username(selected_user)

@@ -1,5 +1,4 @@
 from aiogram import Router, F
-from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
@@ -17,12 +16,8 @@ async def share_base_cancel(
     l10n: FluentLocalization,
     state: FSMContext,
 ):
-
-    text = l10n.format_value("share-base-cancel")
+    text = l10n.format_value("share-base-canceled")
 
     await state.clear()
     await call.answer(text, show_alert=True)
-    try:
-        await call.message.edit_text(text)
-    except TelegramBadRequest:
-        await call.message.edit_reply_markup()
+    await call.message.edit_text(text)
