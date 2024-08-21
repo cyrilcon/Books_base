@@ -5,11 +5,9 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from tgbot.filters import AdminFilter
 from tgbot.services import ClearKeyboard
 
 admin_router = Router()
-admin_router.message.filter(AdminFilter())
 
 
 @admin_router.message(Command("admin"))
