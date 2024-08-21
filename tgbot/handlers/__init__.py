@@ -4,7 +4,7 @@ from .user import user_routers
 from .admin import admin_routers
 
 routers_list = [
-    # admin_routers,
+    admin_routers,
     user_routers,
 ]
 

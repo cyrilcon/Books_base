@@ -93,7 +93,7 @@ async def serve_2(
                     )
                 )
             else:
-                await message.answer(l10n.format_value("user-blocked-bot"))
+                await message.answer(l10n.format_value("error-user-blocked-bot"))
 
             await api.orders.delete_booking(id_booking)
             await state.clear()

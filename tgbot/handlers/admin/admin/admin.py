@@ -21,5 +21,5 @@ async def admin(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    await message.answer(l10n.format_value("admin-commands"))
+    await message.answer(l10n.format_value("admin"))
     await state.clear()

@@ -5,7 +5,7 @@ from .add_blacklist import add_blacklist_routers
 from .add_book import add_book_routers
 from .admin import admin_router
 from .cancel_premium import cancel_premium_routers
-from .check_bookings import check_bookings_router
+from .view_orders import check_bookings_router
 from .delete_book import delete_book_routers
 from .edit_book import edit_book_routers
 from .give_base import give_base_routers
@@ -15,26 +15,26 @@ from .remove_blacklist import remove_blacklist_routers
 from .send_book import send_book_routers
 from .send_files import send_files_routers
 from .send_message import send_message_routers
-from .serve import serve_routers
+from .process_order import serve_routers
 from .take_base import take_base_routers
 
 admin_routers = Router()
 admin_routers.include_routers(
     admin_router,  # Must be the first
     add_admin_routers,
-    add_blacklist_routers,
-    add_book_routers,
-    cancel_premium_routers,
-    check_bookings_router,
-    delete_book_routers,
-    edit_book_routers,
-    give_base_routers,
-    give_premium_routers,
-    remove_admin_routers,
-    remove_blacklist_routers,
-    send_book_routers,
-    send_files_routers,
-    send_message_routers,
-    serve_routers,
-    take_base_routers,
+    # add_blacklist_routers,
+    # add_book_routers,
+    # cancel_premium_routers,
+    # check_bookings_router,
+    # delete_book_routers,
+    # edit_book_routers,
+    # give_base_routers,
+    # give_premium_routers,
+    # remove_admin_routers,
+    # remove_blacklist_routers,
+    # send_book_routers,
+    # send_files_routers,
+    # send_message_routers,
+    # serve_routers,
+    # take_base_routers,
 )

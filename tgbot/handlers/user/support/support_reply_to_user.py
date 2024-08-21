@@ -78,7 +78,7 @@ async def support_reply_to_user_process(
             reply_to_message_id=sent_message.message_id,
         )
     except AiogramError:
-        await message.answer(l10n.format_value("user-blocked-bot"))
+        await message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
         await message.answer(
             l10n.format_value(

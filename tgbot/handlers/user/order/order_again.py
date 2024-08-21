@@ -21,7 +21,7 @@ async def order_again(
     await ClearKeyboard.clear(call, storage)
 
     sent_message = await call.message.answer(
-        l10n.format_value("order-step-1-book-title"),
+        l10n.format_value("order-prompt-book-title"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Order.book_title)

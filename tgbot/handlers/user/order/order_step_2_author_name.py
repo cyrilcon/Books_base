@@ -30,7 +30,7 @@ async def back_to_order_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("order-step-1-book-title"),
+        l10n.format_value("order-prompt-book-title"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Order.book_title)

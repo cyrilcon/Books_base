@@ -26,7 +26,7 @@ async def back_to_share_base_step_1(
     storage: RedisStorage,
 ):
     sent_message = await call.message.edit_text(
-        l10n.format_value("share-base-step-1-select-user"),
+        l10n.format_value("share-base-prompt-select-user"),
         reply_markup=cancel_keyboard(l10n),
         link_preview_options=LinkPreviewOptions(is_disabled=True),
     )

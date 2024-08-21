@@ -27,7 +27,7 @@ async def share_base(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("share-base-step-1-select-user"),
+        l10n.format_value("share-base-prompt-select-user"),
         reply_markup=cancel_keyboard(l10n),
         link_preview_options=LinkPreviewOptions(is_disabled=True),
     )
@@ -100,7 +100,7 @@ async def share_base_step_1(
 
     await message.answer(
         l10n.format_value(
-            "share-base-step-2-prompt-amount",
+            "share-base-prompt-amount",
             {"username": username, "base_balance": base_balance},
         ),
         reply_markup=share_base_keyboard(l10n, base=base_balance),
