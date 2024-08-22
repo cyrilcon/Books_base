@@ -1,19 +1,24 @@
 from aiogram import Router, F
 from aiogram.filters import StateFilter
+from aiogram.fsm.context import FSMContext
+from aiogram.types import CallbackQuery
+from fluent.runtime import FluentLocalization
 
-from tgbot.filters import AdminFilter
-from tgbot.middlewares import CancelCommandMiddleware
 from tgbot.states import CancelPremium
 
 cancel_premium_cancel_router = Router()
-cancel_premium_cancel_router.message.filter(AdminFilter())
-cancel_premium_cancel_router.callback_query.middleware(
-    CancelCommandMiddleware("cancel-premium-cancel")
-)
 
 
 @cancel_premium_cancel_router.callback_query(
     StateFilter(CancelPremium), F.data == "cancel"
 )
-async def cancel_premium_cancel():
-    pass
+async def cancel_premium_cancel(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+):
+    text = l10n.format_value("cancel-premium-canceled")
+
+    await state.clear()
+    await call.answer(text, show_alert=True)
+    await call.message.edit_text(text)

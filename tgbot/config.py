@@ -16,6 +16,7 @@ class TgBot:
     tg_channel: int
     support_chat: int
     booking_chat: int
+    payment_chat: int
     super_admin: int
 
     @staticmethod
@@ -30,6 +31,7 @@ class TgBot:
         tg_channel = env.int("TG_CHANNEL")
         support_chat = env.int("SUPPORT_CHAT")
         booking_chat = env.int("BOOKING_CHAT")
+        payment_chat = env.int("PAYMENT_CHAT")
         super_admin = env.int("SUPER_ADMIN")
         return TgBot(
             token=token,
@@ -38,6 +40,7 @@ class TgBot:
             tg_channel=tg_channel,
             support_chat=support_chat,
             booking_chat=booking_chat,
+            payment_chat=payment_chat,
             super_admin=super_admin,
         )
 

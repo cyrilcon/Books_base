@@ -25,7 +25,7 @@ async def cancel_premium(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("cancel-premium-select-user"),
+        l10n.format_value("cancel-premium-prompt-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(CancelPremium.select_user)
@@ -48,37 +48,7 @@ async def cancel_premium_process(
 
     user, response_message = await find_user(message.text, l10n)
 
-    if user:
-        id_user = user["id_user"]
-        fullname = user["fullname"]
-        username = user["username"]
-        user_link = await create_user_link(fullname, username)
-
-        response = await api.premium.delete_premium(id_user)
-        status = response.status
-
-        if status == 204:
-            await message.answer(
-                l10n.format_value(
-                    "cancel-premium-success",
-                    {"user_link": user_link, "id_user": str(id_user)},
-                )
-            )
-            await state.clear()
-        else:
-            sent_message = await message.answer(
-                l10n.format_value(
-                    "cancel-premium-error",
-                    {"user_link": user_link, "id_user": str(id_user)},
-                ),
-                reply_markup=cancel_keyboard(l10n),
-            )
-            await ClearKeyboard.safe_message(
-                storage=storage,
-                id_user=message.from_user.id,
-                sent_message_id=sent_message.message_id,
-            )
-    else:
+    if not user:
         sent_message = await message.answer(
             response_message, reply_markup=cancel_keyboard(l10n)
         )
@@ -87,3 +57,36 @@ async def cancel_premium_process(
             id_user=message.from_user.id,
             sent_message_id=sent_message.message_id,
         )
+        return
+
+    id_user = user.id_user
+    full_name = user.full_name
+    username = user.username
+
+    user_link = await create_user_link(full_name, username)
+
+    response = await api.premium.delete_premium(id_user)
+    status = response.status
+
+    if status != 204:
+        sent_message = await message.answer(
+            l10n.format_value(
+                "cancel-premium-error-already-canceled",
+                {"user_link": user_link, "id_user": str(id_user)},
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    await message.answer(
+        l10n.format_value(
+            "cancel-premium-success",
+            {"user_link": user_link, "id_user": str(id_user)},
+        )
+    )
+    await state.clear()
