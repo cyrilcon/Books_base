@@ -8,11 +8,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tgbot.services import (
-    get_user_language,
-    ClearKeyboard,
-    create_user_link,
-)
+from tgbot.services import get_user_language, ClearKeyboard, create_user_link
 from tgbot.states import Support
 
 support_reply_to_user_router = Router()

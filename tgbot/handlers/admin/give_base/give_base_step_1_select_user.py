@@ -65,7 +65,11 @@ async def give_base_1_process(
     sent_message = await message.answer(
         l10n.format_value(
             "give-base-prompt-transfer",
-            {"user_link": user_link, "id_user": str(id_user)},
+            {
+                "user_link": user_link,
+                "id_user": str(id_user),
+                "base_balance": user.base_balance,
+            },
         ),
         reply_markup=back_cancel_keyboard(l10n),
     )

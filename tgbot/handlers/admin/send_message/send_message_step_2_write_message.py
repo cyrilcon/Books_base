@@ -8,10 +8,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.filters import AdminFilter
-from tgbot.keyboards.inline import (
-    cancel_keyboard,
-    reply_keyboard,
-)
+from tgbot.keyboards.inline import cancel_keyboard, reply_keyboard
 from tgbot.services import ClearKeyboard, get_user_language, create_user_link
 from tgbot.states import SendMessage
 

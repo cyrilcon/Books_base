@@ -6,6 +6,8 @@ give-base-prompt-transfer =
     <b>2/2</b>
     Введите <i><b>количество base</b></i> 💎, которое хотите отправить пользователю { $user_link } (<code>{ $id_user }</code>).
 
+    { user-balance }
+
 give-base-received =
     Вы получили { $base_received } <i>base</i> 💎
 
@@ -16,6 +18,6 @@ give-base-error-invalid-base = Количество <i>base</i> 💎 должн�
 give-base-success =
     Вы отправили { $base_received } <i>base</i> 💎 пользователю { $user_link } (<code>{ $id_user }</code>).
 
-    Баланс пользователя: <b>{ $base_balance } <i>base</i></b> 💎
+    { user-balance }
 
 give-base-canceled = Вы отменили отправку base пользователю

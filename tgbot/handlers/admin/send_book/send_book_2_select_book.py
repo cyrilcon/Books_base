@@ -7,9 +7,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.filters import AdminFilter
-from tgbot.keyboards.inline import (
-    cancel_keyboard,
-)
+from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import (
     ClearKeyboard,
     Messenger,

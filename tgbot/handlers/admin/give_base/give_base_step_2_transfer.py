@@ -7,14 +7,8 @@ from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.keyboards.inline import (
-    cancel_keyboard,
-    back_cancel_keyboard,
-)
-from tgbot.services import (
-    ClearKeyboard,
-    get_user_language,
-)
+from tgbot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
+from tgbot.services import ClearKeyboard, get_user_language
 from tgbot.states import GiveBase
 
 give_base_step_2_router = Router()
@@ -71,7 +65,7 @@ async def give_base_step_2(
     user = response.get_model()
 
     base_balance = user.base_balance + base_received
-    await api.users.update_user(id_user_recipient, base=base_balance)
+    await api.users.update_user(id_user_recipient, base_balance=base_balance)
 
     try:
         await bot.send_message(

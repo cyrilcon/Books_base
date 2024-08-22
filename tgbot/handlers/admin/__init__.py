@@ -36,5 +36,5 @@ admin_routers.include_routers(
     # send_book_routers,
     send_message_routers,
     # serve_routers,
-    # take_base_routers,
+    take_base_routers,
 )
