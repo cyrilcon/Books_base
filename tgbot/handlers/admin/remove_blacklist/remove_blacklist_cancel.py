@@ -8,7 +8,7 @@ from tgbot.states import RemoveBlacklist
 remove_blacklist_cancel_router = Router()
 remove_blacklist_cancel_router.message.filter(AdminFilter())
 remove_blacklist_cancel_router.callback_query.middleware(
-    CancelCommandMiddleware("remove-blacklist-cancel")
+    CancelCommandMiddleware("remove-blacklist-canceled")
 )
 
 
