@@ -12,7 +12,6 @@ __all__ = (
     "RemoveAdmin",
     "RemoveBlacklist",
     "SendBook",
-    "SendFiles",
     "SendMessage",
     "Serve",
     "ShareBase",
@@ -33,7 +32,6 @@ from .order import Order
 from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
 from .send_book import SendBook
-from .send_files import SendFiles
 from .send_message import SendMessage
 from .serve import Serve
 from .share_base import ShareBase

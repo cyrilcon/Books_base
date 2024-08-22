@@ -4,7 +4,6 @@ __all__ = (
     "ClearKeyboard",
     "create_user_link",
     "extract_username",
-    "send_files_in_groups",
     "find_user",
     "get_fluent_localization",
     "formats_to_list",
@@ -22,7 +21,6 @@ from .broadcaster import Broadcaster
 from .clear_keyboard import ClearKeyboard
 from .create_user_link import create_user_link
 from .extract_username import extract_username
-from .files_in_media_group import send_files_in_groups
 from .find_user import find_user
 from .fluent_loader import get_fluent_localization
 from .formats_to_list import formats_to_list

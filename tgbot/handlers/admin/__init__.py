@@ -14,7 +14,6 @@ from .process_order import serve_routers
 from .remove_admin import remove_admin_routers
 from .remove_blacklist import remove_blacklist_routers
 from .send_book import send_book_routers
-from .send_files import send_files_routers
 from .send_message import send_message_routers
 from .take_base import take_base_routers
 from .view_orders import check_bookings_router
@@ -35,7 +34,6 @@ admin_routers.include_routers(
     remove_admin_routers,
     remove_blacklist_routers,
     # send_book_routers,
-    # send_files_routers,
     send_message_routers,
     # serve_routers,
     # take_base_routers,
