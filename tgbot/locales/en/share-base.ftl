@@ -14,7 +14,7 @@ share-base-error-invalid-username =
     Ваше сообщение не содержит <i><b>имени пользователя</b></i> или <i><b>ссылки</b></i> на него!!
     Введите ещё раз <i><b>имя пользователя</b> (начинается с символа "<code>@</code>")</i> или <i><b>ссылку</b></i> на вашего друга в Telegram
 
-share-base-prompt-amount =
+share-base-prompt-transfer =
     <b>2/2</b>
     Сколько <i><b>base</b></i> вы хотите отправить пользователю <b>@{ $username }</b>??
 

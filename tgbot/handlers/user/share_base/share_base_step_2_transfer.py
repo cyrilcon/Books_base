@@ -64,14 +64,14 @@ async def share_base_step_2(call: CallbackQuery, l10n: FluentLocalization, bot: 
         )
         return
 
-    id_recipient = recipient.id_user
-    l10n_recipient = await get_user_language(id_recipient)
+    id_user_recipient = recipient.id_user
+    l10n_recipient = await get_user_language(id_user_recipient)
 
     user_link = await create_user_link(sender.full_name, sender.username)
 
     try:
         await bot.send_message(
-            chat_id=id_recipient,
+            chat_id=id_user_recipient,
             text=l10n_recipient.format_value(
                 "share-base-received",
                 {
@@ -93,7 +93,7 @@ async def share_base_step_2(call: CallbackQuery, l10n: FluentLocalization, bot: 
             base_balance=sender_base_balance,
         )
         await api.users.update_user(
-            id_user=id_recipient,
+            id_user=id_user_recipient,
             base_balance=recipient_base_balance,
         )
         await call.message.edit_text(
