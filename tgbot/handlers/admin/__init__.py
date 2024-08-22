@@ -36,7 +36,7 @@ admin_routers.include_routers(
     remove_blacklist_routers,
     # send_book_routers,
     # send_files_routers,
-    # send_message_routers,
+    send_message_routers,
     # serve_routers,
     # take_base_routers,
 )
