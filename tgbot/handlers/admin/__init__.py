@@ -10,11 +10,11 @@ from .delete_book import delete_book_routers
 from .edit_book import edit_book_routers
 from .give_base import give_base_routers
 from .give_premium import give_premium_routers
-from .process_order import serve_routers
 from .remove_admin import remove_admin_routers
 from .remove_blacklist import remove_blacklist_routers
 from .send_book import send_book_routers
 from .send_message import send_message_routers
+from .serve_order import serve_order_routers
 from .take_base import take_base_routers
 from .view_orders import check_bookings_router
 
@@ -26,7 +26,6 @@ admin_routers.include_routers(
     add_blacklist_routers,
     add_book_routers,
     cancel_premium_routers,
-    # check_bookings_router,
     delete_book_routers,
     # edit_book_routers,
     give_base_routers,
@@ -35,6 +34,7 @@ admin_routers.include_routers(
     remove_blacklist_routers,
     # send_book_routers,
     send_message_routers,
-    # serve_routers,
+    serve_order_routers,
     take_base_routers,
+    # check_bookings_router,
 )

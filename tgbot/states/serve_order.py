@@ -1,8 +1,8 @@
 from aiogram.fsm.state import StatesGroup, State
 
 
-class Serve(StatesGroup):
+class ServeOrder(StatesGroup):
     """A class of states for order service."""
 
-    select_booking = State()
-    send_book = State()
+    select_order = State()
+    select_book = State()

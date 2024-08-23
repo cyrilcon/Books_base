@@ -6,16 +6,15 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.config import config
-from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import ClearKeyboard
-from tgbot.states import CancelOrder
+from tgbot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
+from tgbot.services import ClearKeyboard, create_user_link
+from tgbot.states import ServeOrder
 
-cancel_order_router = Router()
+serve_step_1_router = Router()
 
 
-@cancel_order_router.message(Command("cancel_order"))
-async def cancel_order(
+@serve_step_1_router.message(Command("serve_order"))
+async def serve_order(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -24,10 +23,10 @@ async def cancel_order(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("cancel-order-select"),
+        l10n.format_value("serve-order-prompt-select-order"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(CancelOrder.select_order)
+    await state.set_state(ServeOrder.select_order)
 
     await ClearKeyboard.safe_message(
         storage=storage,
@@ -36,8 +35,8 @@ async def cancel_order(
     )
 
 
-@cancel_order_router.message(StateFilter(CancelOrder.select_order), F.text)
-async def cancel_order_select(
+@serve_step_1_router.message(StateFilter(ServeOrder.select_order), F.text)
+async def serve_order_step_1(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -46,14 +45,13 @@ async def cancel_order_select(
     await ClearKeyboard.clear(message, storage)
 
     order_number = message.text
-    id_user = message.from_user.id
 
     if order_number[0] == "№":
         order_number = order_number[1:]
 
     if not order_number.isdigit():
         sent_message = await message.answer(
-            l10n.format_value("cancel-order-error-invalid-order-number"),
+            l10n.format_value("serve-order-error-invalid-order-number"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -67,26 +65,43 @@ async def cancel_order_select(
 
     response = await api.orders.get_order_by_id(id_order)
     status = response.status
-    order = response.result
 
-    if status == 200 and (
-        id_user == config.tg_bot.super_admin and id_user == order["id_user"]
-    ):
-        await api.orders.delete_order(id_order)
-
-        await state.clear()
-        await message.answer(
-            l10n.format_value(
-                "cancel-order-success",
-                {"id_order": str(id_order), "book_title": order["book_title"]},
-            ),
+    if status != 200:
+        sent_message = await message.answer(
+            l10n.format_value("serve-order-error-order-not-found"),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
         )
         return
 
+    order = response.get_model()
+
+    response = await api.users.get_user_by_id(order.id_user)
+    user = response.get_model()
+    id_user = user.id_user
+
+    user_link = await create_user_link(user.full_name, user.username)
+
     sent_message = await message.answer(
-        l10n.format_value("cancel-order-error-order-not-found"),
-        reply_markup=cancel_keyboard(l10n),
+        l10n.format_value(
+            "serve-order-prompt-select-book",
+            {
+                "user_link": user_link,
+                "id_user": str(id_user),
+                "book_title": order.book_title,
+                "author_name": order.author_name,
+                "id_order": str(id_order),
+            },
+        ),
+        reply_markup=back_cancel_keyboard(l10n),
     )
+    await state.update_data(id_order=id_order)
+    await state.set_state(ServeOrder.select_book)
+
     await ClearKeyboard.safe_message(
         storage=storage,
         id_user=message.from_user.id,

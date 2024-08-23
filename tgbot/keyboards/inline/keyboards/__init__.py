@@ -14,7 +14,7 @@ __all__ = (
     "price_update_keyboard",
     "reply_keyboard",
     "search_by_author_and_genre_keyboard",
-    "serve_keyboard",
+    "serve_order_keyboard",
     "set_language_keyboard",
     "share_base_keyboard",
     "share_our_store_keyboard",
@@ -37,7 +37,7 @@ from .post_cancel import post_cancel_keyboard
 from .price_update import price_update_keyboard
 from .reply import reply_keyboard
 from .search_by_author_and_genre import search_by_author_and_genre_keyboard
-from .serve import serve_keyboard
+from .serve_order import serve_order_keyboard
 from .set_languages import set_language_keyboard
 from .share_base import share_base_keyboard
 from .share_our_store import share_our_store_keyboard

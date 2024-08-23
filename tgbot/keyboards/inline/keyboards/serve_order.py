@@ -1,0 +1,25 @@
+from aiogram.types import InlineKeyboardMarkup
+from fluent.runtime import FluentLocalization
+
+from tgbot.keyboards.inline.buttons import serve_order_button, unavailable_button
+
+
+def serve_order_keyboard(
+    l10n: FluentLocalization, id_order: int
+) -> InlineKeyboardMarkup:
+    """
+    The "serve_order" keyboard is formed.
+    :param l10n: Language set by the user.
+    :param id_order: Unique order identifier.
+    :return: The "serve_order" keyboard.
+    """
+
+    serve_order_markup = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                serve_order_button(l10n, id_order=id_order),
+                unavailable_button(l10n),
+            ]
+        ],
+    )
+    return serve_order_markup

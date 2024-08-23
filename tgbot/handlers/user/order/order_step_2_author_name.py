@@ -7,7 +7,11 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.config import config
-from tgbot.keyboards.inline import cancel_keyboard, order_again_keyboard, serve_keyboard
+from tgbot.keyboards.inline import (
+    cancel_keyboard,
+    order_again_keyboard,
+    serve_order_keyboard,
+)
 from tgbot.services import (
     ClearKeyboard,
     create_user_link,
@@ -96,5 +100,5 @@ async def order_step_2(
                 "id_order": str(id_order),
             },
         ),
-        reply_markup=serve_keyboard(language_code, id_order),
+        reply_markup=serve_order_keyboard(language_code, id_order),
     )

@@ -13,7 +13,7 @@ __all__ = (
     "RemoveBlacklist",
     "SendBook",
     "SendMessage",
-    "Serve",
+    "ServeOrder",
     "ShareBase",
     "Support",
     "TakeBase",
@@ -33,7 +33,7 @@ from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
 from .send_book import SendBook
 from .send_message import SendMessage
-from .serve import Serve
+from .serve_order import ServeOrder
 from .share_base import ShareBase
 from .support import Support
 from .take_base import TakeBase

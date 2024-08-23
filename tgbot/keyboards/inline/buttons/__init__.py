@@ -26,7 +26,7 @@ __all__ = (
     "reply_button",
     "search_by_author_button",
     "search_by_genre_button",
-    "serve_button",
+    "serve_order_button",
     "share_base_back_button",
     "share_base_cancel_button",
     "share_our_store_button",
@@ -63,7 +63,7 @@ from .price_update_85 import price_update_85_button
 from .reply import reply_button
 from .search_by_author import search_by_author_button
 from .search_by_genre import search_by_genre_button
-from .serve import serve_button
+from .serve_order import serve_order_button
 from .share_base_back import share_base_back_button
 from .share_base_cancel import share_base_cancel_button
 from .share_our_store import share_our_store_button
