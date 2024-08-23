@@ -24,7 +24,7 @@ admin_routers.include_routers(
     admin_router,  # Must be the first
     add_admin_routers,
     add_blacklist_routers,
-    # add_book_routers,
+    add_book_routers,
     cancel_premium_routers,
     # check_bookings_router,
     # delete_book_routers,

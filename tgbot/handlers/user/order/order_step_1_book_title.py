@@ -11,7 +11,12 @@ from tgbot.keyboards.inline import (
     cancel_keyboard,
     show_book_order_cancel_keyboard,
 )
-from tgbot.services import ClearKeyboard, generate_book_caption, Messenger
+from tgbot.services import (
+    ClearKeyboard,
+    generate_book_caption,
+    Messenger,
+    BookFormatter,
+)
 from tgbot.states import Order
 
 order_step_1_router = Router()
@@ -63,7 +68,7 @@ async def order_step_1(
             id_book = book.id_book
             book_title = book.book_title
             authors = ", ".join([author.author_name for author in book.authors])
-            article = "#{:04d}".format(id_book)
+            article = BookFormatter.format_article(id_book)
 
             sent_message = await message.answer(
                 l10n.format_value(
@@ -132,7 +137,7 @@ async def order_step_1_display_book_details(
     await state.clear()
 
     book = response.result
-    caption = await generate_book_caption(data=book, l10n=l10n)
+    caption = await generate_book_caption(book_data=book, l10n=l10n)
 
     await Messenger.safe_send_message(
         bot=bot,

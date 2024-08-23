@@ -5,34 +5,34 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import (
     back_cancel_keyboard,
     done_clear_back_cancel_keyboard,
 )
-from tgbot.services import ClearKeyboard, genres_to_list
+from tgbot.services import ClearKeyboard, parse_and_format_genres, BookFormatter
 from tgbot.states import AddBook
 
-add_book_router_5 = Router()
-add_book_router_5.message.filter(AdminFilter())
+add_book_step_5_router = Router()
 
 
-@add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "back")
-async def back_to_add_book_4(
+@add_book_step_5_router.callback_query(
+    StateFilter(AddBook.add_genres), F.data == "back"
+)
+async def back_to_add_book_step_4(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
 ):
-    await call.answer(cache_time=1)
     await call.message.edit_text(
-        l10n.format_value("add-book-description"),
+        l10n.format_value("add-book-prompt-description"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_description)
+    await call.answer()
 
 
-@add_book_router_5.message(StateFilter(AddBook.add_genres), F.text)
-async def add_book_5(
+@add_book_step_5_router.message(StateFilter(AddBook.add_genres), F.text)
+async def add_book_step_5(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -45,10 +45,10 @@ async def add_book_5(
     data = await state.get_data()
     genres = data.get("genres")
 
-    genres, too_long_genres = await genres_to_list(genres_from_message, genres)
-    if too_long_genres:
+    genres, genre_too_long = await parse_and_format_genres(genres_from_message, genres)
+    if genre_too_long:
         sent_message = await message.answer(
-            l10n.format_value("genres-too-long"),
+            l10n.format_value("add-book-error-genre-name-too-long"),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -59,12 +59,12 @@ async def add_book_5(
         return
 
     await state.update_data(genres=genres)
-    ready_made_genres = " ".join(["#" + genre["genre"] for genre in genres])
+    genres = BookFormatter.format_genres(genres)
 
     sent_message = await message.answer(
         l10n.format_value(
-            "add-book-genres-more",
-            {"genres": ready_made_genres},
+            "add-book-prompt-more-genres",
+            {"genres": genres},
         ),
         reply_markup=done_clear_back_cancel_keyboard(l10n),
     )
@@ -75,30 +75,34 @@ async def add_book_5(
     )
 
 
-@add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "done")
-async def done_add_book_5(
+@add_book_step_5_router.callback_query(
+    StateFilter(AddBook.add_genres), F.data == "done"
+)
+async def add_book_step_5_done(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
 ):
-    await call.answer(cache_time=1)
     await call.message.edit_text(
-        l10n.format_value("add-book-cover"),
+        l10n.format_value("add-book-prompt-cover"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_cover)
+    await call.answer()
 
 
-@add_book_router_5.callback_query(StateFilter(AddBook.add_genres), F.data == "clear")
-async def clear_add_book_5(
+@add_book_step_5_router.callback_query(
+    StateFilter(AddBook.add_genres), F.data == "clear"
+)
+async def add_book_5_clear(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
 ):
-    await call.answer(cache_time=1)
     await call.message.edit_text(
-        l10n.format_value("add-book-genres"),
+        l10n.format_value("add-book-prompt-genres"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     genres = []
     await state.update_data(genres=genres)
+    await call.answer()

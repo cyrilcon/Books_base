@@ -2,51 +2,56 @@ from typing import Dict, Any
 
 from fluent.runtime import FluentLocalization
 
-from tgbot.services import get_fluent_localization
+from tgbot.services import get_fluent_localization, BookFormatter
 
 
 async def generate_book_caption(
-    data: Dict[str, Any],
+    book_data: Dict[str, Any],
     l10n: FluentLocalization = get_fluent_localization("ru"),
-    post: bool = False,
+    is_post: bool = False,
     from_user: bool = False,
 ):
     """
     The caption of the post for the telegram channel is formed.
-    :param data: Dictionary with book data.
+    :param book_data: Dictionary with book data.
     :param l10n: Language set by the user.
-    :param post: True - text is generated for post.
+    :param is_post: True - text is generated for post.
     :param from_user: True - book from user.
     :return: Ready caption of post for telegram channel.
     """
 
-    id_book = data.get("id_book")
-    title = data.get("title")
-    authors = data.get("authors")
-    description = data.get("description")
-    genres = data.get("genres")
-    files = data.get("files")
-    price = data.get("price")
+    id_book = book_data.get("id_book")
+    title = book_data.get("title")
+    authors = book_data.get("authors")
+    description = book_data.get("description")
+    genres = book_data.get("genres")
+    files = book_data.get("files")
+    price = book_data.get("price")
 
-    introductory_text = ""
-    if price == 50:
-        if post:
-            introductory_text = l10n.format_value("daily-action")
-        price = "50₽ <s>85₽</s>"
-    elif price == 85:
-        if from_user:
-            introductory_text = l10n.format_value("new-book-from-user")
-        price = "85₽"
+    intro_config = {
+        50: {
+            "message": l10n.format_value("daily-action") if is_post else "",
+            "price_text": "50₽ <s>85₽</s>",
+        },
+        85: {
+            "message": l10n.format_value("new-book-from-user") if from_user else "",
+            "price_text": "85₽",
+        },
+    }
 
-    authors = ", ".join([author["author"].title() for author in authors])
-    formats = ", ".join(f"{file['format']}" for file in files)
-    genres = " ".join(["#" + genre["genre"] for genre in genres])
-    article = "#{:04d}".format(id_book)
+    intro_info = intro_config.get(price, {"message": "", "price_text": f"{price}₽"})
+    intro_message = intro_info["message"] if is_post else ""
+    price = intro_info["price_text"]
+
+    authors = BookFormatter.format_authors(authors)
+    formats = BookFormatter.format_file_formats(files)
+    genres = BookFormatter.format_genres(genres)
+    article = BookFormatter.format_article(id_book)
 
     caption = l10n.format_value(
-        "book-caption",
+        "book-caption-template",
         {
-            "introductory_text": introductory_text,
+            "intro_message": intro_message,
             "title": title,
             "authors": authors,
             "description": description,

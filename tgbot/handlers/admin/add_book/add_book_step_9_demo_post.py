@@ -12,30 +12,27 @@ from tgbot.keyboards.inline import deep_link_buy_keyboard
 from tgbot.services import Messenger
 from tgbot.states import AddBook
 
-add_book_router_9 = Router()
-add_book_router_9.message.filter(AdminFilter())
+add_book_step_9_router = Router()
+add_book_step_9_router.message.filter(AdminFilter())
 
 
-@add_book_router_9.callback_query(StateFilter(AddBook.preview), F.data == "post")
-async def add_book_9(
+@add_book_step_9_router.callback_query(StateFilter(AddBook.preview), F.data == "post")
+async def add_book_step_9(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
     bot: Bot,
 ):
-    await call.answer(cache_time=1)
-
     data = await state.get_data()
     id_book = data.get("id_book")
     caption = data.get("caption")
     cover = data.get("cover")
-    post = data.get("post")
+    is_post = data.get("is_post")
 
     await api.books.create_book(data)
 
-    deep_link = await create_start_link(bot, f"book_{id_book}")
-
-    if post:
+    if is_post:
+        deep_link = await create_start_link(bot, f"book_{id_book}")
         await Messenger.safe_send_message(
             bot=bot,
             user_id=config.tg_bot.tg_channel,
@@ -47,3 +44,4 @@ async def add_book_9(
     await state.clear()
     await call.message.edit_reply_markup()
     await call.message.answer(l10n.format_value("add-book-success"))
+    await call.answer()

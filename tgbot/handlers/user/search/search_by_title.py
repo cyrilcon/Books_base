@@ -50,7 +50,7 @@ async def search_by_title_get_book(
     if status == 200:
         book = response.result
 
-        caption = await generate_book_caption(data=book, l10n=l10n)
+        caption = await generate_book_caption(book_data=book, l10n=l10n)
 
         await Messenger.safe_send_message(
             bot=bot,

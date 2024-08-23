@@ -2,15 +2,15 @@ from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
 
-def do_not_publish_button(l10n: FluentLocalization) -> InlineKeyboardButton:
+def not_post_button(l10n: FluentLocalization) -> InlineKeyboardButton:
     """
     The "Don't publish" button is formed.
     :param l10n: Language set by the user.
     :return: The "Don't publish" button.
     """
 
-    do_not_publish = InlineKeyboardButton(
-        text=l10n.format_value("button-do-not-publish"),
-        callback_data="do_not_publish",
+    not_post = InlineKeyboardButton(
+        text=l10n.format_value("button-not-post"),
+        callback_data="not_post:85",
     )
-    return do_not_publish
+    return not_post

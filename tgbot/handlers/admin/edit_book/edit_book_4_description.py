@@ -69,7 +69,7 @@ async def edit_description_process(
         response = await api.books.update_book(id_edit_book, description=description)
         book = response.result
 
-        caption = await generate_book_caption(data=book, l10n=l10n)
+        caption = await generate_book_caption(book_data=book, l10n=l10n)
         caption_length = len(caption)
 
         if caption_length <= 1024:

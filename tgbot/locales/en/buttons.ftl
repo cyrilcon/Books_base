@@ -21,7 +21,7 @@ button-price-85 = 85₽
 
 button-price-50 = 50₽
 
-button-do-not-publish = 🚫 Не публиковать
+button-not-post = 🚫 Не публиковать
 
 button-not-from-user = 👤 Не от пользователя
 

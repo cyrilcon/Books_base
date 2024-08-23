@@ -8,7 +8,7 @@ from fluent.runtime import FluentLocalization
 from tgbot.api.books_base_api import api
 from tgbot.filters import SuperAdminFilter
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import ClearKeyboard, is_book_article
+from tgbot.services import ClearKeyboard, is_valid_book_article
 from tgbot.states import DeleteBook
 
 delete_book_router = Router()
@@ -48,7 +48,7 @@ async def delete_book_process(
 
     article = message.text
 
-    if is_book_article(article):
+    if is_valid_book_article(article):
         id_book = int(article.lstrip("#"))
 
         response = await api.books.get_book_by_id(id_book)

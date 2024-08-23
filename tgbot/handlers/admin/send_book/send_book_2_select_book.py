@@ -12,7 +12,7 @@ from tgbot.services import (
     ClearKeyboard,
     Messenger,
     generate_book_caption,
-    is_book_article,
+    is_valid_book_article,
 )
 from tgbot.states import SendBook
 
@@ -46,7 +46,7 @@ async def send_book_2(
 
     article = message.text
 
-    if is_book_article(article):
+    if is_valid_book_article(article):
         id_book = int(article.lstrip("#"))
 
         response = await api.books.get_book_by_id(id_book)
@@ -58,7 +58,7 @@ async def send_book_2(
             data = await state.get_data()
             id_user_recipient = data.get("id_user_recipient")
 
-            caption = await generate_book_caption(data=book, l10n=l10n)
+            caption = await generate_book_caption(book_data=book, l10n=l10n)
 
             is_sent = await Messenger.safe_send_message(
                 bot=bot,

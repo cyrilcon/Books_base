@@ -5,31 +5,31 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import back_cancel_keyboard
 from tgbot.services import ClearKeyboard
 from tgbot.states import AddBook
 
-add_book_router_3 = Router()
-add_book_router_3.message.filter(AdminFilter())
+add_book_step_3_router = Router()
 
 
-@add_book_router_3.callback_query(StateFilter(AddBook.add_authors), F.data == "back")
-async def back_to_add_book_2(
+@add_book_step_3_router.callback_query(
+    StateFilter(AddBook.add_authors), F.data == "back"
+)
+async def back_to_add_book_step_2(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
 ):
     await call.answer(cache_time=1)
     await call.message.edit_text(
-        l10n.format_value("add-book-title"),
+        l10n.format_value("add-book-prompt-title"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_title)
 
 
-@add_book_router_3.message(StateFilter(AddBook.add_authors), F.text)
-async def add_book_3(
+@add_book_step_3_router.message(StateFilter(AddBook.add_authors), F.text)
+async def add_book_step_3(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -39,10 +39,10 @@ async def add_book_3(
 
     authors = message.text.split(", ")
 
-    for author in authors:
-        if len(author) > 255:
+    for author_name in authors:
+        if len(author_name) > 255:
             sent_message = await message.answer(
-                l10n.format_value("authors-too-long"),
+                l10n.format_value("add-book-error-author-name-too-long"),
                 reply_markup=back_cancel_keyboard(l10n),
             )
             await ClearKeyboard.safe_message(
@@ -52,10 +52,10 @@ async def add_book_3(
             )
             return
 
-    authors = [{"author": author} for author in authors]
+    authors = [{"author_name": author_name} for author_name in authors]
 
     sent_message = await message.answer(
-        l10n.format_value("add-book-description"),
+        l10n.format_value("add-book-prompt-description"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.update_data(authors=authors)

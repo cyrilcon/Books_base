@@ -71,7 +71,7 @@ async def edit_cover_process(
     response = await api.books.update_book(id_book_edited, cover=cover)
     book = response.result
 
-    caption = await generate_book_caption(data=book, l10n=l10n)
+    caption = await generate_book_caption(book_data=book, l10n=l10n)
 
     await message.answer(l10n.format_value("edit-book-success"))
     await Messenger.safe_send_message(

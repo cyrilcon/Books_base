@@ -11,9 +11,9 @@ from tgbot.keyboards.inline.buttons import (
 
 def done_clear_back_cancel_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
     """
-    The "Done", "Clear", "Back" and "Cancel" keyboard is formed.
+    The "done_clear_back_cancel" keyboard is formed.
     :param l10n: Language set by the user.
-    :return: The "Done", "Clear", "Back" and "Cancel" keyboard.
+    :return: The "done_clear_back_cancel" keyboard.
     """
 
     done_clear_back_cancel_markup = InlineKeyboardMarkup(

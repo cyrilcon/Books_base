@@ -16,7 +16,7 @@ from tgbot.keyboards.inline import (
 )
 from tgbot.services import (
     ClearKeyboard,
-    formats_to_list,
+    parse_and_format_files,
     generate_book_caption,
     Messenger,
 )
@@ -70,7 +70,7 @@ async def edit_files_process(
 
     data = await state.get_data()
     files = data.get("files")
-    files, text = await formats_to_list(message, l10n, files)
+    files, text = await parse_and_format_files(message, l10n, files)
 
     await state.update_data(files=files)
     sent_message = await message.answer(
@@ -102,7 +102,7 @@ async def done_edit_files(
     response = await api.books.update_book(id_book_edited, files=files)
     book = response.result
 
-    caption = await generate_book_caption(data=book, l10n=l10n)
+    caption = await generate_book_caption(book_data=book, l10n=l10n)
     caption_length = len(caption)
 
     if caption_length <= 1024:

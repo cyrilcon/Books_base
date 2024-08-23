@@ -10,7 +10,7 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import cancel_keyboard, edit_book_keyboard
 from tgbot.services import (
     ClearKeyboard,
-    is_book_article,
+    is_valid_book_article,
     generate_book_caption,
     Messenger,
 )
@@ -54,7 +54,7 @@ async def edit_book_process(
 
     article = message.text
 
-    if is_book_article(article):
+    if is_valid_book_article(article):
         id_book = int(article[1:])
 
         response = await api.books.get_book_by_id(id_book)
@@ -62,7 +62,7 @@ async def edit_book_process(
         book = response.result
 
         if status == 200:
-            caption = await generate_book_caption(data=book, l10n=l10n)
+            caption = await generate_book_caption(book_data=book, l10n=l10n)
 
             await Messenger.safe_send_message(
                 bot=bot,

@@ -63,7 +63,7 @@ async def edit_title_process(
     if len(title) <= 255:
         if '"' in title:
             await message.answer(
-                l10n.format_value("add-book-title-incorrect"),
+                l10n.format_value("add-book-error-invalid-title"),
                 reply_markup=cancel_keyboard(l10n),
             )
         else:
@@ -99,7 +99,7 @@ async def edit_title_process(
                 response = await api.books.update_book(id_book_edited, title=title)
                 book = response.result
 
-                caption = await generate_book_caption(data=book, l10n=l10n)
+                caption = await generate_book_caption(book_data=book, l10n=l10n)
                 caption_length = len(caption)
 
                 if caption_length <= 1024:
@@ -149,7 +149,7 @@ async def yes_edit_title(
     response = await api.books.update_book(id_book_edited, title=title)
     book = response.result
 
-    caption = await generate_book_caption(data=book, l10n=l10n)
+    caption = await generate_book_caption(book_data=book, l10n=l10n)
     caption_length = len(caption)
 
     if caption_length <= 1024:

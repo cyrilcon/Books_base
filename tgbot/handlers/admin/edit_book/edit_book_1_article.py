@@ -11,7 +11,7 @@ from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import cancel_keyboard, edit_book_keyboard
 from tgbot.services import (
     ClearKeyboard,
-    is_book_article,
+    is_valid_book_article,
     generate_book_caption,
     Messenger,
 )
@@ -31,7 +31,7 @@ async def edit_article(
     await call.answer(cache_time=1)
 
     id_book = int(call.data.split(":")[-1])
-    article = "#{:04d}".format(id_book)
+    article = BookFormatter.format_article(id_book)
 
     sent_message = await call.message.answer(
         l10n.format_value("edit-book-article", {"article": article}),
@@ -60,7 +60,7 @@ async def edit_article_process(
 
     article = message.text
 
-    if is_book_article(article):
+    if is_valid_book_article(article):
         new_id_book = int(article[1:])
 
         response = await api.books.get_book_by_id(new_id_book)
@@ -78,7 +78,7 @@ async def edit_article_process(
             response = await api.books.update_book(id_book_edited, id_book=new_id_book)
             book = response.result
 
-            caption = await generate_book_caption(data=book, l10n=l10n)
+            caption = await generate_book_caption(book_data=book, l10n=l10n)
             caption_length = len(caption)
 
             if caption_length <= 1024:

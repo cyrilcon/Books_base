@@ -5,12 +5,12 @@ from tgbot.keyboards.inline.buttons import post_button, cancel_button
 
 def post_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
     """
-    The "Post" and "Cancel" keyboard is formed.
+    The "post_cancel" keyboard is formed.
     :param l10n: Language set by the user.
-    :return: The "Post" and "Cancel" keyboard.
+    :return: The "post_cancel" keyboard.
     """
 
-    post_markup = InlineKeyboardMarkup(
+    post_cancel_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 post_button(l10n),
@@ -18,4 +18,4 @@ def post_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
             ],
         ],
     )
-    return post_markup
+    return post_cancel_markup

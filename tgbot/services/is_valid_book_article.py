@@ -1,7 +1,7 @@
 import re
 
 
-def is_book_article(article: str):
+def is_valid_book_article(article: str):
     """
     Checks if the string is a book article.
 

@@ -4,8 +4,8 @@ daily-action =
 
 new-book-from-user = Добавлена новая книга по заказу пользователя!!
 
-book-caption =
-    { $introductory_text }
+book-caption-template =
+    { $intro_message }
 
     <b>"<code>{ $title }</code>"</b>
     <i>{ $authors }</i>

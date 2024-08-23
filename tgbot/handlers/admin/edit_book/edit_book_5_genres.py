@@ -14,7 +14,7 @@ from tgbot.keyboards.inline import (
 )
 from tgbot.services import (
     ClearKeyboard,
-    genres_to_list,
+    parse_and_format_genres,
     generate_book_caption,
     Messenger,
 )
@@ -69,7 +69,7 @@ async def edit_genres_process(
 
     genres_from_message = message.text
 
-    genres, too_long_genres = await genres_to_list(genres_from_message)
+    genres, too_long_genres = await parse_and_format_genres(genres_from_message)
     if too_long_genres:
         sent_message = await message.answer(
             l10n.format_value("genres-too-long"),
@@ -88,7 +88,7 @@ async def edit_genres_process(
     response = await api.books.update_book(id_edit_book, genres=genres)
     book = response.result
 
-    caption = await generate_book_caption(data=book, l10n=l10n)
+    caption = await generate_book_caption(book_data=book, l10n=l10n)
     caption_length = len(caption)
 
     if caption_length <= 1024:

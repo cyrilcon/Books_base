@@ -11,6 +11,6 @@ def not_from_user_button(l10n: FluentLocalization) -> InlineKeyboardButton:
 
     not_from_user = InlineKeyboardButton(
         text=l10n.format_value("button-not-from-user"),
-        callback_data="not_from_user",
+        callback_data="not_from_user:85",
     )
     return not_from_user
