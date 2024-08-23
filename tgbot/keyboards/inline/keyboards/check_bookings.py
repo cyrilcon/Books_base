@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
-from tgbot.keyboards.inline.buttons import serve_order_button
+from tgbot.keyboards.inline.buttons import serve_button
 
 
 def check_bookings_keyboard(
@@ -45,7 +45,7 @@ def check_bookings_keyboard(
     check_bookings_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                serve_order_button(l10n, id_order=id_booking),
+                serve_button(l10n, id_order=id_booking),
             ],
             action_buttons,
         ]

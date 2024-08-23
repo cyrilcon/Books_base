@@ -26,10 +26,19 @@ serve-order-error-article-not-found =
     Книга с таким артикулом не найдена!!
     Введите артикул существуюшей книги ещё раз
 
-serve-order-error-order-already-served = Заказ уже обслужен!!
+serve-order-error-order-already-served = Заказ уже обслужен или отменён!!
 
 serve-order-served = Ваш заказ <code>№{ $id_order }</code>:
 
 serve-order-success = Заказ <code>№{ $id_order }</code> обслужен!!
+
+serve-order-book-unavailable-message-template =
+    Добрый день!!
+    К сожалению, мы не можем обслужить ваш заказ (<code>№{ $id_order }</code>), по причине – отсутствие книги "<code>{ $book_title }</code>" автора <i>{ $author_name }</i> у поставщика.
+
+    Спасибо за понимание.
+    Читайте и развиватесь!!
+
+serve-order-message-sent = Сообщение отправлено!!
 
 serve-order-canceled = Вы не обслужили заказ
