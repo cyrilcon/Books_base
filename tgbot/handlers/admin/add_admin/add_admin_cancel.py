@@ -4,11 +4,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from tgbot.filters import SuperAdminFilter
 from tgbot.states import AddAdmin
 
 add_admin_cancel_router = Router()
-add_admin_cancel_router.message.filter(SuperAdminFilter())
 
 
 @add_admin_cancel_router.callback_query(StateFilter(AddAdmin), F.data == "cancel")

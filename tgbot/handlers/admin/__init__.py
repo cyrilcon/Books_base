@@ -27,7 +27,7 @@ admin_routers.include_routers(
     add_book_routers,
     cancel_premium_routers,
     # check_bookings_router,
-    # delete_book_routers,
+    delete_book_routers,
     # edit_book_routers,
     give_base_routers,
     give_premium_routers,

@@ -6,13 +6,11 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.filters import SuperAdminFilter
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import find_user, create_user_link, ClearKeyboard
 from tgbot.states import AddAdmin
 
 add_admin_router = Router()
-add_admin_router.message.filter(SuperAdminFilter())
 
 
 @add_admin_router.message(Command("add_admin"))
