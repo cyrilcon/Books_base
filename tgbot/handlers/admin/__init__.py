@@ -5,6 +5,7 @@ from .add_admin import add_admin_routers
 from .add_blacklist import add_blacklist_routers
 from .add_book import add_book_routers
 from .admin import admin_router
+from .broadcast import broadcast_routers
 from .cancel_premium import cancel_premium_routers
 from .delete_book import delete_book_routers
 from .edit_book import edit_book_routers
@@ -25,6 +26,7 @@ admin_routers.include_routers(
     add_admin_routers,
     add_blacklist_routers,
     add_book_routers,
+    broadcast_routers,
     cancel_premium_routers,
     delete_book_routers,
     # edit_book_routers,

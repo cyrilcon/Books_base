@@ -42,9 +42,6 @@ async def support_reply_to_user_process(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    from_chat_id = message.chat.id
-    message_id = message.message_id
-
     data = await state.get_data()
     id_user_recipient = data["id_user_recipient"]
     l10n_recipient = await get_user_language(id_user_recipient)
@@ -58,8 +55,8 @@ async def support_reply_to_user_process(
     try:
         sent_message = await bot.copy_message(
             chat_id=id_user_recipient,
-            from_chat_id=from_chat_id,
-            message_id=message_id,
+            from_chat_id=message.chat.id,
+            message_id=message.message_id,
         )
         await bot.send_message(
             chat_id=id_user_recipient,
