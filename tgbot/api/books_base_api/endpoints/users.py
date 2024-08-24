@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from typing import List
 
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
 from tgbot.schemas import UserSchema
@@ -8,6 +9,17 @@ class UsersApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
         self.endpoint = f"{prefix}/users"
+
+    async def get_user_ids(self) -> ApiResponse[List[int]]:
+        """
+        Get a list of user IDs.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}",
+        )
+        return ApiResponse(status, result)
 
     async def create_user(
         self,
