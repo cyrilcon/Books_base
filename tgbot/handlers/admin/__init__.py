@@ -32,7 +32,7 @@ admin_routers.include_routers(
     give_premium_routers,
     remove_admin_routers,
     remove_blacklist_routers,
-    # send_book_routers,
+    send_book_routers,
     send_message_routers,
     serve_order_routers,
     take_base_routers,

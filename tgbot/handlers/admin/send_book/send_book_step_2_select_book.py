@@ -10,33 +10,33 @@ from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import (
     ClearKeyboard,
-    get_user_language,
     generate_book_caption,
     is_valid_book_article,
+    get_user_language,
 )
-from tgbot.states import ServeOrder
+from tgbot.states import SendBook
 
-serve_step_2_router = Router()
+send_book_step_2_router = Router()
 
 
-@serve_step_2_router.callback_query(
-    StateFilter(ServeOrder.select_book), F.data == "back"
+@send_book_step_2_router.callback_query(
+    StateFilter(SendBook.select_book), F.data == "back"
 )
-async def back_to_serve_order_step_1(
+async def back_to_send_book_step_1(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("serve-order-prompt-select-order"),
+        l10n.format_value("send-book-prompt-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(ServeOrder.select_order)
+    await state.set_state(SendBook.select_user)
     await call.answer()
 
 
-@serve_step_2_router.message(StateFilter(ServeOrder.select_book), F.text)
-async def serve_step_2(
+@send_book_step_2_router.message(StateFilter(SendBook.select_book), F.text)
+async def send_book_step_2(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -49,7 +49,7 @@ async def serve_step_2(
 
     if not is_valid_book_article(article):
         sent_message = await message.answer(
-            l10n.format_value("serve-order-error-invalid-article"),
+            l10n.format_value("send-book-error-invalid-article"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -66,7 +66,7 @@ async def serve_step_2(
 
     if status != 200:
         sent_message = await message.answer(
-            l10n.format_value("serve-order-error-article-not-found"),
+            l10n.format_value("send-book-error-article-not-found"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -79,38 +79,24 @@ async def serve_step_2(
     book = response.result
 
     data = await state.get_data()
-    id_order = data.get("id_order")
-
-    response = await api.orders.get_order_by_id(id_order)
-    order = response.get_model()
-
-    id_user_recipient = order.id_user
+    id_user_recipient = data.get("id_user_recipient")
     l10n_recipient = await get_user_language(id_user_recipient)
     caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
 
     try:
-        sent_message = await bot.send_message(
-            chat_id=id_user_recipient,
-            text=l10n_recipient.format_value(
-                "serve-order-served",
-                {"id_order": str(id_order)},
-            ),
-        )
         await bot.send_photo(
             chat_id=id_user_recipient,
             photo=book["cover"],
             caption=caption,
             # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
-            reply_to_message_id=sent_message.message_id,
         )
     except AiogramError:
         await message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
         await message.answer(
             l10n.format_value(
-                "serve-order-success",
-                {"id_order": str(id_order)},
+                "send-book-success",
+                {"book_title": book["title"]},
             )
         )
-    await api.orders.delete_order(id_order)
     await state.clear()
