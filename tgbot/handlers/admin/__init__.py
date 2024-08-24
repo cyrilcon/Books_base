@@ -16,7 +16,7 @@ from .send_book import send_book_routers
 from .send_message import send_message_routers
 from .serve_order import serve_order_routers
 from .take_base import take_base_routers
-from .view_orders import check_bookings_router
+from .view_orders import view_orders_router
 
 admin_routers = Router()
 admin_routers.message.filter(AdminFilter())
@@ -36,5 +36,5 @@ admin_routers.include_routers(
     send_message_routers,
     serve_order_routers,
     take_base_routers,
-    # check_bookings_router,
+    view_orders_router,
 )

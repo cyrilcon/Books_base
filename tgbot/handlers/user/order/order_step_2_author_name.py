@@ -89,7 +89,7 @@ async def order_step_2(
     language_code = await get_user_language(config.tg_bot.super_admin)
 
     await bot.send_message(
-        chat_id=config.tg_bot.booking_chat,
+        chat_id=config.tg_bot.order_chat,
         text=l10n.format_value(
             "order-received-from-user",
             {

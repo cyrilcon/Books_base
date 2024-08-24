@@ -15,7 +15,7 @@ class TgBot:
     logging_level: str
     tg_channel: int
     support_chat: int
-    booking_chat: int
+    order_chat: int
     payment_chat: int
     super_admin: int
 
@@ -30,7 +30,7 @@ class TgBot:
         logging_level = env.str("LOGGING_LEVEL")
         tg_channel = env.int("TG_CHANNEL")
         support_chat = env.int("SUPPORT_CHAT")
-        booking_chat = env.int("BOOKING_CHAT")
+        order_chat = env.int("ORDER_CHAT")
         payment_chat = env.int("PAYMENT_CHAT")
         super_admin = env.int("SUPER_ADMIN")
         return TgBot(
@@ -39,7 +39,7 @@ class TgBot:
             logging_level=logging_level,
             tg_channel=tg_channel,
             support_chat=support_chat,
-            booking_chat=booking_chat,
+            order_chat=order_chat,
             payment_chat=payment_chat,
             super_admin=super_admin,
         )

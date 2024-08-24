@@ -9,6 +9,7 @@ __all__ = (
     "get_fluent_localization",
     "generate_book_caption",
     "generate_id_order",
+    "get_order_info",
     "get_user_language",
     "is_valid_book_article",
     "Messenger",
@@ -27,6 +28,7 @@ from .find_user import find_user
 from .fluent_loader import get_fluent_localization
 from .generate_book_caption import generate_book_caption
 from .generate_id_order import generate_id_order
+from .get_order_info import get_order_info
 from .get_user_language import get_user_language
 from .is_valid_book_article import is_valid_book_article
 from .messenger import Messenger

@@ -3,7 +3,6 @@ __all__ = (
     "back_yes_cancel_keyboard",
     "order_again_keyboard",
     "cancel_keyboard",
-    "check_bookings_keyboard",
     "deep_link_buy_keyboard",
     "done_clear_back_cancel_keyboard",
     "done_clear_cancel_keyboard",
@@ -19,6 +18,7 @@ __all__ = (
     "share_base_keyboard",
     "share_our_store_keyboard",
     "show_book_order_cancel_keyboard",
+    "view_orders_keyboard",
     "yes_cancel_keyboard",
 )
 
@@ -27,7 +27,6 @@ from .keyboards import (
     back_yes_cancel_keyboard,
     order_again_keyboard,
     cancel_keyboard,
-    check_bookings_keyboard,
     deep_link_buy_keyboard,
     done_clear_back_cancel_keyboard,
     done_clear_cancel_keyboard,
@@ -43,5 +42,6 @@ from .keyboards import (
     share_base_keyboard,
     share_our_store_keyboard,
     show_book_order_cancel_keyboard,
+    view_orders_keyboard,
     yes_cancel_keyboard,
 )

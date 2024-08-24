@@ -40,6 +40,4 @@ order-received-from-user =
 
 order-canceled = Вы отменили заказ
 
-
-
 orders-absent = Заказы отсутствуют

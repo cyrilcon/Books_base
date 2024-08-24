@@ -1,54 +1,55 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
-from tgbot.keyboards.inline.buttons import serve_button
+from tgbot.keyboards.inline.buttons import serve_button, unavailable_button
 
 
-def check_bookings_keyboard(
+def view_orders_keyboard(
     l10n: FluentLocalization,
-    id_booking: int,
-    count: int,
+    id_order: int,
+    orders_count: int,
     position: int = 1,
 ) -> InlineKeyboardMarkup:
     """
     A keyboard with pagination for viewing orders is formed.
     :param l10n: Language set by the user.
-    :param id_booking: Unique booking identifier.
-    :param count: Number of all orders.
-    :param position: Order position among the total number of orders.
+    :param id_order: Unique order identifier.
+    :param orders_count: Number of all orders.
+    :param position: Order position in the database.
     :return: Keyboard with pagination for viewing orders.
     """
 
     action_buttons = []
 
-    if count > 1:
+    if orders_count > 1:
         if position > 1:
             action_buttons.append(
                 InlineKeyboardButton(
-                    text=f"⬅️", callback_data=f"booking_position:{position-1}"
+                    text=f"⬅️", callback_data=f"order_position:{position-1}"
                 )
             )
 
         action_buttons.append(
             InlineKeyboardButton(
-                text=f"{position}/{count}", callback_data=f"booking_pagination"
+                text=f"{position}/{orders_count}", callback_data=f"order_position_info"
             )
         )
 
-        if position < count:
+        if position < orders_count:
             action_buttons.append(
                 InlineKeyboardButton(
-                    text=f"➡️", callback_data=f"booking_position:{position+1}"
+                    text=f"➡️", callback_data=f"order_position:{position+1}"
                 )
             )
 
-    check_bookings_markup = InlineKeyboardMarkup(
+    view_orders_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                serve_button(l10n, id_order=id_booking),
+                serve_button(l10n, id_order=id_order),
+                unavailable_button(l10n, id_order=id_order),
             ],
             action_buttons,
         ]
     )
 
-    return check_bookings_markup
+    return view_orders_markup
