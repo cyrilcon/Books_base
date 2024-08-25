@@ -7,19 +7,14 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.filters import AdminFilter
-from tgbot.keyboards.inline import (
-    cancel_keyboard,
-    edit_book_keyboard,
-)
+from tgbot.keyboards.inline import cancel_keyboard, edit_book_keyboard
 from tgbot.services import ClearKeyboard, generate_book_caption, Messenger
 from tgbot.states import EditBook
 
-edit_book_6_router = Router()
-edit_book_6_router.message.filter(AdminFilter())
+edit_cover_router = Router()
 
 
-@edit_book_6_router.callback_query(F.data.startswith("edit_cover"))
+@edit_cover_router.callback_query(F.data.startswith("edit_cover"))
 async def edit_cover(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -27,22 +22,21 @@ async def edit_cover(
     storage: RedisStorage,
     bot: Bot,
 ):
-    await call.answer(cache_time=1)
+    await ClearKeyboard.clear(call, storage)
 
     id_user = call.from_user.id
 
     id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book_by_id(id_book)
-    book = response.result
+    book = response.get_model()
 
     sent_message = await bot.send_photo(
         chat_id=id_user,
-        photo=book["cover"],
-        caption=l10n.format_value("edit-book-cover"),
+        photo=book.cover,
+        caption=l10n.format_value("edit-book-prompt-cover"),
         reply_markup=cancel_keyboard(l10n),
         show_caption_above_media=True,
     )
-
     await state.update_data(id_book_edited=id_book)
     await state.set_state(EditBook.edit_cover)
 
@@ -51,9 +45,10 @@ async def edit_cover(
         id_user=id_user,
         sent_message_id=sent_message.message_id,
     )
+    await call.answer()
 
 
-@edit_book_6_router.message(StateFilter(EditBook.edit_cover), F.photo)
+@edit_cover_router.message(StateFilter(EditBook.edit_cover), F.photo)
 async def edit_cover_process(
     message: Message,
     l10n: FluentLocalization,

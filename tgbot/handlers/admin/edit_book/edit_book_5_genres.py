@@ -16,10 +16,10 @@ from tgbot.services import (
 )
 from tgbot.states import EditBook
 
-edit_book_5_router = Router()
+edit_genres_router = Router()
 
 
-@edit_book_5_router.callback_query(F.data.startswith("edit_genres"))
+@edit_genres_router.callback_query(F.data.startswith("edit_genres"))
 async def edit_genres(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -52,7 +52,7 @@ async def edit_genres(
     await call.answer()
 
 
-@edit_book_5_router.message(StateFilter(EditBook.edit_genres), F.text)
+@edit_genres_router.message(StateFilter(EditBook.edit_genres), F.text)
 async def edit_genres_process(
     message: Message,
     l10n: FluentLocalization,
