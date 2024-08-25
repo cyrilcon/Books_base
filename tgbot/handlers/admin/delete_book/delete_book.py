@@ -48,7 +48,7 @@ async def delete_book_process(
 
     if not is_valid_book_article(article):
         sent_message = await message.answer(
-            l10n.format_value("delete-book-error-article-incorrect"),
+            l10n.format_value("delete-book-error-invalid-article"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(

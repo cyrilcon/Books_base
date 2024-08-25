@@ -1,6 +1,6 @@
 delete-book-prompt-select-book = Введите <i><b>артикул</b></i> книги, которой хотите удалить
 
-delete-book-error-article-incorrect =
+delete-book-error-invalid-article =
     Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
     Введите артикул книги ещё раз
 

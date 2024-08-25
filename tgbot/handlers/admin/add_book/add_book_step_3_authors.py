@@ -20,12 +20,12 @@ async def back_to_add_book_step_2(
     l10n: FluentLocalization,
     state: FSMContext,
 ):
-    await call.answer(cache_time=1)
     await call.message.edit_text(
         l10n.format_value("add-book-prompt-title"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_title)
+    await call.answer()
 
 
 @add_book_step_3_router.message(StateFilter(AddBook.add_authors), F.text)

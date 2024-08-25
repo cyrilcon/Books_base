@@ -1,6 +1,6 @@
 edit-book-prompt-select-book = Введите <i><b>артикул</b></i> книги, чтобы изменить её данные
 
-edit-book-error-article-incorrect =
+edit-book-error-invalid-article =
     Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
     Введите артикул книги ещё раз
 
@@ -16,7 +16,6 @@ edit-book-prompt-article =
 edit-book-error-article-already-exists =
     Книга с таким артикулом уже существует!!
     Введите артикул ещё раз
-
 
 edit-book-title =
     Введите новое <i><b>название</b></i> книги
@@ -45,15 +44,15 @@ edit-book-error-author-name-too-long =
     Слишком длинное имя у автора!!
     Сократите и введите <i><b>автора(ов)</b></i> ещё раз
 
-edit-book-description =
+edit-book-prompt-description =
     Введите новое <i><b>описание</b></i>
 
     Текущее описание:
     <code>{ $description }</code>
 
-edit-book-description-too-long =
+edit-book-error-description-too-long =
     Слишком большое описание!!
-    Сократите и введите описание книги ещё раз
+    Сократите и введите <i><b>описание</b></i> книги ещё раз
 
 edit-book-genres =
     Введите новые <i><b>жанры</b></i>

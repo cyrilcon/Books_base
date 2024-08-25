@@ -21,6 +21,8 @@ async def edit_authors(
     state: FSMContext,
     storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+
     id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book_by_id(id_book)
     book = response.result

@@ -26,6 +26,8 @@ async def edit_article(
     state: FSMContext,
     storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+
     await call.message.edit_reply_markup()
     id_book = int(call.data.split(":")[-1])
     article = BookFormatter.format_article(id_book)
@@ -59,7 +61,7 @@ async def edit_article_process(
 
     if not is_valid_book_article(article):
         sent_message = await message.answer(
-            l10n.format_value("article-incorrect"),
+            l10n.format_value("edit-book-error-invalid-article"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -93,7 +95,9 @@ async def edit_article_process(
     book = response.result
 
     caption = await generate_book_caption(
-        book_data=book, l10n=l10n, id_book=new_id_book
+        book_data=book,
+        l10n=l10n,
+        id_book=new_id_book,
     )
     caption_length = len(caption)
 
