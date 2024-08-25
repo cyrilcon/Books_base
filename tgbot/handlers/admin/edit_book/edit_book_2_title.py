@@ -7,7 +7,6 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import (
     cancel_keyboard,
     yes_cancel_keyboard,
@@ -16,11 +15,10 @@ from tgbot.keyboards.inline import (
 from tgbot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tgbot.states import EditBook
 
-edit_book_2_router = Router()
-edit_book_2_router.message.filter(AdminFilter())
+edit_title_router = Router()
 
 
-@edit_book_2_router.callback_query(F.data.startswith("edit_title"))
+@edit_title_router.callback_query(F.data.startswith("edit_title"))
 async def edit_title(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -46,7 +44,7 @@ async def edit_title(
     await call.answer()
 
 
-@edit_book_2_router.message(StateFilter(EditBook.edit_title), F.text)
+@edit_title_router.message(StateFilter(EditBook.edit_title), F.text)
 async def edit_title_process(
     message: Message,
     l10n: FluentLocalization,
@@ -118,7 +116,7 @@ async def edit_title_process(
     if caption_length > 1024:
         sent_message = await message.answer(
             l10n.format_value(
-                "edit-book-caption-too-long",
+                "edit-book-error-caption-too-long",
                 {"caption_length": caption_length},
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -143,7 +141,7 @@ async def edit_title_process(
     await state.clear()
 
 
-@edit_book_2_router.callback_query(StateFilter(EditBook.edit_title), F.data == "yes")
+@edit_title_router.callback_query(StateFilter(EditBook.edit_title), F.data == "yes")
 async def edit_title_yes(
     call: CallbackQuery,
     l10n: FluentLocalization,

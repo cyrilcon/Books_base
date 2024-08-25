@@ -36,10 +36,14 @@ edit-book-error-title-already-exists =
 
     Вы уверены, что хотите добавить книгу??
 
-edit-book-authors =
+edit-book-prompt-authors =
     Введите нового <i><b>автора</b></i>
 
     Текущий автор: <code>{ $authors }</code>
+
+edit-book-error-author-name-too-long =
+    Слишком длинное имя у автора!!
+    Сократите и введите <i><b>автора(ов)</b></i> ещё раз
 
 edit-book-description =
     Введите новое <i><b>описание</b></i>

@@ -104,7 +104,7 @@ async def edit_genres_process(
     else:
         sent_message = await message.answer(
             l10n.format_value(
-                "edit-book-caption-too-long",
+                "edit-book-error-caption-too-long",
                 {"caption_length": caption_length},
             ),
             reply_markup=cancel_keyboard(l10n),

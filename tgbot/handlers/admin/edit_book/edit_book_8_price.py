@@ -62,7 +62,7 @@ async def edit_price_process(
     else:
         await call.message.answer(
             l10n.format_value(
-                "edit-book-caption-too-long",
+                "edit-book-error-caption-too-long",
                 {"caption_length": caption_length},
             )
         )
