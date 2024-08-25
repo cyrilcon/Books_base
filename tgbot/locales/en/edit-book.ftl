@@ -1,9 +1,14 @@
-edit-book-select = Введите <i><b>артикул</b></i> книги, чтобы изменить её данные
+edit-book-prompt-select-book = Введите <i><b>артикул</b></i> книги, чтобы изменить её данные
 
-edit-book-does-not-exist =
-    Книги с артикулом <b>{ $article }</b> не существует!!
+edit-book-error-article-incorrect =
+    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+    Введите артикул книги ещё раз
 
-edit-book-article =
+edit-book-error-article-not-found =
+    Книга с таким артикулом не найдена!!
+    Введите артикул существуюшей книги ещё раз
+
+edit-book-prompt-article =
     Введите новый <i><b>артикул</b></i>
 
     Текущий артикул: <code>{ $article }</code>
@@ -42,10 +47,10 @@ edit-book-price = Выберите новую <i><b>цену</b></i> книги
 
 edit-book-price-error = У этой книги уже установалена такая цена!!
 
-edit-book-caption-too-long =
+edit-book-error-caption-too-long =
     Слишком большой текст!!
     (У вас <b>{ $caption_length }</b>/1024 символов)
 
-edit-book-success = Данные успешно изменены!!
+edit-book-success = Данные книги успешно изменены!!
 
-edit-book-cancel = Вы отменили изменение данных о книге
+edit-book-canceled = Вы отменили изменение данных о книге

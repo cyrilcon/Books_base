@@ -10,6 +10,7 @@ async def generate_book_caption(
     l10n: FluentLocalization = get_fluent_localization("ru"),
     is_post: bool = False,
     from_user: bool = False,
+    **kwargs,
 ):
     """
     The caption of the post for the telegram channel is formed.
@@ -17,16 +18,17 @@ async def generate_book_caption(
     :param l10n: Language set by the user.
     :param is_post: True - text is generated for post.
     :param from_user: True - book from user.
+    :param kwargs: Additional parameters that may override book_data.
     :return: Ready caption of post for telegram channel.
     """
 
-    id_book = book_data.get("id_book")
-    title = book_data.get("title")
-    authors = book_data.get("authors")
-    description = book_data.get("description")
-    genres = book_data.get("genres")
-    files = book_data.get("files")
-    price = book_data.get("price")
+    id_book = kwargs.get("id_book", book_data.get("id_book"))
+    title = kwargs.get("title", book_data.get("title"))
+    authors = kwargs.get("authors", book_data.get("authors"))
+    description = kwargs.get("description", book_data.get("description"))
+    genres = kwargs.get("genres", book_data.get("genres"))
+    files = kwargs.get("files", book_data.get("files"))
+    price = kwargs.get("price", book_data.get("price"))
 
     intro_config = {
         50: {

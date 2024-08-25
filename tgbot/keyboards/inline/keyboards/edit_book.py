@@ -9,16 +9,16 @@ from tgbot.keyboards.inline.buttons import (
     genres_button,
     cover_button,
     files_button,
-    price_edit_button,
+    price_button,
 )
 
 
 def edit_book_keyboard(l10n: FluentLocalization, id_book: int) -> InlineKeyboardMarkup:
     """
-    The "Edit book" keyboard is formed.
+    The "edit_book" keyboard is formed.
     :param l10n: Language set by the user.
     :param id_book: Unique book identifier (article of the book).
-    :return: The "Edit book" keyboard.
+    :return: The "edit_book" keyboard.
     """
 
     edit_book_markup = InlineKeyboardMarkup(
@@ -37,7 +37,7 @@ def edit_book_keyboard(l10n: FluentLocalization, id_book: int) -> InlineKeyboard
             ],
             [
                 files_button(l10n, id_book=id_book),
-                price_edit_button(l10n, id_book=id_book),
+                price_button(l10n, id_book=id_book),
             ],
         ],
     )

@@ -2,7 +2,7 @@ from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
 
-def price_edit_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboardButton:
+def price_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboardButton:
     """
     The "Price" button is formed.
     :param l10n: Language set by the user.

@@ -11,12 +11,7 @@ from tgbot.keyboards.inline import (
     cancel_keyboard,
     show_book_order_cancel_keyboard,
 )
-from tgbot.services import (
-    ClearKeyboard,
-    generate_book_caption,
-    Messenger,
-    BookFormatter,
-)
+from tgbot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tgbot.states import Order
 
 order_step_1_router = Router()
@@ -139,11 +134,10 @@ async def order_step_1_display_book_details(
     book = response.result
     caption = await generate_book_caption(book_data=book, l10n=l10n)
 
-    await Messenger.safe_send_message(
-        bot=bot,
-        user_id=call.from_user.id,
-        text=caption,
+    await bot.send_photo(
+        chat_id=call.from_user.id,
         photo=book["cover"],
+        caption=caption,
         # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
     )
     await call.answer()

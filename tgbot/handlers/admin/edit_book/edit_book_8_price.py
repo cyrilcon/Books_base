@@ -4,14 +4,14 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.filters import AdminFilter
-from tgbot.keyboards.inline import price_update_keyboard, edit_book_keyboard
+from tgbot.keyboards.inline import update_price_keyboard, edit_book_keyboard
 from tgbot.services import generate_book_caption, Messenger
 
-edit_book_router_8 = Router()
-edit_book_router_8.message.filter(AdminFilter())
+edit_book_8_router = Router()
+edit_book_8_router.message.filter(AdminFilter())
 
 
-@edit_book_router_8.callback_query(F.data.startswith("edit_price"))
+@edit_book_8_router.callback_query(F.data.startswith("edit_price"))
 async def edit_price(call: CallbackQuery, l10n: FluentLocalization):
     await call.answer(cache_time=1)
 
@@ -19,11 +19,11 @@ async def edit_price(call: CallbackQuery, l10n: FluentLocalization):
 
     await call.message.answer(
         l10n.format_value("edit-book-price"),
-        reply_markup=price_update_keyboard(l10n, id_book),
+        reply_markup=update_price_keyboard(l10n, id_book),
     )
 
 
-@edit_book_router_8.callback_query(F.data.startswith("update_price"))
+@edit_book_8_router.callback_query(F.data.startswith("update_price"))
 async def edit_price_process(
     call: CallbackQuery,
     l10n: FluentLocalization,

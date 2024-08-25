@@ -22,11 +22,11 @@ from tgbot.services import (
 )
 from tgbot.states import EditBook
 
-edit_book_router_7 = Router()
-edit_book_router_7.message.filter(AdminFilter())
+edit_book_7_router = Router()
+edit_book_7_router.message.filter(AdminFilter())
 
 
-@edit_book_router_7.callback_query(F.data.startswith("edit_files"))
+@edit_book_7_router.callback_query(F.data.startswith("edit_files"))
 async def edit_files(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -59,7 +59,7 @@ async def edit_files(
     )
 
 
-@edit_book_router_7.message(StateFilter(EditBook.edit_files), F.document)
+@edit_book_7_router.message(StateFilter(EditBook.edit_files), F.document)
 async def edit_files_process(
     message: Message,
     l10n: FluentLocalization,
@@ -85,7 +85,7 @@ async def edit_files_process(
     )
 
 
-@edit_book_router_7.callback_query(StateFilter(EditBook.edit_files), F.data == "done")
+@edit_book_7_router.callback_query(StateFilter(EditBook.edit_files), F.data == "done")
 async def done_edit_files(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -132,7 +132,7 @@ async def done_edit_files(
         )
 
 
-@edit_book_router_7.callback_query(StateFilter(EditBook.edit_files), F.data == "clear")
+@edit_book_7_router.callback_query(StateFilter(EditBook.edit_files), F.data == "clear")
 async def clear_edit_files(
     call: CallbackQuery,
     l10n: FluentLocalization,

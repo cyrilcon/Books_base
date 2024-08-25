@@ -15,11 +15,11 @@ from tgbot.keyboards.inline import (
 from tgbot.services import ClearKeyboard, generate_book_caption, Messenger
 from tgbot.states import EditBook
 
-edit_book_router_4 = Router()
-edit_book_router_4.message.filter(AdminFilter())
+edit_book_4_router = Router()
+edit_book_4_router.message.filter(AdminFilter())
 
 
-@edit_book_router_4.callback_query(F.data.startswith("edit_description"))
+@edit_book_4_router.callback_query(F.data.startswith("edit_description"))
 async def edit_description(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -50,7 +50,7 @@ async def edit_description(
     )
 
 
-@edit_book_router_4.message(StateFilter(EditBook.edit_description), F.text)
+@edit_book_4_router.message(StateFilter(EditBook.edit_description), F.text)
 async def edit_description_process(
     message: Message,
     l10n: FluentLocalization,

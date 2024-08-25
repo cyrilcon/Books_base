@@ -16,11 +16,11 @@ from tgbot.keyboards.inline import (
 from tgbot.services import ClearKeyboard, generate_book_caption, Messenger
 from tgbot.states import EditBook
 
-edit_book_router_2 = Router()
-edit_book_router_2.message.filter(AdminFilter())
+edit_book_2_router = Router()
+edit_book_2_router.message.filter(AdminFilter())
 
 
-@edit_book_router_2.callback_query(F.data.startswith("edit_title"))
+@edit_book_2_router.callback_query(F.data.startswith("edit_title"))
 async def edit_title(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -48,7 +48,7 @@ async def edit_title(
     )
 
 
-@edit_book_router_2.message(StateFilter(EditBook.edit_title), F.text)
+@edit_book_2_router.message(StateFilter(EditBook.edit_title), F.text)
 async def edit_title_process(
     message: Message,
     l10n: FluentLocalization,
@@ -132,7 +132,7 @@ async def edit_title_process(
         )
 
 
-@edit_book_router_2.callback_query(StateFilter(EditBook.edit_title), F.data == "yes")
+@edit_book_2_router.callback_query(StateFilter(EditBook.edit_title), F.data == "yes")
 async def yes_edit_title(
     call: CallbackQuery,
     l10n: FluentLocalization,

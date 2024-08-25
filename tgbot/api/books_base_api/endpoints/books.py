@@ -148,22 +148,21 @@ class BooksApi:
         )
         return ApiResponse(status, result, model=BookSchema)
 
-    async def update_book(self, **kwargs) -> ApiResponse[BookSchema]:
+    async def update_book(
+        self, id_book_edited: int, **kwargs
+    ) -> ApiResponse[BookSchema]:
         """
         Partially update book information.
 
+        :param id_book_edited: Unique book edited identifier (article of the book).
         :param kwargs: Additional arguments.
         """
-
-        id_book = kwargs.pop("id_book", None)
-        if id_book is None:
-            raise ValueError("id_book is required to update a book!!")
 
         data = {key: value for key, value in kwargs.items()}
 
         status, result = await self.base_client.make_request(
             method="PATCH",
-            url=f"{self.endpoint}/{id_book}",
+            url=f"{self.endpoint}/{id_book_edited}",
             json=data,
         )
         return ApiResponse(status, result, model=BookSchema)
