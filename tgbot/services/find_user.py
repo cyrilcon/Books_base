@@ -1,9 +1,11 @@
+from typing import Tuple
+
 from tgbot.api.books_base_api import api
 from tgbot.schemas import UserSchema
 from tgbot.services import extract_username
 
 
-async def find_user(identifier, l10n) -> tuple[UserSchema | None, str | None]:
+async def find_user(identifier, l10n) -> Tuple[UserSchema | None, str | None]:
     """
     Search for a user by user ID or username.
     :param identifier: User ID or username.

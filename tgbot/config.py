@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import timezone, timedelta
 from typing import Optional
 
 from environs import Env
@@ -132,11 +133,11 @@ class Miscellaneous:
 
     Attributes
     ----------
-    other_params : str, optional
-        A string used to hold other various parameters as required (default is None).
+    yekaterinburg_timezone : timezone
+        # A string used to hold other various parameters as required (default is None).
     """
 
-    other_params: str = None
+    yekaterinburg_timezone: timezone = timezone(timedelta(hours=5))
 
 
 @dataclass

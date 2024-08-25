@@ -7,6 +7,7 @@ __all__ = (
     "CancelPremium",
     "DeleteBook",
     "EditBook",
+    "GetProfile",
     "GiveBase",
     "GivePremium",
     "Order",
@@ -28,6 +29,7 @@ from .cancel_order import CancelOrder
 from .cancel_premium import CancelPremium
 from .delete_book import DeleteBook
 from .edit_book import EditBook
+from .get_profile import GetProfile
 from .give_base import GiveBase
 from .give_premium import GivePremium
 from .order import Order
