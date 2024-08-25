@@ -60,7 +60,7 @@ edit-book-prompt-genres =
     Текущие жанры:
     <code>{ $genres }</code>
 
-edit-book-error-genres-too-long =
+edit-book-error-genre-name-too-long =
     Слишком динное название жанра!!
     Сократите и введите <i><b>жанры</b></i> книги ещё раз
 
@@ -68,7 +68,7 @@ edit-book-prompt-cover = Отправьте новое <i><b>фото облож
 
 edit-book-prompt-files = Отправьте новый <i><b>файл</b></i> книги
 
-edit-book-price = Выберите новую <i><b>цену</b></i> книги
+edit-book-select-price = Выберите новую <i><b>цену</b></i> книги
 
 edit-book-price-error-price-already-set = У этой книги уже установалена такая цена!!
 

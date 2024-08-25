@@ -117,9 +117,7 @@ async def edit_files_done(
 
     caption = await generate_book_caption(book_data=book, l10n=l10n)
 
-    await call.message.edit_text(
-        l10n.format_value("edit-book-success"),  # reply_markup=None
-    )
+    await call.message.edit_text(l10n.format_value("edit-book-success"))
 
     # TODO: продумать отправку больше 10 файлов
     album_builder = MediaGroupBuilder()

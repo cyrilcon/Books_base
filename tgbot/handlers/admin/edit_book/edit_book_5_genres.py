@@ -67,7 +67,7 @@ async def edit_genres_process(
     genres, genre_too_long = await parse_and_format_genres(genres_from_message)
     if genre_too_long:
         sent_message = await message.answer(
-            l10n.format_value("edit-book-error-genres-too-long"),
+            l10n.format_value("edit-book-error-genre-name-too-long"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
