@@ -7,21 +7,16 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.filters import AdminFilter
-from tgbot.keyboards.inline import (
-    cancel_keyboard,
-    edit_book_keyboard,
-)
+from tgbot.keyboards.inline import cancel_keyboard, edit_book_keyboard
 from tgbot.services import (
     ClearKeyboard,
     parse_and_format_genres,
     generate_book_caption,
-    Messenger,
+    BookFormatter,
 )
 from tgbot.states import EditBook
 
 edit_book_5_router = Router()
-edit_book_5_router.message.filter(AdminFilter())
 
 
 @edit_book_5_router.callback_query(F.data.startswith("edit_genres"))
@@ -31,23 +26,22 @@ async def edit_genres(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    await call.answer(cache_time=1)
+    await ClearKeyboard.clear(call, storage)
 
     id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book_by_id(id_book)
     book = response.result
 
-    genres = " ".join(["#" + genre["genre"] for genre in book["genres"]])
+    genres = BookFormatter.format_genres(book["genres"])
 
     sent_message = await call.message.answer(
         l10n.format_value(
-            "edit-book-genres",
+            "edit-book-prompt-genres",
             {"genres": f"<code>{genres}</code>"},
         ),
         reply_markup=cancel_keyboard(l10n),
     )
-
-    await state.update_data(id_edit_book=id_book)
+    await state.update_data(id_book_edited=id_book)
     await state.set_state(EditBook.edit_genres)
 
     await ClearKeyboard.safe_message(
@@ -55,6 +49,7 @@ async def edit_genres(
         id_user=call.from_user.id,
         sent_message_id=sent_message.message_id,
     )
+    await call.answer()
 
 
 @edit_book_5_router.message(StateFilter(EditBook.edit_genres), F.text)
@@ -69,10 +64,10 @@ async def edit_genres_process(
 
     genres_from_message = message.text
 
-    genres, too_long_genres = await parse_and_format_genres(genres_from_message)
-    if too_long_genres:
+    genres, genre_too_long = await parse_and_format_genres(genres_from_message)
+    if genre_too_long:
         sent_message = await message.answer(
-            l10n.format_value("genres-too-long"),
+            l10n.format_value("edit-book-error-genres-too-long"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -83,25 +78,15 @@ async def edit_genres_process(
         return
 
     data = await state.get_data()
-    id_edit_book = data.get("id_edit_book")
+    id_book_edited = data.get("id_book_edited")
 
-    response = await api.books.update_book(id_edit_book, genres=genres)
+    response = await api.books.get_book_by_id(id_book_edited)
     book = response.result
 
-    caption = await generate_book_caption(book_data=book, l10n=l10n)
+    caption = await generate_book_caption(book_data=book, l10n=l10n, genres=genres)
     caption_length = len(caption)
 
-    if caption_length <= 1024:
-        await message.answer(l10n.format_value("edit-book-success"))
-        await Messenger.safe_send_message(
-            bot=bot,
-            user_id=message.from_user.id,
-            text=caption,
-            photo=book["cover"],
-            reply_markup=edit_book_keyboard(l10n, book["id_book"]),
-        )
-        await state.clear()
-    else:
+    if caption_length > 1024:
         sent_message = await message.answer(
             l10n.format_value(
                 "edit-book-error-caption-too-long",
@@ -114,3 +99,16 @@ async def edit_genres_process(
             id_user=message.from_user.id,
             sent_message_id=sent_message.message_id,
         )
+        return
+
+    response = await api.books.update_book(id_book_edited, genres=genres)
+    book = response.get_model()
+
+    await message.answer(l10n.format_value("edit-book-success"))
+    await bot.send_photo(
+        chat_id=message.from_user.id,
+        photo=book.cover,
+        caption=caption,
+        reply_markup=edit_book_keyboard(l10n, book.id_book),
+    )
+    await state.clear()

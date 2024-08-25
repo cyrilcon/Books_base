@@ -54,11 +54,15 @@ edit-book-error-description-too-long =
     Слишком большое описание!!
     Сократите и введите <i><b>описание</b></i> книги ещё раз
 
-edit-book-genres =
+edit-book-prompt-genres =
     Введите новые <i><b>жанры</b></i>
 
     Текущие жанры:
     <code>{ $genres }</code>
+
+edit-book-error-genres-too-long =
+    Слишком динное название жанра!!
+    Сократите и введите <i><b>жанры</b></i> книги ещё раз
 
 edit-book-cover = Отправьте новое <i><b>фото обложки</b></i> книги
 

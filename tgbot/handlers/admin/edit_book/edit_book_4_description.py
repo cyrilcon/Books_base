@@ -7,10 +7,7 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.keyboards.inline import (
-    cancel_keyboard,
-    edit_book_keyboard,
-)
+from tgbot.keyboards.inline import cancel_keyboard, edit_book_keyboard
 from tgbot.services import ClearKeyboard, generate_book_caption
 from tgbot.states import EditBook
 
