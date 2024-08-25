@@ -66,11 +66,11 @@ edit-book-error-genres-too-long =
 
 edit-book-prompt-cover = Отправьте новое <i><b>фото обложки</b></i> книги
 
-edit-book-files = Отправьте новый <i><b>файл</b></i> книги
+edit-book-prompt-files = Отправьте новый <i><b>файл</b></i> книги
 
 edit-book-price = Выберите новую <i><b>цену</b></i> книги
 
-edit-book-price-error = У этой книги уже установалена такая цена!!
+edit-book-price-error-price-already-set = У этой книги уже установалена такая цена!!
 
 edit-book-error-caption-too-long =
     Слишком большой текст!!

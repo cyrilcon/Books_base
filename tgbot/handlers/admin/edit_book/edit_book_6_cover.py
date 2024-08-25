@@ -8,7 +8,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard, edit_book_keyboard
-from tgbot.services import ClearKeyboard, generate_book_caption, Messenger
+from tgbot.services import ClearKeyboard, generate_book_caption
 from tgbot.states import EditBook
 
 edit_cover_router = Router()
@@ -69,11 +69,10 @@ async def edit_cover_process(
     caption = await generate_book_caption(book_data=book, l10n=l10n)
 
     await message.answer(l10n.format_value("edit-book-success"))
-    await Messenger.safe_send_message(
-        bot=bot,
-        user_id=message.from_user.id,
-        text=caption,
+    await bot.send_photo(
+        chat_id=message.from_user.id,
         photo=book["cover"],
+        caption=caption,
         reply_markup=edit_book_keyboard(l10n, book["id_book"]),
     )
     await state.clear()
