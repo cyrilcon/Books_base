@@ -9,7 +9,7 @@ from tgbot.keyboards.inline import (
     back_cancel_keyboard,
     done_clear_back_cancel_keyboard,
 )
-from tgbot.services import ClearKeyboard
+from tgbot.services import ClearKeyboard, BookFormatter
 from tgbot.states import AddBook
 
 add_book_step_6_router = Router()
@@ -23,7 +23,7 @@ async def back_to_add_book_step_5(
 ):
     data = await state.get_data()
     genres = data.get("genres")
-    genres = " ".join(["#" + genre["genre"] for genre in genres])
+    genres = BookFormatter.format_genres(genres)
 
     await call.message.edit_text(
         l10n.format_value(

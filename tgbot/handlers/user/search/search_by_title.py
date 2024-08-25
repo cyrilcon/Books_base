@@ -6,7 +6,12 @@ from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.services import search_book_process, generate_book_caption, Messenger
+from tgbot.services import (
+    search_book_process,
+    generate_book_caption,
+    Messenger,
+    BookFormatter,
+)
 
 search_by_title_router = Router()
 search_by_title_router.message.middleware(ChatActionMiddleware())
@@ -44,6 +49,8 @@ async def search_by_title_get_book(
     await call.answer(cache_time=1)
 
     id_book = int(call.data.split(":")[-1])
+    article = BookFormatter.format_article(id_book)
+
     response = await api.books.get_book_by_id(id_book)
     status = response.status
 
@@ -63,6 +70,6 @@ async def search_by_title_get_book(
         await call.message.answer(
             l10n.format_value(
                 "search-book-does-not-exist",
-                {"article": "#{:04d}".format(int(id_book))},
+                {"article": article},
             )
         )

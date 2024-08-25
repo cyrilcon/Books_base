@@ -76,7 +76,7 @@ async def edit_article_process(
 
     if status == 200:
         sent_message = await message.answer(
-            l10n.format_value("article-already-exists"),
+            l10n.format_value("edit-book-error-article-already-exists"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(

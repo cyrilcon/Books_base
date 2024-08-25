@@ -62,7 +62,7 @@ async def order_step_1(
 
             id_book = book.id_book
             book_title = book.book_title
-            authors = ", ".join([author.author_name for author in book.authors])
+            authors = BookFormatter.format_authors(book.authors)
             article = BookFormatter.format_article(id_book)
 
             sent_message = await message.answer(
@@ -116,6 +116,8 @@ async def order_step_1_display_book_details(
     bot: Bot,
 ):
     id_book = int(call.data.split(":")[-1])
+    article = BookFormatter.format_article(id_book)
+
     response = await api.books.get_book_by_id(id_book)
     status = response.status
 
@@ -123,7 +125,7 @@ async def order_step_1_display_book_details(
         await call.message.answer(
             l10n.format_value(
                 "order-error-book-not-exist",
-                {"article": "#{:04d}".format(int(id_book))},
+                {"article": article},
             )
         )
         return

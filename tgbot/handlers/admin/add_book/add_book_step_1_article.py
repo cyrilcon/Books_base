@@ -60,7 +60,7 @@ async def add_book_step_1(
 
     response = await api.books.get_latest_article()
     latest_article = response.result
-    free_article = "#{:04d}".format(latest_article + 1)
+    free_article = BookFormatter.format_article(latest_article + 1)
 
     if not is_valid_book_article(article):
         sent_message = await message.answer(

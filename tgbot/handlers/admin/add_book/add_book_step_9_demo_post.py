@@ -9,7 +9,6 @@ from tgbot.api.books_base_api import api
 from tgbot.config import config
 from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import deep_link_buy_keyboard
-from tgbot.services import Messenger
 from tgbot.states import AddBook
 
 add_book_step_9_router = Router()
@@ -33,14 +32,12 @@ async def add_book_step_9(
 
     if is_post:
         deep_link = await create_start_link(bot, f"book_{id_book}")
-        await Messenger.safe_send_message(
-            bot=bot,
-            user_id=config.tg_bot.tg_channel,
-            text=caption,
+        await bot.send_photo(
+            chat_id=config.tg_bot.tg_channel,
             photo=cover,
+            caption=caption,
             reply_markup=deep_link_buy_keyboard(deep_link),
         )
-
     await state.clear()
     await call.message.edit_reply_markup()
     await call.message.answer(l10n.format_value("add-book-success"))

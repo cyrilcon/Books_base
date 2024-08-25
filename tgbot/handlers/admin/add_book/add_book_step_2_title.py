@@ -11,7 +11,7 @@ from tgbot.keyboards.inline import (
     back_cancel_keyboard,
     back_yes_cancel_keyboard,
 )
-from tgbot.services import ClearKeyboard
+from tgbot.services import ClearKeyboard, BookFormatter
 from tgbot.states import AddBook
 
 add_book_step_2_router = Router()
@@ -25,7 +25,7 @@ async def back_to_add_book_step_1(
 ):
     response = await api.books.get_latest_article()
     latest_article = response.result
-    free_article = "#{:04d}".format(latest_article + 1)
+    free_article = BookFormatter.format_article(latest_article + 1)
 
     await call.message.edit_text(
         l10n.format_value(
@@ -83,7 +83,7 @@ async def add_book_step_2(
                 "add-book-error-title-already-exists",
                 {
                     "title": book.title,
-                    "article": "#{:04d}".format(book.id_book),
+                    "article": BookFormatter.format_article(book.id_book),
                 },
             ),
             reply_markup=back_yes_cancel_keyboard(l10n),

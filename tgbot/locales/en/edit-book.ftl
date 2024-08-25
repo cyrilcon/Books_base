@@ -13,10 +13,28 @@ edit-book-prompt-article =
 
     Текущий артикул: <code>{ $article }</code>
 
+edit-book-error-article-already-exists =
+    Книга с таким артикулом уже существует!!
+    Введите артикул ещё раз
+
+
 edit-book-title =
     Введите новое <i><b>название</b></i> книги
 
     Текущее название: <code>{ $title }</code>
+
+edit-book-error-title-too-long =
+    Слишком большое название книги!!
+    Сократите и введите <i><b>название</b></i> книги ещё раз
+
+edit-book-error-invalid-title =
+    В названии книги не должно содержаться символов <b>"кавычек"</b>!!
+    Введите название книги ещё раз
+
+edit-book-error-title-already-exists =
+    Книга с названием <b>"{ $title }"</b> (<code>{ $article }</code>) уже существует!!
+
+    Вы уверены, что хотите добавить книгу??
 
 edit-book-authors =
     Введите нового <i><b>автора</b></i>

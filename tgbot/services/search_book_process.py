@@ -8,7 +8,7 @@ from tgbot.keyboards.inline import (
     search_by_author_and_genre_keyboard,
     pagination_keyboard,
 )
-from tgbot.services import generate_book_caption, Messenger
+from tgbot.services import generate_book_caption, Messenger, BookFormatter
 
 
 async def search_book_process(
@@ -70,7 +70,7 @@ async def search_book_process(
     for book in books:
         book = book["book"]
 
-        article = "#{:04d}".format(book["id_book"])
+        article = BookFormatter.format_article(book["id_book"])
         title = book["title"]
         authors = book["authors"]
         text += (
