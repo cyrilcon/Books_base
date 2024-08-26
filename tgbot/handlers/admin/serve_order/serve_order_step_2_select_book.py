@@ -76,7 +76,7 @@ async def serve_step_2(
         )
         return
 
-    book = response.result
+    book = response.get_model()
 
     data = await state.get_data()
     id_order = data.get("id_order")
@@ -98,7 +98,7 @@ async def serve_step_2(
         )
         await bot.send_photo(
             chat_id=id_user_recipient,
-            photo=book["cover"],
+            photo=book.cover,
             caption=caption,
             # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
             reply_to_message_id=sent_message.message_id,

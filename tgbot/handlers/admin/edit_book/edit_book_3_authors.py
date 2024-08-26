@@ -1,4 +1,4 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -25,9 +25,9 @@ async def edit_authors(
 
     id_book = int(call.data.split(":")[-1])
     response = await api.books.get_book_by_id(id_book)
-    book = response.result
+    book = response.get_model()
 
-    authors = BookFormatter.format_authors(book["authors"])
+    authors = BookFormatter.format_authors(book.authors)
 
     sent_message = await call.message.answer(
         l10n.format_value(
@@ -53,7 +53,6 @@ async def edit_authors_process(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
-    bot: Bot,
 ):
     await ClearKeyboard.clear(message, storage)
 
@@ -78,7 +77,7 @@ async def edit_authors_process(
     id_book_edited = data.get("id_edit_book")
 
     response = await api.books.get_book_by_id(id_book_edited)
-    book = response.result
+    book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n, authors=authors)
     caption_length = len(caption)
@@ -102,8 +101,7 @@ async def edit_authors_process(
     book = response.get_model()
 
     await message.answer(l10n.format_value("edit-book-success"))
-    await bot.send_photo(
-        chat_id=message.from_user.id,
+    await message.answer_photo(
         photo=book.cover,
         caption=caption,
         reply_markup=edit_book_keyboard(l10n, book.id_book),

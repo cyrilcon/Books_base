@@ -1,4 +1,4 @@
-from aiogram import Router, Bot, F
+from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -61,13 +61,13 @@ async def order_step_1(
             book = result.books[0].book
 
             id_book = book.id_book
-            book_title = book.book_title
+            book_title = book.title
             authors = BookFormatter.format_authors(book.authors)
             article = BookFormatter.format_article(id_book)
 
             sent_message = await message.answer(
                 l10n.format_value(
-                    "order-book-title-exists",
+                    "order-book-error-book-already-exists",
                     {"book_title": book_title, "authors": authors, "article": article},
                 ),
                 reply_markup=show_book_order_cancel_keyboard(l10n, id_book),
@@ -113,7 +113,6 @@ async def order_step_1_display_book_details(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
-    bot: Bot,
 ):
     id_book = int(call.data.split(":")[-1])
     article = BookFormatter.format_article(id_book)
@@ -133,12 +132,11 @@ async def order_step_1_display_book_details(
     await call.message.edit_reply_markup()
     await state.clear()
 
-    book = response.result
+    book = response.get_model()
     caption = await generate_book_caption(book_data=book, l10n=l10n)
 
-    await bot.send_photo(
-        chat_id=call.from_user.id,
-        photo=book["cover"],
+    await call.message.answer_photo(
+        photo=book.cover,
         caption=caption,
         # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
     )

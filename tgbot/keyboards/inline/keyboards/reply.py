@@ -9,10 +9,10 @@ def reply_keyboard(
     id_user: int | None = None,
 ) -> InlineKeyboardMarkup:
     """
-    The "Reply" keyboard is formed.
+    The "reply" keyboard is formed.
     :param l10n: Language set by the user.
     :param id_user: Unique user identifier.
-    :return: The "Reply" keyboard.
+    :return: The "reply" keyboard.
     """
 
     reply_markup = InlineKeyboardMarkup(

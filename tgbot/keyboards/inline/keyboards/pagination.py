@@ -1,3 +1,5 @@
+from typing import List
+
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
@@ -5,16 +7,20 @@ from tgbot.keyboards.inline.buttons import (
     search_by_author_button,
     search_by_genre_button,
 )
+from tgbot.schemas import BookTitleSearchResult
 
 
 def pagination_keyboard(
-    l10n: FluentLocalization, found: int, books: list, page: int = 1
+    l10n: FluentLocalization,
+    found: int,
+    books: List[BookTitleSearchResult],
+    page: int = 1,
 ) -> InlineKeyboardMarkup:
     """
     The pagination keyboard is formed.
     :param l10n: Language set by the user.
     :param found: Number of books found by search.
-    :param books: List of books foundD.
+    :param books: List of books.
     :param page: Page number for pagination.
     :return: The pagination keyboard.
     """
@@ -23,9 +29,9 @@ def pagination_keyboard(
     num = ((page - 1) * 5) + 1
 
     for book in books:
-        book = book["book"]
+        book = book.book
         id_book_button = InlineKeyboardButton(
-            text=f"{num}", callback_data=f"id_book:{book["id_book"]}"
+            text=f"{num}", callback_data=f"id_book:{book.id_book}"
         )
         buttons.append(id_book_button)
         num += 1
@@ -34,9 +40,8 @@ def pagination_keyboard(
 
     if page > 1:
         bottom_buttons.append(
-            InlineKeyboardButton(text=f"⬅️", callback_data=f"page:{page-1}")
+            InlineKeyboardButton(text=f"⬅️", callback_data=f"search_book_page:{page-1}")
         )
-
     if found > 5:
         all_pages = (found + 4) // 5
         bottom_buttons.append(
@@ -48,7 +53,9 @@ def pagination_keyboard(
 
         if min(page * 5, found) < found:
             bottom_buttons.append(
-                InlineKeyboardButton(text=f"➡️", callback_data=f"page:{page+1}")
+                InlineKeyboardButton(
+                    text=f"➡️", callback_data=f"search_book_page:{page+1}"
+                )
             )
 
     pagination_buttons = InlineKeyboardMarkup(
@@ -61,5 +68,4 @@ def pagination_keyboard(
             ],
         ]
     )
-
     return pagination_buttons

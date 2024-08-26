@@ -11,9 +11,9 @@ def search_by_author_and_genre_keyboard(
     l10n: FluentLocalization,
 ) -> InlineKeyboardMarkup:
     """
-    The "Search by author" and "Search by genre" keyboard is formed.
+    The "search_by_author_and_genre" keyboard is formed.
     :param l10n: Language set by the user.
-    :return: The "Search by author" and "Search by genre" keyboard.
+    :return: The "search_by_author_and_genre" keyboard.
     """
 
     search_by_author_and_genre_markup = InlineKeyboardMarkup(

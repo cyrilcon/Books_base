@@ -67,10 +67,10 @@ async def cancel_order_select(
 
     response = await api.orders.get_order_by_id(id_order)
     status = response.status
-    order = response.result
+    order = response.get_model()
 
     if status == 200 and (
-        id_user == config.tg_bot.super_admin and id_user == order["id_user"]
+        id_user == config.tg_bot.super_admin and id_user == order.id_user
     ):
         await api.orders.delete_order(id_order)
 
@@ -78,7 +78,7 @@ async def cancel_order_select(
         await message.answer(
             l10n.format_value(
                 "cancel-order-success",
-                {"id_order": str(id_order), "book_title": order["book_title"]},
+                {"id_order": str(id_order), "book_title": order.book_title},
             ),
         )
         return

@@ -1,4 +1,4 @@
-from aiogram import Router, Bot, F
+from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -41,7 +41,6 @@ async def edit_book_process(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
-    bot: Bot,
 ):
     await ClearKeyboard.clear(message, storage)
 
@@ -76,12 +75,11 @@ async def edit_book_process(
         )
         return
 
-    book = response.result
+    book = response.get_model()
     caption = await generate_book_caption(book_data=book, l10n=l10n)
 
-    await bot.send_photo(
-        chat_id=message.from_user.id,
-        photo=book["cover"],
+    await message.answer_photo(
+        photo=book.cover,
         caption=caption,
         reply_markup=edit_book_keyboard(l10n, id_book),
     )

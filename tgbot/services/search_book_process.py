@@ -1,4 +1,3 @@
-from aiogram import Bot
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
@@ -8,45 +7,46 @@ from tgbot.keyboards.inline import (
     search_by_author_and_genre_keyboard,
     pagination_keyboard,
 )
-from tgbot.services import generate_book_caption, Messenger, BookFormatter
+from tgbot.services import generate_book_caption, BookFormatter
 
 
 async def search_book_process(
     message: Message,
     l10n: FluentLocalization,
-    bot: Bot,
     page: int = 1,
-    title_request: str = None,
+    book_title_request: str = None,
 ):
     """
     A common function for handling book searches and forward/backward button presses.
     :param message: Message or callback object.
     :param l10n: Language set by the user.
-    :param bot: Bot instance.
     :param page: Page number for pagination.
-    :param title_request: Title of the book to search for.
+    :param book_title_request: Title of the book to search for.
     """
 
-    if title_request is None:
-        title_request = message.text
+    if book_title_request is None:
+        book_title_request = message.text
 
-    title_request.replace('"', "")
+    book_title_request.replace('"', "")
 
-    if len(title_request) > 255:
+    if len(book_title_request) > 255:
         await message.answer(
-            l10n.format_value("search-title-too-long"),
+            l10n.format_value("search-by-title-error-title-too-long"),
             reply_markup=search_by_author_and_genre_keyboard(l10n),
         )
         return
 
-    response = await api.books.search_books_by_title(title_request, page=page)
-    result = response.result
-    found = result["found"]
-    books = result["books"]
+    response = await api.books.search_books_by_title(book_title_request, page=page)
+    result = response.get_model()
+    found = result.found
+    books = result.books
 
     if found == 0:
         await message.answer(
-            l10n.format_value("search-not-found", {"title_request": title_request}),
+            l10n.format_value(
+                "search-by-title-not-found",
+                {"book_title_request": book_title_request},
+            ),
             reply_markup=search_by_author_and_genre_keyboard(l10n),
         )
         return
@@ -55,31 +55,31 @@ async def search_book_process(
         book = books[0]
         caption = await generate_book_caption(book_data=book, l10n=l10n)
 
-        await Messenger.safe_send_message(
-            bot=bot,
-            user_id=message.from_user.id,
-            text=caption,
-            photo=book["cover"],
+        await message.answer_photo(
+            photo=book.cover,
+            caption=caption,
             # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
         )
         return
 
-    text = l10n.format_value("search-found", {"title_request": title_request})
+    text = l10n.format_value(
+        "search-by-title-success",
+        {"book_title_request": book_title_request},
+    )
     num = ((page - 1) * 5) + 1
 
     for book in books:
-        book = book["book"]
+        book = book.book
 
-        article = BookFormatter.format_article(book["id_book"])
-        title = book["title"]
-        authors = book["authors"]
+        article = BookFormatter.format_article(book.id_book)
+        title = book.title
+        authors = book.authors
         text += (
             f"\n\n<b>{num}.</b> <code>{title}</code>\n"
-            f"{', '.join(f'<code>{author['author'].title()}</code>' for author in authors)}"
+            f"{', '.join(f'<code>{author.author_name.title()}</code>' for author in authors)}"
             f" (<code>{article}</code>)"
         )
         num += 1
-
     try:
         await message.edit_text(
             text, reply_markup=pagination_keyboard(l10n, found, books, page)

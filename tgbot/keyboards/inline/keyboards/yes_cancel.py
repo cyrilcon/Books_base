@@ -6,9 +6,9 @@ from tgbot.keyboards.inline.buttons import cancel_button, yes_button
 
 def yes_cancel_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
     """
-    The "Yes" and "Cancel" keyboard is formed.
+    The "yes_cancel" keyboard is formed.
     :param l10n: Language set by the user.
-    :return: The "Yes" and "Cancel" keyboard.
+    :return: The "yes_cancel" keyboard.
     """
 
     yes_cancel_markup = InlineKeyboardMarkup(

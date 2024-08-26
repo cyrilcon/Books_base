@@ -5,9 +5,9 @@ from tgbot.keyboards.inline.buttons import share_our_store_button, cancel_button
 
 def share_our_store_keyboard(l10n) -> InlineKeyboardMarkup:
     """
-    The "Share our store" and "Cancel" keyboard is formed.
+    The "share_our_store" keyboard is formed.
     :param l10n: Language set by the user.
-    :return: The "Share our store" and "Cancel" keyboard.
+    :return: The "share_our_store" keyboard.
     """
 
     share_our_store_markup = InlineKeyboardMarkup(

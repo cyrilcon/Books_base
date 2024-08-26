@@ -8,10 +8,10 @@ from tgbot.keyboards.inline.buttons import (
 
 def share_base_keyboard(l10n, base: int) -> InlineKeyboardMarkup:
     """
-    The "Share base" keyboard is formed.
+    The "share_base" keyboard is formed.
     :param l10n: Language set by the user.
     :param base: The number of bases the user has.
-    :return: The "Share base" keyboard.
+    :return: The "share_base" keyboard.
     """
 
     base_amounts = [10, 20, 30, 50, 100]

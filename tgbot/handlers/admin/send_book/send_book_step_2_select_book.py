@@ -76,7 +76,7 @@ async def send_book_step_2(
         )
         return
 
-    book = response.result
+    book = response.get_model()
 
     data = await state.get_data()
     id_user_recipient = data.get("id_user_recipient")
@@ -86,7 +86,7 @@ async def send_book_step_2(
     try:
         await bot.send_photo(
             chat_id=id_user_recipient,
-            photo=book["cover"],
+            photo=book.cover,
             caption=caption,
             # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
         )
@@ -96,7 +96,7 @@ async def send_book_step_2(
         await message.answer(
             l10n.format_value(
                 "send-book-success",
-                {"book_title": book["title"]},
+                {"book_title": book.title},
             )
         )
     await state.clear()

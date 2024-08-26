@@ -1,12 +1,13 @@
-from typing import Dict, Any
+from typing import Dict, Any, Union
 
 from fluent.runtime import FluentLocalization
 
+from tgbot.schemas import BookSchema
 from tgbot.services import get_fluent_localization, BookFormatter
 
 
 async def generate_book_caption(
-    book_data: Dict[str, Any],
+    book_data: Union[Dict[str, Any], BookSchema],
     l10n: FluentLocalization = get_fluent_localization("ru"),
     is_post: bool = False,
     from_user: bool = False,
@@ -21,6 +22,9 @@ async def generate_book_caption(
     :param kwargs: Additional parameters that may override book_data.
     :return: Ready caption of post for telegram channel.
     """
+
+    if isinstance(book_data, BookSchema):
+        book_data = book_data.model_dump()
 
     id_book = kwargs.get("id_book", book_data.get("id_book"))
     title = kwargs.get("title", book_data.get("title"))

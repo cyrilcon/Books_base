@@ -4,6 +4,7 @@ import logging
 import betterlogging as bl
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
+from aiogram.exceptions import AiogramError
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
@@ -17,7 +18,7 @@ from tgbot.middlewares import (
     LocalizationMiddleware,
     StorageMiddleware,
 )
-from tgbot.services import set_default_commands, Messenger
+from tgbot.services import set_default_commands
 
 
 async def on_startup(bot: Bot):
@@ -29,7 +30,11 @@ async def on_startup(bot: Bot):
     admins = response.result
 
     await set_default_commands(bot, admins)
-    await Messenger.safe_broadcast(bot, admins, "Bot restarted!!")
+    for admin in admins:
+        try:
+            await bot.send_message(chat_id=admin, text="Bot restarted!!")
+        except AiogramError:
+            pass
 
 
 async def on_shutdown():

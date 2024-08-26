@@ -11,7 +11,7 @@ async def search_info(call: CallbackQuery, l10n: FluentLocalization):
     all_pages = call.data.split(":")[-1]
 
     text = l10n.format_value(
-        "pagination-info",
+        "button-pagination-info",
         {
             "page": page,
             "all_pages": all_pages,

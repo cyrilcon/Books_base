@@ -1,4 +1,4 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, F
 from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
@@ -23,15 +23,14 @@ async def edit_price(call: CallbackQuery, l10n: FluentLocalization):
 async def update_price(
     call: CallbackQuery,
     l10n: FluentLocalization,
-    bot: Bot,
 ):
     id_book_edited = int(call.data.split(":")[-1])
     price = int(call.data.split(":")[-2])
 
     response = await api.books.get_book_by_id(id_book_edited)
-    book = response.result
+    book = response.get_model()
 
-    if price == book["price"]:
+    if price == book.price:
         await call.answer(
             l10n.format_value("edit-book-price-error-price-already-set"),
             show_alert=True,
@@ -55,8 +54,7 @@ async def update_price(
     book = response.get_model()
 
     await call.message.edit_text(l10n.format_value("edit-book-success"))
-    await bot.send_photo(
-        chat_id=call.from_user.id,
+    await call.message.answer_photo(
         photo=book.cover,
         caption=caption,
         reply_markup=edit_book_keyboard(l10n, book.id_book),

@@ -1,4 +1,4 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -20,7 +20,6 @@ async def edit_cover(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
-    bot: Bot,
 ):
     await ClearKeyboard.clear(call, storage)
 
@@ -30,8 +29,7 @@ async def edit_cover(
     response = await api.books.get_book_by_id(id_book)
     book = response.get_model()
 
-    sent_message = await bot.send_photo(
-        chat_id=id_user,
+    sent_message = await call.message.answer_photo(
         photo=book.cover,
         caption=l10n.format_value("edit-book-prompt-cover"),
         reply_markup=cancel_keyboard(l10n),
@@ -54,7 +52,6 @@ async def edit_cover_process(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
-    bot: Bot,
 ):
     await ClearKeyboard.clear(message, storage)
 
@@ -64,15 +61,14 @@ async def edit_cover_process(
     id_book_edited = data.get("id_book_edited")
 
     response = await api.books.update_book(id_book_edited, cover=cover)
-    book = response.result
+    book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n)
 
     await message.answer(l10n.format_value("edit-book-success"))
-    await bot.send_photo(
-        chat_id=message.from_user.id,
-        photo=book["cover"],
+    await message.answer_photo(
+        photo=book.cover,
         caption=caption,
-        reply_markup=edit_book_keyboard(l10n, book["id_book"]),
+        reply_markup=edit_book_keyboard(l10n, book.id_book),
     )
     await state.clear()

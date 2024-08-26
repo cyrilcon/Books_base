@@ -1,4 +1,4 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -85,14 +85,13 @@ async def edit_files_done(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
-    bot: Bot,
 ):
     data = await state.get_data()
     id_book_edited = data.get("id_book_edited")
     files = data.get("files")
 
     response = await api.books.get_book_by_id(id_book_edited)
-    book = response.result
+    book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n)
     caption_length = len(caption)
@@ -113,7 +112,7 @@ async def edit_files_done(
         return
 
     response = await api.books.update_book(id_book_edited, files=files)
-    book = response.result
+    book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n)
 
@@ -121,15 +120,14 @@ async def edit_files_done(
 
     # TODO: продумать отправку больше 10 файлов
     album_builder = MediaGroupBuilder()
-    for file in book["files"]:
-        album_builder.add_document(media=file["file_token"])
+    for file in book.files:
+        album_builder.add_document(media=file.file_token)
     await call.message.answer_media_group(media=album_builder.build())
 
-    await bot.send_photo(
-        chat_id=call.from_user.id,
-        photo=book["cover"],
+    await call.message.answer_photo(
+        photo=book.cover,
         caption=caption,
-        reply_markup=edit_book_keyboard(l10n, book["id_book"]),
+        reply_markup=edit_book_keyboard(l10n, book.id_book),
     )
     await state.clear()
     await call.answer()
