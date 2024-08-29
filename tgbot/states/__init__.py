@@ -2,6 +2,7 @@ __all__ = (
     "AddAdmin",
     "AddBlacklist",
     "AddBook",
+    "AuthorSearch",
     "Broadcast",
     "CancelOrder",
     "CancelPremium",
@@ -24,6 +25,7 @@ __all__ = (
 from .add_admin import AddAdmin
 from .add_blacklist import AddBlacklist
 from .add_book import AddBook
+from .author_search import AuthorSearch
 from .broadcast import Broadcast
 from .cancel_order import CancelOrder
 from .cancel_premium import CancelPremium
