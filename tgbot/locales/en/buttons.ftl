@@ -1,56 +1,67 @@
-pagination-info =
-    Это страница { $page } из { $all_pages } результатов поиска.
+button-back = ⬅️ Назад
 
-    Используйте стрелки вправо/влево для навигации между страницами.
+button-cancel = ❌ Отмена
 
-    Чтобы ознакомиться с конкретной книгой, нажмите на её номер.
+button-post = 📤 Опубликовать
 
-button-back = « Назад
+button-done = ✅ Готово
 
-button-cancel = Отмена
+button-clear = 🧹 Стереть
 
-button-post = Опубликовать
+button-delete = 🗑️ Удалить
 
-button-done = Готово
+button-price-85 = 85₽
 
-button-clear = Стереть
+button-price-50 = 50₽
 
-button-do-not-publish = Не публиковать
+button-not-post = 🚫 Не публиковать
 
-button-not-from-a-user = Не от пользователя
+button-not-from-user = 👤 Не от пользователя
 
-button-edit-book-article = Артикул
+button-article = 📄 Артикул
 
-button-edit-book-title = Название
+button-title = 📚 Название
 
-button-edit-book-authors = Авторы
+button-authors = ✍️ Авторы
 
-button-edit-book-descriptions = Описание
+button-description = 📝 Описание
 
-button-edit-book-genres = Жанры
+button-genres = 🎭 Жанры
 
-button-edit-book-cover = Обложка
+button-cover = 🖼️ Обложка
 
-button-edit-book-files = Файлы
+button-files = 📁 Файлы
 
-button-edit-book-price = Цена
+button-price = 💵 Цена
 
-button-yes = Да
+button-yes = ✅ Да
 
-button-show-book = Показать книгу
+button-show-book = 📖 Показать книгу
 
-button-booking = Всё равно заказать
+button-order = 🛒 Всё равно заказать
 
-button-service = Обслужить
+button-serve = 📩 Обслужить
 
-button-not-available = Нет в наличии
+button-unavailable = 🚫 Нет в наличии
 
-button-booking-again = Заказать ещё
+button-order-again = 🔄 Заказать ещё
 
-button-support-reply = Ответить
+button-reply = 💬 Ответить
 
-button-exchange = 💎 Обменять 💎
+button-exchange = 💎 Обменять
 
-button-free-book = Бесплатная книга
+button-free-book = 🎁 Бесплатная книга
 
-button-share-our-store = Поделиться нашим магазином
+button-share-our-store = 📤 Поделиться нашим магазином
+
+button-ru = 🇷🇺 RUS
+
+button-en = 🇬🇧 ENG
+
+button-uk = 🇺🇦 UKR
+
+button-search-by-title = 📔 Поиск по названию
+
+button-search-by-author = 👨🏻‍🎨 Поиск по автору
+
+button-search-by-genre = 🎭 Поиск по жанру

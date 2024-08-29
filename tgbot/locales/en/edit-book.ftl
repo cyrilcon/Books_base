@@ -1,16 +1,19 @@
-edit-book-select = Введите <i><b>артикул</b></i>, чтобы изменить данные о книге
+edit-book-prompt-select-book = Введите <i><b>артикул</b></i> книги, чтобы изменить её данные
 
-edit-book-article-incorrect = Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+edit-book-error-invalid-article =
+    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
+    Введите артикул книги ещё раз
 
-edit-book-does-not-exist =
-    Книги с артикулом <b>{ $article }</b> не существует!!
+edit-book-error-article-not-found =
+    Книга с таким артикулом не найдена!!
+    Введите артикул существуюшей книги ещё раз
 
-edit-book-article =
+edit-book-prompt-article =
     Введите новый <i><b>артикул</b></i>
 
     Текущий артикул: <code>{ $article }</code>
 
-edit-book-article-already-exists =
+edit-book-error-article-already-exists =
     Книга с таким артикулом уже существует!!
     Введите артикул ещё раз
 
@@ -19,47 +22,60 @@ edit-book-title =
 
     Текущее название: <code>{ $title }</code>
 
-edit-book-title-too-long =
-    Слишком длинное название!!
-    Сократите и введите название книги ещё раз
+edit-book-error-title-too-long =
+    Слишком большое название книги!!
+    Сократите и введите <i><b>название</b></i> книги ещё раз
 
-edit-book-authors =
+edit-book-error-invalid-title =
+    В названии книги не должно содержаться символов <b>"кавычек"</b>!!
+    Введите название книги ещё раз
+
+edit-book-error-title-already-exists =
+    Книга с названием <b>"{ $title }"</b> (<code>{ $article }</code>) уже существует!!
+
+    Вы уверены, что хотите добавить книгу??
+
+edit-book-prompt-authors =
     Введите нового <i><b>автора</b></i>
 
     Текущий автор: <code>{ $authors }</code>
 
-edit-book-description =
+edit-book-error-author-name-too-long =
+    Слишком длинное имя у автора!!
+    Сократите и введите <i><b>автора(ов)</b></i> ещё раз
+
+edit-book-prompt-description =
     Введите новое <i><b>описание</b></i>
 
     Текущее описание:
     <code>{ $description }</code>
 
-edit-book-description-too-long =
+edit-book-error-description-too-long =
     Слишком большое описание!!
-    Сократите и введите описание книги ещё раз
+    Сократите и введите <i><b>описание</b></i> книги ещё раз
 
-edit-book-genres =
+edit-book-prompt-genres =
     Введите новые <i><b>жанры</b></i>
 
     Текущие жанры:
     <code>{ $genres }</code>
 
-edit-book-cover = Отправьте новое <i><b>фото обложки</b></i> книги
+edit-book-error-genre-name-too-long =
+    Слишком динное название жанра!!
+    Сократите и введите <i><b>жанры</b></i> книги ещё раз
 
-edit-book-too-long-text =
+edit-book-prompt-cover = Отправьте новое <i><b>фото обложки</b></i> книги
+
+edit-book-prompt-files = Отправьте новый <i><b>файл</b></i> книги
+
+edit-book-select-price = Выберите новую <i><b>цену</b></i> книги
+
+edit-book-price-error-price-already-set = У этой книги уже установалена такая цена!!
+
+edit-book-error-caption-too-long =
     Слишком большой текст!!
-    (У вас <b>{ $post_text_length }</b>/1000 символов)
+    (У вас <b>{ $caption_length }</b>/1024 символов)
 
-edit-book-files = Отправьте новый <i><b>файл</b></i> книги
+edit-book-success = Данные книги успешно изменены!!
 
-edit-book-files-send-more =
-    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
-
-    <b>Изменённые форматы:</b>
-    { $formats }
-
-edit-book-price = Выберите новую <i><b>цену</b></i> книги
-
-edit-book-successfully-changed = Данные успешно изменены!!
-
-edit-book-cancel = Вы отменили изменение данных о книге
+edit-book-canceled = Вы отменили изменение данных о книге

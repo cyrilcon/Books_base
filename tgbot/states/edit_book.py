@@ -2,7 +2,7 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 class EditBook(StatesGroup):
-    """Класс состояний для изменения данных о книге."""
+    """A class of states for changing book data."""
 
     select_book = State()
     edit_article = State()

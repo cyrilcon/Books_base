@@ -1,15 +1,42 @@
-add-admin-select-user = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите выдать права администратора
+admin =
+    📖 Добавить книгу — /add_book
 
-add-admin-was-added = Пользователь { $url_user } (<code>{ $id_user }</code>) стал администратором
+    ♻️ Изменить данные о книге — /edit_book
 
-add-admin-user-is-already-admin = Пользователь { $url_user } (<code>{ $id_user }</code>) уже администратор
+    📕 Удалить книгу — /delete_book
 
-add-admin-cancel = Вы отменили выдачу прав администратора
+    📙 Отправить книгу — /send_book
 
-remove-admin-select = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которого хотите разжаловить
+    — 📗 Подарить книгу — /give_book
 
-remove-admin-was-removed = Пользователь { $url_user } (<code>{ $id_user }</code>) был разжалован
+    ❌ Добавить в чёрный список — /add_blacklist
 
-remove-admin-is-not-already-admin = Пользователь { $url_user } (<code>{ $id_user }</code>) уже не был администратором
+    ❎ Удалить из чёрного списка — /remove_blacklist
 
-remove-admin-cancel = Вы отменили разжалование администратора
+    📬 Посмотреть заказы — /view_orders
+
+    📩 Обслужить заказ — /serve_order
+
+    ⚜️ Подарить Premium — /give_premium
+
+    ♦️ Отменить Premium — /cancel_premium
+
+    — (📚 Субботний пост — /action)
+
+    💎 Выдать base — /give_base
+
+    🔻 Отобрать base — /take_base
+
+    — 🏷️ Выдать скидку — /give_discount
+
+    — 🔺 Забрать скидку — /take_discount
+
+    🪪 Получить информацию о пользователе — /get_profile
+
+    🙋🏼 Назначить администратора — /add_admin
+
+    🙅🏼 Удалить администратора — /remove_admin
+
+    🧑🏼‍💻 Отправить сообщение пользователю — /send_message
+
+    📢 Отправить рассылку — /broadcast

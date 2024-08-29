@@ -2,7 +2,7 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 class Support(StatesGroup):
-    """Класс состояний для тех-поддержки."""
+    """A class of states for tech support."""
 
-    message_to_admin = State()
-    message_to_user = State()
+    reply_to_admin = State()
+    reply_to_user = State()

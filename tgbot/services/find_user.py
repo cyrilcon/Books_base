@@ -1,49 +1,48 @@
-from infrastructure.books_base_api import api
-from tgbot.services import check_username
+from typing import Tuple
+
+from tgbot.api.books_base_api import api
+from tgbot.schemas import UserSchema
+from tgbot.services.extract_username import extract_username
 
 
-async def find_user(identifier, l10n):
+async def find_user(identifier, l10n) -> Tuple[UserSchema | None, str | None]:
     """
-    Поиск пользователя по его ID или username.
-    :param identifier: ID или username пользователя.
-    :param l10n: Объект для локализации сообщений.
-    :return: Кортеж (status, user, message).
+    Search for a user by user ID or username.
+    :param identifier: User ID or username.
+    :param l10n: Language set by the user.
+    :return: Tuple (user, message).
     """
 
     if identifier.isdigit():
         id_user = int(identifier)
-        response = await api.users.get_user(id_user)
+        response = await api.users.get_user_by_id(id_user)
         status = response.status
 
-        if status == 200:
-            user = response.result
-            return status, user, None
-
-        else:
+        if status != 200:
             response_message = l10n.format_value(
-                "user-not-found-by-id",
+                "error-user-not-found-by-id",
                 {"id_user": str(id_user)},
             )
-            return status, None, response_message
+            return None, response_message
 
-    else:
-        selected_user = check_username(identifier)
+        user = response.get_model()
+        return user, None
 
-        if selected_user:
-            response = await api.users.get_user_by_username(selected_user)
-            status = response.status
+    username = extract_username(identifier)
 
-            if status == 200:
-                user = response.result
-                return status, user, None
+    if not username:
+        response_message = l10n.format_value("error-invalid-username")
+        return None, response_message
 
-            else:
-                response_message = l10n.format_value(
-                    "user-not-found-by-username",
-                    {"username": selected_user},
-                )
-                return status, None, response_message
+    response = await api.users.get_user_by_username(username)
+    status = response.status
 
-        else:
-            response_message = l10n.format_value("username-incorrect")
-            return None, None, response_message
+    if status != 200:
+        response_message = l10n.format_value(
+            "error-user-not-found-by-username",
+            {"username": username},
+        )
+        return None, response_message
+
+    user = response.get_model()
+    return user, None

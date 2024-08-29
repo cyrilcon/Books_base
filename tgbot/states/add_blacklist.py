@@ -2,6 +2,6 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 class AddBlacklist(StatesGroup):
-    """Класс состояний для добавления пользователя в чёрный список."""
+    """A class of states for adding a user to the blacklist."""
 
     select_user = State()

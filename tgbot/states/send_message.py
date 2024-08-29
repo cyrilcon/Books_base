@@ -2,7 +2,7 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 class SendMessage(StatesGroup):
-    """Класс состояний для отправки сообщения пользователю."""
+    """A class of states for sending a message to the user."""
 
     select_user = State()
     write_message = State()

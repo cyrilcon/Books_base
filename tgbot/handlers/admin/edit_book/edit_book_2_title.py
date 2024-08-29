@@ -1,177 +1,188 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery
 from aiogram.types import Message
+from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
-from tgbot.config import Config
-from tgbot.filters import AdminFilter
-from tgbot.keyboards import delete_keyboard
+from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import (
     cancel_keyboard,
-    edit_keyboard,
-    yes_and_cancel_keyboard,
+    yes_cancel_keyboard,
+    edit_book_keyboard,
 )
-from tgbot.services import get_user_language, forming_text, safe_send_message
+from tgbot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tgbot.states import EditBook
 
-edit_book_router_2 = Router()
-edit_book_router_2.message.filter(AdminFilter())
+edit_title_router = Router()
 
 
-@edit_book_router_2.callback_query(F.data.startswith("edit_title"))
-async def edit_title(call: CallbackQuery, state: FSMContext):
-    """
-    Обработка кнопки "Название".
-    :param call: Кнопка "Название".
-    :param state: FSM (EditBook).
-    :return: Сообщение для изменения названия книги и переход в FSM (edit_title).
-    """
-
-    id_user = call.from_user.id
-    l10n = await get_user_language(id_user)
-
-    await call.answer(cache_time=1)
+@edit_title_router.callback_query(F.data.startswith("edit_title"))
+async def edit_title(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(call, storage)
 
     id_book = int(call.data.split(":")[-1])
-    response = await api.books.get_book(id_book)
-    book = response.result
+    response = await api.books.get_book_by_id(id_book)
+    book = response.get_model()
 
-    await call.message.answer(
-        l10n.format_value("edit-book-title", {"title": book["title"]}),
+    sent_message = await call.message.answer(
+        l10n.format_value("edit-book-title", {"title": book.title}),
         reply_markup=cancel_keyboard(l10n),
     )
-
-    await state.update_data(id_edit_book=id_book)
+    await state.update_data(id_book_edited=id_book)
     await state.set_state(EditBook.edit_title)
 
+    await ClearKeyboard.safe_message(
+        storage=storage,
+        id_user=call.from_user.id,
+        sent_message_id=sent_message.message_id,
+    )
+    await call.answer()
 
-@edit_book_router_2.message(StateFilter(EditBook.edit_title))
+
+@edit_title_router.message(StateFilter(EditBook.edit_title), F.text)
 async def edit_title_process(
-    message: Message, bot: Bot, state: FSMContext, config: Config
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
 ):
-    """
-    Изменение названия книги.
-    :param message: Сообщение с ожидаемым названием книги.
-    :param bot: Экземпляр бота.
-    :param state: FSM (EditBook).
-    :param config: Config с параметрами бота.
-    :return: Сообщение об успешном изменении названия.
-    """
-
-    await delete_keyboard(bot, message)
-
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
+    await ClearKeyboard.clear(message, storage)
 
     title = message.text
 
-    if len(title) > 250:
-        await message.answer(
-            l10n.format_value("edit-book-title-too-long"),
+    if len(title) > 255:
+        sent_message = await message.answer(
+            l10n.format_value("edit-book-error-title-too-long"),
             reply_markup=cancel_keyboard(l10n),
         )
-    else:
-        if any(char in title for char in {"#", '"'}):
-            await message.answer(
-                l10n.format_value("add-book-title-incorrect"),
-                reply_markup=cancel_keyboard(l10n),
-            )
-        else:
-            response = await api.books.get_book_by_title(title)
-            status = response.status
-            book = response.result
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
 
-            if status == 200:
-                await message.answer(
-                    l10n.format_value(
-                        "add-book-title-already-exists",
-                        {
-                            "title": title,
-                            "article": "#{:04d}".format(book["id_book"] + 1),
-                        },
-                    ),
-                    reply_markup=yes_and_cancel_keyboard(l10n),
-                )
-                await state.update_data(title=title)
-            else:
-                data = await state.get_data()
-                id_edit_book = data.get("id_edit_book")
+    if '"' in title:
+        sent_message = await message.answer(
+            l10n.format_value("edit-book-error-invalid-title"),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
 
-                response = await api.books.update_book(id_edit_book, title=title)
-                status = response.status
-                book = response.result
+    await state.update_data(title=title)
 
-                if status == 200:
-                    post_text = await forming_text(book, l10n)
-                    post_text_length = len(post_text)
+    response = await api.books.search_books_by_title(title, similarity_threshold=100)
+    result = response.get_model()
 
-                    if post_text_length <= 1000:
-                        await message.answer(
-                            l10n.format_value("edit-book-successfully-changed")
-                        )
-                        await safe_send_message(
-                            config=config,
-                            bot=bot,
-                            id_user=id_user,
-                            text=post_text,
-                            photo=book["cover"],
-                            reply_markup=edit_keyboard(l10n, book["id_book"]),
-                        )
-                        await state.clear()
-                    else:
-                        await message.answer(
-                            l10n.format_value(
-                                "edit-book-too-long-text",
-                                {
-                                    "post_text_length": post_text_length,
-                                },
-                            ),
-                            reply_markup=cancel_keyboard(l10n),
-                        )
-
-
-@edit_book_router_2.callback_query(StateFilter(EditBook.edit_title), F.data == "yes")
-async def yes_edit_title(
-    call: CallbackQuery, bot: Bot, state: FSMContext, config: Config
-):
-    """
-    Подтверждение изменения названия.
-    :param call: Нажатая кнопка "Да".
-    :param bot: Экземпляр бота.
-    :param state: FSM (EditBook).
-    :param config: Config с параметрами бота.
-    :return: Сообщение об успешном изменении названия.
-    """
-
-    id_user = call.from_user.id
-    l10n = await get_user_language(id_user)
-
-    await call.answer(cache_time=1)
+    if result.found > 0:
+        book = result.books[0].book
+        sent_message = await message.answer(
+            l10n.format_value(
+                "edit-book-error-title-already-exists",
+                {
+                    "title": book.title,
+                    "article": BookFormatter.format_article(book.id_book),
+                },
+            ),
+            reply_markup=yes_cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
 
     data = await state.get_data()
-    id_edit_book = data.get("id_edit_book")
+    id_book_edited = data.get("id_book_edited")
+
+    response = await api.books.get_book_by_id(id_book_edited)
+    book = response.get_model()
+
+    caption = await generate_book_caption(book_data=book, l10n=l10n, title=title)
+    caption_length = len(caption)
+
+    if caption_length > 1024:
+        sent_message = await message.answer(
+            l10n.format_value(
+                "edit-book-error-caption-too-long",
+                {"caption_length": caption_length},
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    await api.books.update_book(id_book_edited, title=title)
+    book = response.get_model()
+
+    await message.answer(l10n.format_value("edit-book-success"))
+    await message.answer_photo(
+        photo=book.cover,
+        caption=caption,
+        reply_markup=edit_book_keyboard(l10n, book.id_book),
+    )
+    await state.clear()
+
+
+@edit_title_router.callback_query(StateFilter(EditBook.edit_title), F.data == "yes")
+async def edit_title_yes(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await call.message.edit_reply_markup()
+
+    data = await state.get_data()
+    id_book_edited = data.get("id_book_edited")
     title = data.get("title")
 
-    response = await api.books.update_book(id_edit_book, title=title)
-    status = response.status
-    book = response.result
+    response = await api.books.get_book_by_id(id_book_edited)
+    book = response.get_model()
 
-    if status == 200:
-        await call.message.edit_text(
-            l10n.format_value("edit-book-successfully-changed")
+    caption = await generate_book_caption(book_data=book, l10n=l10n, title=title)
+    caption_length = len(caption)
+
+    if caption_length > 1024:
+        sent_message = await call.message.answer(
+            l10n.format_value(
+                "edit-book-error-caption-too-long",
+                {"caption_length": caption_length},
+            ),
+            reply_markup=cancel_keyboard(l10n),
         )
-
-        post_text = await forming_text(book, l10n)
-
-        await safe_send_message(
-            config=config,
-            bot=bot,
-            id_user=id_user,
-            text=post_text,
-            photo=book["cover"],
-            reply_markup=edit_keyboard(l10n, book["id_book"]),
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=call.from_user.id,
+            sent_message_id=sent_message.message_id,
         )
+        return
 
+    response = await api.books.update_book(id_book_edited, title=title)
+    book = response.get_model()
+
+    await call.message.edit_text(l10n.format_value("edit-book-success"))
+    await call.message.answer_photo(
+        photo=book.cover,
+        caption=caption,
+        reply_markup=edit_book_keyboard(l10n, book.id_book),
+    )
     await state.clear()
+    await call.answer()

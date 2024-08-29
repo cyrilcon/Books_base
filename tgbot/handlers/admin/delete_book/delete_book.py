@@ -1,86 +1,87 @@
-import re
-
-from aiogram import Router, Bot
+from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
+from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
-from tgbot.filters import AdminFilter
-from tgbot.keyboards import delete_keyboard
+from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard
-
-from tgbot.services import get_user_language
+from tgbot.services import ClearKeyboard, is_valid_book_article
 from tgbot.states import DeleteBook
 
 delete_book_router = Router()
-delete_book_router.message.filter(AdminFilter())
 
 
 @delete_book_router.message(Command("delete_book"))
-async def delete_book(message: Message, state: FSMContext):
-    """
-    Обработка команды /delete_book.
-    :param message: Команда /delete_book.
-    :param state: FSM (DeleteBook).
-    :return: Сообщение для ввода артикула и переход в FSM (delete_book).
-    """
+async def delete_book(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
 
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
-
-    await message.answer(
-        l10n.format_value("delete-book"),
+    sent_message = await message.answer(
+        l10n.format_value("delete-book-prompt-select-book"),
         reply_markup=cancel_keyboard(l10n),
     )
+    await state.set_state(DeleteBook.select_book)
 
-    await state.set_state(DeleteBook.delete_book)
+    await ClearKeyboard.safe_message(
+        storage=storage,
+        id_user=message.from_user.id,
+        sent_message_id=sent_message.message_id,
+    )
 
 
-@delete_book_router.message(StateFilter(DeleteBook.delete_book))
-async def delete_book_process(message: Message, bot: Bot, state: FSMContext):
-    """
-    Удаление книги.
-    :param message: Сообщение с ожидаемым артикулом книги.
-    :param bot: Экземпляр бота.
-    :param state: FSM (AddBook).
-    :return: Сообщение для добавления названия книги и переход в FSM (add_name_book).
-    """
-
-    await delete_keyboard(bot, message)
-
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
+@delete_book_router.message(StateFilter(DeleteBook.select_book), F.text)
+async def delete_book_process(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
 
     article = message.text
 
-    if not article.startswith("#") or not re.fullmatch(r"#\d{4}", article):
-        await message.answer(
-            l10n.format_value("delete-book-article-incorrect"),
+    if not is_valid_book_article(article):
+        sent_message = await message.answer(
+            l10n.format_value("delete-book-error-invalid-article"),
             reply_markup=cancel_keyboard(l10n),
         )
-    else:
-        id_book = int(article[1:])
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
 
-        response = await api.books.get_book(id_book)
-        status = response.status
-        book = response.result
+    id_book = int(article.lstrip("#"))
 
-        if status == 200:
-            await api.books.delete_book(id_book)
+    response = await api.books.get_book_by_id(id_book)
+    status = response.status
 
-            await message.answer(
-                l10n.format_value(
-                    "delete-book-successful-deleted",
-                    {
-                        "title": book["title"],
-                        "id_book": "#{:04d}".format(book["id_book"]),
-                    },
-                )
-            )
-            await state.clear()
-        else:
-            await message.answer(
-                l10n.format_value("delete-book-not-found"),
-                reply_markup=cancel_keyboard(l10n),
-            )
+    if status != 200:
+        sent_message = await message.answer(
+            l10n.format_value("delete-book-error-article-not-found"),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    book = response.get_model()
+    await api.books.delete_book(id_book)
+
+    await message.answer(
+        l10n.format_value(
+            "delete-book-success",
+            {"title": book.title},
+        )
+    )
+    await state.clear()

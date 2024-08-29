@@ -2,6 +2,6 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 class DeleteBook(StatesGroup):
-    """Класс состояний для удаления книги."""
+    """A class of states for deleting a book."""
 
-    delete_book = State()
+    select_book = State()

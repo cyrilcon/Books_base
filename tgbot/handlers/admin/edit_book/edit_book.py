@@ -1,90 +1,86 @@
-import re
-
-from aiogram import Router, Bot
+from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
+from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
-from tgbot.config import Config
-from tgbot.filters import AdminFilter
-from tgbot.keyboards import delete_keyboard
-from tgbot.keyboards.inline import cancel_keyboard, edit_keyboard
-from tgbot.services import get_user_language, forming_text, safe_send_message
+from tgbot.api.books_base_api import api
+from tgbot.keyboards.inline import cancel_keyboard, edit_book_keyboard
+from tgbot.services import ClearKeyboard, is_valid_book_article, generate_book_caption
 from tgbot.states import EditBook
 
 edit_book_router = Router()
-edit_book_router.message.filter(AdminFilter())
 
 
 @edit_book_router.message(Command("edit_book"))
-async def edit_book(message: Message, state: FSMContext):
-    """
-    Обработка команды /edit_book.
-    :param message: Команда /edit_book.
-    :param state: FSM (EditBook).
-    :return: Сообщение для выбора книги и переход в FSM (select_book).
-    """
+async def edit_book(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
 
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
-
-    await message.answer(
-        l10n.format_value("edit-book-select"),
+    sent_message = await message.answer(
+        l10n.format_value("edit-book-prompt-select-book"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(EditBook.select_book)
 
+    await ClearKeyboard.safe_message(
+        storage=storage,
+        id_user=message.from_user.id,
+        sent_message_id=sent_message.message_id,
+    )
 
-@edit_book_router.message(StateFilter(EditBook.select_book))
+
+@edit_book_router.message(StateFilter(EditBook.select_book), F.text)
 async def edit_book_process(
-    message: Message, bot: Bot, state: FSMContext, config: Config
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
 ):
-    """
-    Поиск книги по артикулу.
-    :param message: Сообщение с ожидаемым артикулом книги.
-    :param bot: Экземпляр бота.
-    :param state: FSM (EditBook).
-    :param config: Config с параметрами бота.
-    :return: Вся информация о книге и кнопки для изменения данных.
-    """
-
-    await delete_keyboard(bot, message)
-
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
+    await ClearKeyboard.clear(message, storage)
 
     article = message.text
 
-    if not article.startswith("#") or not re.fullmatch(r"#\d{4}", article):
-        await message.answer(
-            l10n.format_value("edit-book-article-incorrect"),
+    if not is_valid_book_article(article):
+        sent_message = await message.answer(
+            l10n.format_value("edit-book-error-invalid-article"),
             reply_markup=cancel_keyboard(l10n),
         )
-    else:
-        id_book = int(article[1:])
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
 
-        response = await api.books.get_book(id_book)
-        status = response.status
-        book = response.result
+    id_book = int(article.lstrip("#"))
 
-        if status == 200:
-            post_text = await forming_text(book, l10n)
+    response = await api.books.get_book_by_id(id_book)
+    status = response.status
 
-            await safe_send_message(
-                config=config,
-                bot=bot,
-                id_user=id_user,
-                text=post_text,
-                photo=book["cover"],
-                reply_markup=edit_keyboard(l10n, id_book),
-            )
-            await state.clear()
-        else:
-            await message.answer(
-                l10n.format_value(
-                    "edit-book-does-not-exist",
-                    {"article": article},
-                ),
-                reply_markup=cancel_keyboard(l10n),
-            )
+    if status != 200:
+        sent_message = await message.answer(
+            l10n.format_value("edit-book-error-article-not-found"),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    book = response.get_model()
+    caption = await generate_book_caption(book_data=book, l10n=l10n)
+
+    await message.answer_photo(
+        photo=book.cover,
+        caption=caption,
+        reply_markup=edit_book_keyboard(l10n, id_book),
+    )
+    await state.clear()

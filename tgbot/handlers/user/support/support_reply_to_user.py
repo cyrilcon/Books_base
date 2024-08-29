@@ -1,73 +1,88 @@
 from aiogram import Router, Bot, F
+from aiogram.exceptions import AiogramError
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
+from fluent.runtime import FluentLocalization
 
-from tgbot.config import Config
-from tgbot.keyboards.inline import (
-    cancel_keyboard,
-    support_answer_keyboard,
-)
-from tgbot.services import (
-    get_user_language,
-    safe_send_message,
-)
+from tgbot.api.books_base_api import api
+from tgbot.keyboards.inline import cancel_keyboard, reply_keyboard
+from tgbot.services import get_user_language, ClearKeyboard, create_user_link
 from tgbot.states import Support
 
 support_reply_to_user_router = Router()
 
 
-@support_reply_to_user_router.callback_query(F.data.startswith("support_answer"))
-async def support_reply_to_user(call: CallbackQuery, state: FSMContext):
-    """
-    Обработка кнопки "Ответить".
-    :param call: Кнопка "Ответить".
-    :param state: FSM (Support).
-    :return: Сообщение для отправки сообщения пользователю и переход в FSM (message_to_user).
-    """
-
-    id_admin = call.from_user.id
-    l10n = await get_user_language(id_admin)
-
+@support_reply_to_user_router.callback_query(F.data.startswith("reply_to"))
+async def support_reply_to_user(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
     id_user = call.data.split(":")[-1]
-    await state.update_data(id_user=id_user)
+    await state.update_data(id_user_recipient=id_user)
 
-    await call.answer(cache_time=1)
-    await call.message.answer(
-        l10n.format_value("support-preparation-report"),
+    sent_message = await call.message.answer(
+        l10n.format_value("support-admin-reply-prompt"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(Support.message_to_user)
+    await state.set_state(Support.reply_to_user)
+
+    await ClearKeyboard.safe_message(
+        storage=storage,
+        id_user=call.from_user.id,
+        sent_message_id=sent_message.message_id,
+    )
+    await call.answer()
 
 
-@support_reply_to_user_router.message(StateFilter(Support.message_to_user))
+@support_reply_to_user_router.message(StateFilter(Support.reply_to_user))
 async def support_reply_to_user_process(
-    message: Message, bot: Bot, state: FSMContext, config: Config
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+    bot: Bot,
 ):
-    """
-    Отправка ответа пользователю.
-    :param message: Сообщение с ожидаемым сообщением дял пользователя.
-    :param bot: Экземпляр бота.
-    :param state: FSM (Support).
-    :param config: Config с параметрами бота.
-    :return: Сообщение об успешной отправке сообщения пользователю.
-    """
+    await ClearKeyboard.clear(message, storage)
+
+    from_chat_id = message.chat.id
+    message_id = message.message_id
 
     data = await state.get_data()
-    id_user = data["id_user"]
-    l10n = await get_user_language(id_user)
+    id_user_recipient = data["id_user_recipient"]
+    l10n_recipient = await get_user_language(id_user_recipient)
 
-    reply = message.html_text
+    response = await api.users.get_user_by_id(id_user_recipient)
+    user = response.get_model()
+    full_name = user.full_name
+    username = user.username
+    user_link = await create_user_link(full_name, username)
 
-    is_sent = await safe_send_message(
-        config=config,
-        bot=bot,
-        id_user=id_user,
-        text=l10n.format_value("support-message-from-admin", {"reply": reply}),
-        reply_markup=support_answer_keyboard(l10n),
-    )
-    if is_sent:
-        await message.answer(l10n.format_value("support-message-sent-to-user"))
+    try:
+        sent_message = await bot.copy_message(
+            chat_id=id_user_recipient,
+            from_chat_id=from_chat_id,
+            message_id=message_id,
+        )
+        await bot.send_message(
+            chat_id=id_user_recipient,
+            text=l10n_recipient.format_value("support-message-from-admin"),
+            reply_markup=reply_keyboard(l10n),
+            reply_to_message_id=sent_message.message_id,
+        )
+    except AiogramError:
+        await message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
-        await message.answer(l10n.format_value("support-message-user-blocked-bot"))
+        await message.answer(
+            l10n.format_value(
+                "support-admin-message-sent",
+                {
+                    "user_link": user_link,
+                    "id_user": str(id_user_recipient),
+                },
+            )
+        )
     await state.clear()

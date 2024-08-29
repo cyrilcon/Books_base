@@ -1,80 +1,104 @@
-from aiogram import Router, Bot
+from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
+from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
-from tgbot.filters import AdminFilter
-from tgbot.keyboards import delete_keyboard
+from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import get_user_language, get_url_user, find_user
+from tgbot.services import find_user, create_user_link, ClearKeyboard
 from tgbot.states import RemoveAdmin
 
 remove_admin_router = Router()
-remove_admin_router.message.filter(AdminFilter())
 
 
 @remove_admin_router.message(Command("remove_admin"))
-async def remove_admin(message: Message, state: FSMContext):
-    """
-    Обработка команды /remove_admin.
-    :param message: Команда /remove_admin.
-    :param state: FSM (RemoveAdmin).
-    :return: Сообщение для разжалования администратора и переход в FSM (RemoveAdmin).
-    """
+async def remove_admin(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
 
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
-
-    await message.answer(
-        l10n.format_value("remove-admin-select"),
+    sent_message = await message.answer(
+        l10n.format_value("remove-admin-prompt-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
-
     await state.set_state(RemoveAdmin.select_admin)
 
+    await ClearKeyboard.safe_message(
+        storage=storage,
+        id_user=message.from_user.id,
+        sent_message_id=sent_message.message_id,
+    )
 
-@remove_admin_router.message(StateFilter(RemoveAdmin.select_admin))
-async def remove_admin_process(message: Message, bot: Bot, state: FSMContext):
-    """
-    Выбор администратора для разжалования.
-    :param message: Сообщение с ожидаемым именем пользователя или его ID.
-    :param bot: Экземпляр бота.
-    :param state: FSM (RemoveAdmin).
-    :return: Разжалование администратора.
-    """
 
-    await delete_keyboard(bot, message)
+@remove_admin_router.message(StateFilter(RemoveAdmin.select_admin), F.text)
+async def remove_admin_process(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
 
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
+    user, response_message = await find_user(message.text, l10n)
 
-    status, user, response_message = await find_user(message.text, l10n)
+    if not user:
+        sent_message = await message.answer(
+            response_message, reply_markup=cancel_keyboard(l10n)
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
 
-    if status == 200:
-        id_user = user["id_user"]
-        fullname = user["fullname"]
-        username = user["username"]
-        url_user = await get_url_user(fullname, username)
+    id_user = user.id_user
 
-        response = await api.users.remove_admin(id_user)
-        status = response.status
+    if id_user == message.from_user.id:
+        sent_message = await message.answer(
+            l10n.format_value(
+                "remove-admin-error-self-remove",
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
 
-        if status == 204:
-            await message.answer(
-                l10n.format_value(
-                    "remove-admin-was-removed",
-                    {"url_user": url_user, "id_user": str(id_user)},
-                )
-            )
-            await state.clear()
-        else:
-            await message.answer(
-                l10n.format_value(
-                    "remove-admin-is-not-already-admin",
-                    {"url_user": url_user, "id_user": str(id_user)},
-                ),
-                reply_markup=cancel_keyboard(l10n),
-            )
-    else:
-        await message.answer(response_message, reply_markup=cancel_keyboard(l10n))
+    full_name = user.full_name
+    username = user.username
+    user_link = await create_user_link(full_name, username)
+
+    response = await api.admins.delete_admin(id_user)
+    status = response.status
+
+    if status != 204:
+        sent_message = await message.answer(
+            l10n.format_value(
+                "remove-admin-error-already-not-admin",
+                {"user_link": user_link, "id_user": str(id_user)},
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    await message.answer(
+        l10n.format_value(
+            "remove-admin-success",
+            {"user_link": user_link, "id_user": str(id_user)},
+        )
+    )
+    await state.clear()

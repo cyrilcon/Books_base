@@ -1,79 +1,95 @@
-from aiogram import Router, Bot
+from aiogram import Router, F, Bot
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
+from fluent.runtime import FluentLocalization
 
-from infrastructure.books_base_api import api
-from tgbot.filters import AdminFilter
-from tgbot.keyboards import delete_keyboard
+from tgbot.api.books_base_api import api
+from tgbot.config import config
+from tgbot.handlers.user.booking.booking import booking
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import get_user_language, find_user, get_url_user
+from tgbot.services import find_user, create_user_link, ClearKeyboard
 from tgbot.states import GivePremium
 
 give_premium_router = Router()
-give_premium_router.message.filter(AdminFilter())
 
 
 @give_premium_router.message(Command("give_premium"))
-async def give_premium(message: Message, state: FSMContext):
-    """
-    Обработка команды /give_premium.
-    :param message: Команда /give_premium.
-    :param state: FSM (GivePremium).
-    :return: Сообщение для выбора пользователя и переход в FSM (GivePremium).
-    """
+async def give_premium(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
 
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
-
-    await message.answer(
-        l10n.format_value("give-premium-select-user"),
+    sent_message = await message.answer(
+        l10n.format_value("give-premium-prompt-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GivePremium.select_user)
 
+    await ClearKeyboard.safe_message(
+        storage=storage,
+        id_user=message.from_user.id,
+        sent_message_id=sent_message.message_id,
+    )
 
-@give_premium_router.message(StateFilter(GivePremium.select_user))
-async def give_premium_process(message: Message, bot: Bot, state: FSMContext):
-    """
-    Выбор пользователя для выдачи статуса Books_Base Premium.
-    :param message: Сообщение с ожидаемым именем пользователя или его ID.
-    :param bot: Экземпляр бота.
-    :param state: FSM (GivePremium).
-    :return: Выдача пользователю статуса Books_Base Premium.
-    """
 
-    await delete_keyboard(bot, message)
+@give_premium_router.message(StateFilter(GivePremium.select_user), F.text)
+async def give_premium_process(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+    bot: Bot,
+):
+    await ClearKeyboard.clear(message, storage)
 
-    id_user = message.from_user.id
-    l10n = await get_user_language(id_user)
+    user, response_message = await find_user(message.text, l10n)
 
-    status, user, response_message = await find_user(message.text, l10n)
+    if not user:
+        sent_message = await message.answer(
+            response_message, reply_markup=cancel_keyboard(l10n)
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
 
-    if status == 200:
-        id_user = user["id_user"]
-        fullname = user["fullname"]
-        username = user["username"]
-        url_user = await get_url_user(fullname, username)
+    id_user = user.id_user
+    full_name = user.full_name
+    username = user.username
 
-        response = await api.users.give_premium(id_user)
-        status = response.status
+    user_link = await create_user_link(full_name, username)
 
-        if status == 201:
-            await message.answer(
-                l10n.format_value(
-                    "give-premium-success",
-                    {"url_user": url_user, "id_user": str(id_user)},
-                )
-            )
-            await state.clear()
-        else:
-            await message.answer(
-                l10n.format_value(
-                    "give-premium-error",
-                    {"url_user": url_user, "id_user": str(id_user)},
-                ),
-                reply_markup=cancel_keyboard(l10n),
-            )
-    else:
-        await message.answer(response_message, reply_markup=cancel_keyboard(l10n))
+    response = await api.premium.create_premium(id_user)
+    status = response.status
+
+    if status != 201:
+        sent_message = await message.answer(
+            l10n.format_value(
+                "give-premium-error-already-given",
+                {"user_link": user_link, "id_user": str(id_user)},
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    text = l10n.format_value(
+        "give-premium-success",
+        {"user_link": user_link, "id_user": str(id_user)},
+    )
+
+    await message.answer(text)
+    await state.clear()
+
+    await bot.send_message(chat_id=config.tg_bot.payment_chat, text=text)

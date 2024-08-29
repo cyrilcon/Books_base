@@ -2,7 +2,7 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 class AddBook(StatesGroup):
-    """Класс состояний для добавления книги."""
+    """A class of states for adding a book."""
 
     select_article = State()
     add_title = State()

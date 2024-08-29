@@ -2,6 +2,6 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 class GivePremium(StatesGroup):
-    """Класс состояний для выдачи статуса Books_base Premium."""
+    """A class of states for the issuance of Books_base Premium status."""
 
     select_user = State()

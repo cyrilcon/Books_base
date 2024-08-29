@@ -2,11 +2,11 @@ from pathlib import Path
 from fluent.runtime import FluentLocalization, FluentResourceLoader
 
 
-def get_fluent_localization(language: str) -> FluentLocalization:
+def get_fluent_localization(language_code: str) -> FluentLocalization:
     """
-    Загружает файлы FTL для выбранного языка
-    :param language: название языка, передаваемое из конфигурации
-    :return: Объект FluentLocalization с загруженными файлами FTL для выбранного языка
+    Loads FTL files for the selected language.
+    :param language_code: IETF language tag of the user's language.
+    :return: FluentLocalisation object with loaded FTL files for the selected language.
     """
 
     # Check "locales" directory on the same level as this file
@@ -21,10 +21,10 @@ def get_fluent_localization(language: str) -> FluentLocalization:
     locales_dir = locales_dir.absolute()
 
     # If the requested language directory doesn't exist, fallback to "ru"
-    language_dir = locales_dir / language
+    language_dir = locales_dir / language_code
     if not language_dir.exists() or not language_dir.is_dir():
-        language = "ru"
-        language_dir = locales_dir / language
+        language_code = "ru"
+        language_dir = locales_dir / language_code
 
     # Load all .ftl files from the language directory
     locale_files = list()
@@ -32,9 +32,9 @@ def get_fluent_localization(language: str) -> FluentLocalization:
         locale_files.append(str(file.absolute()))
 
     if not locale_files:
-        err = f'No .ftl files found for "{language}" locale'
+        err = f'No .ftl files found for "{language_code}" locale'
         raise FileNotFoundError(err)
 
     l10n_loader = FluentResourceLoader(str(locales_dir / "{locale}"))
 
-    return FluentLocalization([language], locale_files, l10n_loader)
+    return FluentLocalization([language_code], locale_files, l10n_loader)

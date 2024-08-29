@@ -2,6 +2,6 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 class CancelPremium(StatesGroup):
-    """Класс состояний для отмены статуса Books_base Premium."""
+    """A class of states to revoke Books_base Premium status."""
 
     select_user = State()

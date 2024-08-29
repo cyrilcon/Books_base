@@ -1,13 +1,19 @@
-from datetime import datetime
 from typing import Callable, Dict, Any, Awaitable
 
 from aiogram import BaseMiddleware
-from aiogram.types import TelegramObject, CallbackQuery
+from aiogram.types import TelegramObject
+
+from tgbot.api.books_base_api import api
 
 
 class DatabaseMiddleware(BaseMiddleware):
-    def __init__(self, session_pool) -> None:
-        self.session_pool = session_pool
+    """
+    Middleware to handle user data in the database.
+
+    This middleware checks if the user exists in the database.
+    If the user exists, it updates their information.
+    If the user does not exist, it creates a new user entry.
+    """
 
     async def __call__(
         self,
@@ -15,4 +21,23 @@ class DatabaseMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
-        pass
+        id_user = event.from_user.id
+
+        response = await api.users.get_user_by_id(id_user)
+        status = response.status
+
+        if status == 200:
+            await api.users.update_user(id_user)
+        else:
+            language_code = event.from_user.language_code
+            full_name = event.from_user.full_name
+            username = event.from_user.username
+
+            await api.users.create_user(
+                id_user,
+                language_code=language_code,
+                full_name=full_name,
+                username=username,
+            )
+
+        return await handler(event, data)
