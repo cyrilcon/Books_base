@@ -27,6 +27,7 @@ __all__ = (
     "reply_button",
     "search_by_author_button",
     "search_by_genre_button",
+    "search_by_title_button",
     "serve_button",
     "unavailable_button",
     "share_base_back_button",
@@ -64,8 +65,11 @@ from .order import order_button
 from .order_again import order_again_button
 from .post import post_button
 from .reply import reply_button
-from .search_by_author import search_by_author_button
-from .search_by_genre import search_by_genre_button
+from .search import (
+    search_by_author_button,
+    search_by_genre_button,
+    search_by_title_button,
+)
 from .serve_order import serve_button, unavailable_button
 from .share_base_back import share_base_back_button
 from .share_base_cancel import share_base_cancel_button

@@ -119,41 +119,24 @@ class BookIdTitle(BaseModel):
     )
 
 
-class BookAuthorSearchResult(BaseModel):
+class BookResult(BaseModel):
     """
-    Schema for books found by author.
-    """
-
-    book: BookSchema = Field(..., description="Detailed book schema")
-
-
-class BookAuthorSearchResponse(BaseModel):
-    """
-    Response schema for books found by author.
-    """
-
-    found: int = Field(..., description="Number of books found by search")
-    books: List[BookAuthorSearchResult] = Field(..., description="List of books found")
-
-
-class BookGenreSearchResult(BaseModel):
-    """
-    Schema for books found by genre.
+    Schema representing a book result.
     """
 
     book: BookSchema = Field(..., description="Detailed book schema")
 
 
-class BookGenreSearchResponse(BaseModel):
+class BooksResponse(BaseModel):
     """
-    Response schema for books found by genre.
+    General response schema for listing books.
     """
 
-    found: int = Field(..., description="Number of books found by search")
-    books: List[BookGenreSearchResult] = Field(..., description="List of books found")
+    count: int = Field(..., description="Number of books")
+    books: List[BookResult] = Field(..., description="List of books received")
 
 
-class BookTitleSearchResult(BaseModel):
+class BookTitleSimilarityResult(BaseModel):
     """
     Schema for books found by title with Levenshtein distance.
     """
@@ -164,10 +147,12 @@ class BookTitleSearchResult(BaseModel):
     book: BookSchema = Field(..., description="Detailed book schema")
 
 
-class BookTitleSearchResponse(BaseModel):
+class BookTitleSimilarityResponse(BaseModel):
     """
     Response schema for books found by title.
     """
 
     found: int = Field(..., description="Number of books found by search")
-    books: List[BookTitleSearchResult] = Field(..., description="List of books found")
+    books: List[BookTitleSimilarityResult] = Field(
+        ..., description="List of books found"
+    )

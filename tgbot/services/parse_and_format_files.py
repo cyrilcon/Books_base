@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from tgbot.services import BookFormatter
+from tgbot.services.book_formatter import BookFormatter
 
 
 async def parse_and_format_files(

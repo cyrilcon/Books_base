@@ -3,7 +3,8 @@ from typing import Dict, Any, Union
 from fluent.runtime import FluentLocalization
 
 from tgbot.schemas import BookSchema
-from tgbot.services import get_fluent_localization, BookFormatter
+from tgbot.services.book_formatter import BookFormatter
+from tgbot.services.fluent_loader import get_fluent_localization
 
 
 async def generate_book_caption(

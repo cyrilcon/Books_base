@@ -7,17 +7,17 @@ from tgbot.keyboards.inline.buttons import (
     search_by_author_button,
     search_by_genre_button,
 )
-from tgbot.schemas import BookTitleSearchResult
+from tgbot.schemas import BookTitleSimilarityResult
 
 
-def pagination_keyboard(
+def book_search_pagination_keyboard(
     l10n: FluentLocalization,
     found: int,
-    books: List[BookTitleSearchResult],
+    books: List[BookTitleSimilarityResult],
     page: int = 1,
 ) -> InlineKeyboardMarkup:
     """
-    The pagination keyboard is formed.
+    The pagination keyboard for book search is formed.
     :param l10n: Language set by the user.
     :param found: Number of books found by search.
     :param books: List of books.
@@ -31,7 +31,7 @@ def pagination_keyboard(
     for book in books:
         book = book.book
         id_book_button = InlineKeyboardButton(
-            text=f"{num}", callback_data=f"id_book:{book.id_book}"
+            text=f"{num}", callback_data=f"get_id_book:{book.id_book}"
         )
         buttons.append(id_book_button)
         num += 1
@@ -40,7 +40,7 @@ def pagination_keyboard(
 
     if page > 1:
         bottom_buttons.append(
-            InlineKeyboardButton(text=f"⬅️", callback_data=f"search_book_page:{page-1}")
+            InlineKeyboardButton(text=f"⬅️", callback_data=f"book_search_page:{page-1}")
         )
     if found > 5:
         all_pages = (found + 4) // 5
@@ -54,7 +54,7 @@ def pagination_keyboard(
         if min(page * 5, found) < found:
             bottom_buttons.append(
                 InlineKeyboardButton(
-                    text=f"➡️", callback_data=f"search_book_page:{page+1}"
+                    text=f"➡️", callback_data=f"book_search_page:{page+1}"
                 )
             )
 

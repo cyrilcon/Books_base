@@ -2,7 +2,7 @@ from typing import Tuple
 
 from tgbot.api.books_base_api import api
 from tgbot.schemas import UserSchema
-from tgbot.services import extract_username
+from tgbot.services.extract_username import extract_username
 
 
 async def find_user(identifier, l10n) -> Tuple[UserSchema | None, str | None]:

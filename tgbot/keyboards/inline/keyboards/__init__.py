@@ -8,10 +8,13 @@ __all__ = (
     "done_clear_cancel_keyboard",
     "edit_book_keyboard",
     "order_again_keyboard",
-    "pagination_keyboard",
+    "author_search_pagination_keyboard",
+    "book_search_pagination_keyboard",
     "post_cancel_keyboard",
     "reply_keyboard",
     "search_by_author_and_genre_keyboard",
+    "search_by_author_and_title_keyboard",
+    "search_by_title_and_genre_keyboard",
     "serve_order_keyboard",
     "set_language_keyboard",
     "share_base_keyboard",
@@ -31,10 +34,17 @@ from .done_clear_back_cancel import done_clear_back_cancel_keyboard
 from .done_clear_cancel import done_clear_cancel_keyboard
 from .edit_book import edit_book_keyboard
 from .order_again import order_again_keyboard
-from .pagination import pagination_keyboard
+from .pagination import (
+    author_search_pagination_keyboard,
+    book_search_pagination_keyboard,
+)
 from .post_cancel import post_cancel_keyboard
 from .reply import reply_keyboard
-from .search_by_author_and_genre import search_by_author_and_genre_keyboard
+from .search import (
+    search_by_author_and_genre_keyboard,
+    search_by_author_and_title_keyboard,
+    search_by_title_and_genre_keyboard,
+)
 from .serve_order import serve_order_keyboard
 from .set_languages import set_language_keyboard
 from .share_base import share_base_keyboard

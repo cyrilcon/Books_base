@@ -1,10 +1,3 @@
-button-pagination-info =
-    Это страница { $page } из { $all_pages } результатов поиска.
-
-    Используйте стрелки вправо/влево для навигации между страницами.
-
-    Чтобы ознакомиться с конкретной книгой, нажмите на её номер.
-
 button-back = ⬅️ Назад
 
 button-cancel = ❌ Отмена
@@ -66,6 +59,8 @@ button-ru = 🇷🇺 RUS
 button-en = 🇬🇧 ENG
 
 button-uk = 🇺🇦 UKR
+
+button-search-by-title = 📔 Поиск по названию
 
 button-search-by-author = 👨🏻‍🎨 Поиск по автору
 

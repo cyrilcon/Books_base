@@ -1,9 +1,9 @@
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
 from tgbot.schemas import (
     BookSchema,
-    BookAuthorSearchResponse,
-    BookGenreSearchResponse,
-    BookTitleSearchResponse,
+    BooksResponse,
+    BooksResponse,
+    BookTitleSimilarityResponse,
 )
 
 
@@ -37,61 +37,55 @@ class BooksApi:
         )
         return ApiResponse(status, result, model=BookSchema)
 
-    async def search_books_by_author(
+    async def get_books_by_author_id(
         self,
-        author_name: str,
+        id_author: int,
         max_results: int = 5,
         page: int | None = None,
-    ) -> ApiResponse[BookAuthorSearchResponse]:
+    ) -> ApiResponse[BooksResponse]:
         """
-        Search books by author.
+        Get books by author ID.
 
-        :param author_name: Author of the book to search for.
+        :param id_author: Unique author identifier.
         :param max_results: Maximum number of books to return.
         :param page: Page number for pagination.
         """
 
-        params = {
-            "author_name": author_name,
-            "max_results": max_results,
-        }
+        params = {"max_results": max_results}
         if page is not None:
             params["page"] = page
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/search-by-author",
+            url=f"{self.endpoint}/author/{id_author}",
             params=params,
         )
-        return ApiResponse(status, result, model=BookAuthorSearchResponse)
+        return ApiResponse(status, result, model=BooksResponse)
 
-    async def search_books_by_genre(
+    async def get_books_by_genre_id(
         self,
-        genre_name: str,
+        id_genre: int,
         max_results: int = 5,
         page: int | None = None,
-    ) -> ApiResponse[BookGenreSearchResponse]:
+    ) -> ApiResponse[BooksResponse]:
         """
-        Search books by genre.
+        Get books by genre ID.
 
-        :param genre_name: Genre of the book to search for.
+        :param id_genre: Unique genre identifier.
         :param max_results: Maximum number of books to return.
         :param page: Page number for pagination.
         """
 
-        params = {
-            "genre_name": genre_name,
-            "max_results": max_results,
-        }
+        params = {"max_results": max_results}
         if page is not None:
             params["page"] = page
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/search-by-genre",
+            url=f"{self.endpoint}/genre/{id_genre}",
             params=params,
         )
-        return ApiResponse(status, result, model=BookGenreSearchResponse)
+        return ApiResponse(status, result, model=BooksResponse)
 
     async def search_books_by_title(
         self,
@@ -99,7 +93,7 @@ class BooksApi:
         max_results: int = 5,
         similarity_threshold: int = 75,
         page: int | None = None,
-    ) -> ApiResponse[BookTitleSearchResponse]:
+    ) -> ApiResponse[BookTitleSimilarityResponse]:
         """
         Search books by title with Levenshtein distance.
 
@@ -122,7 +116,7 @@ class BooksApi:
             url=f"{self.endpoint}/search-by-title",
             params=params,
         )
-        return ApiResponse(status, result, model=BookTitleSearchResponse)
+        return ApiResponse(status, result, model=BookTitleSimilarityResponse)
 
     async def get_latest_article(self) -> ApiResponse[int]:
         """
