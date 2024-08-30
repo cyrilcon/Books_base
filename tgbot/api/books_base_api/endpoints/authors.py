@@ -1,5 +1,5 @@
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
-from tgbot.schemas import AuthorSearchResponse
+from tgbot.schemas import AuthorSearchResponse, AuthorSchema
 
 
 class AuthorsApi:
@@ -37,3 +37,16 @@ class AuthorsApi:
             params=params,
         )
         return ApiResponse(status, result, model=AuthorSearchResponse)
+
+    async def get_author_by_id(self, id_author: int) -> ApiResponse[AuthorSchema]:
+        """
+        Get an author by ID.
+
+        :param id_author: Unique author identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_author}",
+        )
+        return ApiResponse(status, result, model=AuthorSchema)

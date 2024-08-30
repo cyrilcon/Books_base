@@ -1,5 +1,5 @@
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
-from tgbot.schemas import GenreSearchResponse
+from tgbot.schemas import GenreSearchResponse, GenreSchema
 
 
 class GenresApi:
@@ -37,3 +37,16 @@ class GenresApi:
             params=params,
         )
         return ApiResponse(status, result, model=GenreSearchResponse)
+
+    async def get_genre_by_id(self, id_genre: int) -> ApiResponse[GenreSchema]:
+        """
+        Get a genre by ID.
+
+        :param id_genre: Unique genre identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_genre}",
+        )
+        return ApiResponse(status, result, model=GenreSchema)
