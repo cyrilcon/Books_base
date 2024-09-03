@@ -2,6 +2,7 @@ from aiogram import Router
 
 from tgbot.filters import AdminFilter
 from .add_admin import add_admin_routers
+from .add_article import add_article_routers
 from .add_blacklist import add_blacklist_routers
 from .add_book import add_book_routers
 from .admin import admin_router
@@ -25,6 +26,7 @@ admin_routers.message.filter(AdminFilter())
 admin_routers.include_routers(
     admin_router,  # Must be the first
     add_admin_routers,
+    add_article_routers,
     add_blacklist_routers,
     add_book_routers,
     broadcast_routers,

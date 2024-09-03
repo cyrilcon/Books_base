@@ -1,5 +1,6 @@
 __all__ = (
     "AddAdmin",
+    "AddArticle",
     "AddBlacklist",
     "AddBook",
     "AuthorSearch",
@@ -23,6 +24,7 @@ __all__ = (
 )
 
 from .add_admin import AddAdmin
+from .add_article import AddArticle
 from .add_blacklist import AddBlacklist
 from .add_book import AddBook
 from .author_search import AuthorSearch

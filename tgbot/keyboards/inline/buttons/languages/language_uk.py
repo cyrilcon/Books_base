@@ -10,7 +10,7 @@ def language_uk_button(l10n: FluentLocalization) -> InlineKeyboardButton:
     """
 
     language_uk = InlineKeyboardButton(
-        text=l10n.format_value("button-uk"),
-        callback_data="set_language:uk",
+        text=l10n.format_value("button-language-uk"),
+        callback_data="language:uk",
     )
     return language_uk

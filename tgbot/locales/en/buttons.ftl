@@ -54,11 +54,11 @@ button-free-book = 🎁 Бесплатная книга
 
 button-share-our-store = 📤 Поделиться нашим магазином
 
-button-ru = 🇷🇺 RUS
+button-language-ru = 🇷🇺 RUS
 
-button-en = 🇬🇧 ENG
+button-language-en = 🇬🇧 ENG
 
-button-uk = 🇺🇦 UKR
+button-language-uk = 🇺🇦 UKR
 
 button-search-by-title = 📔 Поиск по названию
 
