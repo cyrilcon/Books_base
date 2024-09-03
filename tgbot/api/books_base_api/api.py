@@ -2,6 +2,7 @@ from tgbot.config import config
 from .base import BaseClient
 from .endpoints import (
     AdminsApi,
+    ArticlesApi,
     AuthorsApi,
     BlacklistApi,
     BooksApi,
@@ -20,6 +21,7 @@ class BooksBaseApi(BaseClient):
         super().__init__(base_url=self.base_url)
 
         self.admins = AdminsApi(self, self.prefix)
+        self.articles = ArticlesApi(self, self.prefix)
         self.authors = AuthorsApi(self, self.prefix)
         self.blacklist = BlacklistApi(self, self.prefix)
         self.books = BooksApi(self, self.prefix)

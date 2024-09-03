@@ -12,9 +12,16 @@ class UserBase(UserId):
     """
 
     full_name: str | None = Field(
-        None, description="User's full name (first name and last name)"
+        None,
+        max_length=225,
+        description="User's full name (first name and last name)",
     )
-    username: str | None = Field(None, description="User's username")
+    username: str | None = Field(
+        None,
+        min_length=4,
+        max_length=32,
+        description="User's username",
+    )
     language_code: str = Field(
         ...,
         max_length=3,
@@ -36,9 +43,16 @@ class UserUpdate(BaseModel):
     """
 
     full_name: str | None = Field(
-        None, description="User's full name (first name and last name)"
+        None,
+        max_length=225,
+        description="User's full name (first name and last name)",
     )
-    username: str | None = Field(None, description="User's username")
+    username: str | None = Field(
+        None,
+        min_length=4,
+        max_length=32,
+        description="User's username",
+    )
     language_code: str | None = Field(
         None,
         max_length=3,

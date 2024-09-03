@@ -1,5 +1,6 @@
 __all__ = (
     "AdminsApi",
+    "ArticlesApi",
     "AuthorsApi",
     "BlacklistApi",
     "BooksApi",
@@ -10,6 +11,7 @@ __all__ = (
 )
 
 from .admins import AdminsApi
+from .articles import ArticlesApi
 from .authors import AuthorsApi
 from .blacklist import BlacklistApi
 from .books import BooksApi
