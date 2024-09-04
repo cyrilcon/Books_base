@@ -8,6 +8,7 @@ from .add_book import add_book_routers
 from .admin import admin_router
 from .broadcast import broadcast_routers
 from .cancel_premium import cancel_premium_routers
+from .delete_article import delete_article_routers
 from .delete_book import delete_book_routers
 from .edit_book import edit_book_routers
 from .get_profile import get_profile_routers
@@ -31,6 +32,7 @@ admin_routers.include_routers(
     add_book_routers,
     broadcast_routers,
     cancel_premium_routers,
+    delete_article_routers,
     delete_book_routers,
     edit_book_routers,
     get_profile_routers,

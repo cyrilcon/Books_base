@@ -1,3 +1,5 @@
+import re
+
 from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -7,14 +9,14 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import find_user, create_user_link, ClearKeyboard
-from tgbot.states import CancelPremium
+from tgbot.services import ClearKeyboard
+from tgbot.states import DeleteArticle
 
-cancel_premium_router = Router()
+delete_article_router = Router()
 
 
-@cancel_premium_router.message(Command("cancel_premium"))
-async def cancel_premium(
+@delete_article_router.message(Command("delete_article"))
+async def delete_article(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -23,10 +25,10 @@ async def cancel_premium(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("cancel-premium-prompt-select-user"),
+        l10n.format_value("delete-article-prompt-link"),
         reply_markup=cancel_keyboard(l10n),
     )
-    await state.set_state(CancelPremium.select_user)
+    await state.set_state(DeleteArticle.select_article)
 
     await ClearKeyboard.safe_message(
         storage=storage,
@@ -35,8 +37,8 @@ async def cancel_premium(
     )
 
 
-@cancel_premium_router.message(StateFilter(CancelPremium.select_user), F.text)
-async def cancel_premium_process(
+@delete_article_router.message(StateFilter(DeleteArticle.select_article), F.text)
+async def delete_article_process(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -44,34 +46,11 @@ async def cancel_premium_process(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    user, response_message = await find_user(message.text, l10n)
+    link = message.text
 
-    if not user:
+    if not re.match(r"^(https://)?telegra\.ph/", link):
         sent_message = await message.answer(
-            response_message, reply_markup=cancel_keyboard(l10n)
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
-        return
-
-    id_user = user.id_user
-    full_name = user.full_name
-    username = user.username
-
-    user_link = await create_user_link(full_name, username)
-
-    response = await api.premium.delete_premium(id_user)
-    status = response.status
-
-    if status != 204:
-        sent_message = await message.answer(
-            l10n.format_value(
-                "cancel-premium-error-already-canceled",
-                {"user_link": user_link, "id_user": str(id_user)},
-            ),
+            l10n.format_value("delete-article-error-invalid-link"),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -81,10 +60,23 @@ async def cancel_premium_process(
         )
         return
 
-    await message.answer(
-        l10n.format_value(
-            "cancel-premium-success",
-            {"user_link": user_link, "id_user": str(id_user)},
+    response = await api.articles.get_article_by_link(link)
+    status = response.status
+
+    if status != 200:
+        sent_message = await message.answer(
+            l10n.format_value("delete-article-error-article-not-found"),
+            reply_markup=cancel_keyboard(l10n),
         )
-    )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    article = response.get_model()
+    await api.articles.delete_article(article.id_article)
+
+    await message.answer(l10n.format_value("delete-article-success"))
     await state.clear()

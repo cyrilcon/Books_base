@@ -7,12 +7,10 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.config import config
-from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import deep_link_buy_keyboard
 from tgbot.states import AddBook
 
 add_book_step_9_router = Router()
-add_book_step_9_router.message.filter(AdminFilter())
 
 
 @add_book_step_9_router.callback_query(StateFilter(AddBook.preview), F.data == "post")

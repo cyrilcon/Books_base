@@ -7,13 +7,11 @@ from aiogram.types import CallbackQuery, Message
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.filters import AdminFilter
 from tgbot.keyboards.inline import cancel_keyboard, reply_keyboard
 from tgbot.services import ClearKeyboard, get_user_language, create_user_link
 from tgbot.states import SendMessage
 
 send_message_router_2_router = Router()
-send_message_router_2_router.message.filter(AdminFilter())
 
 
 @send_message_router_2_router.callback_query(

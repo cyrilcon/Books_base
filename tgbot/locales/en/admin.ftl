@@ -33,7 +33,7 @@ admin =
 
     📰 Добавить статью — /add_article
 
-    — 🟥 Удалить статью — /delete_article
+    🟥 Удалить статью — /delete_article
 
     🪪 Получить информацию о пользователе — /get_profile
 
