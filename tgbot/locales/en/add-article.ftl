@@ -27,7 +27,7 @@ add-article-prompt-language-code =
     Выберите <i><b>язык</b></i> статьи
 
 add-article-success =
-    Добавлена статья для { $country_flag }!!
+    Статья добавлена!!
 
     { article-template }
 

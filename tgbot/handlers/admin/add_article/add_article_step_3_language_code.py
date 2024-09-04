@@ -45,7 +45,6 @@ async def add_article_step_3(
     response = await api.articles.create_article(link, title, language_code)
     article = response.get_model()
 
-    country_flag = get_country_flag(article.language_code)
     title = article.title
     added_date = article.added_datetime
 
@@ -53,7 +52,6 @@ async def add_article_step_3(
         l10n.format_value(
             "add-article-success",
             {
-                "country_flag": country_flag,
                 "title": title,
                 "added-date": added_date,
             },
@@ -65,12 +63,3 @@ async def add_article_step_3(
     )
     await state.clear()
     await call.answer()
-
-
-def get_country_flag(language_code):
-    flags = {
-        "uk": "🇺🇦",
-        "ru": "🇷🇺",
-        "en": "🇬🇧",
-    }
-    return flags.get(language_code, "🏳️")

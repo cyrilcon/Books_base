@@ -18,6 +18,7 @@ __all__ = (
     "search_by_author_and_title_keyboard",
     "search_by_title_and_genre_keyboard",
     "serve_order_keyboard",
+    "set_language_keyboard",
     "share_base_keyboard",
     "share_our_store_keyboard",
     "show_book_order_cancel_keyboard",
@@ -49,6 +50,7 @@ from .search import (
     search_by_title_and_genre_keyboard,
 )
 from .serve_order import serve_order_keyboard
+from .set_language import set_language_keyboard
 from .share_base import share_base_keyboard
 from .share_our_store import share_our_store_keyboard
 from .show_book_order_cancel import show_book_order_cancel_keyboard
