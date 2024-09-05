@@ -4,6 +4,7 @@ __all__ = (
     "AuthorsApi",
     "BlacklistApi",
     "BooksApi",
+    "DiscountsApi",
     "GenresApi",
     "OrdersApi",
     "PremiumApi",
@@ -15,6 +16,7 @@ from .articles import ArticlesApi
 from .authors import AuthorsApi
 from .blacklist import BlacklistApi
 from .books import BooksApi
+from .discounts import DiscountsApi
 from .genres import GenresApi
 from .orders import OrdersApi
 from .premium import PremiumApi

@@ -18,6 +18,7 @@ __all__ = (
     "BookTitleSimilarityResult",
     "BookTitleSimilarityResponse",
     "DiscountEnum",
+    "DiscountCreate",
     "FileCreate",
     "FileUpdate",
     "FileSchema",
@@ -56,7 +57,7 @@ from .book import (
     BookTitleSimilarityResult,
     BookTitleSimilarityResponse,
 )
-from .discount import DiscountEnum
+from .discount import DiscountEnum, DiscountCreate
 from .file import FileCreate, FileUpdate, FileSchema
 from .genre import (
     GenreCreate,

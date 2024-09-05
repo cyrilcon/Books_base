@@ -6,6 +6,7 @@ from .endpoints import (
     AuthorsApi,
     BlacklistApi,
     BooksApi,
+    DiscountsApi,
     GenresApi,
     OrdersApi,
     PremiumApi,
@@ -25,6 +26,7 @@ class BooksBaseApi(BaseClient):
         self.authors = AuthorsApi(self, self.prefix)
         self.blacklist = BlacklistApi(self, self.prefix)
         self.books = BooksApi(self, self.prefix)
+        self.discount = DiscountsApi(self, self.prefix)
         self.genres = GenresApi(self, self.prefix)
         self.orders = OrdersApi(self, self.prefix)
         self.premium = PremiumApi(self, self.prefix)
