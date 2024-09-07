@@ -6,9 +6,8 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, Message
 from fluent.runtime import FluentLocalization
 
-from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tgbot.services import ClearKeyboard, get_user_language, create_user_link
+from tgbot.services import ClearKeyboard, get_user_language
 from tgbot.states import SendMessage
 
 send_message_router_2_router = Router()
@@ -42,13 +41,9 @@ async def support_reply_to_user_process(
 
     data = await state.get_data()
     id_user_recipient = data["id_user_recipient"]
-    l10n_recipient = await get_user_language(id_user_recipient)
+    user_link = data["user_link"]
 
-    response = await api.users.get_user_by_id(id_user_recipient)
-    user = response.get_model()
-    full_name = user.full_name
-    username = user.username
-    user_link = await create_user_link(full_name, username)
+    l10n_recipient = await get_user_language(id_user_recipient)
 
     try:
         sent_message = await bot.copy_message(

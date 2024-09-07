@@ -80,6 +80,8 @@ async def send_book_step_2(
 
     data = await state.get_data()
     id_user_recipient = data.get("id_user_recipient")
+    user_link = data.get("user_link")
+
     l10n_recipient = await get_user_language(id_user_recipient)
     caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
 
@@ -96,7 +98,11 @@ async def send_book_step_2(
         await message.answer(
             l10n.format_value(
                 "send-book-success",
-                {"book_title": book.title},
+                {
+                    "book_title": book.title,
+                    "user_link": user_link,
+                    "id_user": str(id_user_recipient),
+                },
             )
         )
     await state.clear()

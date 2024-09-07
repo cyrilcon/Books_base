@@ -59,6 +59,7 @@ async def give_base_step_2(
     data = await state.get_data()
     id_user_recipient = data.get("id_user_recipient")
     user_link = data.get("user_link")
+
     l10n_recipient = await get_user_language(id_user_recipient)
 
     response = await api.users.get_user_by_id(id_user_recipient)
