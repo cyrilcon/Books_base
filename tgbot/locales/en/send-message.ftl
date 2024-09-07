@@ -10,4 +10,4 @@ send-message-from-admin = Вы получили сообщение от адми
 
 send-message-success = Сообщение отправлено пользователю { $user_link } (<code>{ $id_user }</code>)!!
 
-send-message-canceled = Вы отменили отпрвку сообщения пользователю
+send-message-canceled = Вы отменили отправку сообщения пользователю

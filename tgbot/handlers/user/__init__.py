@@ -1,5 +1,6 @@
 from aiogram import Router
 
+from .base_store import base_store_routers
 from .booking import booking_router
 from .cancel_order import cancel_order_routers
 from .order import order_routers
@@ -13,6 +14,7 @@ from .support import support_routers
 user_routers = Router()
 user_routers.include_routers(
     start_router,  # Must be the first
+    base_store_routers,
     booking_router,
     cancel_order_routers,
     order_routers,
