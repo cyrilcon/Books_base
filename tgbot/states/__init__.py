@@ -23,6 +23,7 @@ __all__ = (
     "ShareBase",
     "Support",
     "TakeBase",
+    "TakeDiscount",
 )
 
 from .add_admin import AddAdmin
@@ -49,3 +50,4 @@ from .serve_order import ServeOrder
 from .share_base import ShareBase
 from .support import Support
 from .take_base import TakeBase
+from .take_discount import TakeDiscount
