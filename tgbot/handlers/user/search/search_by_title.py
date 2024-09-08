@@ -46,7 +46,7 @@ async def book_search_page(call: CallbackQuery, l10n: FluentLocalization):
     await call.answer()
 
 
-@search_by_title_router.callback_query(F.data.startswith("get_id_book"))
+@search_by_title_router.callback_query(F.data.startswith("get_book"))
 async def search_get_book(call: CallbackQuery, l10n: FluentLocalization):
     id_book = int(call.data.split(":")[-1])
     article = BookFormatter.format_article(id_book)
@@ -106,16 +106,13 @@ async def book_search(
 
     if found == 0:
         await message.answer(
-            l10n.format_value(
-                "search-by-title-not-found",
-                {"book_title_request": book_title_request},
-            ),
+            l10n.format_value("search-not-found", {"request": book_title_request}),
             reply_markup=search_by_author_and_genre_keyboard(l10n),
         )
         return
 
     if found == 1:
-        book = books[0]
+        book = books[0].book
         caption = await generate_book_caption(book_data=book, l10n=l10n)
 
         await message.answer_photo(
@@ -129,20 +126,20 @@ async def book_search(
         "search-by-title-success",
         {"book_title_request": book_title_request},
     )
-    num = ((page - 1) * 5) + 1
+    book_number = ((page - 1) * 5) + 1
 
     for book in books:
         book = book.book
 
         article = BookFormatter.format_article(book.id_book)
         title = book.title
-        authors = book.authors
+        authors = BookFormatter.format_authors(book.authors)
+
         text += (
-            f"\n\n<b>{num}.</b> <code>{title}</code>\n"
-            f"{', '.join(f'<code>{author.author_name.title()}</code>' for author in authors)}"
-            f" (<code>{article}</code>)"
+            f"\n\n<b>{book_number}.</b> <code>{title}</code>\n"
+            f"<i>{authors}</i> (<code>{article}</code>)"
         )
-        num += 1
+        book_number += 1
     try:
         await message.edit_text(
             text,
