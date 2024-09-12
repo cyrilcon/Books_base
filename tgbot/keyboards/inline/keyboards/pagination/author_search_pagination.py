@@ -25,28 +25,28 @@ def author_search_pagination_keyboard(
     :return: The pagination keyboard.
     """
 
-    buttons = []
-    num = ((page - 1) * 5) + 1
+    numbers_buttons = []
+    author_number = ((page - 1) * 5) + 1
 
     for author in authors:
         author = author.author
         id_author_button = InlineKeyboardButton(
-            text=f"{num}", callback_data=f"get_id_author:{author.id_author}"
+            text=f"{author_number}", callback_data=f"get_author:{author.id_author}"
         )
-        buttons.append(id_author_button)
-        num += 1
+        numbers_buttons.append(id_author_button)
+        author_number += 1
 
-    bottom_buttons = []
+    pagination_buttons = []
 
     if page > 1:
-        bottom_buttons.append(
+        pagination_buttons.append(
             InlineKeyboardButton(
                 text=f"⬅️", callback_data=f"author_search_page:{page-1}"
             )
         )
     if found > 5:
         all_pages = (found + 4) // 5
-        bottom_buttons.append(
+        pagination_buttons.append(
             InlineKeyboardButton(
                 text=f"{l10n.format_value("page")} {page}/{all_pages}",
                 callback_data=f"pagination_info:{page}:{all_pages}",
@@ -54,20 +54,20 @@ def author_search_pagination_keyboard(
         )
 
         if min(page * 5, found) < found:
-            bottom_buttons.append(
+            pagination_buttons.append(
                 InlineKeyboardButton(
                     text=f"➡️", callback_data=f"author_search_page:{page+1}"
                 )
             )
 
-    pagination_buttons = InlineKeyboardMarkup(
+    author_search_pagination_markup = InlineKeyboardMarkup(
         inline_keyboard=[
-            buttons,
-            bottom_buttons,
+            numbers_buttons,
+            pagination_buttons,
             [
                 search_by_title_button(l10n),
                 search_by_genre_button(l10n),
             ],
         ]
     )
-    return pagination_buttons
+    return author_search_pagination_markup

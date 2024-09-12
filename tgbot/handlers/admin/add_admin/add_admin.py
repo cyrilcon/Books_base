@@ -62,7 +62,7 @@ async def add_admin_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.admins.create_admin(id_user)
+    response = await api.users.admins.create_admin(id_user)
     status = response.status
 
     if status != 201:

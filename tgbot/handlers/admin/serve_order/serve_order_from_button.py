@@ -7,7 +7,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tgbot.services import ClearKeyboard, get_user_language
+from tgbot.services import ClearKeyboard, get_user_localization
 from tgbot.states import ServeOrder
 
 serve_from_button_router = Router()
@@ -61,7 +61,7 @@ async def serve_order_book_unavailable(
     order = response.get_model()
 
     await call.message.edit_reply_markup()
-    l10n_recipient = await get_user_language(order.id_user)
+    l10n_recipient = await get_user_localization(order.id_user)
 
     try:
         await bot.send_message(

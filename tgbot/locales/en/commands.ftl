@@ -12,6 +12,8 @@ command-base-store = 💎 Shop for discounts
 
 command-share-base = 🤝🏻 Share base with a friend
 
+command-news = 📰 Latest Books_base news
+
 command-support = ⚠️ Tech-support
 
 command-settings = ⚙️ Language settings

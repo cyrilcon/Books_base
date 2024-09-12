@@ -26,6 +26,7 @@ __all__ = (
     "share_our_store_keyboard",
     "show_book_order_cancel_keyboard",
     "update_price_keyboard",
+    "view_news_keyboard",
     "view_orders_keyboard",
     "yes_cancel_keyboard",
 )
@@ -61,5 +62,6 @@ from .share_base import share_base_keyboard
 from .share_our_store import share_our_store_keyboard
 from .show_book_order_cancel import show_book_order_cancel_keyboard
 from .update_price import update_price_keyboard
+from .view_news import view_news_keyboard
 from .view_orders import view_orders_keyboard
 from .yes_cancel import yes_cancel_keyboard

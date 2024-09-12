@@ -4,7 +4,7 @@ from tgbot.api.books_base_api import api
 from tgbot.services.fluent_loader import get_fluent_localization
 
 
-async def get_user_language(id_user: int) -> FluentLocalization:
+async def get_user_localization(id_user: int) -> FluentLocalization:
     """
     Returns the set language of the user.
     :param id_user: Unique user identifier.

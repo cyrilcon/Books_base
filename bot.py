@@ -26,7 +26,7 @@ async def on_startup(bot: Bot):
     Called on bot startup.
     """
 
-    response = await api.admins.get_admin_ids()
+    response = await api.users.admins.get_admin_ids()
     admins = response.result
 
     await set_default_commands(bot, admins)

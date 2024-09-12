@@ -3,12 +3,18 @@ from typing import List
 
 from tgbot.api.books_base_api.base import BaseClient, ApiResponse
 from tgbot.schemas import UserSchema
+from . import AdminsApi, BlacklistApi, DiscountsApi, PremiumApi
 
 
 class UsersApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
         self.endpoint = f"{prefix}/users"
+
+        self.admins = AdminsApi(self.base_client, self.endpoint)
+        self.blacklist = BlacklistApi(self.base_client, self.endpoint)
+        self.discounts = DiscountsApi(self.base_client, self.endpoint)
+        self.premium = PremiumApi(self.base_client, self.endpoint)
 
     async def get_user_ids(self) -> ApiResponse[List[int]]:
         """

@@ -7,6 +7,42 @@ class GenresApi:
         self.base_client = base_client
         self.endpoint = f"{prefix}/genres"
 
+    async def get_genres_with_pagination(
+        self,
+        max_results: int = 5,
+        page: int | None = None,
+    ) -> ApiResponse[GenreSchema]:
+        """
+        Get a list of genres with pagination.
+
+        :param max_results: Maximum number of genres to return.
+        :param page: Page number for pagination.
+        """
+
+        params = {"max_results": max_results}
+        if page is not None:
+            params["page"] = page
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}",
+            params=params,
+        )
+        return ApiResponse(status, result, model=GenreSchema)
+
+    async def get_genre_by_id(self, id_genre: int) -> ApiResponse[GenreSchema]:
+        """
+        Get a genre by ID.
+
+        :param id_genre: Unique genre identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_genre}",
+        )
+        return ApiResponse(status, result, model=GenreSchema)
+
     async def search_genres(
         self,
         genre_name: str,

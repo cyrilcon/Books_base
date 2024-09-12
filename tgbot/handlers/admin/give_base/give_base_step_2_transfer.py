@@ -8,7 +8,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
-from tgbot.services import ClearKeyboard, get_user_language
+from tgbot.services import ClearKeyboard, get_user_localization
 from tgbot.states import GiveBase
 
 give_base_step_2_router = Router()
@@ -60,7 +60,7 @@ async def give_base_step_2(
     id_user_recipient = data.get("id_user_recipient")
     user_link = data.get("user_link")
 
-    l10n_recipient = await get_user_language(id_user_recipient)
+    l10n_recipient = await get_user_localization(id_user_recipient)
 
     response = await api.users.get_user_by_id(id_user_recipient)
     user = response.get_model()

@@ -71,3 +71,5 @@ button-search-by-title = 📔 Поиск по названию
 button-search-by-author = 👨🏻‍🎨 Поиск по автору
 
 button-search-by-genre = 🎭 Поиск по жанру
+
+button-news-channel = 📰 Канал с новостями

@@ -54,22 +54,24 @@ async def search_get_book(call: CallbackQuery, l10n: FluentLocalization):
     response = await api.books.get_book_by_id(id_book)
     status = response.status
 
-    if status == 200:
-        book = response.get_model()
-        caption = await generate_book_caption(book_data=book, l10n=l10n)
-
-        await call.message.answer_photo(
-            photo=book.cover,
-            caption=caption,
-            # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
-        )
-    else:
+    if status != 200:
         await call.message.answer(
             l10n.format_value(
                 "search-by-title-error-book-unavailable",
                 {"article": article},
             )
         )
+        await call.answer()
+        return
+
+    book = response.get_model()
+    caption = await generate_book_caption(book_data=book, l10n=l10n)
+
+    await call.message.answer_photo(
+        photo=book.cover,
+        caption=caption,
+        # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
+    )
     await call.answer()
 
 

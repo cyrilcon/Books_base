@@ -47,16 +47,29 @@ class ArticlesApi:
         )
         return ApiResponse(status, result, model=ArticleSchema)
 
-    async def get_article_by_position(
-        self, position: int
-    ) -> ApiResponse[ArticleSchema]:
+    async def get_articles_count_by_language_code(
+        self, language_code: str
+    ) -> ApiResponse[int]:
         """
-        Get an article by position.
+        Get the total number of articles by language_code.
         """
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/position/{position}",
+            url=f"{self.endpoint}/{language_code}/count",
+        )
+        return ApiResponse(status, result)
+
+    async def get_article_by_language_code_and_position(
+        self, language_code: str, position: int
+    ) -> ApiResponse[ArticleSchema]:
+        """
+        Get an article by language_code and position.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{language_code}/position/{position}",
         )
         return ApiResponse(status, result, model=ArticleSchema)
 

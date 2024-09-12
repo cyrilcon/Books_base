@@ -7,7 +7,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import get_user_language
+from tgbot.services import get_user_localization
 from tgbot.states import GiveDiscount
 
 give_discount_step_2_router = Router()
@@ -44,7 +44,7 @@ async def give_discount_step_2(
     id_user_recipient = data["id_user_recipient"]
     user_link = data["user_link"]
 
-    l10n_recipient = await get_user_language(id_user_recipient)
+    l10n_recipient = await get_user_localization(id_user_recipient)
 
     try:
         await bot.send_message(
@@ -58,7 +58,7 @@ async def give_discount_step_2(
     except AiogramError:
         await call.message.edit_text(l10n.format_value("error-user-blocked-bot"))
     else:
-        await api.discounts.create_discount(
+        await api.users.discounts.create_discount(
             id_user=id_user_recipient,
             discount=discount,
         )

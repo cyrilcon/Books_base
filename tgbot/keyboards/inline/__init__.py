@@ -26,6 +26,7 @@ __all__ = (
     "share_our_store_keyboard",
     "show_book_order_cancel_keyboard",
     "update_price_keyboard",
+    "view_news_keyboard",
     "view_orders_keyboard",
     "yes_cancel_keyboard",
 )
@@ -58,6 +59,7 @@ from .keyboards import (
     share_our_store_keyboard,
     show_book_order_cancel_keyboard,
     update_price_keyboard,
+    view_news_keyboard,
     view_orders_keyboard,
     yes_cancel_keyboard,
 )

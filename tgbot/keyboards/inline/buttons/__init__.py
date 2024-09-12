@@ -13,6 +13,7 @@ __all__ = (
     "discount_50_button",
     "done_button",
     "exchange_base_button",
+    "news_channel_button",
     "article_button",
     "authors_button",
     "cover_button",
@@ -75,6 +76,7 @@ from .edit_book import (
     update_price_85_button,
 )
 from .exchange_base import exchange_base_button
+from .news_channel import news_channel_button
 from .languages import language_en_button, language_ru_button, language_uk_button
 from .order import order_button
 from .order_again import order_again_button

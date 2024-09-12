@@ -62,7 +62,7 @@ async def cancel_premium_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.premium.delete_premium(id_user)
+    response = await api.users.premium.delete_premium(id_user)
     status = response.status
 
     if status != 204:

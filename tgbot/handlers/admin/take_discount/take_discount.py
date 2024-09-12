@@ -62,7 +62,7 @@ async def take_discount_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.discounts.delete_discount(id_user)
+    response = await api.users.discounts.delete_discount(id_user)
     status = response.status
 
     if status != 204:

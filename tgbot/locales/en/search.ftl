@@ -40,7 +40,11 @@ search-by-title-success = Найдено несколько книг по зап
 
 search-by-author-success = Найдено несколько авторов по запросу "<code>{ $author_name_request }</code>":
 
+search-by-author-success-books = Все книги автора "<code>{ $author_name }</code>":
+
 search-by-genre-success = Найдено несколько жанров по запросу "<code>{ $genre_name_request }</code>":
+
+search-by-genre-success-books = Все книги жанра "<code>{ $genre_name }</code>":
 
 search-by-author-books-success = Все книги автора "<code>{ $author_name }</code>":
 

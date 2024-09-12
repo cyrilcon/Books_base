@@ -62,7 +62,7 @@ async def add_blacklist_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.blacklist.create_blacklist(id_user)
+    response = await api.users.blacklist.create_blacklist(id_user)
     status = response.status
 
     if status != 201:

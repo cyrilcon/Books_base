@@ -15,7 +15,7 @@ from tgbot.keyboards.inline import (
 from tgbot.services import (
     ClearKeyboard,
     create_user_link,
-    get_user_language,
+    get_user_localization,
     generate_id_order,
 )
 from tgbot.states import Order
@@ -86,7 +86,7 @@ async def order_step_2(
     await state.clear()
 
     user_link = await create_user_link(full_name, username)
-    language_code = await get_user_language(config.tg_bot.super_admin)
+    language_code = await get_user_localization(config.tg_bot.super_admin)
 
     await bot.send_message(
         chat_id=config.tg_bot.order_chat,

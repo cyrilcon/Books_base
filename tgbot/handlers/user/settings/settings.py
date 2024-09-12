@@ -5,7 +5,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import set_language_keyboard
-from tgbot.services import get_user_language
+from tgbot.services import get_user_localization
 
 settings_router = Router()
 
@@ -31,7 +31,7 @@ async def settings_set_language(
 
     if user.language_code != new_language_code:
         await api.users.update_user(id_user, language_code=new_language_code)
-        l10n = await get_user_language(id_user)
+        l10n = await get_user_localization(id_user)
 
         await call.message.edit_text(
             l10n.format_value("settings-success"),

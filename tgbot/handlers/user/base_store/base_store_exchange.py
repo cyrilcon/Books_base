@@ -57,8 +57,8 @@ async def base_store_discount(call: CallbackQuery, l10n: FluentLocalization):
         return
 
     await api.users.update_user(id_user=id_user, base_balance=base_balance)
-    await api.discounts.create_discount(id_user=id_user, discount=discount)
-    
+    await api.users.discounts.create_discount(id_user=id_user, discount=discount)
+
     await call.message.edit_text(
         l10n.format_value(
             "base-store-exchange-success",

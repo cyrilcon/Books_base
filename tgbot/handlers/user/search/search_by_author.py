@@ -53,47 +53,51 @@ async def book_search_page(call: CallbackQuery, l10n: FluentLocalization):
     await call.answer()
 
 
-@search_by_author_router.callback_query(F.data.startswith("get_id_author"))
+@search_by_author_router.callback_query(F.data.startswith("get_author"))
 async def search_get_author(call: CallbackQuery, l10n: FluentLocalization):
     id_author = int(call.data.split(":")[-1])
 
     response = await api.authors.get_author_by_id(id_author)
     status = response.status
 
-    if status == 200:
-        author = response.get_model()
-        books = await api.books.get_books_by_author_id(id_author)
-
-        text = l10n.format_value(
-            "search-by-author-books",
-            {"author_name": author.author_name},
-        )
-        page = 1
-        num = ((page - 1) * 5) + 1
-
-        for book in books:
-            book = book.book
-
-            article = BookFormatter.format_article(book.id_book)
-            title = book.title
-            text += (
-                f"\n\n<b>{num}.</b> <code>{title}</code>\n" f" (<code>{article}</code>)"
-            )
-            num += 1
-        try:
-            await message.edit_text(
-                text,
-                reply_markup=book_search_pagination_keyboard(l10n, found, books, page),
-            )
-        except TelegramBadRequest:
-            await message.answer(
-                text,
-                reply_markup=book_search_pagination_keyboard(l10n, found, books, page),
-            )
-    else:
+    if status != 200:
         await call.message.answer(
             l10n.format_value("search-by-author-error-author-unavailable")
         )
+        await call.answer()
+        return
+
+    author = response.get_model()
+    response = await api.books.get_books_by_author_id(author.id_author)
+    result = response.get_model()
+    count = result.count
+    books = result.books
+
+    page = 1
+
+    text = l10n.format_value(
+        "search-by-author-success-books",
+        {"author_name": author.author_name},
+    )
+    book_number = ((page - 1) * 5) + 1
+
+    for book in books:
+        book = book.book
+        article = BookFormatter.format_article(book.id_book)
+        title = book.title
+        text += (
+            f"\n\n<b>{book_number}.</b> <code>{title}</code>\n"
+            f"(<code>{article}</code>)"
+        )
+        book_number += 1
+
+    await call.message.edit_text(
+        text,
+        reply_markup=book_search_pagination_keyboard(
+            l10n, count, books, page, search="author"
+        ),
+    )  # TODO: кнопки book_author_page
+    # TODO: Выйти из состояния
     await call.answer()
 
 
@@ -128,33 +132,32 @@ async def author_search(
 
     if found == 0:
         await message.answer(
-            l10n.format_value(
-                "search-by-author-not-found",
-                {"author_name_request": author_name_request},
-            ),
+            l10n.format_value("search-not-found", {"request": author_name_request}),
             reply_markup=search_by_title_and_genre_keyboard(l10n),
         )
         return
 
     if found == 1:
         author = authors[0].author
-        books = await api.books.get_books_by_author_id(author.id_author)
+        response = await api.books.get_books_by_author_id(author.id_author)
+        result = response.get_model()
+        books = result.books
 
         text = l10n.format_value(
-            "search-by-author-books",
+            "search-by-author-success-books",
             {"author_name": author.author_name},
         )
-        num = ((page - 1) * 5) + 1
+        book_number = ((page - 1) * 5) + 1
 
         for book in books:
             book = book.book
-
             article = BookFormatter.format_article(book.id_book)
             title = book.title
             text += (
-                f"\n\n<b>{num}.</b> <code>{title}</code>\n" f" (<code>{article}</code>)"
+                f"\n\n<b>{book_number}.</b> <code>{title}</code>\n"
+                f"(<code>{article}</code>)"
             )
-            num += 1
+            book_number += 1
         try:
             await message.edit_text(
                 text,
@@ -171,13 +174,13 @@ async def author_search(
         "search-by-author-success",
         {"author_name_request": author_name_request},
     )
-    num = ((page - 1) * 5) + 1
+    author_number = ((page - 1) * 5) + 1
 
     for author in authors:
         author = author.author
         author_name = author.author_name
-        text += f"\n\n<b>{num}.</b> <code>{author_name}</code>"
-        num += 1
+        text += f"\n\n<b>{author_number}.</b> <code>{author_name}</code>"
+        author_number += 1
     try:
         await message.edit_text(
             text,

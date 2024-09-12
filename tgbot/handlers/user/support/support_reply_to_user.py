@@ -8,7 +8,7 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tgbot.services import get_user_language, ClearKeyboard, create_user_link
+from tgbot.services import get_user_localization, ClearKeyboard, create_user_link
 from tgbot.states import Support
 
 support_reply_to_user_router = Router()
@@ -53,7 +53,7 @@ async def support_reply_to_user_process(
 
     data = await state.get_data()
     id_user_recipient = data["id_user_recipient"]
-    l10n_recipient = await get_user_language(id_user_recipient)
+    l10n_recipient = await get_user_localization(id_user_recipient)
 
     response = await api.users.get_user_by_id(id_user_recipient)
     user = response.get_model()

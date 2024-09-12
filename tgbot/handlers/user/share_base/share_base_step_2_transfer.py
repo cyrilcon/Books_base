@@ -9,7 +9,7 @@ from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import (
     ClearKeyboard,
-    get_user_language,
+    get_user_localization,
     create_user_link,
     extract_username,
 )
@@ -65,7 +65,7 @@ async def share_base_step_2(call: CallbackQuery, l10n: FluentLocalization, bot: 
         return
 
     id_user_recipient = recipient.id_user
-    l10n_recipient = await get_user_language(id_user_recipient)
+    l10n_recipient = await get_user_localization(id_user_recipient)
 
     user_link = await create_user_link(sender.full_name, sender.username)
 

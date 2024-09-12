@@ -10,7 +10,7 @@ from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline import cancel_keyboard
 from tgbot.services import (
     ClearKeyboard,
-    get_user_language,
+    get_user_localization,
     generate_book_caption,
     is_valid_book_article,
 )
@@ -85,7 +85,7 @@ async def serve_step_2(
     order = response.get_model()
 
     id_user_recipient = order.id_user
-    l10n_recipient = await get_user_language(id_user_recipient)
+    l10n_recipient = await get_user_localization(id_user_recipient)
     caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
 
     try:

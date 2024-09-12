@@ -12,7 +12,7 @@ from tgbot.services import (
     ClearKeyboard,
     generate_book_caption,
     is_valid_book_article,
-    get_user_language,
+    get_user_localization,
 )
 from tgbot.states import SendBook
 
@@ -82,7 +82,7 @@ async def send_book_step_2(
     id_user_recipient = data.get("id_user_recipient")
     user_link = data.get("user_link")
 
-    l10n_recipient = await get_user_language(id_user_recipient)
+    l10n_recipient = await get_user_localization(id_user_recipient)
     caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
 
     try:
