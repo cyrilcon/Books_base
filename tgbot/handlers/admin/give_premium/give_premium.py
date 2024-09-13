@@ -1,4 +1,5 @@
 from aiogram import Router, F, Bot
+from aiogram.exceptions import AiogramError
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -7,9 +8,13 @@ from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
 from tgbot.config import config
-from tgbot.handlers.user.booking.booking import booking
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import find_user, create_user_link, ClearKeyboard
+from tgbot.services import (
+    find_user,
+    create_user_link,
+    ClearKeyboard,
+    get_user_localization,
+)
 from tgbot.states import GivePremium
 
 give_premium_router = Router()
@@ -65,10 +70,7 @@ async def give_premium_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.users.premium.create_premium(id_user)
-    status = response.status
-
-    if status != 201:
+    if user.is_premium:
         sent_message = await message.answer(
             l10n.format_value(
                 "give-premium-error-already-given",
@@ -83,12 +85,22 @@ async def give_premium_process(
         )
         return
 
-    text = l10n.format_value(
-        "give-premium-success",
-        {"user_link": user_link, "id_user": str(id_user)},
-    )
+    l10n_recipient = await get_user_localization(id_user)
 
-    await message.answer(text)
+    try:
+        await bot.send_message(
+            chat_id=id_user,
+            text=l10n_recipient.format_value("give-premium-given"),
+            message_effect_id="5046509860389126442",
+        )
+    except AiogramError:
+        await message.answer(l10n.format_value("error-user-blocked-bot"))
+    else:
+        await api.users.premium.create_premium(id_user)
+        text = l10n.format_value(
+            "give-premium-success",
+            {"user_link": user_link, "id_user": str(id_user)},
+        )
+        await message.answer(text=text)
+        await bot.send_message(chat_id=config.tg_bot.payment_chat, text=text)
     await state.clear()
-
-    await bot.send_message(chat_id=config.tg_bot.payment_chat, text=text)

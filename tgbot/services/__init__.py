@@ -3,6 +3,7 @@ __all__ = (
     "set_default_commands",
     "Broadcaster",
     "ClearKeyboard",
+    "convert_utc_datetime",
     "create_user_link",
     "extract_username",
     "find_user",
@@ -19,6 +20,7 @@ from .book_formatter import BookFormatter
 from .bot_commands import set_default_commands
 from .broadcaster import Broadcaster
 from .clear_keyboard import ClearKeyboard
+from .convert_utc_datetime import convert_utc_datetime
 from .create_user_link import create_user_link
 from .extract_username import extract_username
 from .find_user import find_user

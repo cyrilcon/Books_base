@@ -62,10 +62,7 @@ async def add_admin_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.users.admins.create_admin(id_user)
-    status = response.status
-
-    if status != 201:
+    if user.is_admin:
         sent_message = await message.answer(
             l10n.format_value(
                 "add-admin-error-already-admin",
@@ -80,6 +77,7 @@ async def add_admin_process(
         )
         return
 
+    await api.users.admins.create_admin(id_user)
     await message.answer(
         l10n.format_value(
             "add-admin-success",

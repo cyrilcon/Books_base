@@ -62,10 +62,7 @@ async def cancel_premium_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.users.premium.delete_premium(id_user)
-    status = response.status
-
-    if status != 204:
+    if not user.is_premium:
         sent_message = await message.answer(
             l10n.format_value(
                 "cancel-premium-error-already-canceled",
@@ -80,6 +77,7 @@ async def cancel_premium_process(
         )
         return
 
+    await api.users.premium.delete_premium(id_user)
     await message.answer(
         l10n.format_value(
             "cancel-premium-success",

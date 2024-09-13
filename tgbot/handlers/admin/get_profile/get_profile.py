@@ -1,5 +1,3 @@
-from datetime import timezone
-
 from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -7,9 +5,13 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from tgbot.config import config
 from tgbot.keyboards.inline import cancel_keyboard
-from tgbot.services import find_user, create_user_link, ClearKeyboard
+from tgbot.services import (
+    find_user,
+    create_user_link,
+    ClearKeyboard,
+    convert_utc_datetime,
+)
 from tgbot.states import GetProfile
 
 get_profile_router = Router()
@@ -97,14 +99,6 @@ async def get_profile_process(
         )
     )
     await state.clear()
-
-
-def convert_utc_datetime(utc_datetime):
-    return (
-        utc_datetime.replace(tzinfo=timezone.utc)
-        .astimezone(config.misc.yekaterinburg_timezone)
-        .strftime("%Y-%m-%d %H:%M:%S")
-    )
 
 
 def get_country_flag(language_code):

@@ -62,10 +62,7 @@ async def take_discount_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.users.discounts.delete_discount(id_user)
-    status = response.status
-
-    if status != 204:
+    if not user.has_discount:
         sent_message = await message.answer(
             l10n.format_value(
                 "take-discount-error-already-taken",
@@ -80,6 +77,7 @@ async def take_discount_process(
         )
         return
 
+    await api.users.discounts.delete_discount(id_user)
     await message.answer(
         l10n.format_value(
             "take-discount-success",

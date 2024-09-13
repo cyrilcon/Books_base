@@ -60,7 +60,9 @@ async def article_position(call: CallbackQuery, l10n: FluentLocalization):
 
 
 async def get_article_info(
-    l10n: FluentLocalization, id_user: int, position: int = 1
+    l10n: FluentLocalization,
+    id_user: int,
+    position: int = 1,
 ) -> Tuple[int, Optional[str], Optional[ArticleSchema]]:
     """
     Receive article information and total number of articles.
@@ -85,23 +87,18 @@ async def get_article_info(
         if orders_count == 0:
             return orders_count, None, None
 
-        response = await api.articles.get_article_by_language_code_and_position(
-            language_code="ru",
-            position=position,
-        )
-        article = response.get_model()
+        return await get_article_info_success(position, l10n, orders_count)
 
-        text = l10n.format_value(
-            "article-template",
-            {
-                "title": article.title,
-                "added-date": article.added_datetime,
-            },
-        )
-        return orders_count, text, article
+    return await get_article_info_success(position, l10n, orders_count)
 
+
+async def get_article_info_success(
+    position: int,
+    l10n: FluentLocalization,
+    orders_count: int,
+) -> Tuple[int, Optional[str], Optional[ArticleSchema]]:
     response = await api.articles.get_article_by_language_code_and_position(
-        language_code=language_code,
+        language_code="ru",
         position=position,
     )
     article = response.get_model()

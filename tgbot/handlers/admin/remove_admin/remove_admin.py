@@ -77,10 +77,7 @@ async def remove_admin_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.users.admins.delete_admin(id_user)
-    status = response.status
-
-    if status != 204:
+    if not user.is_admin:
         sent_message = await message.answer(
             l10n.format_value(
                 "remove-admin-error-already-not-admin",
@@ -95,6 +92,7 @@ async def remove_admin_process(
         )
         return
 
+    await api.users.admins.delete_admin(id_user)
     await message.answer(
         l10n.format_value(
             "remove-admin-success",

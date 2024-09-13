@@ -66,7 +66,6 @@ async def give_base_step_2(
     user = response.get_model()
 
     base_balance = user.base_balance + base_received
-    await api.users.update_user(id_user_recipient, base_balance=base_balance)
 
     try:
         await bot.send_message(
@@ -75,12 +74,14 @@ async def give_base_step_2(
                 "give-base-received",
                 {"base_received": base_received, "base_balance": base_balance},
             ),
+            message_effect_id="5046509860389126442",
         )
     except AiogramError:
         await message.answer(
             l10n.format_value("error-user-blocked-bot"),
         )
     else:
+        await api.users.update_user(id_user_recipient, base_balance=base_balance)
         await message.answer(
             l10n.format_value(
                 "give-base-success",

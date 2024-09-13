@@ -2,6 +2,10 @@ give-premium-prompt-select-user = Введите <i><b>имя пользоват
 
 give-premium-error-already-given = Пользователь { $user_link } (<code>{ $id_user }</code>) уже имеет статус Books_base Premium ⚜️
 
+give-premium-given =
+    Вы получили статус <b>Books_base Premium</b> ⚜️
+    Читайте книги нашей библиотеки совершенно бесплатно!!
+
 give-premium-success = Пользователь { $user_link } (<code>{ $id_user }</code>) получил статус Books_base Premium ⚜️
 
 give-premium-canceled = Вы отменили присвоение статуса Books_base Premium ⚜️

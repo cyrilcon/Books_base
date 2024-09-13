@@ -51,9 +51,9 @@ async def broadcast_process(
     from_chat_id = message.chat.id
     message_id = message.message_id
 
+    await state.clear()
     success_count = await Broadcaster.broadcast(bot, users, from_chat_id, message_id)
 
-    await state.clear()
     await message.answer(
         l10n.format_value(
             "broadcast-success",

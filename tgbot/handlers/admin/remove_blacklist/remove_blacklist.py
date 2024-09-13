@@ -62,10 +62,7 @@ async def remove_blacklist_process(
     username = user.username
     user_link = await create_user_link(full_name, username)
 
-    response = await api.users.blacklist.delete_blacklist(id_user)
-    status = response.status
-
-    if status != 204:
+    if not user.is_blacklisted:
         sent_message = await message.answer(
             l10n.format_value(
                 "remove-blacklist-error-already-removed",
@@ -80,6 +77,7 @@ async def remove_blacklist_process(
         )
         return
 
+    await api.users.blacklist.delete_blacklist(id_user)
     await message.answer(
         l10n.format_value(
             "remove-blacklist-success",
