@@ -66,22 +66,7 @@ async def get_profile_process(
     registration_datetime = convert_utc_datetime(user.registration_datetime)
     last_activity_datetime = convert_utc_datetime(user.last_activity_datetime)
 
-    country_flag = get_country_flag(user.language_code)
     status_icons = get_user_status_icons(user, l10n)
-
-    discount = user.has_discount
-    if discount == 100:
-        discount_message = (
-            "\n" + l10n.format_value("get-profile-user-has-free-book") + "\n"
-        )
-    elif discount > 0:
-        discount_message = (
-            "\n"
-            + l10n.format_value("get-profile-user-has-discount", {"discount": discount})
-            + "\n"
-        )
-    else:
-        discount_message = ""
 
     await message.answer(
         l10n.format_value(
@@ -90,8 +75,8 @@ async def get_profile_process(
                 "status_icons": status_icons,
                 "user_link": user_link,
                 "id_user": str(user.id_user),
-                "country_flag": country_flag,
-                "discount": discount_message,
+                "language_code": user.language_code,
+                "discount": user.has_discount,
                 "base_balance": user.base_balance,
                 "registration_datetime": registration_datetime,
                 "last_activity_datetime": last_activity_datetime,
@@ -99,15 +84,6 @@ async def get_profile_process(
         )
     )
     await state.clear()
-
-
-def get_country_flag(language_code):
-    flags = {
-        "uk": "🇺🇦",
-        "ru": "🇷🇺",
-        "en": "🇬🇧",
-    }
-    return flags.get(language_code, "🏳️")
 
 
 def get_user_status_icons(user, l10n):
