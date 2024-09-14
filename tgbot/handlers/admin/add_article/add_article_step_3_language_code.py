@@ -45,15 +45,13 @@ async def add_article_step_3(
     response = await api.articles.create_article(link, title, language_code)
     article = response.get_model()
 
-    title = article.title
-    added_date = article.added_datetime
-
     await call.message.edit_text(
         l10n.format_value(
             "add-article-success",
             {
-                "title": title,
-                "added-date": added_date,
+                "title": article.title,
+                "link": link,
+                "added-date": article.added_datetime,
             },
         ),
         link_preview_options=LinkPreviewOptions(

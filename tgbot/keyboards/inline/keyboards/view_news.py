@@ -8,12 +8,14 @@ def view_news_keyboard(
     l10n: FluentLocalization,
     orders_count: int,
     position: int = 1,
+    language_code: str = "ru",
 ) -> InlineKeyboardMarkup:
     """
     A keyboard with pagination for viewing orders is formed.
     :param l10n: Language set by the user.
     :param orders_count: Number of all articles.
     :param position: Article position in the database.
+    :param language_code: IETF language tag of the user's language.
     :return: Keyboard with pagination for viewing articles.
     """
 
@@ -23,7 +25,7 @@ def view_news_keyboard(
         if position > 1:
             action_buttons.append(
                 InlineKeyboardButton(
-                    text=f"⬅️", callback_data=f"article_position:{position-1}"
+                    text=f"⬅️", callback_data=f"article_position:{position - 1}"
                 )
             )
 
@@ -37,14 +39,16 @@ def view_news_keyboard(
         if position < orders_count:
             action_buttons.append(
                 InlineKeyboardButton(
-                    text=f"➡️", callback_data=f"article_position:{position+1}"
+                    text=f"➡️", callback_data=f"article_position:{position + 1}"
                 )
             )
 
     view_news_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             action_buttons,
-            # news_channel_button(l10n),
+            [
+                news_channel_button(l10n, language_code=language_code),
+            ],
         ]
     )
 
