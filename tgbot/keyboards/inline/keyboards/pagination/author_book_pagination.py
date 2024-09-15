@@ -4,44 +4,46 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
 from tgbot.keyboards.inline.buttons import (
-    search_by_title_button,
+    search_by_author_button,
     search_by_genre_button,
 )
-from tgbot.schemas import AuthorSearchResult
+from tgbot.schemas import BookTitleSimilarityResult
 
 
-def author_search_pagination_keyboard(
+def author_book_pagination_keyboard(
     l10n: FluentLocalization,
     found: int,
-    authors: List[AuthorSearchResult],
+    books: List[BookTitleSimilarityResult],
+    id_author: int,
     page: int = 1,
 ) -> InlineKeyboardMarkup:
     """
-    The pagination keyboard for author search is formed.
+    The pagination keyboard for book search is formed.
     :param l10n: Language set by the user.
-    :param found: Number of authors found by search.
-    :param authors: List of authors.
+    :param found: Number of books found by search.
+    :param books: List of books.
+    :param id_author: Unique author identifier.
     :param page: Page number for pagination.
     :return: The pagination keyboard.
     """
 
     numbers_buttons = []
-    author_number = ((page - 1) * 5) + 1
+    book_number = ((page - 1) * 5) + 1
 
-    for author in authors:
-        author = author.author
-        id_author_button = InlineKeyboardButton(
-            text=f"{author_number}", callback_data=f"get_author:{author.id_author}"
+    for book in books:
+        book = book.book
+        id_book_button = InlineKeyboardButton(
+            text=f"{book_number}", callback_data=f"get_book:{book.id_book}"
         )
-        numbers_buttons.append(id_author_button)
-        author_number += 1
+        numbers_buttons.append(id_book_button)
+        book_number += 1
 
     pagination_buttons = []
 
     if page > 1:
         pagination_buttons.append(
             InlineKeyboardButton(
-                text=f"⬅️", callback_data=f"author_search_page:{page-1}"
+                text=f"⬅️", callback_data=f"author_book_page:{page-1}:{id_author}"
             )
         )
     if found > 5:
@@ -56,18 +58,18 @@ def author_search_pagination_keyboard(
         if min(page * 5, found) < found:
             pagination_buttons.append(
                 InlineKeyboardButton(
-                    text=f"➡️", callback_data=f"author_search_page:{page+1}"
+                    text=f"➡️", callback_data=f"author_book_page:{page+1}:{id_author}"
                 )
             )
 
-    author_search_pagination_markup = InlineKeyboardMarkup(
+    author_book_pagination_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             numbers_buttons,
             pagination_buttons,
             [
-                search_by_title_button(l10n),
+                search_by_author_button(l10n),
                 search_by_genre_button(l10n),
             ],
         ]
     )
-    return author_search_pagination_markup
+    return author_book_pagination_markup

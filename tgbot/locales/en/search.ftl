@@ -28,7 +28,11 @@ search-by-genre-error-genre-name-too-long =
     Слишком большое название жанра!!
     Сократите и введите <i><b>название жанра</b></i> книги ещё раз
 
-search-not-found = По запросу "<code>{ $request }</code>" ничего не найдено
+search-by-title-not-found = Книга по запросу "<code>{ $book_title_request }</code>" не найдена
+
+search-by-author-not-found = Автор по запросу "<code>{ $author_name_request }</code>" не найден
+
+search-by-genre-not-found = Жанр по запросу "<code>{ $genre_name_request }</code>" не найден
 
 search-by-title-error-book-unavailable = Запрашиваемая вами книга с артикулом <code>{ $article }</code> больше не доступна 😕
 

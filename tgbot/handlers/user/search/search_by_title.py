@@ -45,7 +45,7 @@ async def book_page(call: CallbackQuery, l10n: FluentLocalization):
 
 
 @search_by_title_router.callback_query(F.data.startswith("get_book"))
-async def search_get_book(call: CallbackQuery, l10n: FluentLocalization):
+async def get_book(call: CallbackQuery, l10n: FluentLocalization):
     id_book = int(call.data.split(":")[-1])
     article = BookFormatter.format_article(id_book)
 
@@ -90,7 +90,7 @@ async def book_search(
     if book_title_request is None:
         book_title_request = message.text
 
-    book_title_request.replace('"', "")
+    book_title_request = book_title_request.replace('"', "")
 
     if len(book_title_request) > 255:
         await message.answer(
@@ -106,7 +106,10 @@ async def book_search(
 
     if found == 0:
         await message.answer(
-            l10n.format_value("search-not-found", {"request": book_title_request}),
+            l10n.format_value(
+                "search-by-title-not-found",
+                {"book_title_request": book_title_request},
+            ),
             reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),
         )
         return
@@ -143,10 +146,20 @@ async def book_search(
     try:
         await message.edit_text(
             text,
-            reply_markup=book_pagination_keyboard(l10n, found, books, page),
+            reply_markup=book_pagination_keyboard(
+                l10n=l10n,
+                found=found,
+                books=books,
+                page=page,
+            ),
         )
     except TelegramBadRequest:
         await message.answer(
             text,
-            reply_markup=book_pagination_keyboard(l10n, found, books, page),
+            reply_markup=book_pagination_keyboard(
+                l10n=l10n,
+                found=found,
+                books=books,
+                page=page,
+            ),
         )

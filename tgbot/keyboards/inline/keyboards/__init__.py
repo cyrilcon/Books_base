@@ -13,7 +13,8 @@ __all__ = (
     "languages_keyboard",
     "languages_back_cancel_keyboard",
     "order_again_keyboard",
-    "author_search_pagination_keyboard",
+    "author_book_pagination_keyboard",
+    "author_pagination_keyboard",
     "book_pagination_keyboard",
     "post_cancel_keyboard",
     "reply_keyboard",
@@ -44,7 +45,8 @@ from .languages import languages_keyboard
 from .languages_back_cancel import languages_back_cancel_keyboard
 from .order_again import order_again_keyboard
 from .pagination import (
-    author_search_pagination_keyboard,
+    author_book_pagination_keyboard,
+    author_pagination_keyboard,
     book_pagination_keyboard,
 )
 from .post_cancel import post_cancel_keyboard
