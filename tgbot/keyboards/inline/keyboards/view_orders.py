@@ -32,7 +32,7 @@ def view_orders_keyboard(
         action_buttons.append(
             InlineKeyboardButton(
                 text=f"{l10n.format_value("page")} {position}/{orders_count}",
-                callback_data=f"order_position_info",
+                callback_data=f"pagination_info:{position}:{orders_count}",
             )
         )
 

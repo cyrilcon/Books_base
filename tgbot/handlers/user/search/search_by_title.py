@@ -8,10 +8,8 @@ from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
-from tgbot.keyboards.inline import (
-    search_by_author_and_genre_keyboard,
-    book_search_pagination_keyboard,
-)
+from tgbot.enums import SearchBy
+from tgbot.keyboards.inline import search_by_keyboard, book_pagination_keyboard
 from tgbot.services import generate_book_caption, BookFormatter
 
 search_by_title_router = Router()
@@ -26,7 +24,7 @@ async def search_by_title(
 ):
     await call.message.edit_text(
         l10n.format_value("search-by-title"),
-        reply_markup=search_by_author_and_genre_keyboard(l10n),
+        reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),
     )
     await state.clear()
     await call.answer()
@@ -37,8 +35,8 @@ async def search_by_title_process(message: Message, l10n: FluentLocalization):
     await book_search(message, l10n)
 
 
-@search_by_title_router.callback_query(F.data.startswith("book_search_page"))
-async def book_search_page(call: CallbackQuery, l10n: FluentLocalization):
+@search_by_title_router.callback_query(F.data.startswith("book_page"))
+async def book_page(call: CallbackQuery, l10n: FluentLocalization):
     page = int(call.data.split(":")[-1])
     book_title_request = re.search(r'"([^"]*)"', call.message.text).group(1)
 
@@ -97,7 +95,7 @@ async def book_search(
     if len(book_title_request) > 255:
         await message.answer(
             l10n.format_value("search-by-title-error-title-too-long"),
-            reply_markup=search_by_author_and_genre_keyboard(l10n),
+            reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),
         )
         return
 
@@ -109,7 +107,7 @@ async def book_search(
     if found == 0:
         await message.answer(
             l10n.format_value("search-not-found", {"request": book_title_request}),
-            reply_markup=search_by_author_and_genre_keyboard(l10n),
+            reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),
         )
         return
 
@@ -145,10 +143,10 @@ async def book_search(
     try:
         await message.edit_text(
             text,
-            reply_markup=book_search_pagination_keyboard(l10n, found, books, page),
+            reply_markup=book_pagination_keyboard(l10n, found, books, page),
         )
     except TelegramBadRequest:
         await message.answer(
             text,
-            reply_markup=book_search_pagination_keyboard(l10n, found, books, page),
+            reply_markup=book_pagination_keyboard(l10n, found, books, page),
         )

@@ -9,10 +9,11 @@ from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from tgbot.api.books_base_api import api
+from tgbot.enums import SearchBy
 from tgbot.keyboards.inline import (
-    search_by_title_and_genre_keyboard,
+    search_by_keyboard,
     author_search_pagination_keyboard,
-    book_search_pagination_keyboard,
+    book_pagination_keyboard,
 )
 from tgbot.services import BookFormatter
 from tgbot.states import AuthorSearch
@@ -29,7 +30,7 @@ async def search_by_author(
 ):
     await call.message.edit_text(
         l10n.format_value("search-by-author"),
-        reply_markup=search_by_title_and_genre_keyboard(l10n),
+        reply_markup=search_by_keyboard(l10n, by=SearchBy.AUTHOR),
     )
     await state.set_state(AuthorSearch.select_author)
     await call.answer()
@@ -93,9 +94,7 @@ async def search_get_author(call: CallbackQuery, l10n: FluentLocalization):
 
     await call.message.edit_text(
         text,
-        reply_markup=book_search_pagination_keyboard(
-            l10n, count, books, page, search="author"
-        ),
+        reply_markup=book_pagination_keyboard(l10n, count, books, page),
     )  # TODO: кнопки book_author_page
     # TODO: Выйти из состояния
     await call.answer()
@@ -121,7 +120,7 @@ async def author_search(
     if len(author_name_request) > 255:
         await message.answer(
             l10n.format_value("search-by-author-error-name-too-long"),
-            reply_markup=search_by_title_and_genre_keyboard(l10n),
+            reply_markup=search_by_keyboard(l10n, by=SearchBy.AUTHOR),
         )
         return
 
@@ -133,7 +132,7 @@ async def author_search(
     if found == 0:
         await message.answer(
             l10n.format_value("search-not-found", {"request": author_name_request}),
-            reply_markup=search_by_title_and_genre_keyboard(l10n),
+            reply_markup=search_by_keyboard(l10n, by=SearchBy.AUTHOR),
         )
         return
 
@@ -161,12 +160,12 @@ async def author_search(
         try:
             await message.edit_text(
                 text,
-                reply_markup=book_search_pagination_keyboard(l10n, found, books, page),
+                reply_markup=book_pagination_keyboard(l10n, found, books, page),
             )
         except TelegramBadRequest:
             await message.answer(
                 text,
-                reply_markup=book_search_pagination_keyboard(l10n, found, books, page),
+                reply_markup=book_pagination_keyboard(l10n, found, books, page),
             )
         return
 

@@ -14,18 +14,18 @@ news_router = Router()
 
 @news_router.message(Command("news"))
 async def news(message: Message, l10n: FluentLocalization):
-    orders_count, text, article, language_code = await get_article_info(
+    articles_count, text, article, language_code = await get_article_info(
         l10n, id_user=message.from_user.id
     )
 
-    if orders_count == 0:
+    if articles_count == 0:
         await message.answer(l10n.format_value("news-absent"))
     else:
         await message.answer(
             text=text,
             reply_markup=view_news_keyboard(
                 l10n=l10n,
-                orders_count=orders_count,
+                articles_count=articles_count,
                 language_code=language_code,
             ),
             link_preview_options=LinkPreviewOptions(
@@ -39,20 +39,20 @@ async def news(message: Message, l10n: FluentLocalization):
 async def article_position(call: CallbackQuery, l10n: FluentLocalization):
     page = int(call.data.split(":")[-1])
 
-    orders_count, text, article, language_code = await get_article_info(
+    articles_count, text, article, language_code = await get_article_info(
         l10n=l10n,
         id_user=call.from_user.id,
         position=page,
     )
 
-    if orders_count == 0:
+    if articles_count == 0:
         await call.message.edit_text(l10n.format_value("news-absent"))
     else:
         await call.message.edit_text(
             text=text,
             reply_markup=view_news_keyboard(
                 l10n=l10n,
-                orders_count=orders_count,
+                articles_count=articles_count,
                 position=page,
                 language_code=language_code,
             ),

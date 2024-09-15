@@ -10,7 +10,7 @@ from tgbot.keyboards.inline.buttons import (
 from tgbot.schemas import BookTitleSimilarityResult
 
 
-def book_search_pagination_keyboard(
+def book_pagination_keyboard(
     l10n: FluentLocalization,
     found: int,
     books: List[BookTitleSimilarityResult],
@@ -40,7 +40,7 @@ def book_search_pagination_keyboard(
 
     if page > 1:
         pagination_buttons.append(
-            InlineKeyboardButton(text=f"⬅️", callback_data=f"book_search_page:{page-1}")
+            InlineKeyboardButton(text=f"⬅️", callback_data=f"book_page:{page-1}")
         )
     if found > 5:
         all_pages = (found + 4) // 5
@@ -53,9 +53,7 @@ def book_search_pagination_keyboard(
 
         if min(page * 5, found) < found:
             pagination_buttons.append(
-                InlineKeyboardButton(
-                    text=f"➡️", callback_data=f"book_search_page:{page+1}"
-                )
+                InlineKeyboardButton(text=f"➡️", callback_data=f"book_page:{page+1}")
             )
 
     book_search_pagination_markup = InlineKeyboardMarkup(
