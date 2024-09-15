@@ -6,7 +6,7 @@ search =
 search-pagination-info =
     Это страница { $page } из { $all_pages }.
 
-    Используйте стрелки вправо/влево для навигации между страницами.
+    Используйте кнопки ⬅️/➡️ для навигации между страницами.
 
     Чтобы ознакомиться с конкретным контентом, нажмите на её номер.
 
@@ -28,28 +28,24 @@ search-by-genre-error-genre-name-too-long =
     Слишком большое название жанра!!
     Сократите и введите <i><b>название жанра</b></i> книги ещё раз
 
-search-by-title-not-found = Книга по запросу "<code>{ $book_title_request }</code>" не найдена
+search-by-title-error-not-found = Книга по запросу "<code>{ $book_title_request }</code>" не найдена
 
-search-by-author-not-found = Автор по запросу "<code>{ $author_name_request }</code>" не найден
+search-by-author-error-not-found = Автор по запросу "<code>{ $author_name_request }</code>" не найден
 
-search-by-genre-not-found = Жанр по запросу "<code>{ $genre_name_request }</code>" не найден
+search-by-genre-error-not-found = Жанр по запросу "<code>{ $genre_name_request }</code>" не найден
 
 search-by-title-error-book-unavailable = Запрашиваемая вами книга с артикулом <code>{ $article }</code> больше не доступна 😕
 
-search-by-author-error-book-unavailable = Запрашиваемый вами автор больше не доступен 😕
+search-by-author-error-author-unavailable = Запрашиваемый вами автор больше не доступен 😕
 
-search-by-genre-error-book-unavailable = Запрашиваемый вами жанр больше не доступен 😕
+search-by-genre-error-genre-unavailable = Запрашиваемый вами жанр больше не доступен 😕
 
 search-by-title-success = Найдено несколько книг по запросу "<code>{ $book_title_request }</code>":
 
 search-by-author-success = Найдено несколько авторов по запросу "<code>{ $author_name_request }</code>":
 
-search-by-author-success-books = Все книги автора "<code>{ $author_name }</code>":
-
 search-by-genre-success = Найдено несколько жанров по запросу "<code>{ $genre_name_request }</code>":
 
-search-by-genre-success-books = Все книги жанра "<code>{ $genre_name }</code>":
+search-by-author-all-books = Все книги автора "<code>{ $author_name }</code>":
 
-search-by-author-books-success = Все книги автора "<code>{ $author_name }</code>":
-
-search-by-genre-books-success = Все книги жанра "<code>{ $author_name }</code>":
+search-by-genre-all-books = Все книги жанра "<code>{ $genre_name }</code>":

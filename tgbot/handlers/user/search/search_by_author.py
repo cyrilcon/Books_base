@@ -16,7 +16,7 @@ from tgbot.keyboards.inline import (
     author_book_pagination_keyboard,
 )
 from tgbot.services import BookFormatter
-from tgbot.states import AuthorSearch
+from tgbot.states import Search
 
 search_by_author_router = Router()
 search_by_author_router.message.middleware(ChatActionMiddleware())
@@ -32,25 +32,29 @@ async def search_by_author(
         l10n.format_value("search-by-author"),
         reply_markup=search_by_keyboard(l10n, by=SearchBy.AUTHOR),
     )
-    await state.set_state(AuthorSearch.select_author)
+    await state.set_state(Search.by_author)
     await call.answer()
 
 
 @search_by_author_router.message(
-    StateFilter(AuthorSearch.select_author),
+    StateFilter(Search.by_author),
     F.text,
     flags={"chat_action": "typing"},
 )
-async def search_by_author_process(message: Message, l10n: FluentLocalization):
-    await author_search(message, l10n)
+async def search_by_author_process(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+):
+    await author_search(message, l10n, state)
 
 
 @search_by_author_router.callback_query(F.data.startswith("author_page"))
-async def author_page(call: CallbackQuery, l10n: FluentLocalization):
+async def author_page(call: CallbackQuery, l10n: FluentLocalization, state: FSMContext):
     page = int(call.data.split(":")[-1])
     author_name_request = re.search(r'"([^"]*)"', call.message.text).group(1)
 
-    await author_search(call.message, l10n, page, author_name_request)
+    await author_search(call.message, l10n, state, page, author_name_request)
     await call.answer()
 
 
@@ -80,7 +84,7 @@ async def get_author(
     books = result.books
 
     text = l10n.format_value(
-        "search-by-author-success-books",
+        "search-by-author-all-books",
         {"author_name": author.author_name},
     )
     book_number = 1
@@ -96,7 +100,7 @@ async def get_author(
         book_number += 1
 
     await call.message.edit_text(
-        text,
+        text=text,
         reply_markup=author_book_pagination_keyboard(
             l10n=l10n,
             found=count,
@@ -121,8 +125,8 @@ async def author_book_page(call: CallbackQuery, l10n: FluentLocalization):
     author_name_request = re.search(r'"([^"]*)"', call.message.text).group(1)
 
     text = l10n.format_value(
-        "search-by-author-books-success",
-        {"author_name_request": author_name_request},
+        "search-by-author-all-books",
+        {"author_name": author_name_request},
     )
     book_number = ((page - 1) * 5) + 1
 
@@ -135,12 +139,12 @@ async def author_book_page(call: CallbackQuery, l10n: FluentLocalization):
 
         text += (
             f"\n\n<b>{book_number}.</b> <code>{title}</code>\n"
-            f"<i>{authors}</i> (<code>{article}</code>)"
+            f"(<code>{article}</code>)"
         )
         book_number += 1
 
     await call.message.edit_text(
-        text,
+        text=text,
         reply_markup=author_book_pagination_keyboard(
             l10n=l10n,
             found=found,
@@ -155,6 +159,7 @@ async def author_book_page(call: CallbackQuery, l10n: FluentLocalization):
 async def author_search(
     message: Message,
     l10n: FluentLocalization,
+    state: FSMContext,
     page: int = 1,
     author_name_request: str = None,
 ):
@@ -162,6 +167,7 @@ async def author_search(
     A common function for handling author searches and forward/backward button presses.
     :param message: Message or callback object.
     :param l10n: Language set by the user.
+    :param state: Search state.
     :param page: Page number for pagination.
     :param author_name_request: Name of the author to search for.
     """
@@ -173,7 +179,7 @@ async def author_search(
 
     if len(author_name_request) > 255:
         await message.answer(
-            l10n.format_value("search-by-author-error-name-too-long"),
+            l10n.format_value("search-by-author-error-author-name-too-long"),
             reply_markup=search_by_keyboard(l10n, by=SearchBy.AUTHOR),
         )
         return
@@ -186,7 +192,7 @@ async def author_search(
     if found == 0:
         await message.answer(
             l10n.format_value(
-                "search-by-author-not-found",
+                "search-by-author-error-not-found",
                 {"author_name_request": author_name_request},
             ),
             reply_markup=search_by_keyboard(l10n, by=SearchBy.AUTHOR),
@@ -199,10 +205,11 @@ async def author_search(
 
         response = await api.books.get_books_by_author_id(id_author)
         result = response.get_model()
+        count = result.count
         books = result.books
 
         text = l10n.format_value(
-            "search-by-author-success-books",
+            "search-by-author-all-books",
             {"author_name": author.author_name},
         )
         book_number = ((page - 1) * 5) + 1
@@ -218,10 +225,10 @@ async def author_search(
             book_number += 1
         try:
             await message.edit_text(
-                text,
+                text=text,
                 reply_markup=author_book_pagination_keyboard(
                     l10n=l10n,
-                    found=found,
+                    found=count,
                     books=books,
                     id_author=id_author,
                     page=page,
@@ -229,15 +236,16 @@ async def author_search(
             )
         except TelegramBadRequest:
             await message.answer(
-                text,
+                text=text,
                 reply_markup=author_book_pagination_keyboard(
                     l10n=l10n,
-                    found=found,
+                    found=count,
                     books=books,
                     id_author=id_author,
                     page=page,
                 ),
             )
+        await state.clear()
         return
 
     text = l10n.format_value(
@@ -253,7 +261,7 @@ async def author_search(
         author_number += 1
     try:
         await message.edit_text(
-            text,
+            text=text,
             reply_markup=author_pagination_keyboard(
                 l10n=l10n,
                 found=found,
@@ -263,7 +271,7 @@ async def author_search(
         )
     except TelegramBadRequest:
         await message.answer(
-            text,
+            text=text,
             reply_markup=author_pagination_keyboard(
                 l10n=l10n,
                 found=found,

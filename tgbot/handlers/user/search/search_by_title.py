@@ -107,7 +107,7 @@ async def book_search(
     if found == 0:
         await message.answer(
             l10n.format_value(
-                "search-by-title-not-found",
+                "search-by-title-error-not-found",
                 {"book_title_request": book_title_request},
             ),
             reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),

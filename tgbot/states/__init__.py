@@ -3,7 +3,6 @@ __all__ = (
     "AddArticle",
     "AddBlacklist",
     "AddBook",
-    "AuthorSearch",
     "Broadcast",
     "CancelOrder",
     "CancelPremium",
@@ -17,6 +16,7 @@ __all__ = (
     "Order",
     "RemoveAdmin",
     "RemoveBlacklist",
+    "Search",
     "SendBook",
     "SendMessage",
     "ServeOrder",
@@ -30,7 +30,6 @@ from .add_admin import AddAdmin
 from .add_article import AddArticle
 from .add_blacklist import AddBlacklist
 from .add_book import AddBook
-from .author_search import AuthorSearch
 from .broadcast import Broadcast
 from .cancel_order import CancelOrder
 from .cancel_premium import CancelPremium
@@ -44,6 +43,7 @@ from .give_premium import GivePremium
 from .order import Order
 from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
+from .search import Search
 from .send_book import SendBook
 from .send_message import SendMessage
 from .serve_order import ServeOrder
