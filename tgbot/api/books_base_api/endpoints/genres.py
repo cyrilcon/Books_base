@@ -30,18 +30,16 @@ class GenresApi:
         )
         return ApiResponse(status, result, model=GenreSchema)
 
-    async def get_genre_by_id(self, id_genre: int) -> ApiResponse[GenreSchema]:
+    async def get_genres_count(self) -> ApiResponse[int]:
         """
-        Get a genre by ID.
-
-        :param id_genre: Unique genre identifier.
+        Get the total number of genres.
         """
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/{id_genre}",
+            url=f"{self.endpoint}/count",
         )
-        return ApiResponse(status, result, model=GenreSchema)
+        return ApiResponse(status, result)
 
     async def search_genres(
         self,
