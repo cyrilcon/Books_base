@@ -4,6 +4,7 @@ from aiogram.types import Message, LabeledPrice
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
+from config import config
 from tgbot.api.books_base_api import api
 from tgbot.keyboards.inline.keyboards import pay_premium_keyboard
 from tgbot.services import Payment
@@ -24,9 +25,13 @@ async def premium(message: Message, l10n: FluentLocalization):
         )
         return
 
-    rub_price = 385
-    stars_price = 200
-    payment = Payment(amount=rub_price, comment="Books_base Premium")
+    price_rub = config.price.premium.rub
+    price_stars = config.price.premium.stars
+
+    payment = Payment(
+        amount=price_rub,
+        comment="Books_base Premium",
+    )
     payment.create()
     url_payment = payment.invoice
     id_payment = payment.id
@@ -34,16 +39,16 @@ async def premium(message: Message, l10n: FluentLocalization):
     await message.answer_invoice(
         title="Books_base Premium ⚜️",
         description=l10n.format_value(
-            "premium", {"rub_price": rub_price, "stars_price": stars_price}
+            "premium", {"price_rub": price_rub, "price_stars": price_stars}
         ),
-        prices=[LabeledPrice(label="XTR", amount=200)],
+        prices=[LabeledPrice(label="XTR", amount=price_stars)],
         provider_token="",
         payload="premium",
         currency="XTR",
         reply_markup=pay_premium_keyboard(
             l10n=l10n,
             url_payment=url_payment,
-            price=rub_price,
+            price=price_rub,
             id_payment=id_payment,
         ),
     )

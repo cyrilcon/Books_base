@@ -1,12 +1,10 @@
 from aiogram import Router, F, Bot
-from aiogram.filters import Command
-from aiogram.types import Message, LabeledPrice, CallbackQuery
-from aiogram.utils.chat_action import ChatActionMiddleware
+from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
+from keyboards.inline import channel_keyboard
 from tgbot.api.books_base_api import api
 from tgbot.config import config
-from tgbot.keyboards.inline.keyboards import pay_premium_keyboard
 from tgbot.services import Payment, create_user_link
 
 premium_paid_router = Router()
@@ -29,8 +27,8 @@ async def premium_paid(
         return
 
     await call.message.edit_reply_markup()
-    id_user = call.from_user.id
 
+    id_user = call.from_user.id
     response = await api.users.get_user_by_id(id_user)
     user = response.get_model()
 
@@ -38,23 +36,28 @@ async def premium_paid(
         await api.users.discounts.delete_discount(id_user)
 
     await api.users.premium.create_premium(id_user)
+    # TODO: add payment to db
 
     await call.message.answer(
-        l10n.format_value("premium-paid-success"),
+        l10n.format_value(
+            "premium-paid-success",
+            {"channel_link": config.channel.link},
+        ),
         message_effect_id="5046509860389126442",
+        reply_markup=channel_keyboard(l10n),
     )
 
     user_link = await create_user_link(user.full_name, user.username)
 
     await bot.send_message(
-        chat_id=config.tg_bot.payment_chat,
+        chat_id=config.chat.payment,
         text=l10n.format_value(
             "premium-paid-message-for-admin",
             {
                 "user_link": user_link,
-                "id_user": id_user,
+                "id_user": int(id_user),
                 "price": price,
-                "currency": ...,
+                "currency": "₽",
                 "id_payment": id_payment,
             },
         ),

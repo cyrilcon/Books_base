@@ -40,7 +40,7 @@ class Payment:
             sum=self.amount,
             label=f"{self.id}",
             comment=self.comment,
-            successURL="https://t.me/Books_base_bot",  # TODO: вынести в .env
+            successURL=config.channel.link,
         )
         link = quick_pay.base_url
 

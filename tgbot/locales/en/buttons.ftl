@@ -82,3 +82,5 @@ button-buy = Купить
 button-pay = 💳 Оплатить
 
 button-paid = 🧾 Уже оплатил
+
+button-all-books = 📚 Все книги

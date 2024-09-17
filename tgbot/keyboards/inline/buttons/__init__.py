@@ -1,6 +1,7 @@
 __all__ = (
     "back_button",
     "cancel_button",
+    "channel_button",
     "clear_button",
     "create_price_50_button",
     "create_price_85_button",
@@ -50,6 +51,7 @@ __all__ = (
 
 from .back import back_button
 from .cancel import cancel_button
+from .channel import channel_button
 from .clear import clear_button
 from .create_price import (
     create_price_50_button,

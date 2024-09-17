@@ -32,6 +32,7 @@ class Chat(BaseModel):
 
 class Channel(BaseModel):
     books_base: str
+    link: str
     news_en: str
     news_uk: str
     news_ru: str
