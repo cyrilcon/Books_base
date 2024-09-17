@@ -137,7 +137,23 @@ class Miscellaneous:
         # A string used to hold other various parameters as required (default is None).
     """
 
+    yoomoney_wallet_token: str
+    yoomoney_wallet_number: str
     yekaterinburg_timezone: timezone = timezone(timedelta(hours=5))
+
+    @staticmethod
+    def from_env(env: Env):
+        """
+        Creates the Miscellaneous object from environment variables.
+        """
+
+        yoomoney_wallet_token = env.str("YOOMONEY_WALLET_TOKEN")
+        yoomoney_wallet_number = env.str("YOOMONEY_WALLET_NUMBER")
+
+        return Miscellaneous(
+            yoomoney_wallet_token=yoomoney_wallet_token,
+            yoomoney_wallet_number=yoomoney_wallet_number,
+        )
 
 
 @dataclass
@@ -182,7 +198,7 @@ def load_config(path: str = ".env") -> Config:
         tg_bot=TgBot.from_env(env),
         redis=RedisConfig.from_env(env),
         api=Api.from_env(env),
-        misc=Miscellaneous(),
+        misc=Miscellaneous.from_env(env),
     )
 
 

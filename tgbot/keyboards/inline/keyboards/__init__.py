@@ -19,6 +19,7 @@ __all__ = (
     "genre_book_pagination_keyboard",
     "genre_pagination_keyboard",
     "genres_pagination_keyboard",
+    "pay_premium_keyboard",
     "post_cancel_keyboard",
     "reply_keyboard",
     "search_by_keyboard",
@@ -55,6 +56,7 @@ from .pagination import (
     genre_pagination_keyboard,
     genres_pagination_keyboard,
 )
+from .pay_premium import pay_premium_keyboard
 from .post_cancel import post_cancel_keyboard
 from .reply import reply_keyboard
 from .search_by import search_by_keyboard

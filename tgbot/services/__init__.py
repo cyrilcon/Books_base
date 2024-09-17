@@ -14,6 +14,7 @@ __all__ = (
     "is_valid_book_article",
     "parse_and_format_files",
     "parse_and_format_genres",
+    "Payment",
 )
 
 from .book_formatter import BookFormatter
@@ -31,3 +32,4 @@ from .get_user_localization import get_user_localization
 from .is_valid_book_article import is_valid_book_article
 from .parse_and_format_files import parse_and_format_files
 from .parse_and_format_genres import parse_and_format_genres
+from .payment import Payment

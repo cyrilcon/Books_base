@@ -48,7 +48,7 @@ button-order-again = 🔄 Заказать ещё
 
 button-reply = 💬 Ответить
 
-button-exchange-base = 💎 Обменять
+button-exchange-base = 💎 Обменять 💎
 
 button-discount-15 = Скидка 15%
 
@@ -73,3 +73,9 @@ button-search-by-author = 👨🏻‍🎨 Поиск по автору
 button-search-by-genre = 🎭 Поиск по жанру
 
 button-news-channel = 📰 Канал с новостями
+
+button-buy = Купить
+
+button-pay = 💳 Оплатить
+
+button-paid = 🧾 Уже оплатил
