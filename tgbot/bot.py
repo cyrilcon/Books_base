@@ -13,7 +13,6 @@ from tgbot.api.books_base_api import api
 from tgbot.config import config
 from tgbot.handlers import routers_list
 from tgbot.middlewares import (
-    ConfigMiddleware,
     DatabaseMiddleware,
     LocalizationMiddleware,
     StorageMiddleware,
@@ -57,7 +56,6 @@ def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
     """
 
     middleware_types = [
-        ConfigMiddleware(config),
         DatabaseMiddleware(),
         LocalizationMiddleware(),
         StorageMiddleware(storage),
@@ -77,7 +75,7 @@ def setup_logging():
     bl.basic_colorized_config(level=log_level)
 
     logging.basicConfig(
-        level=config.tg_bot.logging_level,
+        level=config.logging_level,
         format="%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s",
     )
     logger = logging.getLogger(__name__)
@@ -92,7 +90,7 @@ def get_storage():
         Storage: The storage object based on the configuration.
     """
 
-    if config.tg_bot.use_redis:
+    if config.use_redis:
         return RedisStorage.from_url(
             config.redis.dsn(),
             key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True),

@@ -102,5 +102,5 @@ async def give_premium_process(
             {"user_link": user_link, "id_user": str(id_user)},
         )
         await message.answer(text=text)
-        await bot.send_message(chat_id=config.tg_bot.payment_chat, text=text)
+        await bot.send_message(chat_id=config.chat.payment, text=text)
     await state.clear()

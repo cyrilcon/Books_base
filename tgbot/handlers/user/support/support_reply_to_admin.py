@@ -51,12 +51,12 @@ async def support_process(
     user_link = await create_user_link(full_name, username)
 
     sent_message = await bot.forward_message(
-        chat_id=config.tg_bot.support_chat,
+        chat_id=config.chat.support,
         from_chat_id=message.chat.id,
         message_id=message.message_id,
     )
     await bot.send_message(
-        chat_id=config.tg_bot.support_chat,
+        chat_id=config.chat.support,
         text=l10n.format_value(
             "support-message-from-user",
             {

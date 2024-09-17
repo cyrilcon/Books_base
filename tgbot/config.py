@@ -1,205 +1,83 @@
-from dataclasses import dataclass
-from datetime import timezone, timedelta
-from typing import Optional
-
-from environs import Env
+from pydantic import BaseModel
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-@dataclass
-class TgBot:
-    """
-    Creates the TgBot object from environment variables.
-    """
-
+class TgBot(BaseModel):
     token: str
-    use_redis: bool
-    logging_level: str
-    tg_channel: int
-    support_chat: int
-    order_chat: int
-    payment_chat: int
     super_admin: int
 
-    @staticmethod
-    def from_env(env: Env):
-        """
-        Creates the TgBot object from environment variables.
-        """
 
-        token = env.str("BOT_TOKEN")
-        use_redis = env.bool("USE_REDIS")
-        logging_level = env.str("LOGGING_LEVEL")
-        tg_channel = env.int("TG_CHANNEL")
-        support_chat = env.int("SUPPORT_CHAT")
-        order_chat = env.int("ORDER_CHAT")
-        payment_chat = env.int("PAYMENT_CHAT")
-        super_admin = env.int("SUPER_ADMIN")
-        return TgBot(
-            token=token,
-            use_redis=use_redis,
-            logging_level=logging_level,
-            tg_channel=tg_channel,
-            support_chat=support_chat,
-            order_chat=order_chat,
-            payment_chat=payment_chat,
-            super_admin=super_admin,
-        )
-
-
-@dataclass
-class RedisConfig:
-    """
-    Redis configuration class.
-
-    Attributes
-    ----------
-    redis_pass : Optional(str)
-        The password used to authenticate with Redis.
-    redis_port : Optional(int)
-        The port where Redis server is listening.
-    redis_host : Optional(str)
-        The host where Redis server is located.
-    """
-
-    redis_pass: Optional[str]
-    redis_port: Optional[int]
-    redis_host: Optional[str]
+class Redis(BaseModel):
+    host: str = "localhost"
+    port: int = 6379
+    password: str
 
     def dsn(self) -> str:
-        """
-        Constructs and returns a Redis DSN (Data Source Name) for this database configuration.
-        """
-
-        if self.redis_pass:
-            return f"redis://:{self.redis_pass}@{self.redis_host}:{self.redis_port}/0"
+        if self.password:
+            return f"redis://:{self.password}@{self.host}:{self.port}/0"
         else:
-            return f"redis://{self.redis_host}:{self.redis_port}/0"
-
-    @staticmethod
-    def from_env(env: Env):
-        """
-        Creates the RedisConfig object from environment variables.
-        """
-
-        redis_pass = env.str("REDIS_PASSWORD")
-        redis_port = env.int("REDIS_PORT")
-        redis_host = env.str("REDIS_HOST")
-
-        return RedisConfig(
-            redis_pass=redis_pass, redis_port=redis_port, redis_host=redis_host
-        )
+            return f"redis://{self.host}:{self.port}/0"
 
 
-@dataclass
-class Api:
-    """
-    API configuration class.
-
-    This class holds the configuration for the external API used by the application.
-
-    Attributes
-    ----------
-    url : str
-        The base URL of the external API.
-    prefix : str
-        ...
-    """
-
-    url: str
+class Api(BaseModel):
+    url: str = "http://127.0.0.1:8000"
     prefix: str = "/api/v1"
 
-    @staticmethod
-    def from_env(env: Env):
-        """
-        Creates the Api object from environment variables.
-        """
 
-        url = env.str("API_URL")
-        prefix = env.str("API_PREFIX")
-
-        return Api(
-            url=url,
-            prefix=prefix,
-        )
+class Chat(BaseModel):
+    order: str
+    payment: str
+    support: str
 
 
-@dataclass
-class Miscellaneous:
-    """
-    Miscellaneous configuration class.
-
-    This class holds settings for various other parameters.
-    It merely serves as a placeholder for settings that are not part of other categories.
-
-    Attributes
-    ----------
-    yekaterinburg_timezone : timezone
-        # A string used to hold other various parameters as required (default is None).
-    """
-
-    yoomoney_wallet_token: str
-    yoomoney_wallet_number: str
-    yekaterinburg_timezone: timezone = timezone(timedelta(hours=5))
-
-    @staticmethod
-    def from_env(env: Env):
-        """
-        Creates the Miscellaneous object from environment variables.
-        """
-
-        yoomoney_wallet_token = env.str("YOOMONEY_WALLET_TOKEN")
-        yoomoney_wallet_number = env.str("YOOMONEY_WALLET_NUMBER")
-
-        return Miscellaneous(
-            yoomoney_wallet_token=yoomoney_wallet_token,
-            yoomoney_wallet_number=yoomoney_wallet_number,
-        )
+class Channel(BaseModel):
+    books_base: str
+    news_en: str
+    news_uk: str
+    news_ru: str
+    news_ro: str
 
 
-@dataclass
-class Config:
-    """
-    The main configuration class that integrates all the other configuration classes.
-
-    This class holds the other configuration classes, providing a centralized point of access for all settings.
-
-    Attributes
-    ----------
-    tg_bot : TgBot
-        Holds the settings related to the Telegram Bot.
-    api : Api
-        Holds the settings specific to the external API.
-    misc : Miscellaneous
-        Holds the values for miscellaneous settings.
-    redis : Optional[RedisConfig]
-        Holds the settings specific to Redis (default is None).
-    """
-
-    tg_bot: TgBot
-    api: Api
-    misc: Miscellaneous
-    redis: Optional[RedisConfig] = None
+class YoomoneyWallet(BaseModel):
+    token: str
+    number: str
 
 
-def load_config(path: str = ".env") -> Config:
-    """
-    This function takes an optional file path as input and returns a Config object.
-    :param path: The path of env file from where to load the configuration variables.
-    It reads environment variables from a .env file if provided, else from the process environment.
-    :return: Config object with attributes set as per environment variables.
-    """
+class Premium(BaseModel):
+    rub: int
+    stars: int
 
-    # Create an Env object.
-    # The Env object will be used to read environment variables.
-    env = Env()
-    env.read_env(path)
 
-    return Config(
-        tg_bot=TgBot.from_env(env),
-        redis=RedisConfig.from_env(env),
-        api=Api.from_env(env),
-        misc=Miscellaneous.from_env(env),
+class Discount(BaseModel):
+    discount_15: int
+    discount_30: int
+    discount_50: int
+    discount_100: int
+
+
+class Price(BaseModel):
+    premium: Premium
+    discount: Discount
+
+
+class Config(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=(".env.template", ".env"),
+        case_sensitive=False,
+        env_nested_delimiter="__",
+        env_prefix="TG_BOT__",
     )
 
+    logging_level: str = "ERROR"
+    use_redis: bool = True
 
-config = load_config(".env")
+    tg_bot: TgBot
+    redis: Redis
+    api: Api = Api()
+    chat: Chat
+    channel: Channel
+    yoomoney_wallet: YoomoneyWallet
+    price: Price
+
+
+config = Config()

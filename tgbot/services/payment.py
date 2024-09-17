@@ -22,7 +22,7 @@ class Payment:
     def check_payment(self):
         """Search for a transaction"""
 
-        client = Client(config.misc.yoomoney_wallet_token)
+        client = Client(config.yoomoney_wallet.token)
         history = client.operation_history(label=self.id)
         for operation in history.operations:
             if str(self.id) == operation.label:
@@ -33,7 +33,7 @@ class Payment:
         """Creates a product and a payment link"""
 
         quick_pay = Quickpay(
-            receiver=config.misc.yoomoney_wallet_number,
+            receiver=config.yoomoney_wallet.number,
             quickpay_form="shop",
             targets=f"Books_base",
             paymentType="SB",
