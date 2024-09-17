@@ -1,4 +1,4 @@
-command-my-account = 🙋🏼 Your Books_base account
+command-my-account = 🙋🏼 Your { -books-base } account
 
 command-premium = ⚜️ Get Premium
 
@@ -12,7 +12,7 @@ command-base-store = 💎 Shop for discounts
 
 command-share-base = 🤝🏻 Share base with a friend
 
-command-news = 📰 Latest Books_base news
+command-news = 📰 Latest { -books-base } news
 
 command-support = ⚠️ Tech-support
 
