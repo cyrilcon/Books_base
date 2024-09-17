@@ -7,12 +7,12 @@ __all__ = (
     "not_from_user_button",
     "not_post_button",
     "deep_link_buy_button",
+    "cancel_discount_button",
     "discount_100_button",
     "discount_15_button",
     "discount_30_button",
     "discount_50_button",
     "done_button",
-    "exchange_base_button",
     "news_channel_button",
     "article_button",
     "authors_button",
@@ -59,6 +59,7 @@ from .create_price import (
 )
 from .deep_link_buy import deep_link_buy_button
 from .discounts import (
+    cancel_discount_button,
     discount_100_button,
     discount_15_button,
     discount_30_button,
@@ -77,7 +78,6 @@ from .edit_book import (
     update_price_50_button,
     update_price_85_button,
 )
-from .exchange_base import exchange_base_button
 from .languages import language_en_button, language_ru_button, language_uk_button
 from .news_channel import news_channel_button
 from .order import order_button

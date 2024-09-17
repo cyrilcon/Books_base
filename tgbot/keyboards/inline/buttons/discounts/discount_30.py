@@ -1,6 +1,8 @@
 from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
+from config import config
+
 
 def discount_30_button(l10n: FluentLocalization) -> InlineKeyboardButton:
     """
@@ -11,6 +13,6 @@ def discount_30_button(l10n: FluentLocalization) -> InlineKeyboardButton:
 
     discount_30 = InlineKeyboardButton(
         text=l10n.format_value("button-discount-30"),
-        callback_data="discount:30:35",
+        callback_data=f"discount:30:{config.price.discount.discount_30}",
     )
     return discount_30

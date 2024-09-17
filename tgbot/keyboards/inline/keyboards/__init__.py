@@ -2,6 +2,7 @@ __all__ = (
     "back_cancel_keyboard",
     "back_yes_cancel_keyboard",
     "cancel_keyboard",
+    "cancel_discount_keyboard",
     "create_price_keyboard",
     "deep_link_buy_keyboard",
     "discounts_keyboard",
@@ -9,7 +10,6 @@ __all__ = (
     "done_clear_back_cancel_keyboard",
     "done_clear_cancel_keyboard",
     "edit_book_keyboard",
-    "exchange_base_keyboard",
     "languages_keyboard",
     "languages_back_cancel_keyboard",
     "order_again_keyboard",
@@ -37,6 +37,7 @@ __all__ = (
 from .back_cancel import back_cancel_keyboard
 from .back_yes_cancel import back_yes_cancel_keyboard
 from .cancel import cancel_keyboard
+from .cancel_discount import cancel_discount_keyboard
 from .create_price import create_price_keyboard
 from .deep_link_buy import deep_link_buy_keyboard
 from .discounts import discounts_keyboard
@@ -44,7 +45,6 @@ from .discounts_back_cancel import discounts_back_cancel_keyboard
 from .done_clear_back_cancel import done_clear_back_cancel_keyboard
 from .done_clear_cancel import done_clear_cancel_keyboard
 from .edit_book import edit_book_keyboard
-from .exchange_base import exchange_base_keyboard
 from .languages import languages_keyboard
 from .languages_back_cancel import languages_back_cancel_keyboard
 from .order_again import order_again_keyboard

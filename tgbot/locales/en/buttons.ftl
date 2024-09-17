@@ -48,8 +48,6 @@ button-order-again = 🔄 Заказать ещё
 
 button-reply = 💬 Ответить
 
-button-exchange-base = 💎 Обменять 💎
-
 button-discount-15 = Скидка 15%
 
 button-discount-30 = Скидка 30%
@@ -57,6 +55,11 @@ button-discount-30 = Скидка 30%
 button-discount-50 = Скидка 50%
 
 button-discount-100 = 🎁 Бесплатная книга
+
+button-cancel-discount = 🚫 Отменить { $discount ->
+        [100] купон
+       *[other] скидку { $discount }%
+    }
 
 button-share-our-store = 📤 Поделиться нашим магазином
 
