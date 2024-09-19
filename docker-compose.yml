@@ -14,7 +14,7 @@ services:
       bash -c "alembic upgrade head && python3 -m bot"
     restart: always
     env_file:
-      - ".env"
+      - "tg_bot/.env"
 #    network_mode: host  # Используется host mode для доступа к хосту
     depends_on:
       - redis_cache  # Гарантирует, что redis_cache запущен перед тем, как стартует контейнер bot.
@@ -35,7 +35,7 @@ services:
     volumes:
       - books_base_pgdata_volume:/var/lib/postgresql/data
     env_file:
-      - '.env'
+      - 'tg_bot/.env'
 #    network_mode: host  # Используется host mode для доступа к хосту
     networks:
       - books_base
@@ -46,7 +46,7 @@ services:
     restart: always
     command: redis-server --port ${REDIS_PORT} --loglevel warning --requirepass ${REDIS_PASSWORD}
     env_file:
-      - ".env"
+      - "tg_bot/.env"
 #    network_mode: host  # Используется host mode для доступа к хосту
     volumes:
       - books_base_redis_volume:/data
