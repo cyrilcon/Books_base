@@ -20,7 +20,7 @@ class DiscountBase(BaseModel):
     """
 
     id_user: int = Field(..., description="Unique user identifier")
-    discount: DiscountEnum = Field(..., description="Discount value")
+    discount_value: DiscountEnum = Field(..., description="Discount value")
 
 
 class DiscountCreate(DiscountBase):

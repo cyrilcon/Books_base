@@ -1,6 +1,6 @@
 from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class AuthorBase(BaseModel):
@@ -16,7 +16,13 @@ class AuthorCreate(AuthorBase):
     Schema for creating a new author.
     """
 
-    pass
+    @model_validator(mode="before")
+    def check_double_quote_in_author_name(cls, values):
+        if '"' in values.get("author_name"):
+            raise ValueError(
+                'The author name must not contain the double quote (") character!!'
+            )
+        return values
 
 
 class AuthorUpdate(AuthorBase):
@@ -27,6 +33,14 @@ class AuthorUpdate(AuthorBase):
     author_name: str | None = Field(
         None, max_length=255, description="Name of the author"
     )
+
+    @model_validator(mode="before")
+    def check_double_quote_in_author_name(cls, values):
+        if "author_name" in values and '"' in values.get("author_name"):
+            raise ValueError(
+                'The author name must not contain the double quote (") character!!'
+            )
+        return values
 
 
 class AuthorSchema(BaseModel):

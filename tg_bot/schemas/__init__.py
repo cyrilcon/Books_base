@@ -29,6 +29,9 @@ __all__ = (
     "GenreSearchResponse",
     "OrderCreate",
     "OrderSchema",
+    "PaymentCurrencyEnum",
+    "PaymentCreate",
+    "PaymentSchema",
     "PremiumCreate",
     "UserCreate",
     "UserUpdate",
@@ -67,6 +70,7 @@ from .genre import (
     GenreSearchResponse,
 )
 from .order import OrderCreate, OrderSchema
+from .payment import PaymentCurrencyEnum, PaymentCreate, PaymentSchema
 from .premium import PremiumCreate
 from .user import UserCreate, UserUpdate, UserSchema
 from .user_id import UserId

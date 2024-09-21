@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class ArticleBase(BaseModel):
@@ -8,7 +8,9 @@ class ArticleBase(BaseModel):
     Base article model with common attributes.
     """
 
-    link: str = Field(..., max_length=255, description="Link to the Telegraph article")
+    link: HttpUrl = Field(
+        ..., max_length=255, description="Link to the Telegraph article"
+    )
     title: str = Field(..., max_length=255, description="Title of the article")
     language_code: str = Field(
         ..., max_length=3, description="IETF language tag of the article"
@@ -29,7 +31,9 @@ class ArticleSchema(BaseModel):
     """
 
     id_article: int = Field(..., description="Unique article identifier")
-    link: str = Field(..., max_length=255, description="Link to the Telegraph article")
+    link: HttpUrl = Field(
+        ..., max_length=255, description="Link to the Telegraph article"
+    )
     title: str = Field(..., max_length=255, description="Title of the article")
     language_code: str = Field(
         ..., max_length=3, description="IETF language tag of the article"

@@ -7,7 +7,6 @@ class PremiumBase(BaseModel):
     """
 
     id_user: int = Field(..., description="Unique premium user identifier")
-    id_payment: int | None = Field(None, description="Unique payment identifier")
 
 
 class PremiumCreate(PremiumBase):

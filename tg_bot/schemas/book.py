@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum
 from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from tg_bot.schemas.author import AuthorCreate, AuthorUpdate, AuthorSchema
 from tg_bot.schemas.file import FileCreate, FileUpdate, FileSchema
@@ -55,6 +55,14 @@ class BookCreate(BookBase):
         ..., description="List of files associated with the book"
     )
 
+    @model_validator(mode="before")
+    def check_double_quote_in_title(cls, values):
+        if '"' in values.get("title"):
+            raise ValueError(
+                'The book title must not contain the double quote (") character!!'
+            )
+        return values
+
 
 class BookUpdate(BookBase):
     """
@@ -85,6 +93,14 @@ class BookUpdate(BookBase):
     files: List[FileUpdate] | None = Field(
         None, description="List of files associated with the book"
     )
+
+    @model_validator(mode="before")
+    def check_double_quote_in_title(cls, values):
+        if "title" in values and '"' in values.get("title"):
+            raise ValueError(
+                'The book title must not contain the double quote (") character!!'
+            )
+        return values
 
 
 class BookSchema(BookBase):
