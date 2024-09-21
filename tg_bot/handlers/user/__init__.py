@@ -5,6 +5,7 @@ from .booking import booking_router
 from .cancel_order import cancel_order_routers
 from .news import news_router
 from .order import order_routers
+from .paysupport import paysupport_router
 from .premium import premium_routers
 from .privacy import privacy_router
 from .search import search_routers
@@ -21,6 +22,7 @@ user_routers.include_routers(
     cancel_order_routers,
     news_router,
     order_routers,
+    paysupport_router,
     premium_routers,
     privacy_router,
     settings_router,

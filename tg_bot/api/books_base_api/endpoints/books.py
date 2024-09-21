@@ -2,7 +2,6 @@ from tg_bot.api.books_base_api.base import BaseClient, ApiResponse
 from tg_bot.schemas import (
     BookSchema,
     BooksResponse,
-    BooksResponse,
     BookTitleSimilarityResponse,
 )
 

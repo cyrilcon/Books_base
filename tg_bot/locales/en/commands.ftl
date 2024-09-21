@@ -18,6 +18,8 @@ command-support = ⚠️ Tech-support
 
 command-settings = ⚙️ Language settings
 
+command-paysupport = 💸 Information on refunds
+
 command-privacy = 🔒 Privacy Policy
 
 command-help = ℹ️ Help
