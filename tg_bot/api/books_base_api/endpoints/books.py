@@ -52,7 +52,7 @@ class BooksApi:
         """
 
         params = {"max_results": max_results}
-        if page is not None:
+        if page:
             params["page"] = page
 
         status, result = await self.base_client.make_request(
@@ -77,7 +77,7 @@ class BooksApi:
         """
 
         params = {"max_results": max_results}
-        if page is not None:
+        if page:
             params["page"] = page
 
         status, result = await self.base_client.make_request(
@@ -108,7 +108,7 @@ class BooksApi:
             "max_results": max_results,
             "similarity_threshold": similarity_threshold,
         }
-        if page is not None:
+        if page:
             params["page"] = page
 
         status, result = await self.base_client.make_request(

@@ -6,6 +6,7 @@ from .endpoints import (
     BooksApi,
     GenresApi,
     OrdersApi,
+    PaymentsApi,
     UsersApi,
 )
 
@@ -22,6 +23,7 @@ class BooksBaseApi(BaseClient):
         self.books = BooksApi(self, self.prefix)
         self.genres = GenresApi(self, self.prefix)
         self.orders = OrdersApi(self, self.prefix)
+        self.payments = PaymentsApi(self, self.prefix)
         self.users = UsersApi(self, self.prefix)
 
     async def close(self):

@@ -7,6 +7,7 @@ __all__ = (
     "DiscountsApi",
     "GenresApi",
     "OrdersApi",
+    "PaymentsApi",
     "PremiumApi",
     "UsersApi",
 )
@@ -19,5 +20,6 @@ from .books import BooksApi
 from .discounts import DiscountsApi
 from .genres import GenresApi
 from .orders import OrdersApi
+from .payments import PaymentsApi
 from .premium import PremiumApi
 from .users import UsersApi
