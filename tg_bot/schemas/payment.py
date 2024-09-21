@@ -12,8 +12,8 @@ class PaymentCurrencyEnum(str, Enum):
     Available payment currency values.
     """
 
-    XTR = "XTR"
-    RUB = "RUB"
+    XTR: str = "XTR"
+    RUB: str = "RUB"
 
 
 class PaymentTypeEnum(str, Enum):
@@ -21,8 +21,8 @@ class PaymentTypeEnum(str, Enum):
     Available payment type values.
     """
 
-    BOOK = "book"
-    PREMIUM = "premium"
+    BOOK: str = "book"
+    PREMIUM: str = "premium"
 
 
 class PaymentBase(BaseModel):

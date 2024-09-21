@@ -8,10 +8,10 @@ class DiscountEnum(int, Enum):
     Available discount values.
     """
 
-    FIFTEEN = 15
-    THIRTY = 30
-    FIFTY = 50
-    HUNDRED = 100
+    FIFTEEN: int = 15
+    THIRTY: int = 30
+    FIFTY: int = 50
+    HUNDRED: int = 100
 
 
 class DiscountBase(BaseModel):

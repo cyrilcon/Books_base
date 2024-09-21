@@ -14,8 +14,8 @@ class PriceEnum(int, Enum):
     Available price values.
     """
 
-    FIFTY = 50
-    EIGHTY_FIVE = 85
+    FIFTY: int = 50
+    EIGHTY_FIVE: int = 85
 
 
 class BookBase(BaseModel):
