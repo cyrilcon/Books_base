@@ -14,6 +14,7 @@ __all__ = (
     "GiveDiscount",
     "GivePremium",
     "Order",
+    "Payment",
     "RemoveAdmin",
     "RemoveBlacklist",
     "Search",
@@ -41,6 +42,7 @@ from .give_base import GiveBase
 from .give_discount import GiveDiscount
 from .give_premium import GivePremium
 from .order import Order
+from .payment import Payment
 from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
 from .search import Search

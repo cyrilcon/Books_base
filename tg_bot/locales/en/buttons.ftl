@@ -79,8 +79,12 @@ button-news-channel = 📰 Канал с новостями
 
 button-buy = Купить
 
-button-pay = 💳 Оплатить
+button-pay = 💳 Оплатить { $price }₽
+
+button-pay-stars = ⭐ Оплатить { $price } ⭐
 
 button-paid = 🧾 Уже оплатил
+
+button-cancel-payment = 🚫 Отменить покупку
 
 button-all-books = 📚 Все книги

@@ -32,6 +32,7 @@ __all__ = (
     "order_again_button",
     "paid_button",
     "pay_button",
+    "pay_stars_button",
     "post_button",
     "reply_button",
     "search_by_author_button",
@@ -84,8 +85,7 @@ from .languages import language_en_button, language_ru_button, language_uk_butto
 from .news_channel import news_channel_button
 from .order import order_button
 from .order_again import order_again_button
-from .paid import paid_button
-from .pay import pay_button
+from .payment import paid_button, pay_button, pay_stars_button
 from .post import post_button
 from .reply import reply_button
 from .search import (

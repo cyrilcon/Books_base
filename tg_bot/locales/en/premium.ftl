@@ -1,8 +1,10 @@
-premium = Читайте любые книги без ограничений с { -books-base-premium }!! Цена: { $rub_price }₽ или { $stars_price } ⭐
+premium = Читайте любые книги без ограничений с { -books-base-premium }!! Цена: { $price_rub }₽ или { $price_stars } ⭐
 
 premium-error-user-already-has-premium = У вас уже действует статус <b>{ -books-base-premium }</b> ⚜️
 
-premium-paid-success =
+premium-payment-check = <i>Ваш ID транзакии:</i> <code>{ $id_payment }</code>
+
+premium-payment-successful =
     Теперь у вас активен <b>{ -books-base-premium }</b> ⚜️
 
     Читайте любые книги без ограничений!!
@@ -19,3 +21,7 @@ premium-paid-message-for-admin =
     (<code>{ $id_payment }</code>)
 
 premium-paid-error-payment-not-found = Транзакция не найдена!!
+
+premium-payment-canceled = Вы отменили покупку { -books-base-premium } ⚜️
+
+premium-pre-checkout-failed-reason = В настоящий момент платёж невозможен!!

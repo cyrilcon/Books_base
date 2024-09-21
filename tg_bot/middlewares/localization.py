@@ -1,4 +1,5 @@
 from typing import Callable, Dict, Any, Awaitable
+
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 
@@ -17,6 +18,10 @@ class LocalizationMiddleware(BaseMiddleware):
         data: Dict[str, Any],
     ) -> Any:
         id_user = event.from_user.id
+
+        if id_user == event._bot.id:
+            return await handler(event, data)
+
         l10n = await get_user_localization(id_user)
         data["l10n"] = l10n
 

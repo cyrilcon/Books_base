@@ -14,7 +14,7 @@ def pay_button(
     """
 
     pay = InlineKeyboardButton(
-        text=f"{l10n.format_value("button-pay")} {price}₽",
+        text=l10n.format_value("button-pay", {"price": price}),
         url=f"{url_payment}",
     )
     return pay
