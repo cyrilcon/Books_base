@@ -5,6 +5,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
+from enums import MessageEffect
 from tg_bot.api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import get_user_localization
@@ -53,14 +54,14 @@ async def give_discount_step_2(
                 "give-discount-given",
                 {"discount": discount},
             ),
-            message_effect_id="5046509860389126442",
+            message_effect_id=MessageEffect.CONFETTI,
         )
     except AiogramError:
         await call.message.edit_text(l10n.format_value("error-user-blocked-bot"))
     else:
         await api.users.discounts.create_discount(
             id_user=id_user_recipient,
-            discount=discount,
+            discount_value=discount,
         )
         await call.message.edit_text(
             l10n.format_value(

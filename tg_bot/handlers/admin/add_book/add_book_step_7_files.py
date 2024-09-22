@@ -5,12 +5,13 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
+from services import BookFormatter
 from tg_bot.keyboards.inline import (
     back_cancel_keyboard,
     done_clear_back_cancel_keyboard,
     create_price_keyboard,
 )
-from tg_bot.services import ClearKeyboard, parse_and_format_files
+from tg_bot.services import ClearKeyboard
 from tg_bot.states import AddBook
 
 add_book_step_7_router = Router()
@@ -44,7 +45,22 @@ async def add_book_step_7(
 
     data = await state.get_data()
     files = data.get("files")
-    files, text = await parse_and_format_files(message, l10n, files)
+
+    file_token = message.document.file_id
+    file_format = message.document.file_name.split(".")[-1]
+
+    if files is None:
+        files = []
+
+    if any(file["format"] == file_format for file in files):
+        text = "add-book-error-file-already-sent"
+    else:
+        file_dict = {"format": file_format, "file_token": file_token}
+        files.append(file_dict)
+        text = "add-book-prompt-more-files"
+
+    formats = BookFormatter.format_file_formats(files)
+    text = l10n.format_value(text, {"formats": formats})
 
     await state.update_data(files=files)
     sent_message = await message.answer(

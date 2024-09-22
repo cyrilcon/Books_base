@@ -123,7 +123,7 @@ async def order_step_1_display_book_details(
     if status != 200:
         await call.message.answer(
             l10n.format_value(
-                "order-error-book-not-exist",
+                "order-error-book-does-not-exist",
                 {"article": article},
             )
         )

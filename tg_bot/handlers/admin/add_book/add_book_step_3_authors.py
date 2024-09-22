@@ -52,6 +52,18 @@ async def add_book_step_3(
             )
             return
 
+        if '"' in author_name:
+            sent_message = await message.answer(
+                l10n.format_value("add-book-error-invalid-author-name"),
+                reply_markup=back_cancel_keyboard(l10n),
+            )
+            await ClearKeyboard.safe_message(
+                storage=storage,
+                id_user=message.from_user.id,
+                sent_message_id=sent_message.message_id,
+            )
+            return
+
     authors = [{"author_name": author_name} for author_name in authors]
 
     sent_message = await message.answer(

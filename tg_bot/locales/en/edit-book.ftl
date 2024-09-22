@@ -68,6 +68,19 @@ edit-book-prompt-cover = Отправьте новое <i><b>фото облож
 
 edit-book-prompt-files = Отправьте новый <i><b>файл</b></i> книги
 
+edit-book-error-file-already-sent =
+    Вы уже отправляли файл этого формата!!
+    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+
+    <b>Форматы:</b>
+    { $formats }
+
+edit-book-prompt-more-files =
+    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+
+    <b>Форматы:</b>
+    { $formats }
+
 edit-book-select-price = Выберите новую <i><b>цену</b></i> книги
 
 edit-book-price-error-price-already-set = У этой книги уже установалена такая цена!!

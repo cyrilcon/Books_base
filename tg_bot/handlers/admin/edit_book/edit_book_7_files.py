@@ -7,13 +7,14 @@ from aiogram.types import Message
 from aiogram.utils.media_group import MediaGroupBuilder
 from fluent.runtime import FluentLocalization
 
+from services import BookFormatter
 from tg_bot.api.books_base_api import api
 from tg_bot.keyboards.inline import (
     cancel_keyboard,
     edit_book_keyboard,
     done_clear_cancel_keyboard,
 )
-from tg_bot.services import ClearKeyboard, parse_and_format_files, generate_book_caption
+from tg_bot.services import ClearKeyboard, generate_book_caption
 from tg_bot.states import EditBook
 
 edit_files_router = Router()
@@ -65,7 +66,22 @@ async def edit_files_process(
 
     data = await state.get_data()
     files = data.get("files")
-    files, text = await parse_and_format_files(message, l10n, files)
+
+    file_token = message.document.file_id
+    file_format = message.document.file_name.split(".")[-1]
+
+    if files is None:
+        files = []
+
+    if any(file["format"] == file_format for file in files):
+        text = "edit-book-error-file-already-sent"
+    else:
+        file_dict = {"format": file_format, "file_token": file_token}
+        files.append(file_dict)
+        text = "edit-book-prompt-more-files"
+
+    formats = BookFormatter.format_file_formats(files)
+    text = l10n.format_value(text, {"formats": formats})
 
     await state.update_data(files=files)
     sent_message = await message.answer(

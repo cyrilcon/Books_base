@@ -28,8 +28,7 @@ async def back_to_add_article_step_2(
 
 
 @add_article_step_3_router.callback_query(
-    StateFilter(AddArticle.select_language_code),
-    F.data.startswith("language"),
+    StateFilter(AddArticle.select_language_code), F.data.startswith("language")
 )
 async def add_article_step_3(
     call: CallbackQuery,

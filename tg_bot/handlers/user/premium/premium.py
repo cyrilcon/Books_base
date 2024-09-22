@@ -31,9 +31,7 @@ async def premium(
     user = response.get_model()
 
     if user.is_premium:
-        await message.answer(
-            l10n.format_value("premium-error-user-already-has-premium")
-        )
+        await message.answer(l10n.format_value("premium-error-already-has-premium"))
         return
 
     price_rub = config.price.premium.rub
@@ -57,7 +55,6 @@ async def premium(
         reply_markup=pay_premium_keyboard(
             l10n=l10n,
             url_payment=payment.invoice,
-            currency="XTR",
             price_stars=price_stars,
             price_rub=price_rub,
             id_payment=payment.id,

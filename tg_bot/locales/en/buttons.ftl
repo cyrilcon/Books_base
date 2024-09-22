@@ -56,9 +56,9 @@ button-discount-50 = Скидка 50%
 
 button-discount-100 = 🎁 Бесплатная книга
 
-button-cancel-discount = 🚫 Отменить { $discount ->
+button-cancel-discount = 🚫 Отменить { $discount_value ->
         [100] купон
-       *[other] скидку { $discount }%
+       *[other] скидку { $discount_value }%
     }
 
 button-share-our-store = 📤 Поделиться нашим магазином

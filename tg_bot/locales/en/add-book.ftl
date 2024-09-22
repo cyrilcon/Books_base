@@ -41,6 +41,10 @@ add-book-error-author-name-too-long =
     Слишком длинное имя у автора!!
     Сократите и введите <i><b>автора(ов)</b></i> ещё раз
 
+add-book-error-invalid-author-name =
+    В имени автора не должно содержаться символов <b>"кавычек"</b>!!
+    Введите имя автора ещё раз
+
 add-book-prompt-description =
     <b>4/8</b>
     Введите <i><b>описание</b></i> книги
@@ -56,6 +60,10 @@ add-book-prompt-genres =
 add-book-error-genre-name-too-long =
     Слишком динное название жанра!!
     Сократите и введите <i><b>жанры</b></i> книги ещё раз
+
+add-book-error-invalid-genre-name =
+    В названии жанра не должно содержаться символов <b>"кавычек"</b>!!
+    Введите название жанра ещё раз
 
 add-book-prompt-more-genres =
     Введите ещё <i><b>жанры</b></i> или нажмите <i>"Готово"</i>

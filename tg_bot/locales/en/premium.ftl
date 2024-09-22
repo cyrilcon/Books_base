@@ -1,10 +1,13 @@
 premium = Читайте любые книги без ограничений с { -books-base-premium }!! Цена: { $price_rub }₽ или { $price_stars } ⭐
 
-premium-error-user-already-has-premium = У вас уже действует статус <b>{ -books-base-premium }</b> ⚜️
+premium-error-already-has-premium = У вас уже действует статус <b>{ -books-base-premium }</b> ⚜️
 
-premium-payment-check = <i>Ваш ID транзакии:</i> <code>{ $id_payment }</code>
+premium-payment-check =
+    <i>Ваш ID транзакци:</i>
 
-premium-payment-successful =
+    <code>{ $id_payment }</code>
+
+premium-payment-success =
     Теперь у вас активен <b>{ -books-base-premium }</b> ⚜️
 
     Читайте любые книги без ограничений!!

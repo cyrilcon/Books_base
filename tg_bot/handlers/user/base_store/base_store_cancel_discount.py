@@ -14,23 +14,23 @@ async def base_store_cancel_discount(call: CallbackQuery, l10n: FluentLocalizati
 
     response = await api.users.get_user_by_id(id_user)
     user = response.get_model()
-    discount = user.has_discount
+    discount_value = user.has_discount
 
-    if not discount:
+    if not discount_value:
         await call.answer(
             l10n.format_value("base-store-cancel-discount-error"),
             show_alert=True,
         )
         return
 
-    discounts = {
+    discount_values = {
         15: config.price.discount.discount_15,
         30: config.price.discount.discount_30,
         50: config.price.discount.discount_50,
         100: config.price.discount.discount_100,
     }
 
-    base_balance = user.base_balance + discounts.get(discount)
+    base_balance = user.base_balance + discount_values.get(discount_value)
 
     await api.users.discounts.delete_discount(id_user=id_user)
     await api.users.update_user(id_user=id_user, base_balance=base_balance)
@@ -39,7 +39,7 @@ async def base_store_cancel_discount(call: CallbackQuery, l10n: FluentLocalizati
         l10n.format_value(
             "base-store-cancel-discount-success",
             {
-                "discount": discount,
+                "discount_value": discount_value,
                 "base_balance": base_balance,
             },
         ),

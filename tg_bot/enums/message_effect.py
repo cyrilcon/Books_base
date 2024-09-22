@@ -1,0 +1,10 @@
+from enum import Enum
+
+
+class MessageEffect(str, Enum):
+    FIRE: str = "5104841245755180586"
+    LIKE: str = "5107584321108051014"
+    DISLIKE: str = "5104858069142078462"
+    HEART: str = "5044134455711629726"
+    CONFETTI: str = "5046509860389126442"
+    POOP: str = "5046589136895476101"

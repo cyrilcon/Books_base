@@ -5,7 +5,9 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from fluent.runtime import FluentLocalization
 
+from enums import MessageEffect
 from keyboards.inline import channel_keyboard
+from schemas import PaymentCurrencyEnum, PaymentTypeEnum
 from services import get_user_localization, ClearKeyboard
 from tg_bot.api.books_base_api import api
 from tg_bot.config import config
@@ -25,7 +27,6 @@ async def premium_paid(
     state: FSMContext,
     bot: Bot,
 ):
-    currency = call.data.split(":")[-3]
     price = float(call.data.split(":")[-2])
     id_payment = call.data.split(":")[-1]
 
@@ -49,19 +50,19 @@ async def premium_paid(
         id_payment=id_payment,
         id_user=id_user,
         price=price,
-        currency=currency,
-        type="premium",
+        currency=PaymentCurrencyEnum.RUB,
+        type=PaymentTypeEnum.PREMIUM,
     )
 
     await call.message.answer(
         l10n.format_value(
-            "premium-payment-successful",
+            "premium-payment-success",
             {
                 "id_payment": id_payment,
                 "channel_link": config.channel.link,
             },
         ),
-        message_effect_id="5046509860389126442",
+        message_effect_id=MessageEffect.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
     await state.clear()
@@ -126,8 +127,8 @@ async def premium_on_successful_payment(
         id_payment=id_payment,
         id_user=id_user,
         price=price,
-        currency="XTR",
-        type="premium",
+        currency=PaymentCurrencyEnum.XTR,
+        type=PaymentTypeEnum.PREMIUM,
     )
 
     await message.answer(
@@ -138,10 +139,10 @@ async def premium_on_successful_payment(
     )
     await message.answer(
         l10n.format_value(
-            "premium-payment-successful",
+            "premium-payment-success",
             {"channel_link": config.channel.link},
         ),
-        message_effect_id="5046509860389126442",
+        message_effect_id=MessageEffect.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
 

@@ -1,3 +1,5 @@
+import re
+
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
@@ -8,12 +10,7 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard, edit_book_keyboard
-from tg_bot.services import (
-    ClearKeyboard,
-    parse_and_format_genres,
-    generate_book_caption,
-    BookFormatter,
-)
+from tg_bot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tg_bot.states import EditBook
 
 edit_genres_router = Router()
@@ -63,18 +60,36 @@ async def edit_genres_process(
 
     genres_from_message = message.text
 
-    genres, genre_too_long = await parse_and_format_genres(genres_from_message)
-    if genre_too_long:
-        sent_message = await message.answer(
-            l10n.format_value("edit-book-error-genre-name-too-long"),
-            reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
-        return
+    genres = []
+
+    new_genres = re.findall(r"\b(\w+(?:\s+\w+)*)\b", genres_from_message)
+    new_genres = [{"genre_name": genre} for genre in new_genres]
+
+    for genre in new_genres:
+        if len(genre["genre_name"]) > 255:
+            sent_message = await message.answer(
+                l10n.format_value("edit-book-error-genre-name-too-long"),
+                reply_markup=cancel_keyboard(l10n),
+            )
+            await ClearKeyboard.safe_message(
+                storage=storage,
+                id_user=message.from_user.id,
+                sent_message_id=sent_message.message_id,
+            )
+            return
+        if '"' in genre["genre_name"]:
+            sent_message = await message.answer(
+                l10n.format_value("add-book-error-invalid-genre-name"),
+                reply_markup=cancel_keyboard(l10n),
+            )
+            await ClearKeyboard.safe_message(
+                storage=storage,
+                id_user=message.from_user.id,
+                sent_message_id=sent_message.message_id,
+            )
+            return
+        if genre["genre_name"] not in [g["genre_name"] for g in genres]:
+            genres.append(genre)
 
     data = await state.get_data()
     id_book_edited = data.get("id_book_edited")

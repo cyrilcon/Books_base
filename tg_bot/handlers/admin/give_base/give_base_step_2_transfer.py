@@ -6,6 +6,7 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
+from enums import MessageEffect
 from tg_bot.api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
 from tg_bot.services import ClearKeyboard, get_user_localization
@@ -74,7 +75,7 @@ async def give_base_step_2(
                 "give-base-received",
                 {"base_received": base_received, "base_balance": base_balance},
             ),
-            message_effect_id="5046509860389126442",
+            message_effect_id=MessageEffect.CONFETTI,
         )
     except AiogramError:
         await message.answer(

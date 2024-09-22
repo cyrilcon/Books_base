@@ -26,9 +26,8 @@ async def edit_article(
     state: FSMContext,
     storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(call, storage)
-
     await call.message.edit_reply_markup()
+
     id_book = int(call.data.split(":")[-1])
     article = BookFormatter.format_article(id_book)
 

@@ -8,18 +8,18 @@ class DiscountsApi:
         self.endpoint = f"{prefix}/discounts"
 
     async def create_discount(
-        self, id_user: int, discount: DiscountEnum
+        self, id_user: int, discount_value: DiscountEnum
     ) -> ApiResponse[UserSchema]:
         """
         Give a discount to the user.
 
         :param id_user: Unique user identifier.
-        :param discount: Discount value.
+        :param discount_value: Discount value.
         """
 
         data = {
             "id_user": id_user,
-            "discount": discount,
+            "discount_value": discount_value,
         }
 
         status, result = await self.base_client.make_request(

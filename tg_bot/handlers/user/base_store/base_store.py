@@ -5,6 +5,7 @@ from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from config import config
+from enums import MessageEffect
 from keyboards.inline import discounts_keyboard, cancel_discount_keyboard
 from tg_bot.api.books_base_api import api
 from tg_bot.services import ClearKeyboard
@@ -27,10 +28,10 @@ async def base_store(
         await message.answer(l10n.format_value("base-store-error-user-has-premium"))
         return
 
-    discount = user.has_discount
+    discount_value = user.has_discount
 
-    if discount:
-        keyboard = cancel_discount_keyboard(l10n, discount=discount)
+    if discount_value:
+        keyboard = cancel_discount_keyboard(l10n, discount_value=discount_value)
     else:
         keyboard = discounts_keyboard(l10n)
 
@@ -42,7 +43,7 @@ async def base_store(
                 "price_discount_30": config.price.discount.discount_30,
                 "price_discount_50": config.price.discount.discount_50,
                 "price_discount_100": config.price.discount.discount_100,
-                "discount": discount,
+                "discount_value": discount_value,
                 "base_balance": user.base_balance,
             },
         ),
@@ -52,7 +53,7 @@ async def base_store(
 
 @base_store_router.callback_query(F.data.startswith("discount"))
 async def base_store_discount(call: CallbackQuery, l10n: FluentLocalization):
-    discount = int(call.data.split(":")[-2])
+    discount_value = int(call.data.split(":")[-2])
     price = int(call.data.split(":")[-1])
 
     id_user = call.from_user.id
@@ -77,7 +78,9 @@ async def base_store_discount(call: CallbackQuery, l10n: FluentLocalization):
         return
 
     await api.users.update_user(id_user=id_user, base_balance=base_balance)
-    await api.users.discounts.create_discount(id_user=id_user, discount=discount)
+    await api.users.discounts.create_discount(
+        id_user=id_user, discount_value=discount_value
+    )
 
     await call.message.edit_reply_markup()
     await call.message.answer(
@@ -85,11 +88,11 @@ async def base_store_discount(call: CallbackQuery, l10n: FluentLocalization):
             "base-store-exchange-success",
             {
                 "price": price,
-                "discount": discount,
+                "discount_value": discount_value,
                 "base_balance": base_balance,
             },
         ),
-        message_effect_id="5046509860389126442",
-        reply_markup=cancel_discount_keyboard(l10n, discount=discount),
+        message_effect_id=MessageEffect.CONFETTI,
+        reply_markup=cancel_discount_keyboard(l10n, discount_value=discount_value),
     )
     await call.answer()

@@ -8,7 +8,7 @@ order-error-book-title-too-long =
 
 order-book-error-book-already-exists = В нашей библиотеке уже есть книга со схожим названием по вашему запросу: <b>"<code>{ $book_title }</code>"</b> <i>{ $authors }</i> (<code>{ $article }</code>)
 
-order-error-book-not-exist = Запрашиваемая вами книга с артикулом <code>{ $article }</code> больше не доступна 😕
+order-error-book-does-not-exist = Запрашиваемая вами книга с артикулом <code>{ $article }</code> больше не доступна 😕
 
 order-prompt-author-name =
     <b>2/2</b>
