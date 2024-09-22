@@ -5,21 +5,24 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from fluent.runtime import FluentLocalization
 
-from enums import MessageEffect
-from keyboards.inline import channel_keyboard
-from schemas import PaymentCurrencyEnum, PaymentTypeEnum
-from services import get_user_localization, ClearKeyboard
 from tg_bot.api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.services import Payment, create_user_link
+from tg_bot.enums import MessageEffect
+from tg_bot.keyboards.inline import channel_keyboard
+from tg_bot.schemas import PaymentCurrencyEnum, PaymentTypeEnum
+from tg_bot.services import (
+    Payment,
+    create_user_link,
+    get_user_localization,
+    ClearKeyboard,
+)
 from tg_bot.states import Payment as PaymentState
 
-premium_paid_router = Router()
+payment_premium_router = Router()
 
 
-@premium_paid_router.callback_query(
-    StateFilter(PaymentState.premium),
-    F.data.startswith("premium_paid"),
+@payment_premium_router.callback_query(
+    StateFilter(PaymentState.premium), F.data.startswith("premium_paid")
 )
 async def premium_paid(
     call: CallbackQuery,
@@ -84,7 +87,7 @@ async def premium_paid(
     )
 
 
-@premium_paid_router.pre_checkout_query(StateFilter(PaymentState.premium))
+@payment_premium_router.pre_checkout_query(StateFilter(PaymentState.premium))
 async def premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
     id_user = pre_checkout_query.from_user.id
     l10n = await get_user_localization(id_user)
@@ -101,7 +104,7 @@ async def premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
     await pre_checkout_query.answer(ok=True)
 
 
-@premium_paid_router.message(StateFilter(PaymentState.premium), F.successful_payment)
+@payment_premium_router.message(StateFilter(PaymentState.premium), F.successful_payment)
 async def premium_on_successful_payment(
     message: Message,
     l10n: FluentLocalization,
@@ -166,3 +169,18 @@ async def premium_on_successful_payment(
             },
         ),
     )
+
+
+@payment_premium_router.callback_query(
+    StateFilter(PaymentState.premium), F.data == "cancel_payment"
+)
+async def premium_cancel_payment(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+):
+    text = l10n.format_value("premium-payment-canceled")
+
+    await state.clear()
+    await call.answer(text, show_alert=True)
+    await call.message.edit_reply_markup()

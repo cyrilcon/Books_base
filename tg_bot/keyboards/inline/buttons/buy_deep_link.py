@@ -1,16 +1,16 @@
 from aiogram.types import InlineKeyboardButton
 
 
-def deep_link_buy_button(deep_link_url: str) -> InlineKeyboardButton:
+def buy_deep_link_button(deep_link_url: str) -> InlineKeyboardButton:
     """
     The "Buy" deep link button is formed.
     :param deep_link_url: Link to purchase the book.
     :return: The "Buy" deep link button.
     """
 
-    deep_link_buy = InlineKeyboardButton(
+    buy_deep_link = InlineKeyboardButton(
         text="Купить",
-        callback_data=f"deep_link_buy",
+        callback_data=f"buy_deep_link",
         url=f"{deep_link_url}",
     )
-    return deep_link_buy
+    return buy_deep_link

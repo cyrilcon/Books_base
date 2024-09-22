@@ -79,6 +79,8 @@ button-news-channel = 📰 Канал с новостями
 
 button-buy = Купить
 
+button-read = Читать
+
 button-pay = 💳 Оплатить { $price }₽
 
 button-pay-stars = ⭐ Оплатить { $price } ⭐

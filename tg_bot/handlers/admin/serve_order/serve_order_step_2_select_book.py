@@ -7,7 +7,7 @@ from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from tg_bot.api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard
+from tg_bot.keyboards.inline import cancel_keyboard, buy_or_read_keyboard
 from tg_bot.services import (
     ClearKeyboard,
     get_user_localization,
@@ -100,7 +100,11 @@ async def serve_step_2(
             chat_id=id_user_recipient,
             photo=book.cover,
             caption=caption,
-            # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
+            reply_markup=await buy_or_read_keyboard(
+                l10n=l10n,
+                id_book=id_book,
+                id_user=message.from_user.id,
+            ),
             reply_to_message_id=sent_message.message_id,
         )
     except AiogramError:

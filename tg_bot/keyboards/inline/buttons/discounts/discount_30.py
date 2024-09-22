@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
-from config import config
+from tg_bot.config import config
 
 
 def discount_30_button(l10n: FluentLocalization) -> InlineKeyboardButton:

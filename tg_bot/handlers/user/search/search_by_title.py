@@ -9,7 +9,11 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api.books_base_api import api
 from tg_bot.enums import SearchBy
-from tg_bot.keyboards.inline import search_by_keyboard, book_pagination_keyboard
+from tg_bot.keyboards.inline import (
+    search_by_keyboard,
+    book_pagination_keyboard,
+    buy_or_read_keyboard,
+)
 from tg_bot.services import generate_book_caption, BookFormatter
 
 search_by_title_router = Router()
@@ -68,7 +72,11 @@ async def get_book(call: CallbackQuery, l10n: FluentLocalization):
     await call.message.answer_photo(
         photo=book.cover,
         caption=caption,
-        # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
+        reply_markup=await buy_or_read_keyboard(
+            l10n=l10n,
+            id_book=id_book,
+            id_user=call.from_user.id,
+        ),
     )
     await call.answer()
 
@@ -121,7 +129,11 @@ async def book_search(
         await message.answer_photo(
             photo=book.cover,
             caption=caption,
-            # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
+            reply_markup=await buy_or_read_keyboard(
+                l10n=l10n,
+                id_book=book.id_book,
+                id_user=message.from_user.id,
+            ),
         )
         return
 

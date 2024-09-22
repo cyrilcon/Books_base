@@ -10,6 +10,7 @@ from tg_bot.keyboards.inline import (
     back_cancel_keyboard,
     cancel_keyboard,
     show_book_order_cancel_keyboard,
+    buy_or_read_keyboard,
 )
 from tg_bot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tg_bot.states import Order
@@ -138,6 +139,10 @@ async def order_step_1_display_book_details(
     await call.message.answer_photo(
         photo=book.cover,
         caption=caption,
-        # reply_markup=deep_link_buy_keyboard(deep_link),  # TODO: добавить кнопку "Купить"
+        reply_markup=await buy_or_read_keyboard(
+            l10n=l10n,
+            id_book=id_book,
+            id_user=call.from_user.id,
+        ),
     )
     await call.answer()

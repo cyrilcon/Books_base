@@ -5,7 +5,7 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from services import BookFormatter
+from tg_bot.services import BookFormatter
 from tg_bot.keyboards.inline import (
     back_cancel_keyboard,
     done_clear_back_cancel_keyboard,
