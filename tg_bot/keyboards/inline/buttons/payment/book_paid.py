@@ -2,7 +2,7 @@ from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
 
-def paid_button(
+def book_paid_button(
     l10n: FluentLocalization,
     price: int | float,
     id_payment: str,
@@ -15,8 +15,8 @@ def paid_button(
     :return: The "Paid" button.
     """
 
-    paid = InlineKeyboardButton(
-        text=l10n.format_value("button-paid"),
-        callback_data=f"premium_paid:{price}:{id_payment}",
+    book_paid = InlineKeyboardButton(
+        book_paid=l10n.format_value("button-paid"),
+        callback_data=f"book_paid:{price}:{id_payment}",
     )
-    return paid
+    return book_paid

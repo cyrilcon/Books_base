@@ -2,14 +2,14 @@ from aiogram.types import InlineKeyboardMarkup
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline.buttons import (
+    book_paid_button,
     cancel_payment_button,
     pay_stars_button,
     pay_button,
-    premium_paid_button,
 )
 
 
-def pay_premium_keyboard(
+def pay_book_keyboard(
     l10n: FluentLocalization,
     url_payment: str,
     price_stars: int,
@@ -17,16 +17,16 @@ def pay_premium_keyboard(
     id_payment: str,
 ):
     """
-    The "pay_premium" keyboard is formed.
+    The "pay_book" keyboard is formed.
     :param l10n: Language set by the user.
     :param url_payment: Payment link.
     :param price_stars: Product price in stars.
     :param price_rub: Product price in rubles.
     :param id_payment: Unique payment identifier.
-    :return: The "pay_premium" keyboard.
+    :return: The "pay_book" keyboard.
     """
 
-    pay_premium_markup = InlineKeyboardMarkup(
+    pay_book_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 pay_stars_button(l10n, price=price_stars),
@@ -35,11 +35,11 @@ def pay_premium_keyboard(
                 pay_button(l10n, price=price_rub, url_payment=url_payment),
             ],
             [
-                premium_paid_button(l10n, price=price_rub, id_payment=id_payment),
+                book_paid_button(l10n, price=price_rub, id_payment=id_payment),
             ],
             [
                 cancel_payment_button(l10n),
             ],
         ],
     )
-    return pay_premium_markup
+    return pay_book_markup

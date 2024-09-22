@@ -1,7 +1,7 @@
 __all__ = (
     "back_cancel_keyboard",
     "back_yes_cancel_keyboard",
-    "buy_deep_link_keyboard",
+    "buy_book_deep_link_keyboard",
     "buy_or_read_keyboard",
     "cancel_keyboard",
     "cancel_discount_keyboard",
@@ -21,6 +21,7 @@ __all__ = (
     "genre_book_pagination_keyboard",
     "genre_pagination_keyboard",
     "genres_pagination_keyboard",
+    "pay_book_keyboard",
     "pay_premium_keyboard",
     "post_cancel_keyboard",
     "reply_keyboard",
@@ -38,7 +39,7 @@ __all__ = (
 
 from .back_cancel import back_cancel_keyboard
 from .back_yes_cancel import back_yes_cancel_keyboard
-from .buy_deep_link import buy_deep_link_keyboard
+from .buy_book_deep_link import buy_book_deep_link_keyboard
 from .buy_or_read import buy_or_read_keyboard
 from .cancel import cancel_keyboard
 from .cancel_discount import cancel_discount_keyboard
@@ -60,6 +61,7 @@ from .pagination import (
     genre_pagination_keyboard,
     genres_pagination_keyboard,
 )
+from .pay_book import pay_book_keyboard
 from .pay_premium import pay_premium_keyboard
 from .post_cancel import post_cancel_keyboard
 from .reply import reply_keyboard

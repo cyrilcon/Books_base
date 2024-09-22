@@ -2,7 +2,7 @@ from aiogram.types import InlineKeyboardMarkup
 from fluent.runtime import FluentLocalization
 
 from tg_bot.api.books_base_api import api
-from tg_bot.keyboards.inline.buttons import buy_button, read_button
+from tg_bot.keyboards.inline.buttons import buy_book_button, read_button
 
 
 async def buy_or_read_keyboard(
@@ -24,7 +24,7 @@ async def buy_or_read_keyboard(
     if user.is_premium:
         button = read_button(l10n, id_book=id_book)
     else:
-        button = await buy_button(l10n, id_book=id_book)
+        button = await buy_book_button(l10n, id_book=id_book)
 
     buy_or_read_markup = InlineKeyboardMarkup(
         inline_keyboard=[

@@ -46,7 +46,7 @@ class YoomoneyWallet(BaseModel):
 
 class Premium(BaseModel):
     rub: int
-    stars: int
+    xtr: int
 
 
 class Discount(BaseModel):
@@ -56,9 +56,25 @@ class Discount(BaseModel):
     discount_100: int
 
 
+class BasicBook(BaseModel):
+    rub: int
+    xtr: int
+
+
+class DailyBook(BaseModel):
+    rub: int
+    xtr: int
+
+
+class Book(BaseModel):
+    basic: BasicBook
+    daily: DailyBook
+
+
 class Price(BaseModel):
     premium: Premium
     discount: Discount
+    book: Book
 
 
 class Config(BaseSettings):

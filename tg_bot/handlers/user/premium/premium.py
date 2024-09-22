@@ -6,10 +6,10 @@ from aiogram.types import Message, LabeledPrice
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
-from tg_bot.config import config
-from tg_bot.services import ClearKeyboard
 from tg_bot.api.books_base_api import api
-from tg_bot.keyboards.inline.keyboards import pay_premium_keyboard
+from tg_bot.config import config
+from tg_bot.keyboards.inline import pay_premium_keyboard
+from tg_bot.services import ClearKeyboard
 from tg_bot.services import Payment
 from tg_bot.states import Payment as PaymentState
 
@@ -26,8 +26,7 @@ async def premium(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    id_user = message.from_user.id
-    response = await api.users.get_user_by_id(id_user)
+    response = await api.users.get_user_by_id(message.from_user.id)
     user = response.get_model()
 
     if user.is_premium:
@@ -35,7 +34,7 @@ async def premium(
         return
 
     price_rub = config.price.premium.rub
-    price_stars = config.price.premium.stars
+    price_stars = config.price.premium.xtr
 
     payment = Payment(
         amount=price_rub,

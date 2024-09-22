@@ -1,7 +1,7 @@
 __all__ = (
     "back_button",
-    "buy_button",
-    "buy_deep_link_button",
+    "buy_book_button",
+    "buy_book_deep_link_button",
     "cancel_button",
     "channel_button",
     "clear_button",
@@ -31,9 +31,11 @@ __all__ = (
     "language_uk_button",
     "order_button",
     "order_again_button",
-    "paid_button",
+    "book_paid_button",
+    "cancel_payment_button",
     "pay_button",
     "pay_stars_button",
+    "premium_paid_button",
     "post_button",
     "read_button",
     "reply_button",
@@ -53,8 +55,8 @@ __all__ = (
 )
 
 from .back import back_button
-from .buy import buy_button
-from .buy_deep_link import buy_deep_link_button
+from .buy_book import buy_book_button
+from .buy_book_deep_link import buy_book_deep_link_button
 from .cancel import cancel_button
 from .channel import channel_button
 from .clear import clear_button
@@ -88,7 +90,13 @@ from .languages import language_en_button, language_ru_button, language_uk_butto
 from .news_channel import news_channel_button
 from .order import order_button
 from .order_again import order_again_button
-from .payment import paid_button, pay_button, pay_stars_button
+from .payment import (
+    book_paid_button,
+    cancel_payment_button,
+    pay_button,
+    pay_stars_button,
+    premium_paid_button,
+)
 from .post import post_button
 from .read import read_button
 from .reply import reply_button

@@ -88,7 +88,7 @@ async def premium_paid(
 
 
 @payment_premium_router.pre_checkout_query(StateFilter(PaymentState.premium))
-async def premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
+async def payment_premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
     id_user = pre_checkout_query.from_user.id
     l10n = await get_user_localization(id_user)
 
@@ -105,7 +105,7 @@ async def premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
 
 
 @payment_premium_router.message(StateFilter(PaymentState.premium), F.successful_payment)
-async def premium_on_successful_payment(
+async def payment_premium_on_successful(
     message: Message,
     l10n: FluentLocalization,
     storage: RedisStorage,
@@ -174,7 +174,7 @@ async def premium_on_successful_payment(
 @payment_premium_router.callback_query(
     StateFilter(PaymentState.premium), F.data == "cancel_payment"
 )
-async def premium_cancel_payment(
+async def payment_premium_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
