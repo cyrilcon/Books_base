@@ -13,6 +13,7 @@ __all__ = (
     "get_user_localization",
     "is_valid_book_article",
     "Payment",
+    "send_files",
 )
 
 from .book_formatter import BookFormatter
@@ -29,3 +30,4 @@ from .generate_id_order import generate_id_order
 from .get_user_localization import get_user_localization
 from .is_valid_book_article import is_valid_book_article
 from .payment import Payment
+from .send_files import send_files

@@ -9,8 +9,7 @@ from fluent.runtime import FluentLocalization
 from tg_bot.api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.keyboards.inline import pay_premium_keyboard
-from tg_bot.services import ClearKeyboard
-from tg_bot.services import Payment
+from tg_bot.services import ClearKeyboard, Payment
 from tg_bot.states import Payment as PaymentState
 
 premium_router = Router()
@@ -30,7 +29,9 @@ async def premium(
     user = response.get_model()
 
     if user.is_premium:
-        await message.answer(l10n.format_value("premium-error-already-has-premium"))
+        await message.answer(
+            l10n.format_value("payment-premium-error-user-already-has-premium")
+        )
         return
 
     price_rub = config.price.premium.rub

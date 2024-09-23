@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class MessageEffect(str, Enum):
+class MessageEffects(str, Enum):
     FIRE: str = "5104841245755180586"
     LIKE: str = "5107584321108051014"
     DISLIKE: str = "5104858069142078462"

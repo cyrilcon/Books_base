@@ -1,20 +1,19 @@
-from aiogram import Router, F
+from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery
 from aiogram.types import Message
-from aiogram.utils.media_group import MediaGroupBuilder
 from fluent.runtime import FluentLocalization
 
-from tg_bot.services import BookFormatter
 from tg_bot.api.books_base_api import api
 from tg_bot.keyboards.inline import (
     cancel_keyboard,
     edit_book_keyboard,
     done_clear_cancel_keyboard,
 )
-from tg_bot.services import ClearKeyboard, generate_book_caption
+from tg_bot.services import BookFormatter
+from tg_bot.services import ClearKeyboard, generate_book_caption, send_files
 from tg_bot.states import EditBook
 
 edit_files_router = Router()
@@ -26,6 +25,7 @@ async def edit_files(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    bot: Bot,
 ):
     await ClearKeyboard.clear(call, storage)
 
@@ -33,11 +33,12 @@ async def edit_files(
     response = await api.books.get_book_by_id(id_book)
     book = response.get_model()
 
-    # TODO: продумать отправку больше 10 файлов
-    album_builder = MediaGroupBuilder()
-    for file in book.files:
-        album_builder.add_document(media=file.file_token)
-    await call.message.answer_media_group(media=album_builder.build())
+    await send_files(
+        bot=bot,
+        chat_id=call.from_user.id,
+        caption=book.title,
+        files=book.files,
+    )
 
     sent_message = await call.message.answer(
         l10n.format_value("edit-book-prompt-files"),
@@ -101,6 +102,7 @@ async def edit_files_done(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    bot: Bot,
 ):
     data = await state.get_data()
     id_book_edited = data.get("id_book_edited")
@@ -134,11 +136,12 @@ async def edit_files_done(
 
     await call.message.edit_text(l10n.format_value("edit-book-success"))
 
-    # TODO: продумать отправку больше 10 файлов
-    album_builder = MediaGroupBuilder()
-    for file in book.files:
-        album_builder.add_document(media=file.file_token)
-    await call.message.answer_media_group(media=album_builder.build())
+    await send_files(
+        bot=bot,
+        chat_id=call.from_user.id,
+        caption=book.title,
+        files=book.files,
+    )
 
     await call.message.answer_photo(
         photo=book.cover,

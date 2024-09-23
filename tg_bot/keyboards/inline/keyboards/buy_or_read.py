@@ -21,7 +21,10 @@ async def buy_or_read_keyboard(
     response = await api.users.get_user_by_id(id_user)
     user = response.get_model()
 
-    if user.is_premium:
+    response = await api.users.get_book_ids(id_user=user.id_user)
+    book_ids = response.result
+
+    if user.is_premium or id_book in book_ids:
         button = read_button(l10n, id_book=id_book)
     else:
         button = await buy_book_button(l10n, id_book=id_book)

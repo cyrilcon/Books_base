@@ -19,6 +19,6 @@ async def buy_book_button(
 
     buy_book = InlineKeyboardButton(
         text=l10n.format_value("button-buy"),
-        callbuy_data=f"buy_book:{book.price}:{id_book}",
+        callback_data=f"buy_book:{book.price.value}:{id_book}",
     )
     return buy_book

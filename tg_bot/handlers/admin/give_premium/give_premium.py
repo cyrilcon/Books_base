@@ -6,7 +6,7 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from tg_bot.enums import MessageEffect
+from tg_bot.enums import MessageEffects
 from tg_bot.api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.keyboards.inline import cancel_keyboard
@@ -92,7 +92,7 @@ async def give_premium_process(
         await bot.send_message(
             chat_id=id_user,
             text=l10n_recipient.format_value("give-premium-given"),
-            message_effect_id=MessageEffect.CONFETTI,
+            message_effect_id=MessageEffects.CONFETTI,
         )
     except AiogramError:
         await message.answer(l10n.format_value("error-user-blocked-bot"))

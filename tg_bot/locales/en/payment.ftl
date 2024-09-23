@@ -1,0 +1,57 @@
+payment-book = Цена: { $price_rub }₽ или { $price_stars } ⭐
+
+payment-book-error-book-unavailable = Запрашиваемая вами книга с артикулом <code>{ $article }</code> больше не доступна 😕
+
+payment-book-error-user-already-has-this-book = У вас уже есть эта книга!!
+
+payment-book-success =
+    Спасибо за покупку!!
+
+    На ваш счёт начислено { $base } <i>base</i> 💎
+
+    Все доступные книги есть в нашем <a href="{ $channel_link }">Telegram канале</a> 👇🏻
+
+payment-book-paid-message-for-admin =
+    { $user_link } (<code>{ $id_user }</code>)
+
+    Купил <code>{ $title }</code> (<code>{ $id_book }</code>)
+
+    <b>{ $price }{ $currency }</b>
+    + { $base } <i>base</i> 💎
+
+    (<code>{ $id_payment }</code>)
+
+payment-book-canceled = Вы отменили покупку книги
+
+payment-book-unprocessed-messages = Оплатите книгу или отмените оплату
+
+payment-premium-error-user-already-has-premium = У вас уже действует статус <b>{ -books-base-premium }</b> ⚜️
+
+payment-premium-success =
+    Теперь у вас активен <b>{ -books-base-premium }</b> ⚜️
+
+    Читайте любые книги без ограничений!!
+
+    Все доступные книги есть в нашем <a href="{ $channel_link }">Telegram канале</a> 👇🏻
+
+payment-premium-paid-message-for-admin =
+    { $user_link } (<code>{ $id_user }</code>)
+
+    Купил <b>{ -books-base-premium }</b> ⚜️
+
+    <b>{ $price }{ $currency }</b>
+
+    (<code>{ $id_payment }</code>)
+
+payment-premium-canceled = Вы отменили покупку { -books-base-premium } ⚜️
+
+payment-premium-unprocessed-messages = Оплатите <b>{ -books-base-premium }</b> ⚜️ или отмените оплату
+
+payment-check =
+    <i>Ваш ID транзакци:</i>
+
+    <code>{ $id_payment }</code>
+
+payment-error-payment-not-found = Транзакция не найдена!!
+
+payment-pre-checkout-failed-reason = В настоящий момент платёж невозможен!!

@@ -81,9 +81,9 @@ button-buy = Купить
 
 button-read = Читать
 
-button-pay = 💳 Оплатить { $price }₽
+button-pay-rub = 💳 Оплатить { $price }₽
 
-button-pay-stars = ⭐ Оплатить { $price } ⭐
+button-pay-xtr = ⭐ Оплатить { $price } ⭐
 
 button-paid = 🧾 Уже оплатил
 

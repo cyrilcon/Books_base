@@ -7,7 +7,7 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.enums import MessageEffect
+from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
 from tg_bot.schemas import PaymentCurrencyEnum, PaymentTypeEnum
 from tg_bot.services import (
@@ -22,9 +22,9 @@ payment_premium_router = Router()
 
 
 @payment_premium_router.callback_query(
-    StateFilter(PaymentState.premium), F.data.startswith("premium_paid")
+    StateFilter(PaymentState.premium), F.data.startswith("paid:premium")
 )
-async def premium_paid(
+async def payment_premium(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -34,9 +34,7 @@ async def premium_paid(
     id_payment = call.data.split(":")[-1]
 
     if not Payment.check_payment(Payment(amount=float(price), id=id_payment)):
-        await call.message.answer(
-            l10n.format_value("premium-paid-error-payment-not-found")
-        )
+        await call.message.answer(l10n.format_value("payment-error-payment-not-found"))
         await call.answer()
         return
 
@@ -59,13 +57,16 @@ async def premium_paid(
 
     await call.message.answer(
         l10n.format_value(
-            "premium-payment-success",
-            {
-                "id_payment": id_payment,
-                "channel_link": config.channel.link,
-            },
+            "payment-check",
+            {"id_payment": id_payment},
         ),
-        message_effect_id=MessageEffect.CONFETTI,
+    )
+    await call.message.answer(
+        l10n.format_value(
+            "payment-premium-success",
+            {"channel_link": config.channel.link},
+        ),
+        message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
     await state.clear()
@@ -75,7 +76,7 @@ async def premium_paid(
     await bot.send_message(
         chat_id=config.chat.payment,
         text=l10n.format_value(
-            "premium-paid-message-for-admin",
+            "payment-premium-paid-message-for-admin",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),
@@ -85,6 +86,7 @@ async def premium_paid(
             },
         ),
     )
+    await call.answer()
 
 
 @payment_premium_router.pre_checkout_query(StateFilter(PaymentState.premium))
@@ -98,7 +100,7 @@ async def payment_premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQ
     if user.is_blacklisted or user.is_premium:
         await pre_checkout_query.answer(
             ok=False,
-            error_message=l10n.format_value("premium-pre-checkout-failed-reason"),
+            error_message=l10n.format_value("payment-pre-checkout-failed-reason"),
         )
 
     await pre_checkout_query.answer(ok=True)
@@ -117,8 +119,6 @@ async def payment_premium_on_successful(
     price = float(message.successful_payment.total_amount)
 
     id_user = message.from_user.id
-    full_name = message.from_user.full_name
-    username = message.from_user.username
 
     response = await api.users.get_user_by_id(id_user)
     user = response.get_model()
@@ -136,30 +136,31 @@ async def payment_premium_on_successful(
 
     await message.answer(
         l10n.format_value(
-            "premium-payment-check",
+            "payment-check",
             {"id_payment": id_payment},
         ),
     )
     await message.answer(
         l10n.format_value(
-            "premium-payment-success",
+            "payment-premium-success",
             {"channel_link": config.channel.link},
         ),
-        message_effect_id=MessageEffect.CONFETTI,
+        message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
 
+    # TODO: удалить на продакшене
     await bot.refund_star_payment(
         user_id=message.from_user.id,
         telegram_payment_charge_id=id_payment,
     )
 
-    user_link = await create_user_link(full_name, username)
+    user_link = await create_user_link(user.full_name, user.username)
 
     await bot.send_message(
         chat_id=config.chat.payment,
         text=l10n.format_value(
-            "premium-paid-message-for-admin",
+            "payment-premium-paid-message-for-admin",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),
@@ -179,8 +180,16 @@ async def payment_premium_cancel(
     l10n: FluentLocalization,
     state: FSMContext,
 ):
-    text = l10n.format_value("premium-payment-canceled")
+    text = l10n.format_value("payment-premium-canceled")
 
     await state.clear()
     await call.answer(text, show_alert=True)
     await call.message.edit_reply_markup()
+
+
+@payment_premium_router.message(StateFilter(PaymentState.premium), F.text)
+async def payment_premium_unprocessed_messages(
+    message: Message,
+    l10n: FluentLocalization,
+):
+    await message.answer(l10n.format_value("payment-premium-unprocessed-messages"))

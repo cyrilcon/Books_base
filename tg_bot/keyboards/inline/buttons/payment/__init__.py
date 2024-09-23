@@ -1,13 +1,13 @@
 __all__ = (
-    "book_paid_button",
     "cancel_payment_button",
-    "pay_button",
-    "pay_stars_button",
-    "premium_paid_button",
+    "paid_book_button",
+    "paid_premium_button",
+    "pay_rub_button",
+    "pay_xtr_button",
 )
 
-from .book_paid import book_paid_button
 from .cancel_payment import cancel_payment_button
-from .pay import pay_button
-from .pay_stars import pay_stars_button
-from .premium_paid import premium_paid_button
+from .paid_book import paid_book_button
+from .paid_premium import paid_premium_button
+from .pay_rub import pay_rub_button
+from .pay_xtr import pay_xtr_button

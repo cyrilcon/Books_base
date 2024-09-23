@@ -30,7 +30,7 @@ async def settings_set_language(
     new_language_code = call.data.split(":")[-1]
 
     if user.language_code != new_language_code:
-        await api.users.update_user(id_user, language_code=new_language_code)
+        await api.users.update_user(id_user=id_user, language_code=new_language_code)
         l10n = await get_user_localization(id_user)
 
         await call.message.edit_text(

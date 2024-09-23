@@ -1,7 +1,7 @@
 __all__ = (
-    "MessageEffect",
+    "MessageEffects",
     "SearchBy",
 )
 
-from .message_effect import MessageEffect
+from .message_effects import MessageEffects
 from .search_by import SearchBy

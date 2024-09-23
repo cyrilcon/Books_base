@@ -6,8 +6,8 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from tg_bot.enums import MessageEffect
 from tg_bot.api.books_base_api import api
+from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
 from tg_bot.services import ClearKeyboard, get_user_localization
 from tg_bot.states import GiveBase
@@ -75,14 +75,17 @@ async def give_base_step_2(
                 "give-base-received",
                 {"base_received": base_received, "base_balance": base_balance},
             ),
-            message_effect_id=MessageEffect.CONFETTI,
+            message_effect_id=MessageEffects.CONFETTI,
         )
     except AiogramError:
         await message.answer(
             l10n.format_value("error-user-blocked-bot"),
         )
     else:
-        await api.users.update_user(id_user_recipient, base_balance=base_balance)
+        await api.users.update_user(
+            id_user=id_user_recipient,
+            base_balance=base_balance,
+        )
         await message.answer(
             l10n.format_value(
                 "give-base-success",

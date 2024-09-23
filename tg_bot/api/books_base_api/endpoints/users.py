@@ -58,6 +58,19 @@ class UsersApi:
 
         return ApiResponse(status, result, model=UserSchema)
 
+    async def get_book_ids(self, id_user: int) -> ApiResponse[List[int]]:
+        """
+        Get a list of book purchased IDs by the user.
+
+        :param id_user: Unique user identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_user}/books",
+        )
+        return ApiResponse(status, result)
+
     async def get_user_by_username(self, username: str) -> ApiResponse[UserSchema]:
         """
         Get a user by username.

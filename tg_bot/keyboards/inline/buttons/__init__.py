@@ -31,11 +31,11 @@ __all__ = (
     "language_uk_button",
     "order_button",
     "order_again_button",
-    "book_paid_button",
     "cancel_payment_button",
-    "pay_button",
-    "pay_stars_button",
-    "premium_paid_button",
+    "paid_book_button",
+    "paid_premium_button",
+    "pay_rub_button",
+    "pay_xtr_button",
     "post_button",
     "read_button",
     "reply_button",
@@ -91,11 +91,11 @@ from .news_channel import news_channel_button
 from .order import order_button
 from .order_again import order_again_button
 from .payment import (
-    book_paid_button,
     cancel_payment_button,
-    pay_button,
-    pay_stars_button,
-    premium_paid_button,
+    paid_book_button,
+    paid_premium_button,
+    pay_rub_button,
+    pay_xtr_button,
 )
 from .post import post_button
 from .read import read_button

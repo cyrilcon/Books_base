@@ -64,7 +64,7 @@ async def take_base_2(
 
     base_balance = max(0, base_balance - base_deducted)
 
-    await api.users.update_user(id_user_recipient, base_balance=base_balance)
+    await api.users.update_user(id_user=id_user_recipient, base_balance=base_balance)
 
     await message.answer(
         l10n.format_value(

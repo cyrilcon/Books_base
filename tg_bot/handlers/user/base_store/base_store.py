@@ -5,7 +5,7 @@ from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from tg_bot.config import config
-from tg_bot.enums import MessageEffect
+from tg_bot.enums import MessageEffects
 from tg_bot.api.books_base_api import api
 from tg_bot.keyboards.inline import discounts_keyboard, cancel_discount_keyboard
 from tg_bot.services import ClearKeyboard
@@ -92,7 +92,7 @@ async def base_store_discount(call: CallbackQuery, l10n: FluentLocalization):
                 "base_balance": base_balance,
             },
         ),
-        message_effect_id=MessageEffect.CONFETTI,
+        message_effect_id=MessageEffects.CONFETTI,
         reply_markup=cancel_discount_keyboard(l10n, discount_value=discount_value),
     )
     await call.answer()

@@ -12,6 +12,6 @@ def read_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboardButton:
 
     read = InlineKeyboardButton(
         text=l10n.format_value("button-read"),
-        callread_data=f"read:{id_book}",
+        callback_data=f"read:{id_book}",
     )
     return read
