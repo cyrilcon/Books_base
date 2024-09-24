@@ -45,3 +45,16 @@ class PaymentsApi:
             json=data,
         )
         return ApiResponse(status, result, model=PaymentSchema)
+
+    async def get_payment_by_id(self, id_payment: int) -> ApiResponse[PaymentSchema]:
+        """
+        Get an order by ID.
+
+        :param id_payment: Unique payment identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_payment}",
+        )
+        return ApiResponse(status, result, model=PaymentSchema)
