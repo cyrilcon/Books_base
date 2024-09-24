@@ -14,6 +14,7 @@ __all__ = (
     "edit_book_keyboard",
     "languages_keyboard",
     "languages_back_cancel_keyboard",
+    "my_books_keyboard",
     "order_again_keyboard",
     "author_book_pagination_keyboard",
     "author_pagination_keyboard",
@@ -52,6 +53,7 @@ from .done_clear_cancel import done_clear_cancel_keyboard
 from .edit_book import edit_book_keyboard
 from .languages import languages_keyboard
 from .languages_back_cancel import languages_back_cancel_keyboard
+from .my_books import my_books_keyboard
 from .order_again import order_again_keyboard
 from .pagination import (
     author_book_pagination_keyboard,

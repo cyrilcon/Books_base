@@ -3,6 +3,7 @@ from aiogram import Router
 from .base_store import base_store_routers
 from .booking import booking_router
 from .cancel_order import cancel_order_routers
+from .my_books import my_books_router
 from .news import news_router
 from .order import order_routers
 from .payment import payment_routers
@@ -21,6 +22,7 @@ user_routers.include_routers(
     base_store_routers,
     booking_router,
     cancel_order_routers,
+    my_books_router,
     news_router,
     order_routers,
     payment_routers,

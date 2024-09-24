@@ -1,5 +1,7 @@
 command-my-account = 🙋🏼 Your { -books-base } account
 
+command-my-books = 📚 Your purchased books
+
 command-premium = ⚜️ Get Premium
 
 command-search = 🔍 Book Search
