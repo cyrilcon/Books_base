@@ -136,14 +136,14 @@ async def give_book_step_2(
         )
 
         text = l10n.format_value(
-                "give-book-success",
-                {
-                    "user_link": user_link,
-                    "id_user": str(id_user_recipient),
-                    "book_title": book.title,
-                    "article": article,
-                },
-            )
+            "give-book-success",
+            {
+                "user_link": user_link,
+                "id_user": str(id_user_recipient),
+                "book_title": book.title,
+                "article": article,
+            },
+        )
         await message.answer(text=text)
         await bot.send_message(chat_id=config.chat.payment, text=text)
     await state.clear()
