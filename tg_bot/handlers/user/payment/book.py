@@ -242,6 +242,7 @@ async def payment_book_on_pre_checkout_query(pre_checkout_query: PreCheckoutQuer
 async def payment_book_on_successful(
     message: Message,
     l10n: FluentLocalization,
+    state: FSMContext,
     storage: RedisStorage,
     bot: Bot,
 ):
@@ -306,6 +307,7 @@ async def payment_book_on_successful(
         message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
+    await state.clear()
 
     user_link = await create_user_link(user.full_name, user.username)
 

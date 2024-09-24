@@ -110,6 +110,7 @@ async def payment_premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQ
 async def payment_premium_on_successful(
     message: Message,
     l10n: FluentLocalization,
+    state: FSMContext,
     storage: RedisStorage,
     bot: Bot,
 ):
@@ -148,6 +149,7 @@ async def payment_premium_on_successful(
         message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
+    await state.clear()
 
     # TODO: удалить на продакшене
     await bot.refund_star_payment(

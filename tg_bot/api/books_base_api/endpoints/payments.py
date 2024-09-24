@@ -46,7 +46,7 @@ class PaymentsApi:
         )
         return ApiResponse(status, result, model=PaymentSchema)
 
-    async def get_payment_by_id(self, id_payment: int) -> ApiResponse[PaymentSchema]:
+    async def get_payment_by_id(self, id_payment: str) -> ApiResponse[PaymentSchema]:
         """
         Get an order by ID.
 
