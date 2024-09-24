@@ -17,7 +17,7 @@ class Payment:
     def create(self):
         """A payment id is created"""
 
-        self.id = str(uuid.uuid4())  # [:12]
+        self.id = str(uuid.uuid4())
 
     def check_payment(self):
         """Search for a transaction"""

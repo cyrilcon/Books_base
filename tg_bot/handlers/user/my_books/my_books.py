@@ -5,8 +5,7 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.keyboards.inline import channel_keyboard
-from tg_bot.keyboards.inline.keyboards import my_books_keyboard
+from tg_bot.keyboards.inline import channel_keyboard, my_books_keyboard
 from tg_bot.services import generate_book_caption
 
 my_books_router = Router()

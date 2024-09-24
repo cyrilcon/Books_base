@@ -11,6 +11,7 @@ __all__ = (
     "EditBook",
     "GetProfile",
     "GiveBase",
+    "GiveBook",
     "GiveDiscount",
     "GivePremium",
     "Order",
@@ -39,6 +40,7 @@ from .delete_book import DeleteBook
 from .edit_book import EditBook
 from .get_profile import GetProfile
 from .give_base import GiveBase
+from .give_book import GiveBook
 from .give_discount import GiveDiscount
 from .give_premium import GivePremium
 from .order import Order
