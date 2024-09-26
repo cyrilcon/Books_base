@@ -35,7 +35,10 @@ async def remove_admin(
     )
 
 
-@remove_admin_router.message(StateFilter(RemoveAdmin.select_admin), F.text)
+@remove_admin_router.message(
+    StateFilter(RemoveAdmin.select_admin),
+    F.text,
+)
 async def remove_admin_process(
     message: Message,
     l10n: FluentLocalization,
@@ -80,7 +83,7 @@ async def remove_admin_process(
     if not user.is_admin:
         sent_message = await message.answer(
             l10n.format_value(
-                "remove-admin-error-already-not-admin",
+                "remove-admin-error-user-already-not-admin",
                 {"user_link": user_link, "id_user": str(id_user)},
             ),
             reply_markup=cancel_keyboard(l10n),
