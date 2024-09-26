@@ -5,7 +5,7 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import find_user, create_user_link, ClearKeyboard
 from tg_bot.states import RemoveAdmin
@@ -44,7 +44,7 @@ async def remove_admin_process(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    user, response_message = await find_user(message.text, l10n)
+    user, response_message = await find_user(l10n, message.text)
 
     if not user:
         sent_message = await message.answer(

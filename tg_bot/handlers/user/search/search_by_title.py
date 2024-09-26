@@ -7,7 +7,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.enums import SearchBy
 from tg_bot.keyboards.inline import (
     search_by_keyboard,

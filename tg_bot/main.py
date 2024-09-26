@@ -9,15 +9,15 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
 
-from tg_bot.api.books_base_api import api
-from tg_bot.config import config
-from tg_bot.handlers import routers_list
-from tg_bot.middlewares import (
+from api.books_base_api import api
+from config import config
+from handlers import routers_list
+from middlewares import (
     DatabaseMiddleware,
     LocalizationMiddleware,
     StorageMiddleware,
 )
-from tg_bot.services import set_default_commands
+from services import set_default_commands
 
 
 async def on_startup(bot: Bot):

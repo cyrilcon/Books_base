@@ -6,7 +6,7 @@ from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from tg_bot.enums import MessageEffects
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import get_user_localization
 from tg_bot.states import GiveDiscount

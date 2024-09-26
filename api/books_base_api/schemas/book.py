@@ -4,9 +4,9 @@ from typing import List
 
 from pydantic import BaseModel, Field, model_validator
 
-from tg_bot.schemas.author import AuthorCreate, AuthorUpdate, AuthorSchema
-from tg_bot.schemas.file import FileCreate, FileUpdate, FileSchema
-from tg_bot.schemas.genre import GenreCreate, GenreUpdate, GenreSchema
+from api.books_base_api.schemas.author import AuthorCreate, AuthorUpdate, AuthorSchema
+from api.books_base_api.schemas.file import FileCreate, FileUpdate, FileSchema
+from api.books_base_api.schemas.genre import GenreCreate, GenreUpdate, GenreSchema
 
 
 class PriceEnum(int, Enum):

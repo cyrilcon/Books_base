@@ -3,7 +3,7 @@ from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from services import send_files
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 
 read_router = Router()
 

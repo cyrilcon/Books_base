@@ -6,7 +6,7 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.keyboards.inline import discounts_keyboard, cancel_discount_keyboard
 from tg_bot.services import ClearKeyboard
 

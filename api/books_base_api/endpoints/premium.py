@@ -1,15 +1,15 @@
-from tg_bot.api.books_base_api.base import BaseClient, ApiResponse
-from tg_bot.schemas import UserSchema
+from api.books_base_api.base import BaseClient, ApiResponse
+from api.books_base_api.schemas import UserSchema
 
 
-class BlacklistApi:
+class PremiumApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/blacklist"
+        self.endpoint = f"{prefix}/premium"
 
-    async def create_blacklist(self, id_user: int) -> ApiResponse[UserSchema]:
+    async def create_premium(self, id_user: int) -> ApiResponse[UserSchema]:
         """
-        Add a user to the blacklist.
+        Assign a user to premium.
 
         :param id_user: Unique user identifier.
         """
@@ -25,9 +25,9 @@ class BlacklistApi:
         )
         return ApiResponse(status, result, model=UserSchema)
 
-    async def delete_blacklist(self, id_user: int) -> ApiResponse:
+    async def delete_premium(self, id_user: int) -> ApiResponse:
         """
-        Remove a user from the blacklist.
+        Remove a user from the list of premium users.
 
         :param id_user: Unique user identifier.
         """

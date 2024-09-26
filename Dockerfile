@@ -1,24 +1,24 @@
 FROM python:3.12-slim
 
-# Установка переменных окружения
+# Set environment variables
 ENV BOT_NAME=tgbot
 ENV POETRY_HOME="/opt/poetry"
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
-# Установка poetry
+# Setting poetry
 RUN pip install -U pip && pip install poetry
 
-# Установка основных элементов сборки
+# Installing the basic elements of the assembly
 RUN apt-get update && apt-get install -y build-essential
 
-# Установка рабочей директории
+# Setting the working directory
 WORKDIR /usr/src/app/${BOT_NAME}
 
-# Копируются только файлы конфигурации poetry
+# Only the poetry configuration files are copied
 COPY pyproject.toml poetry.lock /usr/src/app/${BOT_NAME}/
 
-# Установка зависимостей проекта с помощью poetry
+# Install project dependencies using poetry
 RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
 
-# Копирование всего проекта
+# Copying the entire project
 COPY . /usr/src/app/${BOT_NAME}

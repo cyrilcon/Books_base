@@ -7,11 +7,11 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, LabeledPrice, PreCheckoutQuery, Message
 from fluent.runtime import FluentLocalization
 
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import pay_book_keyboard, channel_keyboard
-from tg_bot.schemas import PaymentCurrencyEnum, PaymentTypeEnum
+from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum
 from tg_bot.services import (
     ClearKeyboard,
     Payment,

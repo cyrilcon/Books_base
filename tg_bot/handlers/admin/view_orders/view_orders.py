@@ -5,7 +5,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.keyboards.inline import view_orders_keyboard
 from tg_bot.services import create_user_link
 

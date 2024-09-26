@@ -43,7 +43,7 @@ async def give_base_1_process(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    user, response_message = await find_user(message.text, l10n)
+    user, response_message = await find_user(l10n, message.text)
 
     if not user:
         sent_message = await message.answer(

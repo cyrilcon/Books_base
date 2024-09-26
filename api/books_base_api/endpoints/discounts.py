@@ -1,5 +1,5 @@
-from tg_bot.api.books_base_api.base import BaseClient, ApiResponse
-from tg_bot.schemas import UserSchema, DiscountEnum
+from api.books_base_api.base import BaseClient, ApiResponse
+from api.books_base_api.schemas import UserSchema, DiscountEnum
 
 
 class DiscountsApi:

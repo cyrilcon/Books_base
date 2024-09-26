@@ -7,10 +7,10 @@ from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from config import config
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard, my_books_keyboard
-from tg_bot.schemas import PaymentCurrencyEnum, PaymentTypeEnum
+from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum
 from tg_bot.services import (
     ClearKeyboard,
     generate_book_caption,

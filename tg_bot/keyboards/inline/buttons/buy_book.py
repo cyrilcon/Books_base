@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 
 
 async def buy_book_button(

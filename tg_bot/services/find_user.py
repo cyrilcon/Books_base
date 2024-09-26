@@ -1,15 +1,20 @@
 from typing import Tuple
 
-from tg_bot.api.books_base_api import api
-from tg_bot.schemas import UserSchema
+from fluent.runtime import FluentLocalization
+
+from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.services.extract_username import extract_username
 
 
-async def find_user(identifier, l10n) -> Tuple[UserSchema | None, str | None]:
+async def find_user(
+    l10n: FluentLocalization,
+    identifier: str,
+) -> Tuple[UserSchema | None, str | None]:
     """
     Search for a user by user ID or username.
-    :param identifier: User ID or username.
     :param l10n: Language set by the user.
+    :param identifier: User ID or username.
     :return: Tuple (user, message).
     """
 

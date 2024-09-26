@@ -7,7 +7,7 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.enums import MessageEffects
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import (
@@ -53,7 +53,7 @@ async def give_premium_process(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    user, response_message = await find_user(message.text, l10n)
+    user, response_message = await find_user(l10n, message.text)
 
     if not user:
         sent_message = await message.answer(

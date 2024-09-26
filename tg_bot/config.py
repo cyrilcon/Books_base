@@ -25,6 +25,8 @@ class Api(BaseModel):
 
 
 class Chat(BaseModel):
+    language_code: str
+
     order: str
     payment: str
     support: str

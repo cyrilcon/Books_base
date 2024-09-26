@@ -2,7 +2,7 @@ from typing import Dict, Any, Union
 
 from fluent.runtime import FluentLocalization
 
-from tg_bot.schemas import BookSchema
+from api.books_base_api.schemas import BookSchema
 from tg_bot.services.book_formatter import BookFormatter
 from tg_bot.services.fluent_loader import get_fluent_localization
 

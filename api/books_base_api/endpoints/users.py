@@ -1,9 +1,14 @@
 from datetime import datetime, timezone
 from typing import List
 
-from tg_bot.api.books_base_api.base import BaseClient, ApiResponse
-from tg_bot.schemas import UserSchema
-from . import AdminsApi, BlacklistApi, DiscountsApi, PremiumApi
+from api.books_base_api.base import BaseClient, ApiResponse
+from api.books_base_api.endpoints import (
+    AdminsApi,
+    BlacklistApi,
+    DiscountsApi,
+    PremiumApi,
+)
+from api.books_base_api.schemas import UserSchema
 
 
 class UsersApi:

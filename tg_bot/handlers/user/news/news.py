@@ -5,9 +5,9 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
-from tg_bot.api.books_base_api import api
+from api.books_base_api import api
 from tg_bot.keyboards.inline import view_news_keyboard
-from tg_bot.schemas import ArticleSchema
+from api.books_base_api.schemas import ArticleSchema
 
 news_router = Router()
 
