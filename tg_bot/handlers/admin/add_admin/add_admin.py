@@ -1,4 +1,5 @@
-from aiogram import Router, F
+from aiogram import Router, F, Bot
+from aiogram.exceptions import AiogramError
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -6,8 +7,14 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import find_user, create_user_link, ClearKeyboard
+from tg_bot.services import (
+    find_user,
+    create_user_link,
+    ClearKeyboard,
+    get_user_localization,
+)
 from tg_bot.states import AddAdmin
 
 add_admin_router = Router()
@@ -44,6 +51,7 @@ async def add_admin_process(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    bot: Bot,
 ):
     await ClearKeyboard.clear(message, storage)
 
@@ -81,11 +89,21 @@ async def add_admin_process(
         )
         return
 
-    await api.users.admins.create_admin(id_user)
-    await message.answer(
-        l10n.format_value(
-            "add-admin-success",
-            {"user_link": user_link, "id_user": str(id_user)},
+    try:
+        l10n_recipient = await get_user_localization(id_user)
+        await bot.send_message(
+            chat_id=id_user,
+            text=l10n_recipient.format_value("add-admin-success-message-for-user"),
+            message_effect_id=MessageEffects.CONFETTI,
         )
-    )
+    except AiogramError:
+        await message.answer(l10n.format_value("error-user-blocked-bot"))
+    else:
+        await api.users.admins.create_admin(id_user)
+        await message.answer(
+            l10n.format_value(
+                "add-admin-success",
+                {"user_link": user_link, "id_user": str(id_user)},
+            )
+        )
     await state.clear()

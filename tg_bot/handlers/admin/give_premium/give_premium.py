@@ -87,7 +87,6 @@ async def give_premium_process(
         return
 
     l10n_recipient = await get_user_localization(id_user)
-
     try:
         await bot.send_message(
             chat_id=id_user,

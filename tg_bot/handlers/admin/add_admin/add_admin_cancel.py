@@ -9,7 +9,10 @@ from tg_bot.states import AddAdmin
 add_admin_cancel_router = Router()
 
 
-@add_admin_cancel_router.callback_query(StateFilter(AddAdmin), F.data == "cancel")
+@add_admin_cancel_router.callback_query(
+    StateFilter(AddAdmin),
+    F.data == "cancel",
+)
 async def add_admin_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,
