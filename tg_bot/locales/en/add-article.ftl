@@ -2,13 +2,23 @@ add-article-prompt-title =
     <b>1/3</b>
     Введите <i><b>название</b></i> статьи
 
+add-article-prompt-title-back =
+    { add-article-prompt-title }
+
+    <code>{ $title }</code>
+
 add-article-error-title-too-long =
-    Слишком большое название статьи!!
+    Слишком длинное название статьи!!
     Сократите и введите <i><b>название</b></i> статьи ещё раз
 
 add-article-prompt-link =
     <b>2/3</b>
     Введите <i><b>ссылку</b></i> на статью
+
+add-article-prompt-link-back =
+    { add-article-prompt-link }
+
+    <code>{ $link }</code>
 
 add-article-error-invalid-link =
     Это не является ссылкой на статью!!

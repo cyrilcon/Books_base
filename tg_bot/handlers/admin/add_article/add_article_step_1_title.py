@@ -34,7 +34,10 @@ async def add_article(
     )
 
 
-@add_article_step_1_router.message(StateFilter(AddArticle.add_title), F.text)
+@add_article_step_1_router.message(
+    StateFilter(AddArticle.add_title),
+    F.text,
+)
 async def add_article_step_1(
     message: Message,
     l10n: FluentLocalization,

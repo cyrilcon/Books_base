@@ -95,7 +95,7 @@ async def remove_admin_process(
         )
         return
 
-    await api.users.admins.delete_admin(id_user)
+    await api.users.admins.delete_admin(id_user=id_user)
     await message.answer(
         l10n.format_value(
             "remove-admin-success",

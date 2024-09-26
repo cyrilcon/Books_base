@@ -99,7 +99,7 @@ async def add_admin_process(
     except AiogramError:
         await message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
-        await api.users.admins.create_admin(id_user)
+        await api.users.admins.create_admin(id_user=id_user)
         await message.answer(
             l10n.format_value(
                 "add-admin-success",

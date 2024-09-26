@@ -10,14 +10,14 @@ from tg_bot.keyboards.inline.buttons import (
 )
 
 
-def languages_back_cancel_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
+def languages_keyboard(l10n: FluentLocalization) -> InlineKeyboardMarkup:
     """
     The "languages_back_cancel" keyboard is formed.
     :param l10n: Language set by the user.
     :return: The "languages_back_cancel" keyboard.
     """
 
-    languages_back_cancel_markup = InlineKeyboardMarkup(
+    languages_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 language_en_button(l10n),
@@ -30,4 +30,4 @@ def languages_back_cancel_keyboard(l10n: FluentLocalization) -> InlineKeyboardMa
             ],
         ],
     )
-    return languages_back_cancel_markup
+    return languages_markup

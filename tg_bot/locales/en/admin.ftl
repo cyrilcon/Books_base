@@ -31,7 +31,7 @@ admin =
 
     🔺 Забрать скидку — /take_discount
 
-    📰 Добавить статью — /add_article
+    + 📰 Добавить статью — /add_article
 
     🟥 Удалить статью — /delete_article
 
