@@ -37,7 +37,10 @@ async def delete_article(
     )
 
 
-@delete_article_router.message(StateFilter(DeleteArticle.select_article), F.text)
+@delete_article_router.message(
+    StateFilter(DeleteArticle.select_article),
+    F.text,
+)
 async def delete_article_process(
     message: Message,
     l10n: FluentLocalization,

@@ -10,7 +10,8 @@ delete_article_cancel_router = Router()
 
 
 @delete_article_cancel_router.callback_query(
-    StateFilter(DeleteArticle), F.data == "cancel"
+    StateFilter(DeleteArticle),
+    F.data == "cancel",
 )
 async def delete_article_cancel(
     call: CallbackQuery,
