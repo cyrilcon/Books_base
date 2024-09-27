@@ -34,9 +34,7 @@ order-information-template =
 
     <b>Номер заказа:</b> <code>№{ $id_order }</code>
 
-order-received-from-user =
-    Вы получили заказ от пользователя
-    { order-information-template }
+order-received-from-user = Вы получили заказ от пользователя { order-information-template }
 
 order-canceled = Вы отменили заказ
 

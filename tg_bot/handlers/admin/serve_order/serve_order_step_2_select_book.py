@@ -20,7 +20,8 @@ serve_step_2_router = Router()
 
 
 @serve_step_2_router.callback_query(
-    StateFilter(ServeOrder.select_book), F.data == "back"
+    StateFilter(ServeOrder.select_book),
+    F.data == "back",
 )
 async def back_to_serve_order_step_1(
     call: CallbackQuery,
@@ -35,7 +36,10 @@ async def back_to_serve_order_step_1(
     await call.answer()
 
 
-@serve_step_2_router.message(StateFilter(ServeOrder.select_book), F.text)
+@serve_step_2_router.message(
+    StateFilter(ServeOrder.select_book),
+    F.text,
+)
 async def serve_step_2(
     message: Message,
     l10n: FluentLocalization,
@@ -61,7 +65,7 @@ async def serve_step_2(
 
     id_book = int(article.lstrip("#"))
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     status = response.status
 
     if status != 200:
@@ -81,10 +85,11 @@ async def serve_step_2(
     data = await state.get_data()
     id_order = data.get("id_order")
 
-    response = await api.orders.get_order_by_id(id_order)
-    order = response.get_model()
+    response = await api.orders.get_order_by_id(id_order=id_order)
 
+    order = response.get_model()
     id_user_recipient = order.id_user
+
     l10n_recipient = await get_user_localization(id_user_recipient)
     caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
 
@@ -92,7 +97,7 @@ async def serve_step_2(
         sent_message = await bot.send_message(
             chat_id=id_user_recipient,
             text=l10n_recipient.format_value(
-                "serve-order-served",
+                "serve-order-success-message-for-user",
                 {"id_order": str(id_order)},
             ),
         )
@@ -116,5 +121,5 @@ async def serve_step_2(
                 {"id_order": str(id_order)},
             )
         )
-    await api.orders.delete_order(id_order)
+    await api.orders.delete_order(id_order=id_order)
     await state.clear()

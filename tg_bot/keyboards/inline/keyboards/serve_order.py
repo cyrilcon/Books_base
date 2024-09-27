@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup
 from fluent.runtime import FluentLocalization
 
-from tg_bot.keyboards.inline.buttons import serve_button, unavailable_button
+from tg_bot.keyboards.inline.buttons import serve_button, book_unavailable_button
 
 
 def serve_order_keyboard(
@@ -18,7 +18,7 @@ def serve_order_keyboard(
         inline_keyboard=[
             [
                 serve_button(l10n, id_order=id_order),
-                unavailable_button(l10n, id_order=id_order),
+                book_unavailable_button(l10n, id_order=id_order),
             ]
         ],
     )

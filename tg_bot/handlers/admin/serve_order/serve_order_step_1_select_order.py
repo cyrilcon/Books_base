@@ -35,7 +35,10 @@ async def serve_order(
     )
 
 
-@serve_step_1_router.message(StateFilter(ServeOrder.select_order), F.text)
+@serve_step_1_router.message(
+    StateFilter(ServeOrder.select_order),
+    F.text,
+)
 async def serve_order_step_1(
     message: Message,
     l10n: FluentLocalization,
@@ -63,7 +66,7 @@ async def serve_order_step_1(
 
     id_order = int(order_number)
 
-    response = await api.orders.get_order_by_id(id_order)
+    response = await api.orders.get_order_by_id(id_order=id_order)
     status = response.status
 
     if status != 200:

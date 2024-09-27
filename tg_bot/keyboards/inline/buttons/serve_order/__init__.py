@@ -1,7 +1,7 @@
 __all__ = (
+    "book_unavailable_button",
     "serve_button",
-    "unavailable_button",
 )
 
+from .book_unavailable import book_unavailable_button
 from .serve import serve_button
-from .unavailable import unavailable_button

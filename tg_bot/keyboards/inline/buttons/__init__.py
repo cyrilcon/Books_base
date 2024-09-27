@@ -42,8 +42,8 @@ __all__ = (
     "search_by_author_button",
     "search_by_genre_button",
     "search_by_title_button",
+    "book_unavailable_button",
     "serve_button",
-    "unavailable_button",
     "set_language_en_button",
     "set_language_ru_button",
     "set_language_uk_button",
@@ -105,7 +105,7 @@ from .search import (
     search_by_genre_button,
     search_by_title_button,
 )
-from .serve_order import serve_button, unavailable_button
+from .serve_order import book_unavailable_button, serve_button
 from .set_language import (
     set_language_en_button,
     set_language_ru_button,

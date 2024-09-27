@@ -20,15 +20,18 @@ async def serve_order_from_button(
     state: FSMContext,
     storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
+
     id_order = int(call.data.split(":")[-1])
 
-    response = await api.orders.get_order_by_id(id_order)
+    response = await api.orders.get_order_by_id(id_order=id_order)
     status = response.status
 
     if status != 200:
         await call.message.edit_reply_markup()
         await call.message.answer(
-            l10n.format_value("serve-order-error-order-already-served")
+            l10n.format_value("serve-order-error-order-already-served-or-canceled")
         )
         return
 
@@ -45,7 +48,6 @@ async def serve_order_from_button(
         id_user=call.from_user.id,
         sent_message_id=sent_message.message_id,
     )
-
     await call.answer()
 
 
@@ -53,21 +55,25 @@ async def serve_order_from_button(
 async def serve_order_book_unavailable(
     call: CallbackQuery,
     l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
     bot: Bot,
 ):
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
+    await call.message.edit_reply_markup()
+
     id_order = int(call.data.split(":")[-1])
 
-    response = await api.orders.get_order_by_id(id_order)
+    response = await api.orders.get_order_by_id(id_order=id_order)
     order = response.get_model()
 
-    await call.message.edit_reply_markup()
     l10n_recipient = await get_user_localization(order.id_user)
-
     try:
         await bot.send_message(
             chat_id=order.id_user,
             text=l10n_recipient.format_value(
-                "serve-order-book-unavailable-message-template",
+                "serve-order-book-unavailable",
                 {
                     "id_order": str(id_order),
                     "book_title": order.book_title,
@@ -80,5 +86,5 @@ async def serve_order_book_unavailable(
         await call.message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
         await call.message.answer(l10n.format_value("serve-order-message-sent"))
-    await api.orders.delete_order(id_order)
+    await api.orders.delete_order(id_order=id_order)
     await call.answer()

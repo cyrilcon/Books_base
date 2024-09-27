@@ -9,7 +9,10 @@ from tg_bot.states import ServeOrder
 serve_order_cancel_router = Router()
 
 
-@serve_order_cancel_router.callback_query(StateFilter(ServeOrder), F.data == "cancel")
+@serve_order_cancel_router.callback_query(
+    StateFilter(ServeOrder),
+    F.data == "cancel",
+)
 async def serve_order_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,

@@ -18,7 +18,7 @@ async def buy_or_read_keyboard(
     :return: The "buy_or_read" keyboard.
     """
 
-    response = await api.users.get_user_by_id(id_user)
+    response = await api.users.get_user_by_id(id_user=id_user)
     user = response.get_model()
 
     response = await api.users.get_book_ids(id_user=user.id_user)

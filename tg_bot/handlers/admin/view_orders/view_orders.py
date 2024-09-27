@@ -22,6 +22,7 @@ async def view_orders(
     storage: RedisStorage,
 ):
     await ClearKeyboard.clear(message, storage)
+    await state.clear()
 
     orders_count, id_order, text = await get_order_info(l10n)
 
@@ -36,7 +37,6 @@ async def view_orders(
                 orders_count=orders_count,
             ),
         )
-    await state.clear()
 
 
 @view_orders_router.callback_query(F.data.startswith("order_position"))
