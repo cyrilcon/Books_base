@@ -9,7 +9,7 @@ admin =
 
     📗 Подарить книгу — /give_book
 
-    ❌ Добавить в чёрный список — /add_blacklist
+    + ❌ Добавить в чёрный список — /add_blacklist
 
     ❎ Удалить из чёрного списка — /remove_blacklist
 

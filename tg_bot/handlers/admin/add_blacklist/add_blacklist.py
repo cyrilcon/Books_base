@@ -35,7 +35,10 @@ async def add_blacklist(
     )
 
 
-@add_blacklist_router.message(StateFilter(AddBlacklist.select_user), F.text)
+@add_blacklist_router.message(
+    StateFilter(AddBlacklist.select_user),
+    F.text,
+)
 async def add_blacklist_process(
     message: Message,
     l10n: FluentLocalization,
@@ -65,7 +68,7 @@ async def add_blacklist_process(
     if user.is_blacklisted:
         sent_message = await message.answer(
             l10n.format_value(
-                "add-blacklist-error-already-added",
+                "add-blacklist-error-user-already-blacklisted",
                 {"user_link": user_link, "id_user": str(id_user)},
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -77,7 +80,7 @@ async def add_blacklist_process(
         )
         return
 
-    await api.users.blacklist.create_blacklist(id_user)
+    await api.users.blacklist.create_blacklist(id_user=id_user)
     await message.answer(
         l10n.format_value(
             "add-blacklist-success",
