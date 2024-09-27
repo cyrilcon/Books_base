@@ -11,7 +11,7 @@ take-base-prompt-deduct-base =
 take-base-error-invalid-base = Количество <i>base</i> 💎 должно быть целым положительным числом!!
 
 take-base-success =
-    Вы изъяли { $base_deducted } <i>base</i> 💎 у пользователя { $user_link } (<code>{ $id_user }</code>).
+    У пользователя { $user_link } (<code>{ $id_user }</code>) изъято { $base_deducted } <i>base</i> 💎
 
     { user-balance }
 

@@ -25,7 +25,7 @@ admin =
 
     + 💎 Выдать base — /give_base
 
-    🔻 Отобрать base — /take_base
+    + 🔻 Отобрать base — /take_base
 
     🏷️ Выдать скидку — /give_discount
 

@@ -34,7 +34,10 @@ async def take_base(
     )
 
 
-@take_base_step_1_router.message(StateFilter(TakeBase.select_user), F.text)
+@take_base_step_1_router.message(
+    StateFilter(TakeBase.select_user),
+    F.text,
+)
 async def take_base_step_1(
     message: Message,
     l10n: FluentLocalization,

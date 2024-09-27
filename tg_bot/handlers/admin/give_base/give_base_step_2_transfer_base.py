@@ -70,13 +70,12 @@ async def give_base_step_2(
     id_user_recipient = data.get("id_user_recipient")
     user_link = data.get("user_link")
 
-    l10n_recipient = await get_user_localization(id_user_recipient)
-
     response = await api.users.get_user_by_id(id_user_recipient)
     user = response.get_model()
 
     base_balance = user.base_balance + base_received
 
+    l10n_recipient = await get_user_localization(id_user_recipient)
     try:
         await bot.send_message(
             chat_id=id_user_recipient,
@@ -107,7 +106,7 @@ async def give_base_step_2(
         }
 
         await message.answer(
-            text=l10n.format_value(l10n_params["key"], l10n_params["params"])
+            l10n.format_value(l10n_params["key"], l10n_params["params"])
         )
 
         l10n_chat = get_fluent_localization(config.chat.language_code)
