@@ -35,7 +35,10 @@ async def remove_blacklist(
     )
 
 
-@remove_blacklist_router.message(StateFilter(RemoveBlacklist.select_user), F.text)
+@remove_blacklist_router.message(
+    StateFilter(RemoveBlacklist.select_user),
+    F.text,
+)
 async def remove_blacklist_process(
     message: Message,
     l10n: FluentLocalization,
@@ -65,7 +68,7 @@ async def remove_blacklist_process(
     if not user.is_blacklisted:
         sent_message = await message.answer(
             l10n.format_value(
-                "remove-blacklist-error-already-removed",
+                "remove-blacklist-error-user-already-not-blacklisted",
                 {"user_link": user_link, "id_user": str(id_user)},
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -77,7 +80,7 @@ async def remove_blacklist_process(
         )
         return
 
-    await api.users.blacklist.delete_blacklist(id_user)
+    await api.users.blacklist.delete_blacklist(id_user=id_user)
     await message.answer(
         l10n.format_value(
             "remove-blacklist-success",

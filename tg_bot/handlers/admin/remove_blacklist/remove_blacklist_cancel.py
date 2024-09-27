@@ -10,7 +10,8 @@ remove_blacklist_cancel_router = Router()
 
 
 @remove_blacklist_cancel_router.callback_query(
-    StateFilter(RemoveBlacklist), F.data == "cancel"
+    StateFilter(RemoveBlacklist),
+    F.data == "cancel",
 )
 async def remove_blacklist_cancel(
     call: CallbackQuery,
