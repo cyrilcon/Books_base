@@ -76,9 +76,7 @@ async def remove_admin_process(
         )
         return
 
-    full_name = user.full_name
-    username = user.username
-    user_link = await create_user_link(full_name, username)
+    user_link = await create_user_link(user.full_name, user.username)
 
     if not user.is_admin:
         sent_message = await message.answer(

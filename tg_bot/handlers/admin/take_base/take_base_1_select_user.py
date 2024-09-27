@@ -60,9 +60,7 @@ async def take_base_step_1(
         return
 
     id_user = user.id_user
-    full_name = user.full_name
-    username = user.username
-    user_link = await create_user_link(full_name, username)
+    user_link = await create_user_link(user.full_name, user.username)
 
     sent_message = await message.answer(
         l10n.format_value(

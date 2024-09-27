@@ -69,10 +69,7 @@ async def add_admin_process(
         return
 
     id_user = user.id_user
-    full_name = user.full_name
-    username = user.username
-
-    user_link = await create_user_link(full_name, username)
+    user_link = await create_user_link(user.full_name, user.username)
 
     if user.is_admin:
         sent_message = await message.answer(

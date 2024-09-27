@@ -15,7 +15,8 @@ give_discount_step_2_router = Router()
 
 
 @give_discount_step_2_router.callback_query(
-    StateFilter(GiveDiscount.select_discount), F.data == "back"
+    StateFilter(GiveDiscount.select_discount),
+    F.data == "back",
 )
 async def back_to_give_discount_step_1(
     call: CallbackQuery,
@@ -31,7 +32,8 @@ async def back_to_give_discount_step_1(
 
 
 @give_discount_step_2_router.callback_query(
-    StateFilter(GiveDiscount.select_discount), F.data.startswith("discount")
+    StateFilter(GiveDiscount.select_discount),
+    F.data.startswith("discount"),
 )
 async def give_discount_step_2(
     call: CallbackQuery,
@@ -39,20 +41,19 @@ async def give_discount_step_2(
     state: FSMContext,
     bot: Bot,
 ):
-    discount = int(call.data.split(":")[-2])
+    discount_value = int(call.data.split(":")[-2])
 
     data = await state.get_data()
     id_user_recipient = data["id_user_recipient"]
     user_link = data["user_link"]
 
     l10n_recipient = await get_user_localization(id_user_recipient)
-
     try:
         await bot.send_message(
             chat_id=id_user_recipient,
             text=l10n_recipient.format_value(
-                "give-discount-given",
-                {"discount": discount},
+                "give-discount-success-message-for-user",
+                {"discount_value": discount_value},
             ),
             message_effect_id=MessageEffects.CONFETTI,
         )
@@ -61,13 +62,13 @@ async def give_discount_step_2(
     else:
         await api.users.discounts.create_discount(
             id_user=id_user_recipient,
-            discount_value=discount,
+            discount_value=discount_value,
         )
         await call.message.edit_text(
             l10n.format_value(
                 "give-discount-success",
                 {
-                    "discount": discount,
+                    "discount_value": discount_value,
                     "user_link": user_link,
                     "id_user": str(id_user_recipient),
                 },
