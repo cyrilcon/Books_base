@@ -15,6 +15,7 @@ from tg_bot.services import (
     create_user_link,
     ClearKeyboard,
     get_user_localization,
+    get_fluent_localization,
 )
 from tg_bot.states import GivePremium
 
@@ -104,10 +105,19 @@ async def give_premium_process(
         await message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
         await api.users.premium.create_premium(id_user=id_user)
-        text = l10n.format_value(
-            "give-premium-success",
-            {"user_link": user_link, "id_user": str(id_user)},
+
+        l10n_params = {
+            "key": "give-premium-success",
+            "params": {"user_link": user_link, "id_user": str(id_user)},
+        }
+
+        await message.answer(
+            text=l10n.format_value(l10n_params["key"], l10n_params["params"])
         )
-        await message.answer(text=text)
-        await bot.send_message(chat_id=config.chat.payment, text=text)
+
+        l10n_chat = get_fluent_localization(config.chat.language_code)
+        await bot.send_message(
+            chat_id=config.chat.payment,
+            text=l10n_chat.format_value(l10n_params["key"], l10n_params["params"]),
+        )
     await state.clear()

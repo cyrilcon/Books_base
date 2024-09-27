@@ -5,4 +5,4 @@ class GiveBase(StatesGroup):
     """A class of states for giving out the base."""
 
     select_user = State()
-    transfer = State()
+    transfer_base = State()

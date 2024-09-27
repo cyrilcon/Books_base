@@ -34,7 +34,10 @@ async def give_base_1(
     )
 
 
-@give_base_step_1_router.message(StateFilter(GiveBase.select_user), F.text)
+@give_base_step_1_router.message(
+    StateFilter(GiveBase.select_user),
+    F.text,
+)
 async def give_base_1_process(
     message: Message,
     l10n: FluentLocalization,
@@ -63,7 +66,7 @@ async def give_base_1_process(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "give-base-prompt-transfer",
+            "give-base-prompt-transfer-base",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),
@@ -73,7 +76,7 @@ async def give_base_1_process(
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.update_data(id_user_recipient=id_user, user_link=user_link)
-    await state.set_state(GiveBase.transfer)
+    await state.set_state(GiveBase.transfer_base)
 
     await ClearKeyboard.safe_message(
         storage=storage,

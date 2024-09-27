@@ -9,7 +9,10 @@ from tg_bot.states import GiveBase
 give_base_cancel_router = Router()
 
 
-@give_base_cancel_router.callback_query(StateFilter(GiveBase), F.data == "cancel")
+@give_base_cancel_router.callback_query(
+    StateFilter(GiveBase),
+    F.data == "cancel",
+)
 async def give_base_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,
