@@ -90,3 +90,7 @@ button-paid = 🧾 Уже оплатил
 button-cancel-payment = 🚫 Отменить покупку
 
 button-all-books = 📚 Все книги
+
+button-arrow-left = ⬅️
+
+button-arrow-right = ➡️

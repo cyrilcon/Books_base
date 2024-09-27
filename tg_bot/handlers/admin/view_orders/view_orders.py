@@ -2,26 +2,41 @@ from typing import Tuple, Optional
 
 from aiogram import Router, F
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import view_orders_keyboard
-from tg_bot.services import create_user_link
+from tg_bot.services import create_user_link, ClearKeyboard
+from .keyboards import view_orders_keyboard
 
 view_orders_router = Router()
 
 
 @view_orders_router.message(Command("view_orders"))
-async def view_orders(message: Message, l10n: FluentLocalization):
+async def view_orders(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
+
     orders_count, id_order, text = await get_order_info(l10n)
 
     if orders_count == 0:
         await message.answer(l10n.format_value("orders-absent"))
     else:
         await message.answer(
-            text, reply_markup=view_orders_keyboard(l10n, id_order, orders_count)
+            text=text,
+            reply_markup=view_orders_keyboard(
+                l10n=l10n,
+                id_order=id_order,
+                orders_count=orders_count,
+            ),
         )
+    await state.clear()
 
 
 @view_orders_router.callback_query(F.data.startswith("order_position"))
@@ -62,11 +77,11 @@ async def get_order_info(
     if orders_count == 0:
         return orders_count, None, None
 
-    response = await api.orders.get_order_by_position(position)
+    response = await api.orders.get_order_by_position(position=position)
     order = response.get_model()
     id_order = order.id_order
 
-    response = await api.users.get_user_by_id(order.id_user)
+    response = await api.users.get_user_by_id(id_user=order.id_user)
     user = response.get_model()
 
     user_link = await create_user_link(user.full_name, user.username)

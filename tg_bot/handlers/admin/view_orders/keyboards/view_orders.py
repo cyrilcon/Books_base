@@ -25,7 +25,8 @@ def view_orders_keyboard(
         if position > 1:
             action_buttons.append(
                 InlineKeyboardButton(
-                    text=f"⬅️", callback_data=f"order_position:{position-1}"
+                    text=l10n.format_value("button-arrow-left"),
+                    callback_data=f"order_position:{position - 1}",
                 )
             )
 
@@ -39,7 +40,8 @@ def view_orders_keyboard(
         if position < orders_count:
             action_buttons.append(
                 InlineKeyboardButton(
-                    text=f"➡️", callback_data=f"order_position:{position+1}"
+                    text=l10n.format_value("button-arrow-right"),
+                    callback_data=f"order_position:{position + 1}",
                 )
             )
 
