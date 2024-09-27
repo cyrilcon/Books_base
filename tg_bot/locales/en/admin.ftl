@@ -19,7 +19,7 @@ admin =
 
     + ⚜️ Подарить Premium — /give_premium
 
-    ♦️ Отменить Premium — /cancel_premium
+    + ♦️ Отменить Premium — /cancel_premium
 
     — (📚 Субботний пост — /action)
 

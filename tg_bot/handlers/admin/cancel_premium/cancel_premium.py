@@ -35,7 +35,10 @@ async def cancel_premium(
     )
 
 
-@cancel_premium_router.message(StateFilter(CancelPremium.select_user), F.text)
+@cancel_premium_router.message(
+    StateFilter(CancelPremium.select_user),
+    F.text,
+)
 async def cancel_premium_process(
     message: Message,
     l10n: FluentLocalization,
@@ -65,7 +68,7 @@ async def cancel_premium_process(
     if not user.is_premium:
         sent_message = await message.answer(
             l10n.format_value(
-                "cancel-premium-error-already-canceled",
+                "cancel-premium-error-user-already-has-not-premium",
                 {"user_link": user_link, "id_user": str(id_user)},
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -77,7 +80,7 @@ async def cancel_premium_process(
         )
         return
 
-    await api.users.premium.delete_premium(id_user)
+    await api.users.premium.delete_premium(id_user=id_user)
     await message.answer(
         l10n.format_value(
             "cancel-premium-success",

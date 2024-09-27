@@ -103,7 +103,7 @@ async def give_premium_process(
     except AiogramError:
         await message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
-        await api.users.premium.create_premium(id_user)
+        await api.users.premium.create_premium(id_user=id_user)
         text = l10n.format_value(
             "give-premium-success",
             {"user_link": user_link, "id_user": str(id_user)},

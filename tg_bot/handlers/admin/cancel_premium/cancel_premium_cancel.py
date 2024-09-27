@@ -10,7 +10,8 @@ cancel_premium_cancel_router = Router()
 
 
 @cancel_premium_cancel_router.callback_query(
-    StateFilter(CancelPremium), F.data == "cancel"
+    StateFilter(CancelPremium),
+    F.data == "cancel",
 )
 async def cancel_premium_cancel(
     call: CallbackQuery,
