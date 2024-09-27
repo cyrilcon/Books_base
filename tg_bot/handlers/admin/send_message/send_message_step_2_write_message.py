@@ -10,11 +10,12 @@ from tg_bot.keyboards.inline import cancel_keyboard, reply_keyboard
 from tg_bot.services import ClearKeyboard, get_user_localization
 from tg_bot.states import SendMessage
 
-send_message_router_2_router = Router()
+send_message_step_2_router = Router()
 
 
-@send_message_router_2_router.callback_query(
-    StateFilter(SendMessage.write_message), F.data == "back"
+@send_message_step_2_router.callback_query(
+    StateFilter(SendMessage.write_message),
+    F.data == "back",
 )
 async def back_to_send_message_step_1(
     call: CallbackQuery,
@@ -29,7 +30,7 @@ async def back_to_send_message_step_1(
     await call.answer()
 
 
-@send_message_router_2_router.message(StateFilter(SendMessage.write_message))
+@send_message_step_2_router.message(StateFilter(SendMessage.write_message))
 async def support_reply_to_user_process(
     message: Message,
     l10n: FluentLocalization,
@@ -53,7 +54,7 @@ async def support_reply_to_user_process(
         )
         await bot.send_message(
             chat_id=id_user_recipient,
-            text=l10n_recipient.format_value("send-message-from-admin"),
+            text=l10n_recipient.format_value("send-message-success-message-for-user"),
             reply_markup=reply_keyboard(l10n),
             reply_to_message_id=sent_message.message_id,
         )

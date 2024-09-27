@@ -34,7 +34,10 @@ async def send_message(
     )
 
 
-@send_message_step_1_router.message(StateFilter(SendMessage.select_user), F.text)
+@send_message_step_1_router.message(
+    StateFilter(SendMessage.select_user),
+    F.text,
+)
 async def send_message_step_1(
     message: Message,
     l10n: FluentLocalization,
@@ -57,9 +60,7 @@ async def send_message_step_1(
         return
 
     id_user = user.id_user
-    full_name = user.full_name
-    username = user.username
-    user_link = await create_user_link(full_name, username)
+    user_link = await create_user_link(user.full_name, user.username)
 
     sent_message = await message.answer(
         l10n.format_value(

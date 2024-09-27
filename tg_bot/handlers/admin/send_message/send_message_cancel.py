@@ -9,7 +9,10 @@ from tg_bot.states import SendMessage
 send_message_cancel_router = Router()
 
 
-@send_message_cancel_router.callback_query(StateFilter(SendMessage), F.data == "cancel")
+@send_message_cancel_router.callback_query(
+    StateFilter(SendMessage),
+    F.data == "cancel",
+)
 async def send_message_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,

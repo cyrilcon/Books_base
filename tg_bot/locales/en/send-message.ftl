@@ -6,7 +6,7 @@ send-message-prompt-write-message =
     <b>2/2</b>
     Напишите <i><b>сообщение</b></i>, которое хотите отправить пользователю { $user_link } (<code>{ $id_user }</code>)
 
-send-message-from-admin = Вы получили сообщение от администратора
+send-message-success-message-for-user = Вы получили сообщение от администратора
 
 send-message-success = Сообщение отправлено пользователю { $user_link } (<code>{ $id_user }</code>)!!
 
