@@ -39,7 +39,10 @@ async def get_profile(
     )
 
 
-@get_profile_router.message(StateFilter(GetProfile.select_user), F.text)
+@get_profile_router.message(
+    StateFilter(GetProfile.select_user),
+    F.text,
+)
 async def get_profile_process(
     message: Message,
     l10n: FluentLocalization,
@@ -61,12 +64,12 @@ async def get_profile_process(
         )
         return
 
+    status_icons = get_user_status_icons(user, l10n)
+
     user_link = await create_user_link(user.full_name, user.username)
 
     registration_datetime = convert_utc_datetime(user.registration_datetime)
     last_activity_datetime = convert_utc_datetime(user.last_activity_datetime)
-
-    status_icons = get_user_status_icons(user, l10n)
 
     await message.answer(
         l10n.format_value(

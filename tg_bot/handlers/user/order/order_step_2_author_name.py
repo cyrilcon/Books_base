@@ -91,7 +91,7 @@ async def order_step_2(
     await bot.send_message(
         chat_id=config.chat.order,
         text=l10n.format_value(
-            "order-received-from-user",
+            "order-success-message-from-user",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),

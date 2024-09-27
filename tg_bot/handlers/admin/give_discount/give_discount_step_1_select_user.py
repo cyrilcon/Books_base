@@ -60,6 +60,18 @@ async def give_discount_step_1(
         )
         return
 
+    if user.is_premium:
+        sent_message = await message.answer(
+            l10n.format_value("give-discount-error-user-has-premium"),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
     discount_value = user.has_discount
     if discount_value:
         sent_message = await message.answer(

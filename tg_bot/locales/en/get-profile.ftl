@@ -16,12 +16,16 @@ get-profile-template =
     
     { user-balance }
 
-    Дата регистрации: <code>{ $registration_datetime }</code>
+    Дата регистрации:
+    <code>{ $registration_datetime }</code>
 
-    Последняя активность: <code>{ $last_activity_datetime }</code>
+    Последняя активность:
+    <code>{ $last_activity_datetime }</code>
 
 get-profile-status-icon-admin = 👮🏻
 
 get-profile-status-icon-blacklisted = 🚫
 
 get-profile-status-icon-premium = ⚜️
+
+get-profile-canceled = Вы отменили получение профиля

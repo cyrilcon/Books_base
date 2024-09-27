@@ -9,7 +9,10 @@ from tg_bot.states import GetProfile
 get_profile_cancel_router = Router()
 
 
-@get_profile_cancel_router.callback_query(StateFilter(GetProfile), F.data == "cancel")
+@get_profile_cancel_router.callback_query(
+    StateFilter(GetProfile),
+    F.data == "cancel",
+)
 async def get_profile_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,

@@ -2,6 +2,8 @@ give-discount-prompt-select-user =
     <b>1/2</b>
     Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите выдать скидку
 
+give-discount-error-user-has-premium = Пользователь имеет статус { -books-base-premium } ⚜️
+
 give-discount-error-user-already-has-discount =
     Пользователь уже имеет <b>{ $discount_value ->
         [100] купон на бесплатную книгу
