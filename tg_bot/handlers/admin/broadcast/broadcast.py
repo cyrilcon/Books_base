@@ -35,7 +35,7 @@ async def broadcast(
     )
 
 
-@broadcast_router.message(StateFilter(Broadcast.write_message), F.text)
+@broadcast_router.message(StateFilter(Broadcast.write_message))
 async def broadcast_process(
     message: Message,
     l10n: FluentLocalization,

@@ -9,7 +9,10 @@ from tg_bot.states import Broadcast
 broadcast_cancel_router = Router()
 
 
-@broadcast_cancel_router.callback_query(StateFilter(Broadcast), F.data == "cancel")
+@broadcast_cancel_router.callback_query(
+    StateFilter(Broadcast),
+    F.data == "cancel",
+)
 async def broadcast_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,

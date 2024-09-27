@@ -45,7 +45,6 @@ async def support_reply_to_user_process(
     user_link = data["user_link"]
 
     l10n_recipient = await get_user_localization(id_user_recipient)
-
     try:
         sent_message = await bot.copy_message(
             chat_id=id_user_recipient,
