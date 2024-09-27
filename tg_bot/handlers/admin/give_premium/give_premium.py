@@ -6,10 +6,10 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from tg_bot.enums import MessageEffects
 from api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.keyboards.inline import cancel_keyboard
+from tg_bot.enums import MessageEffects
+from tg_bot.keyboards.inline import cancel_keyboard, channel_keyboard
 from tg_bot.services import (
     find_user,
     create_user_link,
@@ -43,7 +43,10 @@ async def give_premium(
     )
 
 
-@give_premium_router.message(StateFilter(GivePremium.select_user), F.text)
+@give_premium_router.message(
+    StateFilter(GivePremium.select_user),
+    F.text,
+)
 async def give_premium_process(
     message: Message,
     l10n: FluentLocalization,
@@ -74,7 +77,7 @@ async def give_premium_process(
     if user.is_premium:
         sent_message = await message.answer(
             l10n.format_value(
-                "give-premium-error-already-given",
+                "give-premium-error-user-already-has-premium",
                 {"user_link": user_link, "id_user": str(id_user)},
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -90,8 +93,12 @@ async def give_premium_process(
     try:
         await bot.send_message(
             chat_id=id_user,
-            text=l10n_recipient.format_value("give-premium-given"),
+            text=l10n_recipient.format_value(
+                "give-premium-success-message-for-user",
+                {"channel_link": config.channel.link},
+            ),
             message_effect_id=MessageEffects.CONFETTI,
+            reply_markup=channel_keyboard(l10n),
         )
     except AiogramError:
         await message.answer(l10n.format_value("error-user-blocked-bot"))

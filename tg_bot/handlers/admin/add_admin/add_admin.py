@@ -89,8 +89,8 @@ async def add_admin_process(
         )
         return
 
+    l10n_recipient = await get_user_localization(id_user)
     try:
-        l10n_recipient = await get_user_localization(id_user)
         await bot.send_message(
             chat_id=id_user,
             text=l10n_recipient.format_value("add-admin-success-message-for-user"),

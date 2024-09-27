@@ -17,7 +17,7 @@ admin =
 
     📩 Обслужить заказ — /serve_order
 
-    ⚜️ Подарить Premium — /give_premium
+    + ⚜️ Подарить Premium — /give_premium
 
     ♦️ Отменить Premium — /cancel_premium
 

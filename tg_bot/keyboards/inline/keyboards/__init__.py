@@ -43,7 +43,7 @@ from .buy_book_deep_link import buy_book_deep_link_keyboard
 from .buy_or_read import buy_or_read_keyboard
 from .cancel import cancel_keyboard
 from .cancel_discount import cancel_discount_keyboard
-from .channel_button import channel_keyboard
+from .channel import channel_keyboard
 from .create_price import create_price_keyboard
 from .discounts import discounts_keyboard
 from .discounts_back_cancel import discounts_back_cancel_keyboard

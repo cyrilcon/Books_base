@@ -9,7 +9,10 @@ from tg_bot.states import GivePremium
 give_premium_cancel_router = Router()
 
 
-@give_premium_cancel_router.callback_query(StateFilter(GivePremium), F.data == "cancel")
+@give_premium_cancel_router.callback_query(
+    StateFilter(GivePremium),
+    F.data == "cancel",
+)
 async def give_premium_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,
