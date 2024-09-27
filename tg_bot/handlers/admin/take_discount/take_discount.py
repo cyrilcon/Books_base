@@ -35,7 +35,10 @@ async def take_discount(
     )
 
 
-@take_discount_router.message(StateFilter(TakeDiscount.select_user), F.text)
+@take_discount_router.message(
+    StateFilter(TakeDiscount.select_user),
+    F.text,
+)
 async def take_discount_process(
     message: Message,
     l10n: FluentLocalization,
@@ -58,14 +61,12 @@ async def take_discount_process(
         return
 
     id_user = user.id_user
-    full_name = user.full_name
-    username = user.username
-    user_link = await create_user_link(full_name, username)
+    user_link = await create_user_link(user.full_name, user.username)
 
     if not user.has_discount:
         sent_message = await message.answer(
             l10n.format_value(
-                "take-discount-error-already-taken",
+                "take-discount-error-user-already-has-not-discount",
                 {"user_link": user_link, "id_user": str(id_user)},
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -77,7 +78,7 @@ async def take_discount_process(
         )
         return
 
-    await api.users.discounts.delete_discount(id_user)
+    await api.users.discounts.delete_discount(id_user=id_user)
     await message.answer(
         l10n.format_value(
             "take-discount-success",

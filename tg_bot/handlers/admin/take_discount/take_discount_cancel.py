@@ -10,7 +10,8 @@ take_discount_cancel_router = Router()
 
 
 @take_discount_cancel_router.callback_query(
-    StateFilter(TakeDiscount), F.data == "cancel"
+    StateFilter(TakeDiscount),
+    F.data == "cancel",
 )
 async def take_discount_cancel(
     call: CallbackQuery,
