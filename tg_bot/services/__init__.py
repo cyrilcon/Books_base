@@ -1,6 +1,7 @@
 __all__ = (
     "BookFormatter",
     "set_default_commands",
+    "set_user_commands",
     "Broadcaster",
     "ClearKeyboard",
     "convert_utc_datetime",
@@ -17,7 +18,7 @@ __all__ = (
 )
 
 from .book_formatter import BookFormatter
-from .bot_commands import set_default_commands
+from .bot_commands import set_default_commands, set_user_commands
 from .broadcaster import Broadcaster
 from .clear_keyboard import ClearKeyboard
 from .convert_utc_datetime import convert_utc_datetime

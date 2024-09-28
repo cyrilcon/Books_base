@@ -14,6 +14,7 @@ from tg_bot.services import (
     create_user_link,
     ClearKeyboard,
     get_user_localization,
+    set_user_commands,
 )
 from tg_bot.states import AddAdmin
 
@@ -97,6 +98,7 @@ async def add_admin_process(
         await message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
         await api.users.admins.create_admin(id_user=id_user)
+        await set_user_commands(bot=bot, id_user=id_user, is_admin=True)
         await message.answer(
             l10n.format_value(
                 "add-admin-success",

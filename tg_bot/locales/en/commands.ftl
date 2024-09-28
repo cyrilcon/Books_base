@@ -28,4 +28,50 @@ command-help = ℹ️ Help
 
 command-start = 🔄 Restart bot
 
-command-admin = 🧑🏼‍💼 Commands for admin
+command-admin = 👮🏻 Commands for admin
+
+command-add-book = 📖 Add a book
+
+command-edit-book = ♻️ Edit book details
+
+command-delete-book = 📕 Delete a book
+
+command-send-book = 📙 Send a book
+
+command-give-book = 📗 Gift a book
+
+command-add-blacklist = ❌ Add to blacklist
+
+command-remove-blacklist = ❎ Remove from blacklist
+
+command-view-orders = 📬 View orders
+
+command-serve-order = 📩 Serve an order
+
+command-give-premium = ⚜️ Gift Premium
+
+command-cancel-premium = ♦️ Cancel Premium
+
+command-give-base = 💎 Grant base
+
+command-take-base = 🔻 Revoke base
+
+command-give-discount = 🏷️ Give discount
+
+command-take-discount = 🔺 Remove discount
+
+command-add-article = 📰 Add an article
+
+command-delete-article = 🟥 Delete an article
+
+command-get-profile = 🪪 Get user profile
+
+command-refund = ⭐️ Refund stars to user
+
+command-add-admin = 🙋🏼 Appoint administrator
+
+command-remove-admin = 🙅🏼 Remove administrator
+
+command-send-message = 🧑🏼‍💻 Send message to user
+
+command-broadcast = 📢 Send broadcast

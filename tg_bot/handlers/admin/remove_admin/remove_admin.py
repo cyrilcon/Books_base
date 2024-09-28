@@ -1,4 +1,4 @@
-from aiogram import Router, F
+from aiogram import Router, F, Bot
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -7,7 +7,12 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import find_user, create_user_link, ClearKeyboard
+from tg_bot.services import (
+    find_user,
+    create_user_link,
+    ClearKeyboard,
+    set_user_commands,
+)
 from tg_bot.states import RemoveAdmin
 
 remove_admin_router = Router()
@@ -44,6 +49,7 @@ async def remove_admin_process(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    bot: Bot,
 ):
     await ClearKeyboard.clear(message, storage)
 
@@ -94,6 +100,7 @@ async def remove_admin_process(
         return
 
     await api.users.admins.delete_admin(id_user=id_user)
+    await set_user_commands(bot=bot, id_user=id_user, is_admin=False)
     await message.answer(
         l10n.format_value(
             "remove-admin-success",
