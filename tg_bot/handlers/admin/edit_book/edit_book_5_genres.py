@@ -26,7 +26,7 @@ async def edit_genres(
     await ClearKeyboard.clear(call, storage)
 
     id_book = int(call.data.split(":")[-1])
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     book = response.get_model()
 
     genres = BookFormatter.format_genres(book.genres)

@@ -79,7 +79,7 @@ async def add_book_step_1(
 
     id_book = int(article.lstrip("#"))
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     status = response.status
 
     if status == 200:

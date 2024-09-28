@@ -40,7 +40,7 @@ async def buy_book(
 
     id_user = call.from_user.id
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     status = response.status
 
     if status != 200:
@@ -158,7 +158,7 @@ async def payment_book(
         book_ids=[id_book],
     )
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     book = response.get_model()
 
     await call.message.answer(
@@ -272,7 +272,7 @@ async def payment_book_on_successful(
         book_ids=[id_book],
     )
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     book = response.get_model()
 
     await message.answer(

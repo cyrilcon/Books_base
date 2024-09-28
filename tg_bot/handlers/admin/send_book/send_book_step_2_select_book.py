@@ -20,7 +20,8 @@ send_book_step_2_router = Router()
 
 
 @send_book_step_2_router.callback_query(
-    StateFilter(SendBook.select_book), F.data == "back"
+    StateFilter(SendBook.select_book),
+    F.data == "back",
 )
 async def back_to_send_book_step_1(
     call: CallbackQuery,
@@ -35,7 +36,10 @@ async def back_to_send_book_step_1(
     await call.answer()
 
 
-@send_book_step_2_router.message(StateFilter(SendBook.select_book), F.text)
+@send_book_step_2_router.message(
+    StateFilter(SendBook.select_book),
+    F.text,
+)
 async def send_book_step_2(
     message: Message,
     l10n: FluentLocalization,
@@ -61,7 +65,7 @@ async def send_book_step_2(
 
     id_book = int(article.lstrip("#"))
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     status = response.status
 
     if status != 200:

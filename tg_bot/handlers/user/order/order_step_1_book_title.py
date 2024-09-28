@@ -118,7 +118,7 @@ async def order_step_1_display_book_details(
     id_book = int(call.data.split(":")[-1])
     article = BookFormatter.format_article(id_book)
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     status = response.status
 
     if status != 200:

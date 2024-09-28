@@ -24,7 +24,7 @@ async def edit_authors(
     await ClearKeyboard.clear(call, storage)
 
     id_book = int(call.data.split(":")[-1])
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     book = response.get_model()
 
     authors = BookFormatter.format_authors(book.authors)

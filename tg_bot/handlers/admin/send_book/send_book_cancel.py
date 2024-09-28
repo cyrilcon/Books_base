@@ -9,7 +9,10 @@ from tg_bot.states import SendBook
 send_book_cancel_router = Router()
 
 
-@send_book_cancel_router.callback_query(StateFilter(SendBook), F.data == "cancel")
+@send_book_cancel_router.callback_query(
+    StateFilter(SendBook),
+    F.data == "cancel",
+)
 async def send_book_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,

@@ -26,7 +26,7 @@ async def edit_cover(
     id_user = call.from_user.id
 
     id_book = int(call.data.split(":")[-1])
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     book = response.get_model()
 
     sent_message = await call.message.answer_photo(

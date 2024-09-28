@@ -14,7 +14,7 @@ async def buy_book_button(
     :return: The "Buy book" button.
     """
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     book = response.get_model()
 
     buy_book = InlineKeyboardButton(
