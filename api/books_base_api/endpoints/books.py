@@ -172,3 +172,17 @@ class BooksApi:
             url=f"{self.endpoint}/{id_book}",
         )
         return ApiResponse(status, result)
+
+    async def delete_file(self, id_book: int, file_format: str) -> ApiResponse:
+        """
+        Delete a file of the book by its format.
+
+        :param id_book: Unique book identifier (article of the book).
+        :param file_format: Format of the file.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="DELETE",
+            url=f"{self.endpoint}/{id_book}/file{file_format}",
+        )
+        return ApiResponse(status, result)
