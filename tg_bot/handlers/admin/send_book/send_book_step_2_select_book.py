@@ -107,7 +107,7 @@ async def send_book_step_2(
             l10n.format_value(
                 "send-book-success",
                 {
-                    "book_title": book.title,
+                    "title": book.title,
                     "article": article,
                     "user_link": user_link,
                     "id_user": str(id_user_recipient),

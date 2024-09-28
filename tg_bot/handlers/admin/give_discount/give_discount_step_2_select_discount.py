@@ -5,10 +5,11 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from tg_bot.enums import MessageEffects
 from api.books_base_api import api
+from tg_bot.config import config
+from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import get_user_localization
+from tg_bot.services import get_user_localization, get_fluent_localization
 from tg_bot.states import GiveDiscount
 
 give_discount_step_2_router = Router()
@@ -64,15 +65,24 @@ async def give_discount_step_2(
             id_user=id_user_recipient,
             discount_value=discount_value,
         )
+
+        l10n_params = {
+            "msg_id": "give-discount-success",
+            "args": {
+                "discount_value": discount_value,
+                "user_link": user_link,
+                "id_user": str(id_user_recipient),
+            },
+        }
+
         await call.message.edit_text(
-            l10n.format_value(
-                "give-discount-success",
-                {
-                    "discount_value": discount_value,
-                    "user_link": user_link,
-                    "id_user": str(id_user_recipient),
-                },
-            )
+            l10n.format_value(l10n_params["msg_id"], l10n_params["args"])
+        )
+
+        l10n_chat = get_fluent_localization(config.chat.language_code)
+        await bot.send_message(
+            chat_id=config.chat.payment,
+            text=l10n_chat.format_value(l10n_params["msg_id"], l10n_params["args"]),
         )
     await state.clear()
     await call.answer()

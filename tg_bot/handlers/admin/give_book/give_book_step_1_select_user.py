@@ -34,7 +34,10 @@ async def give_book_1(
     )
 
 
-@give_book_step_1_router.message(StateFilter(GiveBook.select_user), F.text)
+@give_book_step_1_router.message(
+    StateFilter(GiveBook.select_user),
+    F.text,
+)
 async def give_book_1_process(
     message: Message,
     l10n: FluentLocalization,
@@ -69,9 +72,7 @@ async def give_book_1_process(
         return
 
     id_user = user.id_user
-    full_name = user.full_name
-    username = user.username
-    user_link = await create_user_link(full_name, username)
+    user_link = await create_user_link(user.full_name, user.username)
 
     sent_message = await message.answer(
         l10n.format_value(

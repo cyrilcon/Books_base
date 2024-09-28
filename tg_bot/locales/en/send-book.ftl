@@ -14,6 +14,6 @@ send-book-error-article-not-found =
     Книга с таким артикулом не найдена!!
     Введите артикул существуюшей книги ещё раз
 
-send-book-success = Книга "<code>{ $book_title }</code>" (<code>{ $article }</code>) отправлена пользователю { $user_link } (<code>{ $id_user }</code>)!!
+send-book-success = Книга "<code>{ $title }</code>" (<code>{ $article }</code>) отправлена пользователю { $user_link } (<code>{ $id_user }</code>)!!
 
 send-book-canceled = Вы не отправили книгу пользователю

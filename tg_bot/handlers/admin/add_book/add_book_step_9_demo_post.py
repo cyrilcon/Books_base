@@ -23,6 +23,8 @@ async def add_book_step_9(
     state: FSMContext,
     bot: Bot,
 ):
+    await call.message.edit_reply_markup()
+
     data = await state.get_data()
     is_post = data.get("is_post")
     id_book = data.get("id_book")
@@ -39,7 +41,6 @@ async def add_book_step_9(
             caption=book_caption,
             reply_markup=buy_deep_link_keyboard(deep_link_url=deep_link_url),
         )
-    await call.message.edit_reply_markup()
     await call.message.answer(l10n.format_value("add-book-success"))
     await state.clear()
     await call.answer()
