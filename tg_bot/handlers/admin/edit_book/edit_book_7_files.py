@@ -7,14 +7,19 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import (
-    cancel_keyboard,
-    edit_book_keyboard,
-    done_clear_cancel_keyboard,
+from tg_bot.services import (
+    ClearKeyboard,
+    generate_book_caption,
+    send_files,
+    BookFormatter,
 )
-from tg_bot.services import BookFormatter
-from tg_bot.services import ClearKeyboard, generate_book_caption, send_files
 from tg_bot.states import EditBook
+from .keyboards import (
+    edit_book_keyboard,
+    delete_cancel_keyboard,
+    done_clear_delete_cancel_keyboard,
+    formats_keyboard,
+)
 
 edit_files_router = Router()
 
@@ -42,7 +47,7 @@ async def edit_files(
 
     sent_message = await call.message.answer(
         l10n.format_value("edit-book-prompt-files"),
-        reply_markup=cancel_keyboard(l10n),
+        reply_markup=delete_cancel_keyboard(l10n),
     )
 
     await state.update_data(id_book_edited=id_book)
@@ -56,7 +61,10 @@ async def edit_files(
     await call.answer()
 
 
-@edit_files_router.message(StateFilter(EditBook.edit_files), F.document)
+@edit_files_router.message(
+    StateFilter(EditBook.edit_files),
+    F.document,
+)
 async def edit_files_process(
     message: Message,
     l10n: FluentLocalization,
@@ -86,8 +94,8 @@ async def edit_files_process(
 
     await state.update_data(files=files)
     sent_message = await message.answer(
-        text,  # TODO: add delete button (future feature)
-        reply_markup=done_clear_cancel_keyboard(l10n),
+        text=text,
+        reply_markup=done_clear_delete_cancel_keyboard(l10n),
     )
     await ClearKeyboard.safe_message(
         storage=storage,
@@ -96,7 +104,10 @@ async def edit_files_process(
     )
 
 
-@edit_files_router.callback_query(StateFilter(EditBook.edit_files), F.data == "done")
+@edit_files_router.callback_query(
+    StateFilter(EditBook.edit_files),
+    F.data == "done",
+)
 async def edit_files_done(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -108,7 +119,7 @@ async def edit_files_done(
     id_book_edited = data.get("id_book_edited")
     files = data.get("files")
 
-    response = await api.books.get_book_by_id(id_book_edited)
+    response = await api.books.get_book_by_id(id_book=id_book_edited)
     book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n)
@@ -120,7 +131,7 @@ async def edit_files_done(
                 "edit-book-error-caption-too-long",
                 {"caption_length": caption_length},
             ),
-            reply_markup=cancel_keyboard(l10n),
+            reply_markup=delete_cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
             storage=storage,
@@ -152,7 +163,10 @@ async def edit_files_done(
     await call.answer()
 
 
-@edit_files_router.callback_query(StateFilter(EditBook.edit_files), F.data == "clear")
+@edit_files_router.callback_query(
+    StateFilter(EditBook.edit_files),
+    F.data == "clear",
+)
 async def edit_files_clear(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -160,8 +174,57 @@ async def edit_files_clear(
 ):
     await call.message.edit_text(
         l10n.format_value("edit-book-prompt-files"),
-        reply_markup=cancel_keyboard(l10n),
+        reply_markup=delete_cancel_keyboard(l10n),
     )
     files = []
     await state.update_data(files=files)
+    await call.answer()
+
+
+@edit_files_router.callback_query(
+    StateFilter(EditBook.edit_files),
+    F.data == "delete",
+)
+async def edit_files_delete(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+):
+    data = await state.get_data()
+    id_book = data.get("id_book_edited")
+
+    response = await api.books.get_book_by_id(id_book=id_book)
+    book = response.get_model()
+    formats = [getattr(file, "format") for file in book.files]
+
+    await call.message.edit_text(
+        l10n.format_value("edit-book-delete-files"),
+        reply_markup=formats_keyboard(l10n, formats=formats),
+    )
+    await call.answer()
+
+
+@edit_files_router.callback_query(
+    StateFilter(EditBook.edit_files),
+    F.data.startswith("delete_format"),
+)
+async def edit_files_delete_format(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+):
+    file_format = call.data.split(":")[-1]
+
+    data = await state.get_data()
+    id_book = data.get("id_book_edited")
+
+    await api.books.delete_file(id_book=id_book, file_format=file_format)
+
+    response = await api.books.get_book_by_id(id_book=id_book)
+    book = response.get_model()
+    formats = [getattr(file, "format") for file in book.files]
+
+    await call.message.edit_reply_markup(
+        reply_markup=formats_keyboard(l10n, formats=formats),
+    )
     await call.answer()

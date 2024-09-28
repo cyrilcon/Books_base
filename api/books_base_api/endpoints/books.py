@@ -183,6 +183,6 @@ class BooksApi:
 
         status, result = await self.base_client.make_request(
             method="DELETE",
-            url=f"{self.endpoint}/{id_book}/file{file_format}",
+            url=f"{self.endpoint}/{id_book}/file/{file_format}",
         )
         return ApiResponse(status, result)

@@ -1,20 +1,30 @@
 from aiogram import Router, F
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import update_price_keyboard, edit_book_keyboard
-from tg_bot.services import generate_book_caption
+from tg_bot.services import generate_book_caption, ClearKeyboard
+from .keyboards import edit_book_keyboard, price_keyboard
 
 edit_price_router = Router()
 
 
 @edit_price_router.callback_query(F.data.startswith("edit_price"))
-async def edit_price(call: CallbackQuery, l10n: FluentLocalization):
+async def edit_price(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
+
     id_book = int(call.data.split(":")[-1])
     await call.message.answer(
         l10n.format_value("edit-book-select-price"),
-        reply_markup=update_price_keyboard(l10n, id_book),
+        reply_markup=price_keyboard(l10n, id_book),
     )
     await call.answer()
 
@@ -23,7 +33,12 @@ async def edit_price(call: CallbackQuery, l10n: FluentLocalization):
 async def update_price(
     call: CallbackQuery,
     l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
+
     id_book_edited = int(call.data.split(":")[-1])
     price = int(call.data.split(":")[-2])
 
@@ -50,7 +65,7 @@ async def update_price(
         )
         return
 
-    response = await api.books.update_book(id_book_edited, price=price)
+    response = await api.books.update_book(id_book_edited=id_book_edited, price=price)
     book = response.get_model()
 
     await call.message.edit_text(l10n.format_value("edit-book-success"))

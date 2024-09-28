@@ -9,9 +9,10 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard, edit_book_keyboard
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tg_bot.states import EditBook
+from .keyboards import edit_book_keyboard
 
 edit_genres_router = Router()
 
@@ -34,7 +35,7 @@ async def edit_genres(
     sent_message = await call.message.answer(
         l10n.format_value(
             "edit-book-prompt-genres",
-            {"genres": f"<code>{genres}</code>"},
+            {"genres": genres},
         ),
         reply_markup=cancel_keyboard(l10n),
     )
@@ -49,7 +50,10 @@ async def edit_genres(
     await call.answer()
 
 
-@edit_genres_router.message(StateFilter(EditBook.edit_genres), F.text)
+@edit_genres_router.message(
+    StateFilter(EditBook.edit_genres),
+    F.text,
+)
 async def edit_genres_process(
     message: Message,
     l10n: FluentLocalization,
@@ -77,6 +81,7 @@ async def edit_genres_process(
                 sent_message_id=sent_message.message_id,
             )
             return
+
         if '"' in genre["genre_name"]:
             sent_message = await message.answer(
                 l10n.format_value("add-book-error-invalid-genre-name"),
@@ -88,6 +93,7 @@ async def edit_genres_process(
                 sent_message_id=sent_message.message_id,
             )
             return
+
         if genre["genre_name"] not in [g["genre_name"] for g in genres]:
             genres.append(genre)
 
@@ -115,7 +121,7 @@ async def edit_genres_process(
         )
         return
 
-    response = await api.books.update_book(id_book_edited, genres=genres)
+    response = await api.books.update_book(id_book_edited=id_book_edited, genres=genres)
     book = response.get_model()
 
     await message.answer(l10n.format_value("edit-book-success"))

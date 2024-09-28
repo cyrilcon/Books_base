@@ -9,6 +9,7 @@ __all__ = (
     "create_price_85_button",
     "not_from_user_button",
     "not_post_button",
+    "delete_button",
     "cancel_discount_button",
     "discount_100_button",
     "discount_15_button",
@@ -66,6 +67,7 @@ from .create_price import (
     not_from_user_button,
     not_post_button,
 )
+from .delete import delete_button
 from .discounts import (
     cancel_discount_button,
     discount_100_button,

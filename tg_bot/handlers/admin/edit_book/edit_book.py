@@ -6,9 +6,10 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard, edit_book_keyboard
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import ClearKeyboard, is_valid_book_article, generate_book_caption
 from tg_bot.states import EditBook
+from .keyboards import edit_book_keyboard
 
 edit_book_router = Router()
 
@@ -35,7 +36,10 @@ async def edit_book(
     )
 
 
-@edit_book_router.message(StateFilter(EditBook.select_book), F.text)
+@edit_book_router.message(
+    StateFilter(EditBook.select_book),
+    F.text,
+)
 async def edit_book_process(
     message: Message,
     l10n: FluentLocalization,
@@ -81,6 +85,6 @@ async def edit_book_process(
     await message.answer_photo(
         photo=book.cover,
         caption=caption,
-        reply_markup=edit_book_keyboard(l10n, id_book),
+        reply_markup=edit_book_keyboard(l10n, id_book=id_book),
     )
     await state.clear()

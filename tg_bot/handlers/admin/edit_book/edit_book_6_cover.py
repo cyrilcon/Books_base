@@ -7,9 +7,10 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard, edit_book_keyboard
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import ClearKeyboard, generate_book_caption
 from tg_bot.states import EditBook
+from .keyboards import edit_book_keyboard
 
 edit_cover_router = Router()
 
@@ -46,7 +47,10 @@ async def edit_cover(
     await call.answer()
 
 
-@edit_cover_router.message(StateFilter(EditBook.edit_cover), F.photo)
+@edit_cover_router.message(
+    StateFilter(EditBook.edit_cover),
+    F.photo,
+)
 async def edit_cover_process(
     message: Message,
     l10n: FluentLocalization,
@@ -60,7 +64,7 @@ async def edit_cover_process(
     data = await state.get_data()
     id_book_edited = data.get("id_book_edited")
 
-    response = await api.books.update_book(id_book_edited, cover=cover)
+    response = await api.books.update_book(id_book_edited=id_book_edited, cover=cover)
     book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n)

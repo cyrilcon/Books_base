@@ -7,9 +7,10 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard, edit_book_keyboard
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import ClearKeyboard, generate_book_caption
 from tg_bot.states import EditBook
+from .keyboards import edit_book_keyboard
 
 edit_description_router = Router()
 
@@ -30,7 +31,7 @@ async def edit_description(
     sent_message = await call.message.answer(
         l10n.format_value(
             "edit-book-prompt-description",
-            {"description": f"<code>{book.description}</code>"},
+            {"description": book.description},
         ),
         reply_markup=cancel_keyboard(l10n),
     )
@@ -45,7 +46,10 @@ async def edit_description(
     await call.answer()
 
 
-@edit_description_router.message(StateFilter(EditBook.edit_description), F.text)
+@edit_description_router.message(
+    StateFilter(EditBook.edit_description),
+    F.text,
+)
 async def edit_description_process(
     message: Message,
     l10n: FluentLocalization,
@@ -96,7 +100,10 @@ async def edit_description_process(
         )
         return
 
-    response = await api.books.update_book(id_book_edited, description=description)
+    response = await api.books.update_book(
+        id_book_edited=id_book_edited,
+        description=description,
+    )
     book = response.get_model()
 
     await message.answer(l10n.format_value("edit-book-success"))

@@ -5,9 +5,6 @@ __all__ = (
     "cancel_discount_keyboard",
     "channel_keyboard",
     "discounts_keyboard",
-    "done_clear_back_cancel_keyboard",
-    "done_clear_cancel_keyboard",
-    "edit_book_keyboard",
     "languages_keyboard",
     "my_books_keyboard",
     "order_again_keyboard",
@@ -26,9 +23,7 @@ __all__ = (
     "share_base_keyboard",
     "share_our_store_keyboard",
     "show_book_order_cancel_keyboard",
-    "update_price_keyboard",
     "view_news_keyboard",
-    "yes_cancel_keyboard",
 )
 
 from .keyboards import (
@@ -38,9 +33,6 @@ from .keyboards import (
     cancel_discount_keyboard,
     channel_keyboard,
     discounts_keyboard,
-    done_clear_back_cancel_keyboard,
-    done_clear_cancel_keyboard,
-    edit_book_keyboard,
     languages_keyboard,
     my_books_keyboard,
     order_again_keyboard,
@@ -59,7 +51,5 @@ from .keyboards import (
     share_base_keyboard,
     share_our_store_keyboard,
     show_book_order_cancel_keyboard,
-    update_price_keyboard,
     view_news_keyboard,
-    yes_cancel_keyboard,
 )

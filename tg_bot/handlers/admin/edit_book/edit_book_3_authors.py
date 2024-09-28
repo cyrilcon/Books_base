@@ -7,9 +7,10 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard, edit_book_keyboard
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tg_bot.states import EditBook
+from .keyboards import edit_book_keyboard
 
 edit_authors_router = Router()
 
@@ -32,7 +33,7 @@ async def edit_authors(
     sent_message = await call.message.answer(
         l10n.format_value(
             "edit-book-prompt-authors",
-            {"authors": f"<code>{authors}</code>"},
+            {"authors": authors},
         ),
         reply_markup=cancel_keyboard(l10n),
     )
@@ -47,7 +48,10 @@ async def edit_authors(
     await call.answer()
 
 
-@edit_authors_router.message(StateFilter(EditBook.edit_authors), F.text)
+@edit_authors_router.message(
+    StateFilter(EditBook.edit_authors),
+    F.text,
+)
 async def edit_authors_process(
     message: Message,
     l10n: FluentLocalization,
@@ -71,12 +75,24 @@ async def edit_authors_process(
             )
             return
 
+        if '"' in author_name:
+            sent_message = await message.answer(
+                l10n.format_value("edit-book-error-invalid-author-name"),
+                reply_markup=cancel_keyboard(l10n),
+            )
+            await ClearKeyboard.safe_message(
+                storage=storage,
+                id_user=message.from_user.id,
+                sent_message_id=sent_message.message_id,
+            )
+            return
+
     authors = [{"author_name": author_name} for author_name in authors]
 
     data = await state.get_data()
     id_book_edited = data.get("id_edit_book")
 
-    response = await api.books.get_book_by_id(id_book_edited)
+    response = await api.books.get_book_by_id(id_book=id_book_edited)
     book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n, authors=authors)
@@ -97,8 +113,7 @@ async def edit_authors_process(
         )
         return
 
-    response = await api.books.update_book(id_book_edited, authors=authors)
-    book = response.get_model()
+    await api.books.update_book(id_book_edited=id_book_edited, authors=authors)
 
     await message.answer(l10n.format_value("edit-book-success"))
     await message.answer_photo(

@@ -40,6 +40,10 @@ edit-book-prompt-authors =
 
     Текущий автор: <code>{ $authors }</code>
 
+edit-book-error-invalid-author-name =
+    В имени автора не должно содержаться символов <b>"кавычек"</b>!!
+    Введите имя автора ещё раз
+
 edit-book-error-author-name-too-long =
     Слишком длинное имя у автора!!
     Сократите и введите <i><b>автора(ов)</b></i> ещё раз
@@ -66,7 +70,7 @@ edit-book-error-genre-name-too-long =
 
 edit-book-prompt-cover = Отправьте новое <i><b>фото обложки</b></i> книги
 
-edit-book-prompt-files = Отправьте новый <i><b>файл</b></i> книги
+edit-book-prompt-files = Отправьте новый <i><b>файл</b></i> книги или удалите ненужный
 
 edit-book-error-file-already-sent =
     Вы уже отправляли файл этого формата!!
@@ -80,6 +84,8 @@ edit-book-prompt-more-files =
 
     <b>Форматы:</b>
     { $formats }
+
+edit-book-delete-files = Выберите файл, который хотите удалить
 
 edit-book-select-price = Выберите новую <i><b>цену</b></i> книги
 

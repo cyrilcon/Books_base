@@ -5,7 +5,8 @@ from tg_bot.keyboards.inline.buttons import serve_button, book_unavailable_butto
 
 
 def serve_order_keyboard(
-    l10n: FluentLocalization, id_order: int
+    l10n: FluentLocalization,
+    id_order: int,
 ) -> InlineKeyboardMarkup:
     """
     The "serve_order" keyboard is formed.

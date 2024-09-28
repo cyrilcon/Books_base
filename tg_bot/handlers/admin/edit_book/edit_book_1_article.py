@@ -7,7 +7,7 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard, edit_book_keyboard
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import (
     ClearKeyboard,
     is_valid_book_article,
@@ -15,6 +15,7 @@ from tg_bot.services import (
     BookFormatter,
 )
 from tg_bot.states import EditBook
+from .keyboards import edit_book_keyboard
 
 edit_article_router = Router()
 
@@ -32,7 +33,10 @@ async def edit_article(
     article = BookFormatter.format_article(id_book)
 
     sent_message = await call.message.answer(
-        l10n.format_value("edit-book-prompt-article", {"article": article}),
+        l10n.format_value(
+            "edit-book-prompt-article",
+            {"article": article},
+        ),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.update_data(id_book_edited=id_book)
@@ -46,7 +50,10 @@ async def edit_article(
     await call.answer()
 
 
-@edit_article_router.message(StateFilter(EditBook.edit_article), F.text)
+@edit_article_router.message(
+    StateFilter(EditBook.edit_article),
+    F.text,
+)
 async def edit_article_process(
     message: Message,
     l10n: FluentLocalization,
@@ -71,7 +78,7 @@ async def edit_article_process(
 
     new_id_book = int(article.lstrip("#"))
 
-    response = await api.books.get_book_by_id(new_id_book)
+    response = await api.books.get_book_by_id(id_book=new_id_book)
     status = response.status
 
     if status == 200:
@@ -89,7 +96,7 @@ async def edit_article_process(
     data = await state.get_data()
     id_book_edited = data.get("id_book_edited")
 
-    response = await api.books.get_book_by_id(id_book_edited)
+    response = await api.books.get_book_by_id(id_book=id_book_edited)
     book = response.get_model()
 
     caption = await generate_book_caption(
@@ -114,7 +121,10 @@ async def edit_article_process(
         )
         return
 
-    response = await api.books.update_book(id_book_edited, id_book=new_id_book)
+    response = await api.books.update_book(
+        id_book_edited=id_book_edited,
+        id_book=new_id_book,
+    )
     book = response.get_model()
 
     await message.answer(l10n.format_value("edit-book-success"))
