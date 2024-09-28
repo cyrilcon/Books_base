@@ -9,7 +9,10 @@ from tg_bot.states import Refund
 refund_cancel_router = Router()
 
 
-@refund_cancel_router.callback_query(StateFilter(Refund), F.data == "cancel")
+@refund_cancel_router.callback_query(
+    StateFilter(Refund),
+    F.data == "cancel",
+)
 async def refund_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,

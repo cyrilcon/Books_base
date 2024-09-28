@@ -7,10 +7,10 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import PaymentCurrencyEnum
 from tg_bot.config import config
 from tg_bot.keyboards.inline import cancel_keyboard
-from api.books_base_api.schemas import PaymentCurrencyEnum
-from tg_bot.services import ClearKeyboard, create_user_link
+from tg_bot.services import ClearKeyboard, create_user_link, get_fluent_localization
 from tg_bot.states import Refund
 
 refund_router = Router()
@@ -38,7 +38,10 @@ async def refund(
     )
 
 
-@refund_router.message(StateFilter(Refund.select_payment), F.text)
+@refund_router.message(
+    StateFilter(Refund.select_payment),
+    F.text,
+)
 async def refund_process(
     message: Message,
     l10n: FluentLocalization,
@@ -92,18 +95,24 @@ async def refund_process(
         response = await api.users.get_user_by_id(id_user)
         user = response.get_model()
 
-        full_name = user.full_name
-        username = user.username
-        user_link = await create_user_link(full_name, username)
+        user_link = await create_user_link(user.full_name, user.username)
 
-        text = l10n.format_value(
-            "refund-success",
-            {
+        l10n_params = {
+            "msg_id": "refund-success",
+            "args": {
                 "user_link": user_link,
                 "id_user": str(id_user),
                 "stars": payment.price,
             },
+        }
+
+        await message.answer(
+            l10n.format_value(l10n_params["msg_id"], l10n_params["args"])
         )
-        await message.answer(text=text)
-        await bot.send_message(chat_id=config.chat.payment, text=text)
+
+        l10n_chat = get_fluent_localization(config.chat.language_code)
+        await bot.send_message(
+            chat_id=config.chat.payment,
+            text=l10n_chat.format_value(l10n_params["msg_id"], l10n_params["args"]),
+        )
     await state.clear()
