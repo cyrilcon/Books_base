@@ -7,33 +7,41 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from tg_bot.keyboards.inline import (
-    back_cancel_keyboard,
-    done_clear_back_cancel_keyboard,
-)
+from tg_bot.keyboards.inline import back_cancel_keyboard
 from tg_bot.services import ClearKeyboard, BookFormatter
 from tg_bot.states import AddBook
+from .keyboards import done_clear_back_cancel_keyboard
 
 add_book_step_5_router = Router()
 
 
 @add_book_step_5_router.callback_query(
-    StateFilter(AddBook.add_genres), F.data == "back"
+    StateFilter(AddBook.add_genres),
+    F.data == "back",
 )
 async def back_to_add_book_step_4(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
 ):
+    data = await state.get_data()
+    description = data.get("description")
+
     await call.message.edit_text(
-        l10n.format_value("add-book-prompt-description"),
+        l10n.format_value(
+            "add-book-prompt-description-back",
+            {"description": description},
+        ),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_description)
     await call.answer()
 
 
-@add_book_step_5_router.message(StateFilter(AddBook.add_genres), F.text)
+@add_book_step_5_router.message(
+    StateFilter(AddBook.add_genres),
+    F.text,
+)
 async def add_book_step_5(
     message: Message,
     l10n: FluentLocalization,
@@ -65,6 +73,7 @@ async def add_book_step_5(
                 sent_message_id=sent_message.message_id,
             )
             return
+
         if '"' in genre["genre_name"]:
             sent_message = await message.answer(
                 l10n.format_value("add-book-error-invalid-genre-name"),
@@ -76,6 +85,7 @@ async def add_book_step_5(
                 sent_message_id=sent_message.message_id,
             )
             return
+
         if genre["genre_name"] not in [g["genre_name"] for g in genres]:
             genres.append(genre)
 
@@ -97,7 +107,8 @@ async def add_book_step_5(
 
 
 @add_book_step_5_router.callback_query(
-    StateFilter(AddBook.add_genres), F.data == "done"
+    StateFilter(AddBook.add_genres),
+    F.data == "done",
 )
 async def add_book_step_5_done(
     call: CallbackQuery,
@@ -113,7 +124,8 @@ async def add_book_step_5_done(
 
 
 @add_book_step_5_router.callback_query(
-    StateFilter(AddBook.add_genres), F.data == "clear"
+    StateFilter(AddBook.add_genres),
+    F.data == "clear",
 )
 async def add_book_5_clear(
     call: CallbackQuery,

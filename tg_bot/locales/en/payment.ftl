@@ -14,7 +14,7 @@ payment-book-success =
 payment-book-paid-message-for-admin =
     { $user_link } (<code>{ $id_user }</code>)
 
-    Купил <code>{ $title }</code> (<code>{ $id_book }</code>)
+    Купил "<code>{ $title }</code>" (<code>{ $article }</code>)
 
     <b>{ $price }{ $currency }</b>
     + { $base } <i>base</i> 💎

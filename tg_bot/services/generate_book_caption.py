@@ -55,7 +55,7 @@ async def generate_book_caption(
     genres = BookFormatter.format_genres(genres)
     article = BookFormatter.format_article(id_book)
 
-    caption = l10n.format_value(
+    book_caption = l10n.format_value(
         "book-caption-template",
         {
             "intro_message": intro_message,
@@ -69,4 +69,4 @@ async def generate_book_caption(
         },
     )
 
-    return caption
+    return book_caption

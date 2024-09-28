@@ -7,13 +7,16 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.keyboards.inline import buy_book_deep_link_keyboard
 from tg_bot.states import AddBook
+from .keyboards import buy_deep_link_keyboard
 
 add_book_step_9_router = Router()
 
 
-@add_book_step_9_router.callback_query(StateFilter(AddBook.preview), F.data == "post")
+@add_book_step_9_router.callback_query(
+    StateFilter(AddBook.preview),
+    F.data == "post",
+)
 async def add_book_step_9(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -21,22 +24,22 @@ async def add_book_step_9(
     bot: Bot,
 ):
     data = await state.get_data()
-    id_book = data.get("id_book")
-    caption = data.get("caption")
-    cover = data.get("cover")
     is_post = data.get("is_post")
+    id_book = data.get("id_book")
+    cover = data.get("cover")
+    book_caption = data.get("book_caption")
 
-    await api.books.create_book(data)
+    await api.books.create_book(data=data)
 
     if is_post:
-        deep_link = await create_start_link(bot, f"book_{id_book}")
+        deep_link_url = await create_start_link(bot, f"book_{id_book}")
         await bot.send_photo(
             chat_id=config.channel.books_base,
             photo=cover,
-            caption=caption,
-            reply_markup=buy_book_deep_link_keyboard(deep_link),
+            caption=book_caption,
+            reply_markup=buy_deep_link_keyboard(deep_link_url=deep_link_url),
         )
-    await state.clear()
     await call.message.edit_reply_markup()
     await call.message.answer(l10n.format_value("add-book-success"))
+    await state.clear()
     await call.answer()

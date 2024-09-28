@@ -10,14 +10,14 @@ from tg_bot.keyboards.inline.buttons import (
 )
 
 
-def create_price_keyboard(l10n) -> InlineKeyboardMarkup:
+def price_keyboard(l10n) -> InlineKeyboardMarkup:
     """
-    The "create_price" keyboard is formed.
+    The "price" keyboard is formed.
     :param l10n: Language set by the user.
-    :return: The "create_price" keyboard.
+    :return: The "price" keyboard.
     """
 
-    create_price_keyboard_markup = InlineKeyboardMarkup(
+    price_keyboard_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 create_price_85_button(l10n),
@@ -33,4 +33,4 @@ def create_price_keyboard(l10n) -> InlineKeyboardMarkup:
             ],
         ],
     )
-    return create_price_keyboard_markup
+    return price_keyboard_markup

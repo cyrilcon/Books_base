@@ -20,6 +20,11 @@ add-book-prompt-title =
     <b>2/8</b>
     Введите <i><b>название</b></i> книги
 
+add-book-prompt-title-back =
+    { add-book-prompt-title }
+
+    <code>{ $title }</code>
+
 add-book-error-title-too-long =
     Слишком большое название книги!!
     Сократите и введите <i><b>название</b></i> книги ещё раз
@@ -37,6 +42,11 @@ add-book-prompt-authors =
     <b>3/8</b>
     Введите <i><b>автора(ов)</b></i>
 
+add-book-prompt-authors-back =
+    { add-book-prompt-authors }
+
+    <code>{ $authors }</code>
+
 add-book-error-author-name-too-long =
     Слишком длинное имя у автора!!
     Сократите и введите <i><b>автора(ов)</b></i> ещё раз
@@ -48,6 +58,11 @@ add-book-error-invalid-author-name =
 add-book-prompt-description =
     <b>4/8</b>
     Введите <i><b>описание</b></i> книги
+
+add-book-prompt-description-back =
+    { add-book-prompt-description }
+
+    <code>{ $description }</code>
 
 add-book-error-description-too-long =
     Слишком большое описание!!

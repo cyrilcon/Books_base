@@ -35,6 +35,7 @@ async def add_book(
         ),
         reply_markup=cancel_keyboard(l10n),
     )
+    await state.update_data(free_article=free_article)
     await state.set_state(AddBook.select_article)
 
     await ClearKeyboard.safe_message(
@@ -44,7 +45,10 @@ async def add_book(
     )
 
 
-@add_book_step_1_router.message(StateFilter(AddBook.select_article), F.text)
+@add_book_step_1_router.message(
+    StateFilter(AddBook.select_article),
+    F.text,
+)
 async def add_book_step_1(
     message: Message,
     l10n: FluentLocalization,
@@ -55,9 +59,8 @@ async def add_book_step_1(
 
     article = message.text
 
-    response = await api.books.get_latest_article()
-    latest_article = response.result
-    free_article = BookFormatter.format_article(latest_article + 1)
+    data = await state.get_data()
+    free_article = data.get("free_article")
 
     if not is_valid_book_article(article):
         sent_message = await message.answer(

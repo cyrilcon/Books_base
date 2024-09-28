@@ -35,7 +35,10 @@ async def delete_book(
     )
 
 
-@delete_book_router.message(StateFilter(DeleteBook.select_book), F.text)
+@delete_book_router.message(
+    StateFilter(DeleteBook.select_book),
+    F.text,
+)
 async def delete_book_process(
     message: Message,
     l10n: FluentLocalization,
@@ -60,7 +63,7 @@ async def delete_book_process(
 
     id_book = int(article.lstrip("#"))
 
-    response = await api.books.get_book_by_id(id_book)
+    response = await api.books.get_book_by_id(id_book=id_book)
     status = response.status
 
     if status != 200:
@@ -76,7 +79,7 @@ async def delete_book_process(
         return
 
     book = response.get_model()
-    await api.books.delete_book(id_book)
+    await api.books.delete_book(id_book=id_book)
 
     await message.answer(
         l10n.format_value(

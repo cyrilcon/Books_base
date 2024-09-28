@@ -74,8 +74,8 @@ async def take_base_2(
     await api.users.update_user(id_user=id_user_recipient, base_balance=base_balance)
 
     l10n_params = {
-        "key": "take-base-success",
-        "params": {
+        "msg_id": "take-base-success",
+        "args": {
             "base_deducted": base_deducted,
             "user_link": user_link,
             "id_user": str(id_user_recipient),
@@ -83,11 +83,11 @@ async def take_base_2(
         },
     }
 
-    await message.answer(l10n.format_value(l10n_params["key"], l10n_params["params"]))
+    await message.answer(l10n.format_value(l10n_params["msg_id"], l10n_params["args"]))
 
     l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(
         chat_id=config.chat.payment,
-        text=l10n_chat.format_value(l10n_params["key"], l10n_params["params"]),
+        text=l10n_chat.format_value(l10n_params["msg_id"], l10n_params["args"]),
     )
     await state.clear()

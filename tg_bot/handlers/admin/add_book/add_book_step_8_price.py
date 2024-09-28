@@ -5,19 +5,17 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, Message
 from fluent.runtime import FluentLocalization
 
-from tg_bot.keyboards.inline import (
-    done_clear_back_cancel_keyboard,
-    cancel_keyboard,
-    post_cancel_keyboard,
-)
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tg_bot.states import AddBook
+from .keyboards import done_clear_back_cancel_keyboard, post_cancel_keyboard
 
 add_book_step_8_router = Router()
 
 
 @add_book_step_8_router.callback_query(
-    StateFilter(AddBook.select_price), F.data == "back"
+    StateFilter(AddBook.select_price),
+    F.data == "back",
 )
 async def back_to_add_book_step_7(
     call: CallbackQuery,
@@ -64,8 +62,12 @@ async def add_book_step_8(
     cover = data.get("cover")
     description = data.get("description")
 
-    caption = await generate_book_caption(data, is_post=is_post, from_user=from_user)
-    caption_length = len(caption)
+    book_caption = await generate_book_caption(
+        book_data=data,
+        is_post=is_post,
+        from_user=from_user,
+    )
+    caption_length = len(book_caption)
 
     if caption_length > 1024:
         await call.message.edit_text(
@@ -84,10 +86,10 @@ async def add_book_step_8(
     await call.message.delete()
     sent_message = await call.message.answer_photo(
         photo=cover,
-        caption=caption,
+        caption=book_caption,
         reply_markup=post_cancel_keyboard(l10n),
     )
-    await state.update_data(caption=caption)
+    await state.update_data(book_caption=book_caption)
     await state.set_state(AddBook.preview)
 
     await ClearKeyboard.safe_message(
@@ -98,7 +100,10 @@ async def add_book_step_8(
     await call.answer()
 
 
-@add_book_step_8_router.message(StateFilter(AddBook.reduce_description), F.text)
+@add_book_step_8_router.message(
+    StateFilter(AddBook.reduce_description),
+    F.text,
+)
 async def add_book_step_8_abbreviation_of_description(
     message: Message,
     l10n: FluentLocalization,
@@ -115,8 +120,12 @@ async def add_book_step_8_abbreviation_of_description(
     is_post = data.get("is_post")
     from_user = data.get("from_user")
 
-    caption = await generate_book_caption(data, is_post=is_post, from_user=from_user)
-    caption_length = len(caption)
+    book_caption = await generate_book_caption(
+        book_data=data,
+        is_post=is_post,
+        from_user=from_user,
+    )
+    caption_length = len(book_caption)
 
     if caption_length > 1024:
         sent_message = await message.answer(
@@ -132,10 +141,10 @@ async def add_book_step_8_abbreviation_of_description(
     else:
         sent_message = await message.answer_photo(
             photo=cover,
-            caption=caption,
+            caption=book_caption,
             reply_markup=post_cancel_keyboard(l10n),
         )
-        await state.update_data(caption=caption)
+        await state.update_data(book_caption=book_caption)
         await state.set_state(AddBook.preview)
 
     await ClearKeyboard.safe_message(
