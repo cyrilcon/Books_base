@@ -5,7 +5,8 @@ from tg_bot.keyboards.inline.buttons import cancel_discount_button
 
 
 def cancel_discount_keyboard(
-    l10n: FluentLocalization, discount_value: int
+    l10n: FluentLocalization,
+    discount_value: int,
 ) -> InlineKeyboardMarkup:
     """
     The "cancel_discount" keyboard is formed.

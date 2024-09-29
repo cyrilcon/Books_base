@@ -1,14 +1,15 @@
 from aiogram import Router, F
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
+from api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
-from api.books_base_api import api
-from tg_bot.keyboards.inline import discounts_keyboard, cancel_discount_keyboard
 from tg_bot.services import ClearKeyboard
+from .keyboards import discounts_keyboard, cancel_discount_keyboard
 
 base_store_router = Router()
 
@@ -17,11 +18,13 @@ base_store_router = Router()
 async def base_store(
     message: Message,
     l10n: FluentLocalization,
+    state: FSMContext,
     storage: RedisStorage,
 ):
     await ClearKeyboard.clear(message, storage)
+    await state.clear()
 
-    response = await api.users.get_user_by_id(message.from_user.id)
+    response = await api.users.get_user_by_id(id_user=message.from_user.id)
     user = response.get_model()
 
     if user.is_premium:
@@ -52,7 +55,12 @@ async def base_store(
 
 
 @base_store_router.callback_query(F.data.startswith("discount"))
-async def base_store_discount(call: CallbackQuery, l10n: FluentLocalization):
+async def base_store_discount(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
     discount_value = int(call.data.split(":")[-2])
     price = int(call.data.split(":")[-1])
 
@@ -77,11 +85,14 @@ async def base_store_discount(call: CallbackQuery, l10n: FluentLocalization):
         )
         return
 
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
     await call.message.edit_reply_markup()
 
     await api.users.update_user(id_user=id_user, base_balance=base_balance)
     await api.users.discounts.create_discount(
-        id_user=id_user, discount_value=discount_value
+        id_user=id_user,
+        discount_value=discount_value,
     )
 
     await call.message.answer(

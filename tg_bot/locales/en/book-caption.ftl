@@ -16,3 +16,5 @@ book-caption-template =
     { $price }
     Артикул: <code>{ $article }</code>
     { $genres }
+
+free-with-premium = Бесплатно с { -books-base-premium } ⚜️

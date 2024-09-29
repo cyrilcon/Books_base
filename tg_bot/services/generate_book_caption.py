@@ -3,7 +3,7 @@ from typing import Dict, Any, Union
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from api.books_base_api.schemas import BookSchema, UserSchema
+from api.books_base_api.schemas import BookSchema
 from tg_bot.services.book_formatter import BookFormatter
 from tg_bot.services.fluent_loader import get_fluent_localization
 
@@ -60,7 +60,9 @@ async def generate_book_caption(
         response = await api.users.get_book_ids(id_user=id_user)
         book_ids = response.result
 
-        if user.is_premium or id_book in book_ids:
+        if user.is_premium:
+            price = l10n.format_value("free-with-premium")
+        elif id_book in book_ids:
             price = ""
 
     authors = BookFormatter.format_authors(authors)

@@ -2,9 +2,7 @@ __all__ = (
     "back_cancel_keyboard",
     "buy_or_read_keyboard",
     "cancel_keyboard",
-    "cancel_discount_keyboard",
     "channel_keyboard",
-    "discounts_keyboard",
     "languages_keyboard",
     "my_books_keyboard",
     "author_book_pagination_keyboard",
@@ -24,9 +22,7 @@ __all__ = (
 from .back_cancel import back_cancel_keyboard
 from .buy_or_read import buy_or_read_keyboard
 from .cancel import cancel_keyboard
-from .cancel_discount import cancel_discount_keyboard
 from .channel import channel_keyboard
-from .discounts import discounts_keyboard
 from .languages import languages_keyboard
 from .my_books import my_books_keyboard
 from .pagination import (
