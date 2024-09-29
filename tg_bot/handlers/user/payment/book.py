@@ -8,10 +8,10 @@ from aiogram.types import CallbackQuery, LabeledPrice, PreCheckoutQuery, Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
-from tg_bot.keyboards.inline import pay_book_keyboard, channel_keyboard
-from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum
+from tg_bot.keyboards.inline import channel_keyboard
 from tg_bot.services import (
     ClearKeyboard,
     Payment,
@@ -21,6 +21,7 @@ from tg_bot.services import (
     send_files,
 )
 from tg_bot.states import Payment as PaymentState
+from .keyboards import pay_book_keyboard
 
 payment_book_router = Router()
 
@@ -114,7 +115,8 @@ async def buy_book(
 
 
 @payment_book_router.callback_query(
-    StateFilter(PaymentState.book), F.data.startswith("paid:book")
+    StateFilter(PaymentState.book),
+    F.data.startswith("paid:book"),
 )
 async def payment_book(
     call: CallbackQuery,
@@ -238,7 +240,10 @@ async def payment_book_on_pre_checkout_query(pre_checkout_query: PreCheckoutQuer
     await pre_checkout_query.answer(ok=True)
 
 
-@payment_book_router.message(StateFilter(PaymentState.book), F.successful_payment)
+@payment_book_router.message(
+    StateFilter(PaymentState.book),
+    F.successful_payment,
+)
 async def payment_book_on_successful(
     message: Message,
     l10n: FluentLocalization,
@@ -330,7 +335,8 @@ async def payment_book_on_successful(
 
 
 @payment_book_router.callback_query(
-    StateFilter(PaymentState.book), F.data == "cancel_payment"
+    StateFilter(PaymentState.book),
+    F.data == "cancel_payment",
 )
 async def payment_book_cancel(
     call: CallbackQuery,
@@ -344,7 +350,10 @@ async def payment_book_cancel(
     await call.message.edit_reply_markup()
 
 
-@payment_book_router.message(StateFilter(PaymentState.book), F.text)
+@payment_book_router.message(
+    StateFilter(PaymentState.book),
+    F.text,
+)
 async def payment_book_unprocessed_messages(
     message: Message,
     l10n: FluentLocalization,

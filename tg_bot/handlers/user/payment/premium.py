@@ -6,10 +6,10 @@ from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
-from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum
 from tg_bot.services import (
     Payment,
     create_user_link,
@@ -22,7 +22,8 @@ payment_premium_router = Router()
 
 
 @payment_premium_router.callback_query(
-    StateFilter(PaymentState.premium), F.data.startswith("paid:premium")
+    StateFilter(PaymentState.premium),
+    F.data.startswith("paid:premium"),
 )
 async def payment_premium(
     call: CallbackQuery,
@@ -106,7 +107,10 @@ async def payment_premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQ
     await pre_checkout_query.answer(ok=True)
 
 
-@payment_premium_router.message(StateFilter(PaymentState.premium), F.successful_payment)
+@payment_premium_router.message(
+    StateFilter(PaymentState.premium),
+    F.successful_payment,
+)
 async def payment_premium_on_successful(
     message: Message,
     l10n: FluentLocalization,
@@ -175,7 +179,8 @@ async def payment_premium_on_successful(
 
 
 @payment_premium_router.callback_query(
-    StateFilter(PaymentState.premium), F.data == "cancel_payment"
+    StateFilter(PaymentState.premium),
+    F.data == "cancel_payment",
 )
 async def payment_premium_cancel(
     call: CallbackQuery,
@@ -189,7 +194,10 @@ async def payment_premium_cancel(
     await call.message.edit_reply_markup()
 
 
-@payment_premium_router.message(StateFilter(PaymentState.premium), F.text)
+@payment_premium_router.message(
+    StateFilter(PaymentState.premium),
+    F.text,
+)
 async def payment_premium_unprocessed_messages(
     message: Message,
     l10n: FluentLocalization,

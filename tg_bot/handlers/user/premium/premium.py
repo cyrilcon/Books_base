@@ -8,9 +8,9 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.keyboards.inline import pay_premium_keyboard
 from tg_bot.services import ClearKeyboard, Payment
 from tg_bot.states import Payment as PaymentState
+from .keyboards import pay_premium_keyboard
 
 premium_router = Router()
 premium_router.message.middleware(ChatActionMiddleware())

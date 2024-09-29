@@ -1,9 +1,11 @@
 from aiogram import Router, F, Bot
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from services import send_files
 from api.books_base_api import api
+from tg_bot.services import send_files, ClearKeyboard
 
 read_router = Router()
 
@@ -12,8 +14,13 @@ read_router = Router()
 async def read(
     call: CallbackQuery,
     l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
     bot: Bot,
 ):
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
+
     id_book = int(call.data.split(":")[-1])
 
     response = await api.books.get_book_by_id(id_book=id_book)
