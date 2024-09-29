@@ -16,7 +16,10 @@ premium_router = Router()
 premium_router.message.middleware(ChatActionMiddleware())
 
 
-@premium_router.message(Command("premium"), flags={"chat_action": "typing"})
+@premium_router.message(
+    Command("premium"),
+    flags={"chat_action": "typing"},
+)
 async def premium(
     message: Message,
     l10n: FluentLocalization,
@@ -25,7 +28,7 @@ async def premium(
 ):
     await ClearKeyboard.clear(message, storage)
 
-    response = await api.users.get_user_by_id(message.from_user.id)
+    response = await api.users.get_user_by_id(id_user=message.from_user.id)
     user = response.get_model()
 
     if user.is_premium:

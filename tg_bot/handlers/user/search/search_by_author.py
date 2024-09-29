@@ -4,19 +4,20 @@ from aiogram import Router, F
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.enums import SearchBy
-from tg_bot.keyboards.inline import (
+from tg_bot.services import BookFormatter, ClearKeyboard
+from tg_bot.states import Search
+from .keyboards import (
     search_by_keyboard,
     author_pagination_keyboard,
     author_book_pagination_keyboard,
 )
-from tg_bot.services import BookFormatter
-from tg_bot.states import Search
 
 search_by_author_router = Router()
 search_by_author_router.message.middleware(ChatActionMiddleware())
@@ -27,7 +28,10 @@ async def search_by_author(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
+    storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+
     await call.message.edit_text(
         l10n.format_value("search-by-author"),
         reply_markup=search_by_keyboard(l10n, by=SearchBy.AUTHOR),
@@ -50,7 +54,11 @@ async def search_by_author_process(
 
 
 @search_by_author_router.callback_query(F.data.startswith("author_page"))
-async def author_page(call: CallbackQuery, l10n: FluentLocalization, state: FSMContext):
+async def author_page(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+):
     page = int(call.data.split(":")[-1])
     author_name_request = re.search(r'"([^"]*)"', call.message.text).group(1)
 

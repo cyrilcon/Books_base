@@ -4,20 +4,21 @@ from aiogram import Router, F
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.enums import SearchBy
-from tg_bot.keyboards.inline import (
+from tg_bot.services import BookFormatter, ClearKeyboard
+from tg_bot.states import Search
+from .keyboards import (
     search_by_keyboard,
     genre_pagination_keyboard,
     genre_book_pagination_keyboard,
     genres_pagination_keyboard,
 )
-from tg_bot.services import BookFormatter
-from tg_bot.states import Search
 
 search_by_genre_router = Router()
 search_by_genre_router.message.middleware(ChatActionMiddleware())
@@ -28,7 +29,10 @@ async def search_by_genre(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
+    storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+
     response = await api.genres.get_genres_with_pagination()
     genres = response.get_model()
 

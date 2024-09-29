@@ -3,18 +3,16 @@ import re
 from aiogram import Router, F
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.enums import SearchBy
-from tg_bot.keyboards.inline import (
-    search_by_keyboard,
-    book_pagination_keyboard,
-    buy_or_read_keyboard,
-)
-from tg_bot.services import generate_book_caption, BookFormatter
+from tg_bot.keyboards.inline import buy_or_read_keyboard
+from tg_bot.services import generate_book_caption, BookFormatter, ClearKeyboard
+from .keyboards import search_by_keyboard, book_pagination_keyboard
 
 search_by_title_router = Router()
 search_by_title_router.message.middleware(ChatActionMiddleware())
@@ -25,12 +23,15 @@ async def search_by_title(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
+    storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
+
     await call.message.edit_text(
         l10n.format_value("search-by-title"),
         reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),
     )
-    await state.clear()
     await call.answer()
 
 
@@ -49,7 +50,15 @@ async def book_page(call: CallbackQuery, l10n: FluentLocalization):
 
 
 @search_by_title_router.callback_query(F.data.startswith("get_book"))
-async def get_book(call: CallbackQuery, l10n: FluentLocalization):
+async def get_book(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
+
     id_book = int(call.data.split(":")[-1])
     article = BookFormatter.format_article(id_book)
 
@@ -67,7 +76,13 @@ async def get_book(call: CallbackQuery, l10n: FluentLocalization):
         return
 
     book = response.get_model()
-    caption = await generate_book_caption(book_data=book, l10n=l10n)
+    id_user = call.from_user.id
+
+    caption = await generate_book_caption(
+        book_data=book,
+        l10n=l10n,
+        id_user=id_user,
+    )
 
     await call.message.answer_photo(
         photo=book.cover,
@@ -75,7 +90,7 @@ async def get_book(call: CallbackQuery, l10n: FluentLocalization):
         reply_markup=await buy_or_read_keyboard(
             l10n=l10n,
             id_book=id_book,
-            id_user=call.from_user.id,
+            id_user=id_user,
         ),
     )
     await call.answer()
@@ -123,8 +138,14 @@ async def book_search(
         return
 
     if found == 1:
+        id_user = message.from_user.id
+
         book = books[0].book
-        caption = await generate_book_caption(book_data=book, l10n=l10n)
+        caption = await generate_book_caption(
+            book_data=book,
+            l10n=l10n,
+            id_user=id_user,
+        )
 
         await message.answer_photo(
             photo=book.cover,
@@ -132,7 +153,7 @@ async def book_search(
             reply_markup=await buy_or_read_keyboard(
                 l10n=l10n,
                 id_book=book.id_book,
-                id_user=message.from_user.id,
+                id_user=id_user,
             ),
         )
         return
