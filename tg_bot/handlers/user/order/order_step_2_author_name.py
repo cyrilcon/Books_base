@@ -7,23 +7,23 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.keyboards.inline import (
-    cancel_keyboard,
-    order_again_keyboard,
-    serve_order_keyboard,
-)
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import (
     ClearKeyboard,
     create_user_link,
-    get_user_localization,
     generate_id_order,
+    get_fluent_localization,
 )
 from tg_bot.states import Order
+from .keyboards import order_again_keyboard, serve_order_keyboard
 
 order_step_2_router = Router()
 
 
-@order_step_2_router.callback_query(StateFilter(Order.author_name), F.data == "back")
+@order_step_2_router.callback_query(
+    StateFilter(Order.author_name),
+    F.data == "back",
+)
 async def back_to_order_step_1(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -37,7 +37,10 @@ async def back_to_order_step_1(
     await call.answer()
 
 
-@order_step_2_router.message(StateFilter(Order.author_name))
+@order_step_2_router.message(
+    StateFilter(Order.author_name),
+    F.text,
+)
 async def order_step_2(
     message: Message,
     l10n: FluentLocalization,
@@ -48,8 +51,6 @@ async def order_step_2(
     await ClearKeyboard.clear(message, storage)
 
     id_user = message.from_user.id
-    full_name = message.from_user.full_name
-    username = message.from_user.username
 
     author_name = message.text
 
@@ -70,11 +71,16 @@ async def order_step_2(
     data = await state.get_data()
     book_title = data["book_title"]
 
-    await api.orders.create_order(id_order, id_user, book_title, author_name)
+    await api.orders.create_order(
+        id_order=id_order,
+        id_user=id_user,
+        book_title=book_title,
+        author_name=author_name,
+    )
 
     await message.answer(
         l10n.format_value(
-            "order-success",
+            "order-success-message-for-user",
             {
                 "book_title": book_title,
                 "author_name": author_name,
@@ -85,13 +91,16 @@ async def order_step_2(
     )
     await state.clear()
 
-    user_link = await create_user_link(full_name, username)
-    language_code = await get_user_localization(config.tg_bot.super_admin)
+    user_link = await create_user_link(
+        full_name=message.from_user.full_name,
+        username=message.from_user.username,
+    )
 
+    l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(
         chat_id=config.chat.order,
         text=l10n.format_value(
-            "order-success-message-from-user",
+            "order-success",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),
@@ -100,5 +109,5 @@ async def order_step_2(
                 "id_order": str(id_order),
             },
         ),
-        reply_markup=serve_order_keyboard(language_code, id_order),
+        reply_markup=serve_order_keyboard(l10n_chat, id_order),
     )

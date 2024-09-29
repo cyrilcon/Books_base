@@ -9,7 +9,8 @@ from tg_bot.keyboards.inline.buttons import (
 
 
 def show_book_order_cancel_keyboard(
-    l10n: FluentLocalization, id_book: int
+    l10n: FluentLocalization,
+    id_book: int,
 ) -> InlineKeyboardMarkup:
     """
     The "show_book_order_cancel" keyboard is formed.

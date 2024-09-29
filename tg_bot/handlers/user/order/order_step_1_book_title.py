@@ -9,11 +9,11 @@ from api.books_base_api import api
 from tg_bot.keyboards.inline import (
     back_cancel_keyboard,
     cancel_keyboard,
-    show_book_order_cancel_keyboard,
     buy_or_read_keyboard,
 )
 from tg_bot.services import ClearKeyboard, generate_book_caption, BookFormatter
 from tg_bot.states import Order
+from .keyboards import show_book_order_cancel_keyboard
 
 order_step_1_router = Router()
 
@@ -40,7 +40,10 @@ async def order(
     )
 
 
-@order_step_1_router.message(StateFilter(Order.book_title), F.text)
+@order_step_1_router.message(
+    StateFilter(Order.book_title),
+    F.text,
+)
 async def order_step_1(
     message: Message,
     l10n: FluentLocalization,
@@ -51,40 +54,47 @@ async def order_step_1(
 
     book_title = message.text
 
-    if len(book_title) <= 255:
-        response = await api.books.search_books_by_title(
-            book_title, similarity_threshold=100
-        )
-        result = response.get_model()
-        found = result.found
-
-        if found > 0:
-            book = result.books[0].book
-
-            id_book = book.id_book
-            book_title = book.title
-            authors = BookFormatter.format_authors(book.authors)
-            article = BookFormatter.format_article(id_book)
-
-            sent_message = await message.answer(
-                l10n.format_value(
-                    "order-book-error-book-already-exists",
-                    {"book_title": book_title, "authors": authors, "article": article},
-                ),
-                reply_markup=show_book_order_cancel_keyboard(l10n, id_book),
-            )
-        else:
-            sent_message = await message.answer(
-                l10n.format_value("order-prompt-author-name"),
-                reply_markup=back_cancel_keyboard(l10n),
-            )
-            await state.set_state(Order.author_name)
-        await state.update_data(book_title=book_title)
-    else:
+    if len(book_title) > 255:
         sent_message = await message.answer(
             l10n.format_value("order-error-book-title-too-long"),
             reply_markup=cancel_keyboard(l10n),
         )
+        await ClearKeyboard.safe_message(
+            storage=storage,
+            id_user=message.from_user.id,
+            sent_message_id=sent_message.message_id,
+        )
+        return
+
+    response = await api.books.search_books_by_title(
+        title=book_title,
+        similarity_threshold=100,
+    )
+    result = response.get_model()
+    found = result.found
+
+    if found > 0:
+        book = result.books[0].book
+
+        id_book = book.id_book
+        book_title = book.title
+        authors = BookFormatter.format_authors(book.authors)
+        article = BookFormatter.format_article(id_book)
+
+        sent_message = await message.answer(
+            l10n.format_value(
+                "order-book-error-book-already-exists",
+                {"title": book_title, "authors": authors, "article": article},
+            ),
+            reply_markup=show_book_order_cancel_keyboard(l10n, id_book),
+        )
+    else:
+        sent_message = await message.answer(
+            l10n.format_value("order-prompt-author-name"),
+            reply_markup=back_cancel_keyboard(l10n),
+        )
+        await state.set_state(Order.author_name)
+    await state.update_data(book_title=book_title)
 
     await ClearKeyboard.safe_message(
         storage=storage,
@@ -93,14 +103,17 @@ async def order_step_1(
     )
 
 
-@order_step_1_router.callback_query(StateFilter(Order.book_title), F.data == "order")
+@order_step_1_router.callback_query(
+    StateFilter(Order.book_title),
+    F.data == "order",
+)
 async def order_step_1_confirm_order(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("order-author-name"),
+        l10n.format_value("order-prompt-author-name"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(Order.author_name)
@@ -108,7 +121,8 @@ async def order_step_1_confirm_order(
 
 
 @order_step_1_router.callback_query(
-    StateFilter(Order.book_title), F.data.startswith("show_book")
+    StateFilter(Order.book_title),
+    F.data.startswith("show_book"),
 )
 async def order_step_1_display_book_details(
     call: CallbackQuery,

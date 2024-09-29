@@ -7,7 +7,6 @@ __all__ = (
     "discounts_keyboard",
     "languages_keyboard",
     "my_books_keyboard",
-    "order_again_keyboard",
     "pay_book_keyboard",
     "pay_premium_keyboard",
     "author_book_pagination_keyboard",
@@ -18,11 +17,8 @@ __all__ = (
     "genres_pagination_keyboard",
     "reply_keyboard",
     "search_by_keyboard",
-    "serve_order_keyboard",
-    "set_language_keyboard",
     "share_base_keyboard",
     "share_our_store_keyboard",
-    "show_book_order_cancel_keyboard",
     "view_news_keyboard",
 )
 
@@ -35,7 +31,6 @@ from .keyboards import (
     discounts_keyboard,
     languages_keyboard,
     my_books_keyboard,
-    order_again_keyboard,
     pay_book_keyboard,
     pay_premium_keyboard,
     author_book_pagination_keyboard,
@@ -46,10 +41,7 @@ from .keyboards import (
     genres_pagination_keyboard,
     reply_keyboard,
     search_by_keyboard,
-    serve_order_keyboard,
-    set_language_keyboard,
     share_base_keyboard,
     share_our_store_keyboard,
-    show_book_order_cancel_keyboard,
     view_news_keyboard,
 )

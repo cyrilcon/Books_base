@@ -1,20 +1,30 @@
 from aiogram import Router, F
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import set_language_keyboard
-from tg_bot.services import get_fluent_localization
+from tg_bot.services import get_fluent_localization, ClearKeyboard
+from .keyboards import languages_keyboard
 
 settings_router = Router()
 
 
 @settings_router.message(Command("settings"))
-async def settings(message: Message, l10n: FluentLocalization):
+async def settings(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
+    await state.clear()
+
     await message.answer(
         l10n.format_value("settings"),
-        reply_markup=set_language_keyboard(l10n),
+        reply_markup=languages_keyboard(l10n),
     )
 
 
@@ -42,6 +52,6 @@ async def settings_set_language(call: CallbackQuery, l10n: FluentLocalization):
 
     await call.message.edit_text(
         l10n.format_value("settings-success"),
-        reply_markup=set_language_keyboard(l10n),
+        reply_markup=languages_keyboard(l10n),
     )
     await call.answer()
