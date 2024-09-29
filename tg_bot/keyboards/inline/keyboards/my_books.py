@@ -26,7 +26,10 @@ def my_books_keyboard(
     if books_count > 1:
         if page > 1:
             action_buttons.append(
-                InlineKeyboardButton(text=f"⬅️", callback_data=f"my_books_page:{page-1}")
+                InlineKeyboardButton(
+                    text=l10n.format_value("button-arrow-left"),
+                    callback_data=f"my_books_page:{page-1}",
+                )
             )
 
         action_buttons.append(
@@ -38,7 +41,10 @@ def my_books_keyboard(
 
         if page < books_count:
             action_buttons.append(
-                InlineKeyboardButton(text=f"➡️", callback_data=f"my_books_page:{page+1}")
+                InlineKeyboardButton(
+                    text=l10n.format_value("button-arrow-right"),
+                    callback_data=f"my_books_page:{page+1}",
+                )
             )
 
     my_books_markup = InlineKeyboardMarkup(

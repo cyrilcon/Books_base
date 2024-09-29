@@ -38,4 +38,5 @@ def formats_keyboard(
     )
 
     formats_buttons_markup = InlineKeyboardMarkup(inline_keyboard=formats_buttons)
+
     return formats_buttons_markup

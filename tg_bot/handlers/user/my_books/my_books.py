@@ -1,18 +1,28 @@
 from aiogram import Router, F
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery, InputMediaPhoto
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.keyboards.inline import channel_keyboard, my_books_keyboard
-from tg_bot.services import generate_book_caption
+from tg_bot.services import generate_book_caption, ClearKeyboard
 
 my_books_router = Router()
 
 
 @my_books_router.message(Command("my_books"))
-async def my_books(message: Message, l10n: FluentLocalization):
+async def my_books(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
+    await state.clear()
+
     id_user = message.from_user.id
 
     response = await api.users.get_book_ids(id_user=id_user)
@@ -40,7 +50,8 @@ async def my_books(message: Message, l10n: FluentLocalization):
 
     response = await api.books.get_book_by_id(book_ids[0])
     book = response.get_model()
-    caption = await generate_book_caption(book_data=book, l10n=l10n)
+
+    caption = await generate_book_caption(book_data=book, l10n=l10n, id_user=id_user)
 
     await message.answer_photo(
         photo=book.cover,
@@ -75,7 +86,7 @@ async def my_books_page(call: CallbackQuery, l10n: FluentLocalization):
     response = await api.books.get_book_by_id(book_ids[page - 1])
     book = response.get_model()
 
-    caption = await generate_book_caption(book_data=book, l10n=l10n)
+    caption = await generate_book_caption(book_data=book, l10n=l10n, id_user=id_user)
 
     await call.message.edit_media(
         media=InputMediaPhoto(media=book.cover, caption=caption),

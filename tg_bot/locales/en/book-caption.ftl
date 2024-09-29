@@ -13,8 +13,6 @@ book-caption-template =
     { $description }
 
     Доступные форматы: { $formats }
-
-    <b>Цена:</b> { $price }
-
+    { $price }
     Артикул: <code>{ $article }</code>
     { $genres }

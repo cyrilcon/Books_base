@@ -110,7 +110,11 @@ async def give_book_step_2(
         return
 
     l10n_recipient = await get_user_localization(id_user_recipient)
-    caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
+    caption = await generate_book_caption(
+        book_data=book,
+        l10n=l10n_recipient,
+        id_user=id_user_recipient,
+    )
 
     try:
         await bot.send_message(
