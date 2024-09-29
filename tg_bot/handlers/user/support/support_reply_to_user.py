@@ -21,6 +21,8 @@ async def support_reply_to_user(
     state: FSMContext,
     storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+
     id_user = call.data.split(":")[-1]
     await state.update_data(id_user_recipient=id_user)
 
@@ -55,11 +57,10 @@ async def support_reply_to_user_process(
     id_user_recipient = data["id_user_recipient"]
     l10n_recipient = await get_user_localization(id_user_recipient)
 
-    response = await api.users.get_user_by_id(id_user_recipient)
+    response = await api.users.get_user_by_id(id_user=id_user_recipient)
     user = response.get_model()
-    full_name = user.full_name
-    username = user.username
-    user_link = await create_user_link(full_name, username)
+
+    user_link = await create_user_link(user.full_name, user.username)
 
     try:
         sent_message = await bot.copy_message(

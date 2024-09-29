@@ -20,6 +20,8 @@ async def support_reply_to_admin(
     state: FSMContext,
     storage: RedisStorage,
 ):
+    await ClearKeyboard.clear(call, storage)
+
     sent_message = await call.message.answer(
         l10n.format_value("support-user-reply-prompt"),
         reply_markup=cancel_keyboard(l10n),
@@ -46,9 +48,10 @@ async def support_process(
     await ClearKeyboard.clear(message, storage)
 
     id_user = message.from_user.id
-    full_name = message.from_user.full_name
-    username = message.from_user.username
-    user_link = await create_user_link(full_name, username)
+    user_link = await create_user_link(
+        full_name=message.from_user.full_name,
+        username=message.from_user.username,
+    )
 
     sent_message = await bot.forward_message(
         chat_id=config.chat.support,

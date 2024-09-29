@@ -9,7 +9,10 @@ from tg_bot.states import Support
 support_cancel_router = Router()
 
 
-@support_cancel_router.callback_query(StateFilter(Support), F.data == "cancel")
+@support_cancel_router.callback_query(
+    StateFilter(Support),
+    F.data == "cancel",
+)
 async def support_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,
