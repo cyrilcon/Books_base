@@ -22,7 +22,7 @@ async def give_book_1(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("give-book-prompt-select-user"),
+        l10n.format_value("give-book-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GiveBook.select_user)
@@ -76,7 +76,7 @@ async def give_book_1_process(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "give-book-prompt-select-book",
+            "give-book-select-book",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),

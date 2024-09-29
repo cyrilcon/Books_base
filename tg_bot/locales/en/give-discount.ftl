@@ -1,4 +1,4 @@
-give-discount-prompt-select-user =
+give-discount-select-user =
     <b>1/2</b>
     Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите выдать скидку
 
@@ -10,7 +10,7 @@ give-discount-error-user-already-has-discount =
        *[other] скидку { $discount_value }%
     }</b>!!
 
-give-discount-prompt-select-discount =
+give-discount-select-discount =
     <b>2/2</b>
     Выберите <i><b>скидку</b></i>, которую хотите выдать пользователю { $user_link } (<code>{ $id_user }</code>)
 

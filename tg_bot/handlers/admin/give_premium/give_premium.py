@@ -32,7 +32,7 @@ async def give_premium(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("give-premium-prompt-select-user"),
+        l10n.format_value("give-premium-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GivePremium.select_user)

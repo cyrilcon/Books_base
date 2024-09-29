@@ -31,7 +31,7 @@ async def add_admin(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("add-admin-prompt-select-user"),
+        l10n.format_value("add-admin-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(AddAdmin.select_user)

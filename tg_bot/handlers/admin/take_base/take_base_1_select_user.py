@@ -22,7 +22,7 @@ async def take_base(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("take-base-prompt-select-user"),
+        l10n.format_value("take-base-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(TakeBase.select_user)
@@ -64,7 +64,7 @@ async def take_base_step_1(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "take-base-prompt-deduct-base",
+            "take-base-deduct-base",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),

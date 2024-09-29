@@ -1,4 +1,4 @@
-add-blacklist-prompt-select-user = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которого хотите добавить в чёрный список
+add-blacklist-select-user = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которого хотите добавить в чёрный список
 
 add-blacklist-error-user-already-blacklisted = Пользователь { $user_link } (<code>{ $id_user }</code>) уже в чёрном списке
 

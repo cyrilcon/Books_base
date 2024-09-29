@@ -22,7 +22,7 @@ async def send_message(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("send-message-prompt-select-user"),
+        l10n.format_value("send-message-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(SendMessage.select_user)
@@ -64,7 +64,7 @@ async def send_message_step_1(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "send-message-prompt-write-message",
+            "send-message-write-message",
             {"user_link": user_link, "id_user": str(id_user)},
         ),
         reply_markup=back_cancel_keyboard(l10n),

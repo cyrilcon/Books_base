@@ -1,9 +1,9 @@
-add-article-prompt-title =
+add-article-title =
     <b>1/3</b>
     Введите <i><b>название</b></i> статьи
 
-add-article-prompt-title-back =
-    { add-article-prompt-title }
+add-article-title-back =
+    { add-article-title }
 
     <code>{ $title }</code>
 
@@ -11,12 +11,12 @@ add-article-error-title-too-long =
     Слишком длинное название статьи!!
     Сократите и введите <i><b>название</b></i> статьи ещё раз
 
-add-article-prompt-link =
+add-article-link =
     <b>2/3</b>
     Введите <i><b>ссылку</b></i> на статью
 
-add-article-prompt-link-back =
-    { add-article-prompt-link }
+add-article-link-back =
+    { add-article-link }
 
     <code>{ $link }</code>
 
@@ -32,7 +32,7 @@ add-article-error-link-already-exists =
     Ссылка на эту статью уже существует!!
     Введите <i><b>ссылку</b></i> на статью ещё раз
 
-add-article-prompt-language-code =
+add-article-language-code =
     <b>3/3</b>
     Выберите <i><b>язык</b></i> статьи
 

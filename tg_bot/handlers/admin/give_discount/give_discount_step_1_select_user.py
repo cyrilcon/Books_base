@@ -23,7 +23,7 @@ async def give_discount(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("give-discount-prompt-select-user"),
+        l10n.format_value("give-discount-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GiveDiscount.select_user)
@@ -93,7 +93,7 @@ async def give_discount_step_1(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "give-discount-prompt-select-discount",
+            "give-discount-select-discount",
             {"user_link": user_link, "id_user": str(id_user)},
         ),
         reply_markup=discounts_keyboard(l10n),

@@ -23,7 +23,7 @@ async def add_blacklist(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("add-blacklist-prompt-select-user"),
+        l10n.format_value("add-blacklist-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(AddBlacklist.select_user)

@@ -23,7 +23,7 @@ async def serve_order(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("serve-order-prompt-select-order"),
+        l10n.format_value("serve-order-select-order"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(ServeOrder.select_order)
@@ -91,7 +91,7 @@ async def serve_order_step_1(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "serve-order-prompt-select-book",
+            "serve-order-select-book",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),

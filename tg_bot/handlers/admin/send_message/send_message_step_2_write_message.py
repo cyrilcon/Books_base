@@ -23,7 +23,7 @@ async def back_to_send_message_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("send-message-prompt-select-user"),
+        l10n.format_value("send-message-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(SendMessage.select_user)

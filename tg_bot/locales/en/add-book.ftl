@@ -1,4 +1,4 @@
-add-book-prompt-article =
+add-book-article =
     <b>1/8</b>
     Введите <i><b>артикул</b></i> книги, чтобы добавить её в бд
 
@@ -16,12 +16,12 @@ add-book-error-article-already-exists =
 
     Свободный артикул: <code>{ $free_article }</code>
 
-add-book-prompt-title =
+add-book-title =
     <b>2/8</b>
     Введите <i><b>название</b></i> книги
 
-add-book-prompt-title-back =
-    { add-book-prompt-title }
+add-book-title-back =
+    { add-book-title }
 
     <code>{ $title }</code>
 
@@ -38,12 +38,12 @@ add-book-error-title-already-exists =
 
     Вы уверены, что хотите добавить книгу??
 
-add-book-prompt-authors =
+add-book-authors =
     <b>3/8</b>
     Введите <i><b>автора(ов)</b></i>
 
-add-book-prompt-authors-back =
-    { add-book-prompt-authors }
+add-book-authors-back =
+    { add-book-authors }
 
     <code>{ $authors }</code>
 
@@ -55,12 +55,12 @@ add-book-error-invalid-author-name =
     В имени автора не должно содержаться символов <b>"кавычек"</b>!!
     Введите имя автора ещё раз
 
-add-book-prompt-description =
+add-book-description =
     <b>4/8</b>
     Введите <i><b>описание</b></i> книги
 
-add-book-prompt-description-back =
-    { add-book-prompt-description }
+add-book-description-back =
+    { add-book-description }
 
     <code>{ $description }</code>
 
@@ -68,7 +68,7 @@ add-book-error-description-too-long =
     Слишком большое описание!!
     Сократите и введите <i><b>описание</b></i> книги ещё раз
 
-add-book-prompt-genres =
+add-book-genres =
     <b>5/8</b>
     Введите <i><b>жанры</b></i> книги
 
@@ -80,17 +80,17 @@ add-book-error-invalid-genre-name =
     В названии жанра не должно содержаться символов <b>"кавычек"</b>!!
     Введите название жанра ещё раз
 
-add-book-prompt-more-genres =
+add-book-more-genres =
     Введите ещё <i><b>жанры</b></i> или нажмите <i>"Готово"</i>
 
     <b>Пример:</b>
     { $genres }
 
-add-book-prompt-cover =
+add-book-cover =
     <b>6/8</b>
     Отправьте <i><b>фото обложки</b></i> книги
 
-add-book-prompt-files =
+add-book-files =
     <b>7/8</b>
     Отправьте <i><b>файл</b></i> книги
 
@@ -101,7 +101,7 @@ add-book-error-file-already-sent =
     <b>Форматы:</b>
     { $formats }
 
-add-book-prompt-more-files =
+add-book-more-files =
     Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
 
     <b>Форматы:</b>

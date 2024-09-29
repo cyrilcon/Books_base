@@ -28,7 +28,7 @@ async def back_to_add_book_step_7(
 
     await call.message.edit_text(
         l10n.format_value(
-            "add-book-prompt-more-files",
+            "add-book-more-files",
             {"formats": formats},
         ),
         reply_markup=done_clear_back_cancel_keyboard(l10n),

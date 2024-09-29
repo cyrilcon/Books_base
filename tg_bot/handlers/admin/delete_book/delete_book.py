@@ -23,7 +23,7 @@ async def delete_book(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("delete-book-prompt-select-book"),
+        l10n.format_value("delete-book-select-book"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(DeleteBook.select_book)

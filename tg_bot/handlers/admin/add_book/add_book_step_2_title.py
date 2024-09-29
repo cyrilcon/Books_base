@@ -28,7 +28,7 @@ async def back_to_add_book_step_1(
 
     await call.message.edit_text(
         l10n.format_value(
-            "add-book-prompt-article",
+            "add-book-article",
             {"free_article": free_article},
         ),
         reply_markup=cancel_keyboard(l10n),
@@ -97,7 +97,7 @@ async def add_book_step_2(
         )
     else:
         sent_message = await message.answer(
-            l10n.format_value("add-book-prompt-authors"),
+            l10n.format_value("add-book-authors"),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await state.set_state(AddBook.add_authors)
@@ -120,7 +120,7 @@ async def add_book_step_2_yes(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("add-book-prompt-authors"),
+        l10n.format_value("add-book-authors"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_authors)

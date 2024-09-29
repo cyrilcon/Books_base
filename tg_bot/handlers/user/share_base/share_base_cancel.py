@@ -10,7 +10,10 @@ share_base_cancel_router = Router()
 
 
 @share_base_cancel_router.callback_query(F.data == "share_base_cancel")
-@share_base_cancel_router.callback_query(StateFilter(ShareBase), F.data == "cancel")
+@share_base_cancel_router.callback_query(
+    StateFilter(ShareBase),
+    F.data == "cancel",
+)
 async def share_base_cancel(
     call: CallbackQuery,
     l10n: FluentLocalization,

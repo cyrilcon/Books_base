@@ -6,13 +6,10 @@ from aiogram.types import Message, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import (
-    cancel_keyboard,
-    share_base_keyboard,
-    share_our_store_keyboard,
-)
+from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import ClearKeyboard, extract_username
 from tg_bot.states import ShareBase
+from .keyboards import share_base_keyboard, share_our_store_keyboard
 
 share_base_step_1_router = Router()
 
@@ -27,7 +24,7 @@ async def share_base(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("share-base-prompt-select-user"),
+        l10n.format_value("share-base-select-user"),
         reply_markup=cancel_keyboard(l10n),
         link_preview_options=LinkPreviewOptions(is_disabled=True),
     )
@@ -40,7 +37,10 @@ async def share_base(
     )
 
 
-@share_base_step_1_router.message(StateFilter(ShareBase.select_user), F.text)
+@share_base_step_1_router.message(
+    StateFilter(ShareBase.select_user),
+    F.text,
+)
 async def share_base_step_1(
     message: Message,
     l10n: FluentLocalization,
@@ -51,8 +51,7 @@ async def share_base_step_1(
 
     id_user = message.from_user.id
 
-    message_text = message.text
-    username = extract_username(message_text)
+    username = extract_username(message.text)
 
     if not username:
         sent_message = await message.answer(
@@ -84,7 +83,8 @@ async def share_base_step_1(
     if status != 200:
         sent_message = await message.answer(
             l10n.format_value(
-                "share-base-error-user-not-found", {"username": username}
+                "share-base-error-user-not-found",
+                {"username": username},
             ),
             reply_markup=share_our_store_keyboard(l10n),
         )
@@ -100,7 +100,7 @@ async def share_base_step_1(
 
     await message.answer(
         l10n.format_value(
-            "share-base-prompt-transfer",
+            "share-base-transfer",
             {"username": username, "base_balance": base_balance},
         ),
         reply_markup=share_base_keyboard(l10n, base=base_balance),

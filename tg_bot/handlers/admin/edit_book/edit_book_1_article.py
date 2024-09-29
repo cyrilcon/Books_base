@@ -34,7 +34,7 @@ async def edit_article(
 
     sent_message = await call.message.answer(
         l10n.format_value(
-            "edit-book-prompt-article",
+            "edit-book-article",
             {"article": article},
         ),
         reply_markup=cancel_keyboard(l10n),

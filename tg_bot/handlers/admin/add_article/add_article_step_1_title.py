@@ -22,7 +22,7 @@ async def add_article(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("add-article-prompt-title"),
+        l10n.format_value("add-article-title"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(AddArticle.add_title)
@@ -61,7 +61,7 @@ async def add_article_step_1(
         return
 
     sent_message = await message.answer(
-        l10n.format_value("add-article-prompt-link"),
+        l10n.format_value("add-article-link"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.update_data(title=title)

@@ -23,7 +23,7 @@ async def cancel_premium(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("cancel-premium-prompt-select-user"),
+        l10n.format_value("cancel-premium-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(CancelPremium.select_user)

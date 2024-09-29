@@ -1,4 +1,4 @@
-broadcast-prompt-write-message = Введите сообщение для рассылки
+broadcast-write-message = Введите сообщение для рассылки
 
 broadcast-success = Отправлено { $success_count }/{ $users_count } сообщений
 

@@ -22,7 +22,7 @@ async def give_base_1(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("give-base-prompt-select-user"),
+        l10n.format_value("give-base-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GiveBase.select_user)
@@ -64,7 +64,7 @@ async def give_base_1_process(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "give-base-prompt-transfer-base",
+            "give-base-transfer-base",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),

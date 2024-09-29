@@ -15,8 +15,6 @@ __all__ = (
     "pay_premium_keyboard",
     "reply_keyboard",
     "search_by_keyboard",
-    "share_base_keyboard",
-    "share_our_store_keyboard",
 )
 
 from .back_cancel import back_cancel_keyboard
@@ -37,5 +35,3 @@ from .pay_book import pay_book_keyboard
 from .pay_premium import pay_premium_keyboard
 from .reply import reply_keyboard
 from .search_by import search_by_keyboard
-from .share_base import share_base_keyboard
-from .share_our_store import share_our_store_keyboard

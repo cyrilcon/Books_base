@@ -27,7 +27,7 @@ async def back_to_add_book_step_3(
 
     await call.message.edit_text(
         l10n.format_value(
-            "add-book-prompt-authors-back",
+            "add-book-authors-back",
             {"authors": authors},
         ),
         reply_markup=back_cancel_keyboard(l10n),
@@ -69,14 +69,14 @@ async def add_book_step_4(
         genres = BookFormatter.format_genres(genres)
         sent_message = await message.answer(
             l10n.format_value(
-                "add-book-prompt-more-genres",
+                "add-book-more-genres",
                 {"genres": genres},
             ),
             reply_markup=done_clear_back_cancel_keyboard(l10n),
         )
     else:
         sent_message = await message.answer(
-            l10n.format_value("add-book-prompt-genres"),
+            l10n.format_value("add-book-genres"),
             reply_markup=back_cancel_keyboard(l10n),
         )
 

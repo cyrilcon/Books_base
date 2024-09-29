@@ -28,7 +28,7 @@ async def remove_admin(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("remove-admin-prompt-select-user"),
+        l10n.format_value("remove-admin-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(RemoveAdmin.select_admin)

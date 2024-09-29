@@ -24,7 +24,7 @@ async def back_to_take_base_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("take-base-prompt-select-user"),
+        l10n.format_value("take-base-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(TakeBase.select_user)

@@ -1,4 +1,4 @@
-serve-order-prompt-select-order =
+serve-order-select-order =
     <b>1/2</b>
     Введите <i><b>номер заказа</b></i>, которому хотите обслужить
 
@@ -10,13 +10,13 @@ serve-order-error-order-not-found =
     Заказ не найден!!
     Введите <i><b>номер заказа</b></i> ещё раз
 
-serve-order-prompt-select-book =
+serve-order-select-book =
     <b>2/2</b>
-    { serve-order-prompt-select-book-from-button }
+    { serve-order-select-book-from-button }
 
     { order-information-template }
 
-serve-order-prompt-select-book-from-button = Введите <i><b>артикул</b></i> книги, которой хотите отправить пользователю.
+serve-order-select-book-from-button = Введите <i><b>артикул</b></i> книги, которой хотите отправить пользователю.
 
 serve-order-error-invalid-article =
     Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!

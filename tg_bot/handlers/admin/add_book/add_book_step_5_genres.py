@@ -29,7 +29,7 @@ async def back_to_add_book_step_4(
 
     await call.message.edit_text(
         l10n.format_value(
-            "add-book-prompt-description-back",
+            "add-book-description-back",
             {"description": description},
         ),
         reply_markup=back_cancel_keyboard(l10n),
@@ -94,7 +94,7 @@ async def add_book_step_5(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "add-book-prompt-more-genres",
+            "add-book-more-genres",
             {"genres": genres},
         ),
         reply_markup=done_clear_back_cancel_keyboard(l10n),
@@ -116,7 +116,7 @@ async def add_book_step_5_done(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("add-book-prompt-cover"),
+        l10n.format_value("add-book-cover"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(AddBook.add_cover)
@@ -133,7 +133,7 @@ async def add_book_5_clear(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("add-book-prompt-genres"),
+        l10n.format_value("add-book-genres"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     genres = []

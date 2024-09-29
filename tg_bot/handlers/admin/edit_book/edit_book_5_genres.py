@@ -34,7 +34,7 @@ async def edit_genres(
 
     sent_message = await call.message.answer(
         l10n.format_value(
-            "edit-book-prompt-genres",
+            "edit-book-genres",
             {"genres": genres},
         ),
         reply_markup=cancel_keyboard(l10n),

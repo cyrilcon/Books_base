@@ -46,7 +46,7 @@ async def edit_files(
     )
 
     sent_message = await call.message.answer(
-        l10n.format_value("edit-book-prompt-files"),
+        l10n.format_value("edit-book-files"),
         reply_markup=delete_cancel_keyboard(l10n),
     )
 
@@ -87,7 +87,7 @@ async def edit_files_process(
     else:
         file_dict = {"format": file_format, "file_token": file_token}
         files.append(file_dict)
-        text = "edit-book-prompt-more-files"
+        text = "edit-book-more-files"
 
     formats = BookFormatter.format_file_formats(files)
     text = l10n.format_value(text, {"formats": formats})
@@ -173,7 +173,7 @@ async def edit_files_clear(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("edit-book-prompt-files"),
+        l10n.format_value("edit-book-files"),
         reply_markup=delete_cancel_keyboard(l10n),
     )
     files = []

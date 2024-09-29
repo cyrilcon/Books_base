@@ -1,4 +1,4 @@
-give-premium-prompt-select-user = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите присвоить статус { -books-base-premium } ⚜️
+give-premium-select-user = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите присвоить статус { -books-base-premium } ⚜️
 
 give-premium-error-user-already-has-premium = Пользователь { $user_link } (<code>{ $id_user }</code>) уже имеет статус { -books-base-premium } ⚜️
 

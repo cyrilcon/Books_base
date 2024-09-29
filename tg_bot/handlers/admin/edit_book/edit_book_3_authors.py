@@ -32,7 +32,7 @@ async def edit_authors(
 
     sent_message = await call.message.answer(
         l10n.format_value(
-            "edit-book-prompt-authors",
+            "edit-book-authors",
             {"authors": authors},
         ),
         reply_markup=cancel_keyboard(l10n),

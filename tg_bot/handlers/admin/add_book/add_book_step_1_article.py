@@ -30,7 +30,7 @@ async def add_book(
 
     sent_message = await message.answer(
         l10n.format_value(
-            "add-book-prompt-article",
+            "add-book-article",
             {"free_article": free_article},
         ),
         reply_markup=cancel_keyboard(l10n),
@@ -92,7 +92,7 @@ async def add_book_step_1(
         )
     else:
         sent_message = await message.answer(
-            l10n.format_value("add-book-prompt-title"),
+            l10n.format_value("add-book-title"),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await state.update_data(id_book=id_book)

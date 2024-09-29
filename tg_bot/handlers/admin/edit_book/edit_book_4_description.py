@@ -30,7 +30,7 @@ async def edit_description(
 
     sent_message = await call.message.answer(
         l10n.format_value(
-            "edit-book-prompt-description",
+            "edit-book-description",
             {"description": book.description},
         ),
         reply_markup=cancel_keyboard(l10n),

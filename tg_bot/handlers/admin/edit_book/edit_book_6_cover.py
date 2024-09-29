@@ -32,7 +32,7 @@ async def edit_cover(
 
     sent_message = await call.message.answer_photo(
         photo=book.cover,
-        caption=l10n.format_value("edit-book-prompt-cover"),
+        caption=l10n.format_value("edit-book-cover"),
         reply_markup=cancel_keyboard(l10n),
         show_caption_above_media=True,
     )

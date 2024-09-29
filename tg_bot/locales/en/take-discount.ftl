@@ -1,4 +1,4 @@
-take-discount-prompt-select-user = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, у которого хотите отобрать скидку
+take-discount-select-user = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, у которого хотите отобрать скидку
 
 take-discount-error-user-already-has-not-discount = Пользователь { $user_link } (<code>{ $id_user }</code>) уже не имел скидки
 

@@ -25,7 +25,7 @@ async def back_to_add_article_step_2(
 
     await call.message.edit_text(
         l10n.format_value(
-            "add-article-prompt-link-back",
+            "add-article-link-back",
             {"link": link},
         ),
         reply_markup=back_cancel_keyboard(l10n),

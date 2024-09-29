@@ -25,7 +25,7 @@ async def delete_article(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("delete-article-prompt-link"),
+        l10n.format_value("delete-article-link"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(DeleteArticle.select_article)

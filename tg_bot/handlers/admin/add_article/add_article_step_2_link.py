@@ -33,7 +33,7 @@ async def back_to_add_article_step_1(
 
     await call.message.edit_text(
         l10n.format_value(
-            "add-article-prompt-title-back",
+            "add-article-title-back",
             {"title": title},
         ),
         reply_markup=cancel_keyboard(l10n),
@@ -96,7 +96,7 @@ async def add_article_step_2(
         return
 
     sent_message = await message.answer(
-        l10n.format_value("add-article-prompt-language-code"),
+        l10n.format_value("add-article-language-code"),
         reply_markup=languages_keyboard(l10n),
     )
     await state.update_data(link=link)

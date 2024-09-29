@@ -1,4 +1,4 @@
-delete-article-prompt-link = Введите <i><b>ссылку</b></i> на статью, которую хотите удалить
+delete-article-link = Введите <i><b>ссылку</b></i> на статью, которую хотите удалить
 
 delete-article-error-invalid-link =
     Это не является ссылкой на статью!!

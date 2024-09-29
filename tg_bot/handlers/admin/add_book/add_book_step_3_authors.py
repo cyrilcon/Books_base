@@ -26,7 +26,7 @@ async def back_to_add_book_step_2(
 
     await call.message.edit_text(
         l10n.format_value(
-            "add-book-prompt-title-back",
+            "add-book-title-back",
             {"title": title},
         ),
         reply_markup=back_cancel_keyboard(l10n),
@@ -77,7 +77,7 @@ async def add_book_step_3(
     authors = [{"author_name": author_name} for author_name in authors]
 
     sent_message = await message.answer(
-        l10n.format_value("add-book-prompt-description"),
+        l10n.format_value("add-book-description"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.update_data(authors=authors)

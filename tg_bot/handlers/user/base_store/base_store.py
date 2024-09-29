@@ -1,4 +1,4 @@
-from aiogram import Router, F
+from aiogram import Router, F, Bot
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -8,7 +8,7 @@ from fluent.runtime import FluentLocalization
 from api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
-from tg_bot.services import ClearKeyboard
+from tg_bot.services import ClearKeyboard, get_fluent_localization, create_user_link
 from .keyboards import discounts_keyboard, cancel_discount_keyboard
 
 base_store_router = Router()
@@ -60,6 +60,7 @@ async def base_store_discount(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    bot: Bot,
 ):
     discount_value = int(call.data.split(":")[-2])
     price = int(call.data.split(":")[-1])
@@ -108,3 +109,20 @@ async def base_store_discount(
         reply_markup=cancel_discount_keyboard(l10n, discount_value=discount_value),
     )
     await call.answer()
+
+    user_link = await create_user_link(user.full_name, user.username)
+
+    l10n_chat = get_fluent_localization(config.chat.language_code)
+    await bot.send_message(
+        chat_id=config.chat.payment,
+        text=l10n_chat.format_value(
+            "base-store-exchange-success-message-for-admin",
+            {
+                "user_link": user_link,
+                "id_user": str(id_user),
+                "price": price,
+                "discount_value": discount_value,
+                "base_balance": base_balance,
+            },
+        ),
+    )

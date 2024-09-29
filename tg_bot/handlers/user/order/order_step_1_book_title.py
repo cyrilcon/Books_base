@@ -28,7 +28,7 @@ async def order(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("order-prompt-book-title"),
+        l10n.format_value("order-book-title"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Order.book_title)
@@ -90,7 +90,7 @@ async def order_step_1(
         )
     else:
         sent_message = await message.answer(
-            l10n.format_value("order-prompt-author-name"),
+            l10n.format_value("order-author-name"),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await state.set_state(Order.author_name)
@@ -113,7 +113,7 @@ async def order_step_1_confirm_order(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("order-prompt-author-name"),
+        l10n.format_value("order-author-name"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.set_state(Order.author_name)

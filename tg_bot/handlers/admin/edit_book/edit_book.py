@@ -24,7 +24,7 @@ async def edit_book(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("edit-book-prompt-select-book"),
+        l10n.format_value("edit-book-select-book"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(EditBook.select_book)

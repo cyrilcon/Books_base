@@ -24,7 +24,7 @@ async def back_to_add_book_step_6(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("add-book-prompt-cover"),
+        l10n.format_value("add-book-cover"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     files = []
@@ -59,7 +59,7 @@ async def add_book_step_7(
     else:
         file_dict = {"format": file_format, "file_token": file_token}
         files.append(file_dict)
-        text = "add-book-prompt-more-files"
+        text = "add-book-more-files"
 
     formats = BookFormatter.format_file_formats(files)
     text = l10n.format_value(text, {"formats": formats})
@@ -102,7 +102,7 @@ async def add_book_step_7_clear(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("add-book-prompt-files"),
+        l10n.format_value("add-book-files"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     files = []

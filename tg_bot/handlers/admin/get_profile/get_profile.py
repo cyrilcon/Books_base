@@ -27,7 +27,7 @@ async def get_profile(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("get-profile-prompt-select-user"),
+        l10n.format_value("get-profile-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GetProfile.select_user)

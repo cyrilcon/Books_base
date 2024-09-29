@@ -34,7 +34,7 @@ async def back_to_give_book_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("give-book-prompt-select-user"),
+        l10n.format_value("give-book-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GiveBook.select_user)

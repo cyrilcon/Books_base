@@ -38,7 +38,7 @@ async def serve_order_from_button(
     await state.update_data(id_order=id_order)
 
     sent_message = await call.message.answer(
-        l10n.format_value("serve-order-prompt-select-book-from-button"),
+        l10n.format_value("serve-order-select-book-from-button"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(ServeOrder.select_book)

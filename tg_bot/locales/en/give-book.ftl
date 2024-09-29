@@ -1,10 +1,10 @@
-give-book-prompt-select-user =
+give-book-select-user =
     <b>1/2</b>
     Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите подарить книгу
 
 give-book-error-user-has-premium = Пользователь имеет статус { -books-base-premium } ⚜️
 
-give-book-prompt-select-book =
+give-book-select-book =
     <b>2/2</b>
     Введите <i><b>артикул</b></i> книги, которой хотите подарить пользователю { $user_link } (<code>{ $id_user }</code>).
 

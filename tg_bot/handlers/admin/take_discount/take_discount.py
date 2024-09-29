@@ -23,7 +23,7 @@ async def take_discount(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("take-discount-prompt-select-user"),
+        l10n.format_value("take-discount-select-user"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(TakeDiscount.select_user)

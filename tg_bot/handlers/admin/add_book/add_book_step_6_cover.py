@@ -28,7 +28,7 @@ async def back_to_add_book_step_5(
 
     await call.message.edit_text(
         l10n.format_value(
-            "add-book-prompt-more-genres",
+            "add-book-more-genres",
             {"genres": genres},
         ),
         reply_markup=done_clear_back_cancel_keyboard(l10n),
@@ -52,7 +52,7 @@ async def add_book_step_6(
     cover = message.photo[-1].file_id
 
     sent_message = await message.answer(
-        l10n.format_value("add-book-prompt-files"),
+        l10n.format_value("add-book-files"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.update_data(cover=cover)

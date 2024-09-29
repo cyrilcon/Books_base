@@ -29,7 +29,7 @@ async def back_to_serve_order_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("serve-order-prompt-select-order"),
+        l10n.format_value("serve-order-select-order"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(ServeOrder.select_order)

@@ -15,8 +15,6 @@ __all__ = (
     "genres_pagination_keyboard",
     "reply_keyboard",
     "search_by_keyboard",
-    "share_base_keyboard",
-    "share_our_store_keyboard",
 )
 
 from .keyboards import (
@@ -36,6 +34,4 @@ from .keyboards import (
     genres_pagination_keyboard,
     reply_keyboard,
     search_by_keyboard,
-    share_base_keyboard,
-    share_our_store_keyboard,
 )

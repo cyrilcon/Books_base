@@ -23,7 +23,7 @@ async def broadcast(
     await ClearKeyboard.clear(message, storage)
 
     sent_message = await message.answer(
-        l10n.format_value("broadcast-prompt-write-message"),
+        l10n.format_value("broadcast-write-message"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Broadcast.write_message)

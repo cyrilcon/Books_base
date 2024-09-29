@@ -43,6 +43,14 @@ base-store-exchange-success =
 
     { base-balance }
 
+base-store-exchange-success-message-for-admin =
+    Пользователь { $user_link } (<code>{ $id_user }</code>) обменял <b>{ $price } <i>base</i></b> на <b>{ $discount_value ->
+        [100] Бесплатную книгу
+       *[other] Скидку { $discount_value }%
+    }</b>!!
+
+    { user-balance }
+
 base-store-cancel-discount-error = У вас уже нет никакой скидки!!
 
 base-store-cancel-discount-success =
@@ -52,3 +60,11 @@ base-store-cancel-discount-success =
     }</b>!!
 
     { base-balance }
+
+base-store-cancel-discount-success-message-for-admin =
+    Пользователь { $user_link } (<code>{ $id_user }</code>) отменил <b>{ $discount_value ->
+        [100] купон на бесплатную книгу
+       *[other] скидку { $discount_value }%
+    }</b>
+
+    { user-balance }
