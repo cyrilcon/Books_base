@@ -18,7 +18,7 @@ async def start(
     storage: RedisStorage,
 ):
     await ClearKeyboard.clear(message, storage)
+    await state.clear()
 
     full_name = message.from_user.full_name
     await message.answer(l10n.format_value("start", {"full_name": full_name}))
-    await state.clear()

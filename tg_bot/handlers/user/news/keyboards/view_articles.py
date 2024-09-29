@@ -4,14 +4,14 @@ from fluent.runtime import FluentLocalization
 from tg_bot.keyboards.inline.buttons import news_channel_button
 
 
-def view_news_keyboard(
+def view_articles_keyboard(
     l10n: FluentLocalization,
     articles_count: int,
     position: int = 1,
     language_code: str = "ru",
 ) -> InlineKeyboardMarkup:
     """
-    A keyboard with pagination for viewing orders is formed.
+    A keyboard with pagination for viewing articles is formed.
     :param l10n: Language set by the user.
     :param articles_count: Number of all articles.
     :param position: Article position in the database.
@@ -25,7 +25,8 @@ def view_news_keyboard(
         if position > 1:
             action_buttons.append(
                 InlineKeyboardButton(
-                    text=f"⬅️", callback_data=f"article_position:{position - 1}"
+                    text=l10n.format_value("button-arrow-left"),
+                    callback_data=f"article_position:{position - 1}",
                 )
             )
 
@@ -39,11 +40,12 @@ def view_news_keyboard(
         if position < articles_count:
             action_buttons.append(
                 InlineKeyboardButton(
-                    text=f"➡️", callback_data=f"article_position:{position + 1}"
+                    text=l10n.format_value("button-arrow-right"),
+                    callback_data=f"article_position:{position + 1}",
                 )
             )
 
-    view_news_markup = InlineKeyboardMarkup(
+    view_articles_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             action_buttons,
             [
@@ -52,4 +54,4 @@ def view_news_keyboard(
         ]
     )
 
-    return view_news_markup
+    return view_articles_markup

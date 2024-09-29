@@ -2,20 +2,31 @@ from typing import Tuple, Optional
 
 from aiogram import Router, F
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import view_news_keyboard
 from api.books_base_api.schemas import ArticleSchema
+from tg_bot.services import ClearKeyboard
+from .keyboards import view_articles_keyboard
 
 news_router = Router()
 
 
 @news_router.message(Command("news"))
-async def news(message: Message, l10n: FluentLocalization):
+async def news(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
+    await state.clear()
+
     articles_count, text, article, language_code = await get_article_info(
-        l10n, id_user=message.from_user.id
+        l10n=l10n, id_user=message.from_user.id
     )
 
     if articles_count == 0:
@@ -23,19 +34,19 @@ async def news(message: Message, l10n: FluentLocalization):
     else:
         await message.answer(
             text=text,
-            reply_markup=view_news_keyboard(
+            reply_markup=view_articles_keyboard(
                 l10n=l10n,
                 articles_count=articles_count,
                 language_code=language_code,
             ),
             link_preview_options=LinkPreviewOptions(
-                url=article.link,
+                url=str(article.link),
                 prefer_large_media=True,
             ),
         )
 
 
-@news_router.callback_query(F.data.startswith("article_page"))
+@news_router.callback_query(F.data.startswith("article_position"))
 async def article_position(call: CallbackQuery, l10n: FluentLocalization):
     page = int(call.data.split(":")[-1])
 
@@ -50,14 +61,14 @@ async def article_position(call: CallbackQuery, l10n: FluentLocalization):
     else:
         await call.message.edit_text(
             text=text,
-            reply_markup=view_news_keyboard(
+            reply_markup=view_articles_keyboard(
                 l10n=l10n,
                 articles_count=articles_count,
                 position=page,
                 language_code=language_code,
             ),
             link_preview_options=LinkPreviewOptions(
-                url=article.link,
+                url=str(article.link),
                 prefer_large_media=True,
             ),
         )
@@ -87,12 +98,16 @@ async def get_article_info(
     user = response.get_model()
     language_code = user.language_code
 
-    response = await api.articles.get_articles_count_by_language_code(language_code)
+    response = await api.articles.get_articles_count_by_language_code(
+        language_code=language_code
+    )
     articles_count = response.result
 
     if articles_count == 0:
         language_code = "ru"
-        response = await api.articles.get_articles_count_by_language_code(language_code)
+        response = await api.articles.get_articles_count_by_language_code(
+            language_code=language_code
+        )
         articles_count = response.result
 
         if articles_count == 0:
@@ -132,7 +147,7 @@ async def get_article_info_success(
         "article-template",
         {
             "title": article.title,
-            "link": article.link,
+            "link": str(article.link),
             "added-date": article.added_datetime,
         },
     )

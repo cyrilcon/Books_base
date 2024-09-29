@@ -22,7 +22,7 @@ add-article-prompt-link-back =
 
 add-article-error-invalid-link =
     Это не является ссылкой на статью!!
-    Ссылка должна начинаться на <code>https://telegra.ph/</code> или <code>telegra.ph/</code>
+    Ссылка должна начинаться на <code>https://telegra.ph/</code>
 
 add-article-error-link-too-long =
     Слишком длинная ссылка!!

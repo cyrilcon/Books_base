@@ -68,7 +68,7 @@ async def add_article_step_2(
         )
         return
 
-    if not re.match(r"^(https://)?telegra\.ph/", link):
+    if not re.match(r"^https://telegra\.ph/", link):
         sent_message = await message.answer(
             l10n.format_value("add-article-error-invalid-link"),
             reply_markup=back_cancel_keyboard(l10n),

@@ -19,7 +19,6 @@ __all__ = (
     "search_by_keyboard",
     "share_base_keyboard",
     "share_our_store_keyboard",
-    "view_news_keyboard",
 )
 
 from .keyboards import (
@@ -43,5 +42,4 @@ from .keyboards import (
     search_by_keyboard,
     share_base_keyboard,
     share_our_store_keyboard,
-    view_news_keyboard,
 )

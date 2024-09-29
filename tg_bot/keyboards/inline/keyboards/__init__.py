@@ -19,7 +19,6 @@ __all__ = (
     "search_by_keyboard",
     "share_base_keyboard",
     "share_our_store_keyboard",
-    "view_news_keyboard",
 )
 
 from .back_cancel import back_cancel_keyboard
@@ -44,4 +43,3 @@ from .reply import reply_keyboard
 from .search_by import search_by_keyboard
 from .share_base import share_base_keyboard
 from .share_our_store import share_our_store_keyboard
-from .view_news import view_news_keyboard
