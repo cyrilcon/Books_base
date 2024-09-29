@@ -6,7 +6,6 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.config import config
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import ClearKeyboard
 from tg_bot.states import CancelOrder
@@ -36,8 +35,11 @@ async def cancel_order(
     )
 
 
-@cancel_order_router.message(StateFilter(CancelOrder.select_order), F.text)
-async def cancel_order_select(
+@cancel_order_router.message(
+    StateFilter(CancelOrder.select_order),
+    F.text,
+)
+async def cancel_order_process(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
@@ -46,7 +48,6 @@ async def cancel_order_select(
     await ClearKeyboard.clear(message, storage)
 
     order_number = message.text
-    id_user = message.from_user.id
 
     if order_number[0] == "№":
         order_number = order_number[1:]
@@ -65,22 +66,25 @@ async def cancel_order_select(
 
     id_order = int(order_number)
 
-    response = await api.orders.get_order_by_id(id_order)
+    response = await api.orders.get_order_by_id(id_order=id_order)
     status = response.status
     order = response.get_model()
 
-    if status == 200 and (
-        id_user == config.tg_bot.super_admin and id_user == order.id_user
-    ):
-        await api.orders.delete_order(id_order)
+    response = await api.users.admins.get_admin_ids()
+    admin_ids = response.result
 
-        await state.clear()
+    id_user = message.from_user.id
+
+    if status == 200 and (id_user in admin_ids or id_user == order.id_user):
+        await api.orders.delete_order(id_order=id_order)
+
         await message.answer(
             l10n.format_value(
                 "cancel-order-success",
                 {"id_order": str(id_order), "book_title": order.book_title},
             ),
         )
+        await state.clear()
         return
 
     sent_message = await message.answer(
