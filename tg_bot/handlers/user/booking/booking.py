@@ -5,9 +5,13 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
+from tg_bot.middlewares import BlacklistMiddleware
 from tg_bot.services import ClearKeyboard
 
 booking_router = Router()
+
+booking_router.message.middleware(BlacklistMiddleware())
+booking_router.callback_query.middleware(BlacklistMiddleware())
 
 
 @booking_router.message(Command("booking"))

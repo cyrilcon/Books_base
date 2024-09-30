@@ -19,18 +19,18 @@ from .support import support_routers
 user_routers = Router()
 user_routers.include_routers(
     start_router,  # Must be the first
+    support_routers,  # Must be the second
+    payment_routers,  # Must be the third
     base_store_routers,
     booking_router,
     cancel_order_routers,
     my_books_router,
     news_router,
     order_routers,
-    payment_routers,
     paysupport_router,
     premium_router,
     privacy_router,
     settings_router,
     share_base_routers,
-    support_routers,
     search_routers,  # Must be the latest
 )
