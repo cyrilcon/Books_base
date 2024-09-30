@@ -45,8 +45,13 @@ async def buy_book(
     status = response.status
 
     if status != 200:
+        article = BookFormatter.format_article(id_book=id_book)
+
         await call.message.answer(
-            l10n.format_value("payment-book-error-book-unavailable")
+            l10n.format_value(
+                "error-book-unavailable",
+                {"article": article},
+            )
         )
         await call.answer()
         return
@@ -58,8 +63,14 @@ async def buy_book(
 
     if id_book in book_ids:
         await call.message.edit_reply_markup()
+
+        article = BookFormatter.format_article(id_book=id_book)
+
         await call.message.answer(
-            l10n.format_value("payment-book-error-user-already-has-this-book")
+            l10n.format_value(
+                "error-book-unavailable",
+                {"article": article},
+            )
         )
 
         await send_files(

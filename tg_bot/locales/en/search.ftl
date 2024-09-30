@@ -34,8 +34,6 @@ search-by-author-error-not-found = Автор по запросу "<code>{ $auth
 
 search-by-genre-error-not-found = Жанр по запросу "<code>{ $genre_name_request }</code>" не найден
 
-search-by-title-error-book-unavailable = Запрашиваемая вами книга с артикулом <code>{ $article }</code> больше не доступна 😕
-
 search-by-author-error-author-unavailable = Запрашиваемый вами автор больше не доступен 😕
 
 search-by-genre-error-genre-unavailable = Запрашиваемый вами жанр больше не доступен 😕

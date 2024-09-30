@@ -5,7 +5,7 @@ from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.services import send_files, ClearKeyboard
+from tg_bot.services import send_files, ClearKeyboard, BookFormatter
 
 read_router = Router()
 
@@ -28,10 +28,13 @@ async def read(
 
     if status != 200:
         await call.message.edit_reply_markup()
+
+        article = BookFormatter.format_article(id_book=id_book)
+
         await call.message.answer(
             l10n.format_value(
                 "error-book-unavailable",
-                {"id_book": id_book},
+                {"article": article},
             )
         )
         await call.answer()

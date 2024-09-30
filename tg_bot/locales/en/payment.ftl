@@ -1,7 +1,5 @@
 payment-book = Цена: { $price_rub }₽ или { $price_stars } ⭐
 
-payment-book-error-book-unavailable = Запрашиваемая вами книга с артикулом <code>{ $article }</code> больше не доступна 😕
-
 payment-book-error-user-already-has-this-book = У вас уже есть эта книга!!
 
 payment-book-success =

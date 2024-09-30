@@ -68,7 +68,7 @@ async def get_book(
     if status != 200:
         await call.message.answer(
             l10n.format_value(
-                "search-by-title-error-book-unavailable",
+                "error-book-unavailable",
                 {"article": article},
             )
         )
