@@ -22,6 +22,7 @@ from .remove_blacklist import remove_blacklist_routers
 from .send_book import send_book_routers
 from .send_message import send_message_routers
 from .serve_order import serve_order_routers
+from .stats import stats_router
 from .take_base import take_base_routers
 from .take_discount import take_discount_routers
 from .view_orders import view_orders_router
@@ -50,6 +51,7 @@ admin_routers.include_routers(
     send_book_routers,
     send_message_routers,
     serve_order_routers,
+    stats_router,
     take_base_routers,
     take_discount_routers,
     view_orders_router,

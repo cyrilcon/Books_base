@@ -75,3 +75,5 @@ command-remove-admin = 🙅🏼 Remove administrator
 command-send-message = 🧑🏼‍💻 Send message to user
 
 command-broadcast = 📢 Send broadcast
+
+command-stats = 📊 User activity

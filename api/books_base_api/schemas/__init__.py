@@ -37,6 +37,7 @@ __all__ = (
     "UserCreate",
     "UserUpdate",
     "UserSchema",
+    "UserStats",
     "UserId",
 )
 
@@ -73,5 +74,5 @@ from .genre import (
 from .order import OrderCreate, OrderSchema
 from .payment import PaymentCurrencyEnum, PaymentTypeEnum, PaymentCreate, PaymentSchema
 from .premium import PremiumCreate
-from .user import UserCreate, UserUpdate, UserSchema
+from .user import UserCreate, UserUpdate, UserSchema, UserStats
 from .user_id import UserId

@@ -8,7 +8,7 @@ from api.books_base_api.endpoints import (
     DiscountsApi,
     PremiumApi,
 )
-from api.books_base_api.schemas import UserSchema
+from api.books_base_api.schemas import UserSchema, UserStats
 
 
 class UsersApi:
@@ -63,18 +63,16 @@ class UsersApi:
 
         return ApiResponse(status, result, model=UserSchema)
 
-    async def get_book_ids(self, id_user: int) -> ApiResponse[List[int]]:
+    async def get_user_statistics(self) -> ApiResponse[UserStats]:
         """
-        Get a list of book purchased IDs by the user.
-
-        :param id_user: Unique user identifier.
+        Get user activity statistics.
         """
 
         status, result = await self.base_client.make_request(
             method="GET",
-            url=f"{self.endpoint}/{id_user}/books",
+            url=f"{self.endpoint}/stats",
         )
-        return ApiResponse(status, result)
+        return ApiResponse(status, result, model=UserStats)
 
     async def get_user_by_username(self, username: str) -> ApiResponse[UserSchema]:
         """
@@ -88,6 +86,19 @@ class UsersApi:
             url=f"{self.endpoint}/username/{username}",
         )
         return ApiResponse(status, result, model=UserSchema)
+
+    async def get_book_ids(self, id_user: int) -> ApiResponse[List[int]]:
+        """
+        Get a list of book purchased IDs by the user.
+
+        :param id_user: Unique user identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_user}/books",
+        )
+        return ApiResponse(status, result)
 
     async def get_user_by_id(self, id_user: int) -> ApiResponse[UserSchema]:
         """

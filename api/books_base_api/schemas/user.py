@@ -85,3 +85,23 @@ class UserSchema(UserBase):
         ...,
         description="False, if the user does not have a discount or the discount value",
     )
+
+
+class UserStats(BaseModel):
+    """
+    User activity statistics model.
+    """
+
+    active_last_hour: int = Field(
+        ..., description="Number of users active in the last hour"
+    )
+    active_last_24_hours: int = Field(
+        ..., description="Number of users active in the last 24 hours"
+    )
+    active_last_week: int = Field(
+        ..., description="Number of users active in the last week"
+    )
+    active_last_month: int = Field(
+        ..., description="Number of users active in the last month"
+    )
+    total_users: int = Field(..., description="Total number of users in the database")

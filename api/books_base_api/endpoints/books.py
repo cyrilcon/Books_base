@@ -86,6 +86,17 @@ class BooksApi:
         )
         return ApiResponse(status, result, model=BooksResponse)
 
+    async def get_latest_article(self) -> ApiResponse[int]:
+        """
+        Get the latest article of books.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/latest-article",
+        )
+        return ApiResponse(status, result)
+
     async def search_books_by_title(
         self,
         title: str,
@@ -116,17 +127,6 @@ class BooksApi:
             params=params,
         )
         return ApiResponse(status, result, model=BookTitleSimilarityResponse)
-
-    async def get_latest_article(self) -> ApiResponse[int]:
-        """
-        Get the latest article of books.
-        """
-
-        status, result = await self.base_client.make_request(
-            method="GET",
-            url=f"{self.endpoint}/latest-article",
-        )
-        return ApiResponse(status, result)
 
     async def get_book_by_id(self, id_book: int) -> ApiResponse[BookSchema]:
         """
