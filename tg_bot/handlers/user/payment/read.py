@@ -5,7 +5,14 @@ from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.services import send_files, ClearKeyboard, BookFormatter
+from tg_bot.config import config
+from tg_bot.services import (
+    send_files,
+    ClearKeyboard,
+    BookFormatter,
+    get_fluent_localization,
+    create_user_link,
+)
 
 read_router = Router()
 
@@ -49,3 +56,26 @@ async def read(
         files=book.files,
     )
     await call.answer()
+
+    id_user = call.from_user.id
+
+    response = await api.users.get_user_by_id(id_user=id_user)
+    user = response.get_model()
+
+    if user.is_premium:
+        user_link = await create_user_link(user.full_name, user.username)
+        article = BookFormatter.format_article(id_book=id_book)
+
+        l10n_chat = get_fluent_localization(config.chat.language_code)
+        await bot.send_message(
+            chat_id=config.chat.payment,
+            text=l10n_chat.format_value(
+                "read",
+                {
+                    "user_link": user_link,
+                    "id_user": str(id_user),
+                    "title": book.title,
+                    "article": article,
+                },
+            ),
+        )

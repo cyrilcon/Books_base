@@ -19,6 +19,7 @@ from tg_bot.services import (
     BookFormatter,
     get_user_localization,
     send_files,
+    get_fluent_localization,
 )
 from tg_bot.states import Payment as PaymentState
 from .keyboards import pay_book_keyboard
@@ -107,9 +108,10 @@ async def buy_book(
 
             user_link = await create_user_link(user.full_name, user.username)
 
+            l10n_chat = get_fluent_localization(config.chat.language_code)
             await bot.send_message(
                 chat_id=config.chat.payment,
-                text=l10n.format_value(
+                text=l10n_chat.format_value(
                     "payment-book-paid-message-for-admin",
                     {
                         "user_link": user_link,
@@ -246,9 +248,10 @@ async def payment_book(
 
     user_link = await create_user_link(user.full_name, user.username)
 
+    l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(
         chat_id=config.chat.payment,
-        text=l10n.format_value(
+        text=l10n_chat.format_value(
             "payment-book-paid-message-for-admin",
             {
                 "user_link": user_link,
@@ -362,9 +365,10 @@ async def payment_book_on_successful(
 
     user_link = await create_user_link(user.full_name, user.username)
 
+    l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(
         chat_id=config.chat.payment,
-        text=l10n.format_value(
+        text=l10n_chat.format_value(
             "payment-book-paid-message-for-admin",
             {
                 "user_link": user_link,
