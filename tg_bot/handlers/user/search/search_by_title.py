@@ -11,7 +11,12 @@ from fluent.runtime import FluentLocalization
 from api.books_base_api import api
 from tg_bot.enums import SearchBy
 from tg_bot.keyboards.inline import buy_or_read_keyboard
-from tg_bot.services import generate_book_caption, BookFormatter, ClearKeyboard
+from tg_bot.services import (
+    generate_book_caption,
+    BookFormatter,
+    ClearKeyboard,
+    is_valid_book_article,
+)
 from .keyboards import search_by_keyboard, book_pagination_keyboard
 
 search_by_title_router = Router()
@@ -110,8 +115,44 @@ async def book_search(
     :param book_title_request: Title of the book to search for.
     """
 
+    id_user = message.from_user.id
+
     if book_title_request is None:
         book_title_request = message.text
+
+    if is_valid_book_article(book_title_request):
+        id_book = int(book_title_request.lstrip("#"))
+        response = await api.books.get_book_by_id(id_book=id_book)
+        status = response.status
+
+        if status != 200:
+            await message.answer(
+                l10n.format_value(
+                    "search-by-title-error-article-not-found",
+                    {"article": book_title_request},
+                ),
+                reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),
+            )
+            return
+
+        book = response.get_model()
+
+        caption = await generate_book_caption(
+            book_data=book,
+            l10n=l10n,
+            id_user=id_user,
+        )
+
+        await message.answer_photo(
+            photo=book.cover,
+            caption=caption,
+            reply_markup=await buy_or_read_keyboard(
+                l10n=l10n,
+                id_book=book.id_book,
+                id_user=id_user,
+            ),
+        )
+        return
 
     book_title_request = book_title_request.replace('"', "")
 
@@ -130,7 +171,7 @@ async def book_search(
     if found == 0:
         await message.answer(
             l10n.format_value(
-                "search-by-title-error-not-found",
+                "search-by-title-error-title-not-found",
                 {"book_title_request": book_title_request},
             ),
             reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),
@@ -138,8 +179,6 @@ async def book_search(
         return
 
     if found == 1:
-        id_user = message.from_user.id
-
         book = books[0].book
         caption = await generate_book_caption(
             book_data=book,
