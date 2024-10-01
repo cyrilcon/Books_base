@@ -13,7 +13,7 @@ class PaymentsApi:
         self,
         id_payment: int,
         id_user: int,
-        price: float,
+        price: int,
         currency: str,
         type: str,
         book_ids: List[int] | None = None,

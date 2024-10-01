@@ -4,6 +4,7 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from api.books_base_api.schemas import BookSchema
+from tg_bot.config import config
 from tg_bot.services.book_formatter import BookFormatter
 from tg_bot.services.fluent_loader import get_fluent_localization
 
@@ -41,17 +42,17 @@ async def generate_book_caption(
     intro_config = {
         50: {
             "message": l10n.format_value("daily-action") if is_post else "",
-            "price_text": "\n<b>Цена:</b> 50₽ <s>85₽</s>\n",
+            "price_text": f"\n{l10n.format_value("price", {"price": price})}\n",
         },
         85: {
             "message": l10n.format_value("new-book-from-user") if from_user else "",
-            "price_text": "\n<b>Цена:</b> 85₽\n",
+            "price_text": f"\n{l10n.format_value("price", {"price": price})}\n",
         },
     }
 
     intro_info = intro_config.get(price, {"message": "", "price_text": f"{price}₽"})
     intro_message = intro_info["message"] if is_post else ""
-    price = intro_info["price_text"]
+    price_text = intro_info["price_text"]
 
     if id_user:
         response = await api.users.get_user_by_id(id_user=id_user)
@@ -61,9 +62,18 @@ async def generate_book_caption(
         book_ids = response.result
 
         if user.is_premium:
-            price = l10n.format_value("free-with-premium")
+            price_text = l10n.format_value("free-with-premium")
         elif id_book in book_ids:
-            price = ""
+            price_text = ""
+        elif user.has_discount and price != 50:
+            prices = {
+                15: 72,
+                30: 60,
+                50: 43,
+                100: 0,
+            }
+            price = prices.get(user.has_discount)
+            price_text = f"\n{l10n.format_value("price", {"price": price})}\n"
 
     authors = BookFormatter.format_authors(authors)
     formats = BookFormatter.format_file_formats(files)
@@ -78,7 +88,7 @@ async def generate_book_caption(
             "authors": authors,
             "description": description,
             "formats": formats,
-            "price": price,
+            "price": price_text,
             "article": article,
             "genres": genres,
         },

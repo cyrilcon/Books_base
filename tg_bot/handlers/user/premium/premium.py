@@ -27,6 +27,7 @@ async def premium(
     storage: RedisStorage,
 ):
     await ClearKeyboard.clear(message, storage)
+    await state.clear()
 
     response = await api.users.get_user_by_id(id_user=message.from_user.id)
     user = response.get_model()
@@ -38,7 +39,7 @@ async def premium(
         return
 
     price_rub = config.price.premium.rub
-    price_stars = config.price.premium.xtr
+    price_xtr = config.price.premium.xtr
 
     payment = Payment(
         amount=price_rub,
@@ -49,16 +50,16 @@ async def premium(
     sent_message = await message.answer_invoice(
         title="Books_base Premium ⚜️",
         description=l10n.format_value(
-            "premium", {"price_rub": price_rub, "price_stars": price_stars}
+            "premium", {"price_rub": price_rub, "price_xtr": price_xtr}
         ),
-        prices=[LabeledPrice(label="XTR", amount=price_stars)],
+        prices=[LabeledPrice(label="XTR", amount=price_xtr)],
         provider_token="",
         payload="premium",
         currency="XTR",
         reply_markup=pay_premium_keyboard(
             l10n=l10n,
             url_payment=payment.invoice,
-            price_stars=price_stars,
+            price_xtr=price_xtr,
             price_rub=price_rub,
             id_payment=payment.id,
         ),

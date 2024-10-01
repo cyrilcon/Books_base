@@ -35,6 +35,7 @@ async def buy_book(
     bot: Bot,
 ):
     await ClearKeyboard.clear(call, storage)
+    await state.clear()
 
     price = int(call.data.split(":")[-2])
     id_book = int(call.data.split(":")[-1])
@@ -64,45 +65,82 @@ async def buy_book(
     if id_book in book_ids:
         await call.message.edit_reply_markup()
 
-        article = BookFormatter.format_article(id_book=id_book)
-
-        await call.message.answer(
-            l10n.format_value(
-                "error-book-unavailable",
-                {"article": article},
-            )
-        )
-
         await send_files(
             bot=bot,
             chat_id=id_user,
             caption=book.title,
             files=book.files,
         )
-
         await call.answer()
         return
 
-    price_rub = config.price.book.basic.rub
-    price_stars = config.price.book.basic.xtr
-
-    if price == price_rub:
-        # TODO: проверить скидку у пользователя и от этого выдавать цену
-        pass
-
     payment = Payment(
-        amount=price_rub,
+        amount=price,
         comment=book.title,
     )
     payment.create()
+    id_payment = payment.id
+
+    if price == 85:
+        response = await api.users.get_user_by_id(id_user=id_user)
+        user = response.get_model()
+        discount = user.has_discount
+
+        if discount == 100:
+            await call.message.edit_reply_markup()
+
+            await api.users.discounts.delete_discount(id_user=id_user)
+            await api.payments.create_payment(
+                id_payment=id_payment,
+                id_user=id_user,
+                price=0,
+                currency=PaymentCurrencyEnum.RUB,
+                type=PaymentTypeEnum.BOOK,
+                book_ids=[id_book],
+            )
+            await send_files(
+                bot=bot,
+                chat_id=id_user,
+                caption=book.title,
+                files=book.files,
+            )
+
+            user_link = await create_user_link(user.full_name, user.username)
+
+            await bot.send_message(
+                chat_id=config.chat.payment,
+                text=l10n.format_value(
+                    "payment-book-paid-message-for-admin",
+                    {
+                        "user_link": user_link,
+                        "id_user": str(id_user),
+                        "title": book.title,
+                        "article": BookFormatter.format_article(book.id_book),
+                        "price": 0,
+                        "currency": "₽",
+                        "base": 0,
+                        "id_payment": id_payment,
+                    },
+                ),
+            )
+            await call.answer()
+            return
+
+        elif discount:
+            prices = {
+                15: 72,
+                30: 60,
+                50: 43,
+            }
+            price = prices.get(discount)
 
     sent_message = await call.message.answer_invoice(
         title=book.title,
         description=l10n.format_value(
             "payment-book",
-            {"price_rub": price_rub, "price_stars": price_stars},
+            {"price_rub": price, "price_xtr": price},
         ),
-        prices=[LabeledPrice(label="XTR", amount=price_stars)],
+        prices=[LabeledPrice(label="XTR", amount=price)],
         provider_token="",
         payload=f"book:{id_book}",
         currency="XTR",
@@ -110,9 +148,8 @@ async def buy_book(
             l10n=l10n,
             id_book=id_book,
             url_payment=payment.invoice,
-            price_stars=price_stars,
-            price_rub=price_rub,
-            id_payment=payment.id,
+            price=price,
+            id_payment=id_payment,
         ),
     )
     await state.set_state(PaymentState.book)
@@ -152,7 +189,7 @@ async def payment_book(
         await call.answer()
         return
 
-    if not Payment.check_payment(Payment(amount=float(price), id=id_payment)):
+    if not Payment.check_payment(Payment(amount=int(price), id=id_payment)):
         await call.message.answer(l10n.format_value("payment-error-payment-not-found"))
         await call.answer()
         return
@@ -188,12 +225,11 @@ async def payment_book(
         files=book.files,
     )
 
-    base = (
-        random.randint(7, 15)
-        if price == config.price.book.daily.rub
-        else random.randint(10, 20)
-    )
+    base = random.randint(7, 15) if price == 50 else random.randint(10, 20)
     await api.users.update_user(id_user=id_user, base_balance=user.base_balance + base)
+
+    if user.has_discount:
+        await api.users.discounts.delete_discount(id_user=id_user)
 
     await call.message.answer(
         l10n.format_value(
@@ -218,7 +254,7 @@ async def payment_book(
                 "user_link": user_link,
                 "id_user": str(id_user),
                 "title": book.title,
-                "id_book": BookFormatter.format_article(book.id_book),
+                "article": BookFormatter.format_article(book.id_book),
                 "price": price,
                 "currency": "₽",
                 "base": base,
@@ -305,12 +341,11 @@ async def payment_book_on_successful(
         files=book.files,
     )
 
-    base = (
-        random.randint(7, 15)
-        if price == config.price.book.daily.rub
-        else random.randint(10, 20)
-    )
+    base = random.randint(7, 15) if price == 50 else random.randint(10, 20)
     await api.users.update_user(id_user=id_user, base_balance=user.base_balance + base)
+
+    if user.has_discount:
+        await api.users.discounts.delete_discount(id_user=id_user)
 
     await message.answer(
         l10n.format_value(
@@ -335,9 +370,9 @@ async def payment_book_on_successful(
                 "user_link": user_link,
                 "id_user": str(id_user),
                 "title": book.title,
-                "id_book": BookFormatter.format_article(book.id_book),
+                "article": BookFormatter.format_article(book.id_book),
                 "price": price,
-                "currency": "⭐️",
+                "currency": " ⭐️",
                 "base": base,
                 "id_payment": id_payment,
             },

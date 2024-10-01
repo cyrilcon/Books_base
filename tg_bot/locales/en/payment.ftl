@@ -1,4 +1,4 @@
-payment-book = Цена: { $price_rub }₽ или { $price_stars } ⭐
+payment-book = Цена: { $price_rub }₽ или { $price_xtr } ⭐
 
 payment-book-error-user-already-has-this-book = У вас уже есть эта книга!!
 

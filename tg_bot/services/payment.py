@@ -10,7 +10,7 @@ from tg_bot.config import config
 class Payment:
     """Class to work with payments"""
 
-    amount: float
+    amount: int
     comment: str = None
     id: str = None
 

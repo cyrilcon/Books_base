@@ -13,8 +13,7 @@ def pay_book_keyboard(
     l10n: FluentLocalization,
     id_book: int,
     url_payment: str,
-    price_stars: int,
-    price_rub: int | float,
+    price: int,
     id_payment: str,
 ):
     """
@@ -22,8 +21,7 @@ def pay_book_keyboard(
     :param l10n: Language set by the user.
     :param id_book: Unique book identifier (article of the book).
     :param url_payment: Payment link.
-    :param price_stars: Product price in stars.
-    :param price_rub: Product price in rubles.
+    :param price: Product price.
     :param id_payment: Unique payment identifier.
     :return: The "pay_book" keyboard.
     """
@@ -31,16 +29,16 @@ def pay_book_keyboard(
     pay_book_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                pay_xtr_button(l10n, price=price_stars),
+                pay_xtr_button(l10n, price=price),
             ],
             [
-                pay_rub_button(l10n, price=price_rub, url_payment=url_payment),
+                pay_rub_button(l10n, price=price, url_payment=url_payment),
             ],
             [
                 paid_book_button(
                     l10n=l10n,
                     id_book=id_book,
-                    price=price_rub,
+                    price=price,
                     id_payment=id_payment,
                 ),
             ],

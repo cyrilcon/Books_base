@@ -171,7 +171,7 @@ async def payment_premium_on_successful(
                 "user_link": user_link,
                 "id_user": str(id_user),
                 "price": price,
-                "currency": "⭐️",
+                "currency": " ⭐️",
                 "id_payment": id_payment,
             },
         ),
