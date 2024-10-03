@@ -1,4 +1,4 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, Bot
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
@@ -46,17 +46,29 @@ async def broadcast_process(
     await ClearKeyboard.clear(message, storage)
 
     response = await api.users.get_user_ids()
-    users = response.result
+    user_ids = response.result
+
+    response = await api.users.blacklist.get_blacklisted_user_ids()
+    blacklisted_user_ids = response.result
 
     from_chat_id = message.chat.id
     message_id = message.message_id
 
     await state.clear()
-    success_count = await Broadcaster.broadcast(bot, users, from_chat_id, message_id)
+    success_count = await Broadcaster.broadcast(
+        bot=bot,
+        users=list(set(user_ids) - set(blacklisted_user_ids)),
+        from_chat_id=from_chat_id,
+        message_id=message_id,
+    )
 
     await message.answer(
         l10n.format_value(
             "broadcast-success",
-            {"success_count": success_count, "users_count": len(users)},
+            {
+                "success_count": success_count,
+                "users_count": len(user_ids),
+                "blacklisted_users_count": len(blacklisted_user_ids),
+            },
         )
     )
