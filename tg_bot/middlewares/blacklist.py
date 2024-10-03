@@ -3,8 +3,6 @@ from typing import Callable, Dict, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 
-from api.books_base_api import api
-
 
 class BlacklistMiddleware(BaseMiddleware):
     """
@@ -17,21 +15,11 @@ class BlacklistMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
-        id_user = event.from_user.id
         l10n = data["l10n"]
+        user = data["user"]
 
-        # Проверяем, является ли сообщение от бота
-        if id_user == event._bot.id:
-            return await handler(event, data)
-
-        # Получаем информацию о пользователе
-        response = await api.users.get_user_by_id(id_user=id_user)
-        user = response.get_model()
-
-        # Если пользователь в черном списке, отправляем сообщение и прекращаем обработку
         if user.is_blacklisted:
             await event.answer(l10n.format_value("error-user-blacklisted"))
-            return  # Прекращаем выполнение обработчиков
+            return
 
-        # Если пользователь не в черном списке, продолжаем обработку
         return await handler(event, data)
