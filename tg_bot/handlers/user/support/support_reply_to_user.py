@@ -60,7 +60,7 @@ async def support_reply_to_user_process(
     response = await api.users.get_user_by_id(id_user=id_user_recipient)
     user = response.get_model()
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     try:
         sent_message = await bot.copy_message(

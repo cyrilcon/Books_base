@@ -87,7 +87,7 @@ async def serve_order_step_1(
     user = response.get_model()
     id_user = user.id_user
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     sent_message = await message.answer(
         l10n.format_value(
@@ -102,7 +102,10 @@ async def serve_order_step_1(
         ),
         reply_markup=back_cancel_keyboard(l10n),
     )
-    await state.update_data(id_order=id_order)
+    await state.update_data(
+        id_order=id_order,
+        language_code_recipient=user.language_code,
+    )
     await state.set_state(ServeOrder.select_book)
 
     await ClearKeyboard.safe_message(

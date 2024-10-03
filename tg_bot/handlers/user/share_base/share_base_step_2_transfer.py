@@ -74,7 +74,7 @@ async def share_base_step_2(
     id_user_recipient = recipient.id_user
     l10n_recipient = await get_user_localization(id_user_recipient)
 
-    user_link = await create_user_link(sender.full_name, sender.username)
+    user_link = create_user_link(sender.full_name, sender.username)
 
     try:
         await bot.send_message(
@@ -116,7 +116,7 @@ async def share_base_step_2(
         )
         await call.answer()
 
-        user_link_recipient = await create_user_link(
+        user_link_recipient = create_user_link(
             full_name=recipient.full_name,
             username=recipient.username,
         )

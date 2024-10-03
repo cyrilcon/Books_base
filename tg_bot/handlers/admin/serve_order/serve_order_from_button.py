@@ -68,7 +68,7 @@ async def serve_order_book_unavailable(
     response = await api.orders.get_order_by_id(id_order=id_order)
     order = response.get_model()
 
-    l10n_recipient = await get_user_localization(order.id_user)
+    l10n_recipient = await get_user_localization(id_user=order.id_user)
     try:
         await bot.send_message(
             chat_id=order.id_user,

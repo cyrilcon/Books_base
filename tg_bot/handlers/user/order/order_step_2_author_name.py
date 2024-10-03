@@ -91,7 +91,7 @@ async def order_step_2(
     )
     await state.clear()
 
-    user_link = await create_user_link(
+    user_link = create_user_link(
         full_name=message.from_user.full_name,
         username=message.from_user.username,
     )

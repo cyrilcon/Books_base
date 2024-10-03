@@ -106,7 +106,7 @@ async def buy_book(
                 files=book.files,
             )
 
-            user_link = await create_user_link(user.full_name, user.username)
+            user_link = create_user_link(user.full_name, user.username)
 
             l10n_chat = get_fluent_localization(config.chat.language_code)
             await bot.send_message(
@@ -246,7 +246,7 @@ async def payment_book(
     )
     await state.clear()
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(
@@ -363,7 +363,7 @@ async def payment_book_on_successful(
     )
     await state.clear()
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(

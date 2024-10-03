@@ -63,7 +63,7 @@ async def read(
     user = response.get_model()
 
     if user.is_premium:
-        user_link = await create_user_link(user.full_name, user.username)
+        user_link = create_user_link(user.full_name, user.username)
         article = BookFormatter.format_article(id_book=id_book)
 
         l10n_chat = get_fluent_localization(config.chat.language_code)

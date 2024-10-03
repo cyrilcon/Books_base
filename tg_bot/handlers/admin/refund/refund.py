@@ -95,7 +95,7 @@ async def refund_process(
         response = await api.users.get_user_by_id(id_user)
         user = response.get_model()
 
-        user_link = await create_user_link(user.full_name, user.username)
+        user_link = create_user_link(user.full_name, user.username)
 
         l10n_params = {
             "msg_id": "refund-success",
@@ -107,12 +107,18 @@ async def refund_process(
         }
 
         await message.answer(
-            l10n.format_value(l10n_params["msg_id"], l10n_params["args"])
+            l10n.format_value(
+                msg_id=l10n_params["msg_id"],
+                args=l10n_params["args"],
+            )
         )
 
         l10n_chat = get_fluent_localization(config.chat.language_code)
         await bot.send_message(
             chat_id=config.chat.payment,
-            text=l10n_chat.format_value(l10n_params["msg_id"], l10n_params["args"]),
+            text=l10n_chat.format_value(
+                msg_id=l10n_params["msg_id"],
+                args=l10n_params["args"],
+            ),
         )
     await state.clear()

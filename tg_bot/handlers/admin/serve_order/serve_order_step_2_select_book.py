@@ -10,9 +10,9 @@ from api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard, buy_or_read_keyboard
 from tg_bot.services import (
     ClearKeyboard,
-    get_user_localization,
     generate_book_caption,
     is_valid_book_article,
+    get_fluent_localization,
 )
 from tg_bot.states import ServeOrder
 
@@ -84,13 +84,14 @@ async def serve_step_2(
 
     data = await state.get_data()
     id_order = data.get("id_order")
+    language_code_recipient = data.get("language_code_recipient")
 
     response = await api.orders.get_order_by_id(id_order=id_order)
 
     order = response.get_model()
     id_user_recipient = order.id_user
 
-    l10n_recipient = await get_user_localization(id_user_recipient)
+    l10n_recipient = get_fluent_localization(language_code_recipient)
     caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
 
     try:

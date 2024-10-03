@@ -72,7 +72,7 @@ async def give_book_1_process(
         return
 
     id_user = user.id_user
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     sent_message = await message.answer(
         l10n.format_value(
@@ -84,7 +84,11 @@ async def give_book_1_process(
         ),
         reply_markup=back_cancel_keyboard(l10n),
     )
-    await state.update_data(id_user_recipient=id_user, user_link=user_link)
+    await state.update_data(
+        id_user_recipient=id_user,
+        language_code_recipient=user.language_code,
+        user_link=user_link,
+    )
     await state.set_state(GiveBook.select_book)
 
     await ClearKeyboard.safe_message(

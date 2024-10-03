@@ -13,8 +13,8 @@ from tg_bot.services import (
     find_user,
     create_user_link,
     ClearKeyboard,
-    get_user_localization,
     set_user_commands,
+    get_fluent_localization,
 )
 from tg_bot.states import AddAdmin
 
@@ -70,7 +70,7 @@ async def add_admin_process(
         return
 
     id_user = user.id_user
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     if user.is_admin:
         sent_message = await message.answer(
@@ -87,7 +87,7 @@ async def add_admin_process(
         )
         return
 
-    l10n_recipient = await get_user_localization(id_user)
+    l10n_recipient = get_fluent_localization(user.language_code)
     try:
         await bot.send_message(
             chat_id=id_user,

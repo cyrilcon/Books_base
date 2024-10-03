@@ -14,7 +14,6 @@ from tg_bot.services import (
     find_user,
     create_user_link,
     ClearKeyboard,
-    get_user_localization,
     get_fluent_localization,
 )
 from tg_bot.states import GivePremium
@@ -71,7 +70,7 @@ async def give_premium_process(
         return
 
     id_user = user.id_user
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     if user.is_premium:
         sent_message = await message.answer(
@@ -88,7 +87,7 @@ async def give_premium_process(
         )
         return
 
-    l10n_recipient = await get_user_localization(id_user)
+    l10n_recipient = get_fluent_localization(user.language_code)
     try:
         await bot.send_message(
             chat_id=id_user,
@@ -110,12 +109,18 @@ async def give_premium_process(
         }
 
         await message.answer(
-            text=l10n.format_value(l10n_params["msg_id"], l10n_params["args"])
+            text=l10n.format_value(
+                msg_id=l10n_params["msg_id"],
+                args=l10n_params["args"],
+            )
         )
 
         l10n_chat = get_fluent_localization(config.chat.language_code)
         await bot.send_message(
             chat_id=config.chat.payment,
-            text=l10n_chat.format_value(l10n_params["msg_id"], l10n_params["args"]),
+            text=l10n_chat.format_value(
+                msg_id=l10n_params["msg_id"],
+                args=l10n_params["args"],
+            ),
         )
     await state.clear()

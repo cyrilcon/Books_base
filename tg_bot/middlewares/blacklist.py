@@ -15,8 +15,8 @@ class BlacklistMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
-        l10n = data["l10n"]
         user = data["user"]
+        l10n = data["l10n"]
 
         if user.is_blacklisted:
             await event.answer(l10n.format_value("error-user-blacklisted"))

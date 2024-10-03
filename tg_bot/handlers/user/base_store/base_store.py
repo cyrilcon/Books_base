@@ -110,7 +110,7 @@ async def base_store_discount(
     )
     await call.answer()
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(

@@ -48,7 +48,7 @@ async def support_process(
     await ClearKeyboard.clear(message, storage)
 
     id_user = message.from_user.id
-    user_link = await create_user_link(
+    user_link = create_user_link(
         full_name=message.from_user.full_name,
         username=message.from_user.username,
     )

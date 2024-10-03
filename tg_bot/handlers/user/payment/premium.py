@@ -73,7 +73,7 @@ async def payment_premium(
     )
     await state.clear()
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(
@@ -163,7 +163,7 @@ async def payment_premium_on_successful(
         telegram_payment_charge_id=id_payment,
     )
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(

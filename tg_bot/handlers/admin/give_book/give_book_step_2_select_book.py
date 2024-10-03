@@ -15,7 +15,6 @@ from tg_bot.services import (
     ClearKeyboard,
     generate_book_caption,
     is_valid_book_article,
-    get_user_localization,
     Payment,
     get_fluent_localization,
 )
@@ -89,6 +88,7 @@ async def give_book_step_2(
 
     data = await state.get_data()
     id_user_recipient = data.get("id_user_recipient")
+    language_code_recipient = data.get("language_code_recipient")
     user_link = data.get("user_link")
 
     response = await api.users.get_book_ids(id_user=id_user_recipient)
@@ -109,7 +109,7 @@ async def give_book_step_2(
         )
         return
 
-    l10n_recipient = await get_user_localization(id_user_recipient)
+    l10n_recipient = get_fluent_localization(language_code_recipient)
     caption = await generate_book_caption(
         book_data=book,
         l10n=l10n_recipient,
@@ -159,12 +159,18 @@ async def give_book_step_2(
         }
 
         await message.answer(
-            l10n.format_value(l10n_params["msg_id"], l10n_params["args"])
+            l10n.format_value(
+                msg_id=l10n_params["msg_id"],
+                args=l10n_params["args"],
+            )
         )
 
         l10n_chat = get_fluent_localization(config.chat.language_code)
         await bot.send_message(
             chat_id=config.chat.payment,
-            text=l10n_chat.format_value(l10n_params["msg_id"], l10n_params["args"]),
+            text=l10n_chat.format_value(
+                msg_id=l10n_params["msg_id"],
+                args=l10n_params["args"],
+            ),
         )
     await state.clear()

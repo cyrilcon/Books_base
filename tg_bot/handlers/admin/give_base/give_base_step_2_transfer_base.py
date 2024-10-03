@@ -10,11 +10,7 @@ from api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
-from tg_bot.services import (
-    ClearKeyboard,
-    get_user_localization,
-    get_fluent_localization,
-)
+from tg_bot.services import ClearKeyboard, get_fluent_localization
 from tg_bot.states import GiveBase
 
 give_base_step_2_router = Router()
@@ -75,7 +71,7 @@ async def give_base_step_2(
 
     base_balance = user.base_balance + base_received
 
-    l10n_recipient = await get_user_localization(id_user_recipient)
+    l10n_recipient = get_fluent_localization(user.language_code)
     try:
         await bot.send_message(
             chat_id=id_user_recipient,
@@ -106,12 +102,18 @@ async def give_base_step_2(
         }
 
         await message.answer(
-            l10n.format_value(l10n_params["msg_id"], l10n_params["args"])
+            l10n.format_value(
+                msg_id=l10n_params["msg_id"],
+                args=l10n_params["args"],
+            )
         )
 
         l10n_chat = get_fluent_localization(config.chat.language_code)
         await bot.send_message(
             chat_id=config.chat.payment,
-            text=l10n_chat.format_value(l10n_params["msg_id"], l10n_params["args"]),
+            text=l10n_chat.format_value(
+                msg_id=l10n_params["msg_id"],
+                args=l10n_params["args"],
+            ),
         )
     await state.clear()

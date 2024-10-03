@@ -66,7 +66,7 @@ async def get_profile_process(
 
     status_icons = get_user_status_icons(user, l10n)
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     registration_datetime = convert_utc_datetime(user.registration_datetime)
     last_activity_datetime = convert_utc_datetime(user.last_activity_datetime)

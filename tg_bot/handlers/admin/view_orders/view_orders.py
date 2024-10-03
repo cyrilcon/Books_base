@@ -84,7 +84,7 @@ async def get_order_info(
     response = await api.users.get_user_by_id(id_user=order.id_user)
     user = response.get_model()
 
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     text = l10n.format_value(
         "order-information-template",

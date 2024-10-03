@@ -61,7 +61,7 @@ async def cancel_premium_process(
         return
 
     id_user = user.id_user
-    user_link = await create_user_link(user.full_name, user.username)
+    user_link = create_user_link(user.full_name, user.username)
 
     if not user.is_premium:
         sent_message = await message.answer(

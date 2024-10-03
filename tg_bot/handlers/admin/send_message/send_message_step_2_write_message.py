@@ -7,7 +7,7 @@ from aiogram.types import CallbackQuery, Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tg_bot.services import ClearKeyboard, get_user_localization
+from tg_bot.services import ClearKeyboard, get_fluent_localization
 from tg_bot.states import SendMessage
 
 send_message_step_2_router = Router()
@@ -42,9 +42,10 @@ async def support_reply_to_user_process(
 
     data = await state.get_data()
     id_user_recipient = data["id_user_recipient"]
+    language_code_recipient = data["language_code_recipient"]
     user_link = data["user_link"]
 
-    l10n_recipient = await get_user_localization(id_user_recipient)
+    l10n_recipient = get_fluent_localization(language_code_recipient)
     try:
         sent_message = await bot.copy_message(
             chat_id=id_user_recipient,
