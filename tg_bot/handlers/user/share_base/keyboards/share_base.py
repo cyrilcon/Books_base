@@ -29,7 +29,10 @@ def share_base_keyboard(l10n, base: int) -> InlineKeyboardMarkup:
     keyboard_buttons = [
         buttons[:3],
         buttons[3:],
-        [share_base_back_button(l10n), share_base_cancel_button(l10n)],
+        [
+            share_base_back_button(l10n),
+            share_base_cancel_button(l10n),
+        ],
     ]
     share_base_markup = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 

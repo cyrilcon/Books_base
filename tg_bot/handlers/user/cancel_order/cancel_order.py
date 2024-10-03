@@ -1,16 +1,42 @@
 from aiogram import Router, F
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard
+from tg_bot.filters import AdminFilter
 from tg_bot.services import ClearKeyboard
-from tg_bot.states import CancelOrder
+from .keyboards import orders_keyboard
 
 cancel_order_router = Router()
+
+
+@cancel_order_router.message(
+    Command("cancel_order"),
+    AdminFilter(),
+)
+async def cancel_order(
+    message: Message,
+    l10n: FluentLocalization,
+    state: FSMContext,
+    storage: RedisStorage,
+):
+    await ClearKeyboard.clear(message, storage)
+    await state.clear()
+
+    response = await api.orders.get_order_ids()
+    orders = response.result
+
+    if len(orders) == 0:
+        await message.answer(l10n.format_value("orders-absent"))
+        return
+
+    await message.answer(
+        l10n.format_value("cancel-order"),
+        reply_markup=orders_keyboard(orders=orders),
+    )
 
 
 @cancel_order_router.message(Command("cancel_order"))
@@ -21,78 +47,65 @@ async def cancel_order(
     storage: RedisStorage,
 ):
     await ClearKeyboard.clear(message, storage)
+    await state.clear()
 
-    sent_message = await message.answer(
-        l10n.format_value("cancel-order-select"),
-        reply_markup=cancel_keyboard(l10n),
+    id_user = message.from_user.id
+
+    response = await api.users.get_order_ids_by_user(id_user=id_user)
+    orders = response.result
+
+    if len(orders) == 0:
+        await message.answer(l10n.format_value("cancel-order-error-user-has-no-order"))
+        return
+
+    await message.answer(
+        l10n.format_value("cancel-order"),
+        reply_markup=orders_keyboard(orders=orders),
     )
-    await state.set_state(CancelOrder.select_order)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )
 
 
-@cancel_order_router.message(
-    StateFilter(CancelOrder.select_order),
-    F.text,
-)
+@cancel_order_router.callback_query(F.data.startswith("cancel_order"))
 async def cancel_order_process(
-    message: Message,
+    call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
+    await ClearKeyboard.clear(call, storage)
+    await state.clear()
 
-    order_number = message.text
-
-    if order_number[0] == "№":
-        order_number = order_number[1:]
-
-    if not order_number.isdigit():
-        sent_message = await message.answer(
-            l10n.format_value("cancel-order-error-invalid-order-number"),
-            reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
-        return
-
-    id_order = int(order_number)
+    id_order = int(call.data.split(":")[-1])
+    id_user = call.from_user.id
 
     response = await api.orders.get_order_by_id(id_order=id_order)
     status = response.status
-    order = response.get_model()
 
-    response = await api.users.admins.get_admin_ids()
-    admin_ids = response.result
+    response = await api.users.get_user_by_id(id_user=id_user)
+    user = response.get_model()
 
-    id_user = message.from_user.id
+    if user.is_admin:
+        response = await api.orders.get_order_ids()
+    else:
+        response = await api.users.get_order_ids_by_user(id_user=id_user)
+    orders = response.result
 
-    if status == 200 and (id_user in admin_ids or id_user == order.id_user):
-        await api.orders.delete_order(id_order=id_order)
-
-        await message.answer(
-            l10n.format_value(
-                "cancel-order-success",
-                {"id_order": str(id_order), "book_title": order.book_title},
-            ),
+    if status != 200:
+        await call.answer(
+            l10n.format_value("cancel-order-error-order-already-canceled"),
+            show_alert=True,
         )
-        await state.clear()
+        await call.message.edit_reply_markup(
+            reply_markup=orders_keyboard(orders=orders)
+        )
         return
 
-    sent_message = await message.answer(
-        l10n.format_value("cancel-order-error-order-not-found"),
-        reply_markup=cancel_keyboard(l10n),
+    await api.orders.delete_order(id_order=id_order)
+
+    await call.message.edit_text(
+        l10n.format_value(
+            "cancel-order-success",
+            {"id_order": str(id_order)},
+        ),
+        reply_markup=orders_keyboard(orders=orders),
     )
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )
+    await call.answer()

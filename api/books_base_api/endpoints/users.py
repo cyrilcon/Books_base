@@ -100,6 +100,19 @@ class UsersApi:
         )
         return ApiResponse(status, result)
 
+    async def get_order_ids_by_user(self, id_user: int) -> ApiResponse[List[int]]:
+        """
+        Get a list of order IDs by the user.
+
+        :param id_user: Unique user identifier.
+        """
+
+        status, result = await self.base_client.make_request(
+            method="GET",
+            url=f"{self.endpoint}/{id_user}/orders",
+        )
+        return ApiResponse(status, result)
+
     async def get_user_by_id(self, id_user: int) -> ApiResponse[UserSchema]:
         """
         Get a user by ID.

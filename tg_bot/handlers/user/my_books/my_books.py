@@ -77,7 +77,6 @@ async def my_books_page(call: CallbackQuery, l10n: FluentLocalization):
             l10n.format_value("my-books-user-has-premium-alert"),
             show_alert=True,
         )
-        await call.answer()
         return
 
     response = await api.users.get_book_ids(id_user=id_user)

@@ -1,13 +1,10 @@
-cancel-order-select = Введите <i><b>Ваш номер заказа</b></i>, который хотите отменить
+cancel-order-error-user-has-no-order =
+    У вас отсутствуют действующие заказы!!
 
-cancel-order-error-invalid-order-number =
-    Номер заказа некорректен!!
-    Введите <i><b>номер заказа</b></i> ещё раз
+    Заказать книгу – /order
 
-cancel-order-error-order-not-found =
-    Заказ не найден!!
-    Введите <i><b>номер заказа</b></i> ещё раз
+cancel-order = Выберите номер заказа, который хотите отменить
 
-cancel-order-success = Заказ <code>№{ $id_order }</code> с книгой <b>"{ $book_title }"</b> успешно отменён!!
+cancel-order-error-order-already-canceled = Этот заказ уже отменён!!
 
-cancel-order-canceled = Вы не отменили заказ
+cancel-order-success = Заказ <code>№{ $id_order }</code> отменён!!
