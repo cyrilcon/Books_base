@@ -9,6 +9,7 @@ from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.enums import SearchBy
 from tg_bot.keyboards.inline import buy_or_read_keyboard
 from tg_bot.services import (
@@ -41,16 +42,24 @@ async def search_by_title(
 
 
 @search_by_title_router.message(F.text, flags={"chat_action": "typing"})
-async def search_by_title_process(message: Message, l10n: FluentLocalization):
-    await book_search(message, l10n)
+async def search_by_title_process(
+    message: Message,
+    l10n: FluentLocalization,
+    user: UserSchema,
+):
+    await book_search(message, l10n, user)
 
 
 @search_by_title_router.callback_query(F.data.startswith("book_page"))
-async def book_page(call: CallbackQuery, l10n: FluentLocalization):
+async def book_page(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    user: UserSchema,
+):
     page = int(call.data.split(":")[-1])
     book_title_request = re.search(r'"([^"]*)"', call.message.text).group(1)
 
-    await book_search(call.message, l10n, page, book_title_request)
+    await book_search(call.message, l10n, user, page, book_title_request)
     await call.answer()
 
 
@@ -60,6 +69,7 @@ async def get_book(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
 ):
     await ClearKeyboard.clear(call, storage)
     await state.clear()
@@ -81,12 +91,11 @@ async def get_book(
         return
 
     book = response.get_model()
-    id_user = call.from_user.id
 
     caption = await generate_book_caption(
         book_data=book,
         l10n=l10n,
-        id_user=id_user,
+        user=user,
     )
 
     await call.message.answer_photo(
@@ -95,7 +104,7 @@ async def get_book(
         reply_markup=await buy_or_read_keyboard(
             l10n=l10n,
             id_book=id_book,
-            id_user=id_user,
+            user=user,
         ),
     )
     await call.answer()
@@ -104,6 +113,7 @@ async def get_book(
 async def book_search(
     message: Message,
     l10n: FluentLocalization,
+    user: UserSchema,
     page: int = 1,
     book_title_request: str = None,
 ):
@@ -111,11 +121,10 @@ async def book_search(
     A common function for handling book searches and forward/backward button presses.
     :param message: Message or callback object.
     :param l10n: Language set by the user.
+    :param user: User instance.
     :param page: Page number for pagination.
     :param book_title_request: Title of the book to search for.
     """
-
-    id_user = message.from_user.id
 
     if book_title_request is None:
         book_title_request = message.text
@@ -140,7 +149,7 @@ async def book_search(
         caption = await generate_book_caption(
             book_data=book,
             l10n=l10n,
-            id_user=id_user,
+            user=user,
         )
 
         await message.answer_photo(
@@ -149,7 +158,7 @@ async def book_search(
             reply_markup=await buy_or_read_keyboard(
                 l10n=l10n,
                 id_book=book.id_book,
-                id_user=id_user,
+                user=user,
             ),
         )
         return
@@ -163,7 +172,10 @@ async def book_search(
         )
         return
 
-    response = await api.books.search_books_by_title(book_title_request, page=page)
+    response = await api.books.search_books_by_title(
+        title=book_title_request,
+        page=page,
+    )
     result = response.get_model()
     found = result.found
     books = result.books
@@ -183,16 +195,15 @@ async def book_search(
         caption = await generate_book_caption(
             book_data=book,
             l10n=l10n,
-            id_user=id_user,
+            user=user,
         )
-
         await message.answer_photo(
             photo=book.cover,
             caption=caption,
             reply_markup=await buy_or_read_keyboard(
                 l10n=l10n,
                 id_book=book.id_book,
-                id_user=id_user,
+                user=user,
             ),
         )
         return
@@ -205,11 +216,9 @@ async def book_search(
 
     for book in books:
         book = book.book
-
         article = BookFormatter.format_article(book.id_book)
         title = book.title
         authors = BookFormatter.format_authors(book.authors)
-
         text += (
             f"\n\n<b>{book_number}.</b> <code>{title}</code>\n"
             f"<i>{authors}</i> (<code>{article}</code>)"

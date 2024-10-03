@@ -3,8 +3,7 @@ from typing import Dict, Any, Union
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from api.books_base_api.schemas import BookSchema
-from tg_bot.config import config
+from api.books_base_api.schemas import BookSchema, UserSchema
 from tg_bot.services.book_formatter import BookFormatter
 from tg_bot.services.fluent_loader import get_fluent_localization
 
@@ -14,7 +13,7 @@ async def generate_book_caption(
     l10n: FluentLocalization = get_fluent_localization("ru"),
     is_post: bool = False,
     from_user: bool = False,
-    id_user: int = None,
+    user: UserSchema = None,
     **kwargs,
 ):
     """
@@ -23,7 +22,7 @@ async def generate_book_caption(
     :param l10n: Language set by the user.
     :param is_post: True - text is generated for post.
     :param from_user: True - book from user.
-    :param id_user: Unique user identifier.
+    :param user: User instance.
     :param kwargs: Additional parameters that may override book_data.
     :return: Ready caption of post for telegram channel.
     """
@@ -54,11 +53,8 @@ async def generate_book_caption(
     intro_message = intro_info["message"] if is_post else ""
     price_text = intro_info["price_text"]
 
-    if id_user:
-        response = await api.users.get_user_by_id(id_user=id_user)
-        user = response.get_model()
-
-        response = await api.users.get_book_ids(id_user=id_user)
+    if user:
+        response = await api.users.get_book_ids(id_user=user.id_user)
         book_ids = response.result
 
         if user.is_premium:

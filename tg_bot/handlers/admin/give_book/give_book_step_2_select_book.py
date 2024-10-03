@@ -110,10 +110,14 @@ async def give_book_step_2(
         return
 
     l10n_recipient = get_fluent_localization(language_code_recipient)
+
+    response = await api.users.get_user_by_id(id_user=id_user_recipient)
+    user = response.get_model()
+
     caption = await generate_book_caption(
         book_data=book,
         l10n=l10n_recipient,
-        id_user=id_user_recipient,
+        user=user,
     )
 
     try:

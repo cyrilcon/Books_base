@@ -92,7 +92,7 @@ async def refund_process(
     except AiogramError:
         await message.answer(l10n.format_value("error-user-blocked-bot"))
     else:
-        response = await api.users.get_user_by_id(id_user)
+        response = await api.users.get_user_by_id(id_user=id_user)
         user = response.get_model()
 
         user_link = create_user_link(user.full_name, user.username)

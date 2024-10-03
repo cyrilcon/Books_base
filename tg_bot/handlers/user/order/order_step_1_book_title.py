@@ -6,6 +6,7 @@ from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.keyboards.inline import (
     back_cancel_keyboard,
     cancel_keyboard,
@@ -128,6 +129,7 @@ async def order_step_1_display_book_details(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
+    user: UserSchema,
 ):
     id_book = int(call.data.split(":")[-1])
     article = BookFormatter.format_article(id_book)
@@ -156,7 +158,7 @@ async def order_step_1_display_book_details(
         reply_markup=await buy_or_read_keyboard(
             l10n=l10n,
             id_book=id_book,
-            id_user=call.from_user.id,
+            user=user,
         ),
     )
     await call.answer()

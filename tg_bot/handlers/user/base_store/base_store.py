@@ -6,6 +6,7 @@ from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
 from tg_bot.services import ClearKeyboard, get_fluent_localization, create_user_link
@@ -20,12 +21,10 @@ async def base_store(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
 ):
     await ClearKeyboard.clear(message, storage)
     await state.clear()
-
-    response = await api.users.get_user_by_id(id_user=message.from_user.id)
-    user = response.get_model()
 
     if user.is_premium:
         await message.answer(l10n.format_value("base-store-error-user-has-premium"))
@@ -60,15 +59,11 @@ async def base_store_discount(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
     bot: Bot,
 ):
     discount_value = int(call.data.split(":")[-2])
     price = int(call.data.split(":")[-1])
-
-    id_user = call.from_user.id
-
-    response = await api.users.get_user_by_id(id_user)
-    user = response.get_model()
 
     if user.is_premium or user.has_discount:
         await call.answer(
@@ -90,9 +85,9 @@ async def base_store_discount(
     await state.clear()
     await call.message.edit_reply_markup()
 
-    await api.users.update_user(id_user=id_user, base_balance=base_balance)
+    await api.users.update_user(id_user=user.id_user, base_balance=base_balance)
     await api.users.discounts.create_discount(
-        id_user=id_user,
+        id_user=user.id_user,
         discount_value=discount_value,
     )
 
@@ -119,7 +114,7 @@ async def base_store_discount(
             "base-store-exchange-success-message-for-admin",
             {
                 "user_link": user_link,
-                "id_user": str(id_user),
+                "id_user": str(user.id_user),
                 "price": price,
                 "discount_value": discount_value,
                 "base_balance": base_balance,

@@ -84,15 +84,16 @@ async def send_book_step_2(
 
     data = await state.get_data()
     id_user_recipient = data.get("id_user_recipient")
-    language_code_recipient = data["language_code_recipient"]
     user_link = data.get("user_link")
 
-    l10n_recipient = get_fluent_localization(language_code_recipient)
+    response = await api.users.get_user_by_id(id_user=id_user_recipient)
+    user = response.get_model()
 
+    l10n_recipient = get_fluent_localization(user.language_code)
     caption = await generate_book_caption(
         book_data=book,
         l10n=l10n_recipient,
-        id_user=id_user_recipient,
+        user=user,
     )
 
     try:
@@ -103,7 +104,7 @@ async def send_book_step_2(
             reply_markup=await buy_or_read_keyboard(
                 l10n=l10n,
                 id_book=id_book,
-                id_user=message.from_user.id,
+                user=user,
             ),
         )
     except AiogramError:

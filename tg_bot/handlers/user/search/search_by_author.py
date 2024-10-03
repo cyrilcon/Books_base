@@ -125,7 +125,7 @@ async def author_book_page(call: CallbackQuery, l10n: FluentLocalization):
     page = int(call.data.split(":")[-2])
     id_author = int(call.data.split(":")[-1])
 
-    response = await api.books.get_books_by_author_id(id_author, page=page)
+    response = await api.books.get_books_by_author_id(id_author=id_author, page=page)
     result = response.get_model()
     found = result.count
     books = result.books
@@ -140,11 +140,8 @@ async def author_book_page(call: CallbackQuery, l10n: FluentLocalization):
 
     for book in books:
         book = book.book
-
         article = BookFormatter.format_article(book.id_book)
         title = book.title
-        authors = BookFormatter.format_authors(book.authors)
-
         text += (
             f"\n\n<b>{book_number}.</b> <code>{title}</code>\n"
             f"(<code>{article}</code>)"
@@ -192,7 +189,10 @@ async def author_search(
         )
         return
 
-    response = await api.authors.search_authors(author_name_request, page=page)
+    response = await api.authors.search_authors(
+        author_name=author_name_request,
+        page=page,
+    )
     result = response.get_model()
     found = result.found
     authors = result.authors
@@ -211,7 +211,7 @@ async def author_search(
         author = authors[0].author
         id_author = author.id_author
 
-        response = await api.books.get_books_by_author_id(id_author)
+        response = await api.books.get_books_by_author_id(id_author=id_author)
         result = response.get_model()
         count = result.count
         books = result.books

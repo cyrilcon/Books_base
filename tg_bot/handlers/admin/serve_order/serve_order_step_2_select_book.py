@@ -84,14 +84,15 @@ async def serve_step_2(
 
     data = await state.get_data()
     id_order = data.get("id_order")
-    language_code_recipient = data.get("language_code_recipient")
 
     response = await api.orders.get_order_by_id(id_order=id_order)
-
     order = response.get_model()
     id_user_recipient = order.id_user
 
-    l10n_recipient = get_fluent_localization(language_code_recipient)
+    response = await api.users.get_user_by_id(id_user=id_user_recipient)
+    user = response.get_model()
+
+    l10n_recipient = get_fluent_localization(user.language_code)
     caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
 
     try:
@@ -109,7 +110,7 @@ async def serve_step_2(
             reply_markup=await buy_or_read_keyboard(
                 l10n=l10n,
                 id_book=id_book,
-                id_user=message.from_user.id,
+                user=user,
             ),
             reply_to_message_id=sent_message.message_id,
         )

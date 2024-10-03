@@ -102,10 +102,7 @@ async def serve_order_step_1(
         ),
         reply_markup=back_cancel_keyboard(l10n),
     )
-    await state.update_data(
-        id_order=id_order,
-        language_code_recipient=user.language_code,
-    )
+    await state.update_data(id_order=id_order)
     await state.set_state(ServeOrder.select_book)
 
     await ClearKeyboard.safe_message(

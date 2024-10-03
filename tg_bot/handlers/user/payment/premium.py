@@ -6,14 +6,13 @@ from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum
+from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum, UserSchema
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
 from tg_bot.services import (
     Payment,
     create_user_link,
-    get_user_localization,
     ClearKeyboard,
     get_fluent_localization,
 )
@@ -30,28 +29,25 @@ async def payment_premium(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
+    user: UserSchema,
     bot: Bot,
 ):
     price = float(call.data.split(":")[-2])
     id_payment = call.data.split(":")[-1]
 
-    if not Payment.check_payment(Payment(amount=float(price), id=id_payment)):
+    if not Payment.check_payment(Payment(amount=int(price), id=id_payment)):
         await call.message.answer(l10n.format_value("payment-error-payment-not-found"))
         await call.answer()
         return
 
     await call.message.edit_reply_markup()
 
-    id_user = call.from_user.id
-    response = await api.users.get_user_by_id(id_user)
-    user = response.get_model()
-
     if user.has_discount:
-        await api.users.discounts.delete_discount(id_user)
+        await api.users.discounts.delete_discount(id_user=user.id_user)
 
     await api.payments.create_payment(
         id_payment=id_payment,
-        id_user=id_user,
+        id_user=user.id_user,
         price=price,
         currency=PaymentCurrencyEnum.RUB,
         type=PaymentTypeEnum.PREMIUM,
@@ -82,7 +78,7 @@ async def payment_premium(
             "payment-premium-paid-message-for-admin",
             {
                 "user_link": user_link,
-                "id_user": str(id_user),
+                "id_user": str(user.id_user),
                 "price": price,
                 "currency": "₽",
                 "id_payment": id_payment,
@@ -95,12 +91,12 @@ async def payment_premium(
 @payment_premium_router.pre_checkout_query(StateFilter(PaymentState.premium))
 async def payment_premium_on_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
     id_user = pre_checkout_query.from_user.id
-    l10n = await get_user_localization(id_user)
 
     response = await api.users.get_user_by_id(id_user)
     user = response.get_model()
 
     if user.is_blacklisted or user.is_premium:
+        l10n = get_fluent_localization(user.language_code)
         await pre_checkout_query.answer(
             ok=False,
             error_message=l10n.format_value("payment-pre-checkout-failed-reason"),
@@ -118,6 +114,7 @@ async def payment_premium_on_successful(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
     bot: Bot,
 ):
     await ClearKeyboard.clear(message, storage)
@@ -125,17 +122,12 @@ async def payment_premium_on_successful(
     id_payment = message.successful_payment.telegram_payment_charge_id
     price = float(message.successful_payment.total_amount)
 
-    id_user = message.from_user.id
-
-    response = await api.users.get_user_by_id(id_user)
-    user = response.get_model()
-
     if user.has_discount:
-        await api.users.discounts.delete_discount(id_user)
+        await api.users.discounts.delete_discount(id_user=user.id_user)
 
     await api.payments.create_payment(
         id_payment=id_payment,
-        id_user=id_user,
+        id_user=user.id_user,
         price=price,
         currency=PaymentCurrencyEnum.XTR,
         type=PaymentTypeEnum.PREMIUM,
@@ -172,7 +164,7 @@ async def payment_premium_on_successful(
             "payment-premium-paid-message-for-admin",
             {
                 "user_link": user_link,
-                "id_user": str(id_user),
+                "id_user": str(user.id_user),
                 "price": price,
                 "currency": " ⭐️",
                 "id_payment": id_payment,

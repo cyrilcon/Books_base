@@ -5,6 +5,7 @@ from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.config import config
 from tg_bot.services import (
     send_files,
@@ -23,6 +24,7 @@ async def read(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
     bot: Bot,
 ):
     await ClearKeyboard.clear(call, storage)
@@ -57,11 +59,6 @@ async def read(
     )
     await call.answer()
 
-    id_user = call.from_user.id
-
-    response = await api.users.get_user_by_id(id_user=id_user)
-    user = response.get_model()
-
     if user.is_premium:
         user_link = create_user_link(user.full_name, user.username)
         article = BookFormatter.format_article(id_book=id_book)
@@ -73,7 +70,7 @@ async def read(
                 "read",
                 {
                     "user_link": user_link,
-                    "id_user": str(id_user),
+                    "id_user": str(user.id_user),
                     "title": book.title,
                     "article": article,
                 },

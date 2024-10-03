@@ -3,6 +3,7 @@ from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.config import config
 from tg_bot.services import get_fluent_localization, create_user_link
 
@@ -13,12 +14,9 @@ base_store_cancel_discount_router = Router()
 async def base_store_cancel_discount(
     call: CallbackQuery,
     l10n: FluentLocalization,
+    user: UserSchema,
     bot: Bot,
 ):
-    id_user = call.from_user.id
-
-    response = await api.users.get_user_by_id(id_user)
-    user = response.get_model()
     discount_value = user.has_discount
 
     if not discount_value:
@@ -37,8 +35,8 @@ async def base_store_cancel_discount(
 
     base_balance = user.base_balance + discount_values.get(discount_value)
 
-    await api.users.discounts.delete_discount(id_user=id_user)
-    await api.users.update_user(id_user=id_user, base_balance=base_balance)
+    await api.users.discounts.delete_discount(id_user=user.id_user)
+    await api.users.update_user(id_user=user.id_user, base_balance=base_balance)
 
     await call.message.edit_text(
         l10n.format_value(
@@ -60,7 +58,7 @@ async def base_store_cancel_discount(
             "base-store-cancel-discount-success-message-for-admin",
             {
                 "user_link": user_link,
-                "id_user": str(id_user),
+                "id_user": str(user.id_user),
                 "discount_value": discount_value,
                 "base_balance": base_balance,
             },

@@ -6,6 +6,7 @@ from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.filters import AdminFilter
 from tg_bot.services import ClearKeyboard
 from .keyboards import orders_keyboard
@@ -45,13 +46,12 @@ async def cancel_order(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
 ):
     await ClearKeyboard.clear(message, storage)
     await state.clear()
 
-    id_user = message.from_user.id
-
-    response = await api.users.get_order_ids_by_user(id_user=id_user)
+    response = await api.users.get_order_ids_by_user(id_user=user.id_user)
     orders = response.result
 
     if len(orders) == 0:
@@ -70,23 +70,20 @@ async def cancel_order_process(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
 ):
     await ClearKeyboard.clear(call, storage)
     await state.clear()
 
     id_order = int(call.data.split(":")[-1])
-    id_user = call.from_user.id
 
     response = await api.orders.get_order_by_id(id_order=id_order)
     status = response.status
 
-    response = await api.users.get_user_by_id(id_user=id_user)
-    user = response.get_model()
-
     if user.is_admin:
         response = await api.orders.get_order_ids()
     else:
-        response = await api.users.get_order_ids_by_user(id_user=id_user)
+        response = await api.users.get_order_ids_by_user(id_user=user.id_user)
     orders = response.result
 
     if status != 200:

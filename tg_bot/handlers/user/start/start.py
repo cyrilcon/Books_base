@@ -8,6 +8,7 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.keyboards.inline import buy_or_read_keyboard
 from tg_bot.services import ClearKeyboard, BookFormatter, generate_book_caption
 
@@ -23,6 +24,7 @@ async def start_deep_link(
     state: FSMContext,
     storage: RedisStorage,
     command: CommandObject,
+    user: UserSchema,
 ):
     await ClearKeyboard.clear(message, storage)
     await state.clear()
@@ -44,12 +46,11 @@ async def start_deep_link(
         return
 
     book = response.get_model()
-    id_user = message.from_user.id
 
     caption = await generate_book_caption(
         book_data=book,
         l10n=l10n,
-        id_user=id_user,
+        user=user,
     )
 
     await message.answer_photo(
@@ -58,7 +59,7 @@ async def start_deep_link(
         reply_markup=await buy_or_read_keyboard(
             l10n=l10n,
             id_book=id_book,
-            id_user=id_user,
+            user=user,
         ),
     )
 

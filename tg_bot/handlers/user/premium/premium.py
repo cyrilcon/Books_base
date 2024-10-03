@@ -6,7 +6,7 @@ from aiogram.types import Message, LabeledPrice
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
+from api.books_base_api.schemas import UserSchema
 from tg_bot.config import config
 from tg_bot.services import ClearKeyboard, Payment
 from tg_bot.states import Payment as PaymentState
@@ -25,12 +25,10 @@ async def premium(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
 ):
     await ClearKeyboard.clear(message, storage)
     await state.clear()
-
-    response = await api.users.get_user_by_id(id_user=message.from_user.id)
-    user = response.get_model()
 
     if user.is_premium:
         await message.answer(

@@ -69,11 +69,7 @@ async def send_book_step_1(
         ),
         reply_markup=back_cancel_keyboard(l10n),
     )
-    await state.update_data(
-        id_user_recipient=id_user,
-        language_code_recipient=user.language_code,
-        user_link=user_link,
-    )
+    await state.update_data(id_user_recipient=id_user, user_link=user_link)
     await state.set_state(SendBook.select_book)
 
     await ClearKeyboard.safe_message(

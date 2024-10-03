@@ -8,7 +8,7 @@ from aiogram.types import Message, CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from api.books_base_api.schemas import ArticleSchema
+from api.books_base_api.schemas import ArticleSchema, UserSchema
 from tg_bot.services import ClearKeyboard
 from .keyboards import view_articles_keyboard
 
@@ -21,12 +21,14 @@ async def news(
     l10n: FluentLocalization,
     state: FSMContext,
     storage: RedisStorage,
+    user: UserSchema,
 ):
     await ClearKeyboard.clear(message, storage)
     await state.clear()
 
     articles_count, text, article, language_code = await get_article_info(
-        l10n=l10n, id_user=message.from_user.id
+        l10n=l10n,
+        user=user,
     )
 
     if articles_count == 0:
@@ -47,12 +49,16 @@ async def news(
 
 
 @news_router.callback_query(F.data.startswith("article_position"))
-async def article_position(call: CallbackQuery, l10n: FluentLocalization):
+async def article_position(
+    call: CallbackQuery,
+    l10n: FluentLocalization,
+    user: UserSchema,
+):
     page = int(call.data.split(":")[-1])
 
     articles_count, text, article, language_code = await get_article_info(
         l10n=l10n,
-        id_user=call.from_user.id,
+        user=user,
         position=page,
     )
 
@@ -77,7 +83,7 @@ async def article_position(call: CallbackQuery, l10n: FluentLocalization):
 
 async def get_article_info(
     l10n: FluentLocalization,
-    id_user: int,
+    user: UserSchema,
     position: int = 1,
 ) -> Tuple[int, Optional[str], Optional[ArticleSchema], str]:
     """
@@ -88,14 +94,12 @@ async def get_article_info(
     it returns 0 and no article data.
 
     :param l10n: User's localization for formatting the text.
-    :param id_user: Unique user identifier.
+    :param user: User instance.
     :param position: Article position in the database.
     :return: A tuple with the total number of articles, article text,
              ArticleSchema object, and language code.
     """
 
-    response = await api.users.get_user_by_id(id_user)
-    user = response.get_model()
     language_code = user.language_code
 
     response = await api.articles.get_articles_count_by_language_code(

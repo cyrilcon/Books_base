@@ -121,7 +121,7 @@ async def get_genre(
 ):
     id_genre = int(call.data.split(":")[-1])
 
-    response = await api.genres.get_genre_by_id(id_genre)
+    response = await api.genres.get_genre_by_id(id_genre=id_genre)
     status = response.status
 
     if status != 200:
@@ -133,7 +133,7 @@ async def get_genre(
 
     genre = response.get_model()
 
-    response = await api.books.get_books_by_genre_id(id_genre)
+    response = await api.books.get_books_by_genre_id(id_genre=id_genre)
     result = response.get_model()
     count = result.count
     books = result.books
@@ -172,7 +172,7 @@ async def genre_book_page(call: CallbackQuery, l10n: FluentLocalization):
     page = int(call.data.split(":")[-2])
     id_genre = int(call.data.split(":")[-1])
 
-    response = await api.books.get_books_by_genre_id(id_genre, page=page)
+    response = await api.books.get_books_by_genre_id(id_genre=id_genre, page=page)
     result = response.get_model()
     found = result.count
     books = result.books
@@ -187,11 +187,9 @@ async def genre_book_page(call: CallbackQuery, l10n: FluentLocalization):
 
     for book in books:
         book = book.book
-
         article = BookFormatter.format_article(book.id_book)
         title = book.title
         authors = BookFormatter.format_authors(book.authors)
-
         text += (
             f"\n\n<b>{book_number}.</b> <code>{title}</code>\n"
             f"<i>{authors}</i> (<code>{article}</code>)"
@@ -239,7 +237,7 @@ async def genre_search(
         )
         return
 
-    response = await api.genres.search_genres(genre_name_request, page=page)
+    response = await api.genres.search_genres(genre_name=genre_name_request, page=page)
     result = response.get_model()
     found = result.found
     genres = result.genres
@@ -258,7 +256,7 @@ async def genre_search(
         genre = genres[0].genre
         id_genre = genre.id_genre
 
-        response = await api.books.get_books_by_genre_id(id_genre)
+        response = await api.books.get_books_by_genre_id(id_genre=id_genre)
         result = response.get_model()
         count = result.count
         books = result.books
