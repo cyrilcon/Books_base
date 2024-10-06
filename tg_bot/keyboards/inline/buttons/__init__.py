@@ -36,6 +36,7 @@ __all__ = (
     "cancel_payment_button",
     "paid_book_button",
     "paid_premium_button",
+    "paid_set_button",
     "pay_rub_button",
     "pay_xtr_button",
     "post_button",
@@ -98,6 +99,7 @@ from .payment import (
     cancel_payment_button,
     paid_book_button,
     paid_premium_button,
+    paid_set_button,
     pay_rub_button,
     pay_xtr_button,
 )

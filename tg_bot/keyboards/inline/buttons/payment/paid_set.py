@@ -1,24 +1,25 @@
+from typing import List
+
 from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
 
-def paid_book_button(
+def paid_set_button(
     l10n: FluentLocalization,
-    id_book: int,
-    price: int | float,
+    book_ids: List[int],
     id_payment: str,
 ) -> InlineKeyboardButton:
     """
     The "Paid" button is formed.
     :param l10n: Language set by the user.
-    :param id_book: Unique book identifier (article of the book).
-    :param price: Product price.
+    :param book_ids: List of book ids.
     :param id_payment: Unique payment identifier.
     :return: The "Paid" button.
     """
 
-    paid_book = InlineKeyboardButton(
+    paid_set = InlineKeyboardButton(
         text=l10n.format_value("button-paid"),
-        callback_data=f"paid_book:{id_book}:{price}:{id_payment}",
+        # callback_data=f"paid_set:{id_payment}:{','.join(map(str, book_ids))}",
+        callback_data=f"paid_set:{id_payment}:9999,8888,7777",
     )
-    return paid_book
+    return paid_set

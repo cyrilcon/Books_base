@@ -6,3 +6,4 @@ class Payment(StatesGroup):
 
     premium = State()
     book = State()
+    set = State()

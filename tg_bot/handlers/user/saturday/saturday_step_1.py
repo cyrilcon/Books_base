@@ -92,7 +92,10 @@ async def saturday_step_1(
 
     if id_book_1 in user_book_ids:
         sent_message = await message.answer(
-            l10n.format_value("saturday-error-user-already-has-this-book"),
+            l10n.format_value(
+                "saturday-error-user-already-has-this-book",
+                {"title": book.title},
+            ),
             reply_markup=cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(

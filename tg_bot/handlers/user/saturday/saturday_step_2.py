@@ -102,9 +102,14 @@ async def saturday_step_2(
 
     user_book_ids = data.get("user_book_ids")
 
+    book = response.get_model()
+
     if id_book_2 in user_book_ids:
         sent_message = await message.answer(
-            l10n.format_value("saturday-error-user-already-has-this-book"),
+            l10n.format_value(
+                "saturday-error-user-already-has-this-book",
+                {"title": book.title},
+            ),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await ClearKeyboard.safe_message(
@@ -113,8 +118,6 @@ async def saturday_step_2(
             sent_message_id=sent_message.message_id,
         )
         return
-
-    book = response.get_model()
 
     title_1 = data.get("title_1")
     sent_message = await message.answer(

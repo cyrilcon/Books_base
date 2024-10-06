@@ -44,6 +44,7 @@ async def buy_book(
     status = response.status
 
     if status != 200:
+        await call.message.edit_reply_markup()
         article = BookFormatter.format_article(id_book=id_book)
 
         await call.message.answer(
@@ -162,7 +163,7 @@ async def buy_book(
 
 @payment_book_router.callback_query(
     StateFilter(PaymentState.book),
-    F.data.startswith("paid:book"),
+    F.data.startswith("paid_book"),
 )
 async def payment_book(
     call: CallbackQuery,
@@ -172,13 +173,14 @@ async def payment_book(
     bot: Bot,
 ):
     id_book = int(call.data.split(":")[-3])
-    price = float(call.data.split(":")[-2])
+    price = int(call.data.split(":")[-2])
     id_payment = call.data.split(":")[-1]
 
     response = await api.users.get_book_ids(id_user=user.id_user)
     book_ids = response.result
 
     if id_book in book_ids:
+        await call.message.edit_reply_markup()
         await call.message.answer(
             l10n.format_value("payment-book-error-user-already-has-this-book")
         )
@@ -186,7 +188,7 @@ async def payment_book(
         await call.answer()
         return
 
-    if not Payment.check_payment(Payment(amount=int(price), id=id_payment)):
+    if not Payment.check_payment(Payment(amount=price, id=id_payment)):
         await call.message.answer(l10n.format_value("payment-error-payment-not-found"))
         await call.answer()
         return

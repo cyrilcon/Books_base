@@ -1,1 +1,0 @@
-premium = Читайте любые книги без ограничений с { -books-base-premium }!! Цена: { $price_rub }₽ или { $price_xtr } ⭐

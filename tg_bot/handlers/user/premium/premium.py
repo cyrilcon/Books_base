@@ -48,7 +48,8 @@ async def premium(
     sent_message = await message.answer_invoice(
         title="Books_base Premium ⚜️",
         description=l10n.format_value(
-            "premium", {"price_rub": price_rub, "price_xtr": price_xtr}
+            "payment-premium",
+            {"price_rub": price_rub, "price_xtr": price_xtr},
         ),
         prices=[LabeledPrice(label="XTR", amount=price_xtr)],
         provider_token="",

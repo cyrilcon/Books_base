@@ -23,7 +23,7 @@ payment_premium_router = Router()
 
 @payment_premium_router.callback_query(
     StateFilter(PaymentState.premium),
-    F.data.startswith("paid:premium"),
+    F.data.startswith("paid_premium"),
 )
 async def payment_premium(
     call: CallbackQuery,

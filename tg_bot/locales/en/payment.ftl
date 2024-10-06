@@ -23,6 +23,8 @@ payment-book-canceled = Вы отменили покупку книги
 
 payment-book-unprocessed-messages = Оплатите книгу или отмените оплату
 
+payment-premium = Читайте любые книги без ограничений с { -books-base-premium }!! Цена: { $price_rub }₽ или { $price_xtr } ⭐
+
 payment-premium-error-user-already-has-premium = У вас уже действует статус <b>{ -books-base-premium }</b> ⚜️
 
 payment-premium-success =
@@ -55,3 +57,14 @@ payment-error-payment-not-found = Транзакция не найдена!!
 payment-pre-checkout-failed-reason = В настоящий момент платёж невозможен!!
 
 read = Пользователь { $user_link } (<code>{ $id_user }</code>) читает книгу "<code>{ $title }</code>" (<code>{ $article }</code>)
+
+saturday-action = Субботная акция
+
+payment-set-error-book-unavailable =
+    Книга с артикулом <code>{ $article }</code> больше не доступна 😕
+
+    Соберите новый набор – /saturday
+
+payment-set-error-user-already-has-this-book = У вас уже есть книга "<code>{ $title }</code>"!!
+
+payment-set = Цена: { $price_rub }₽ или { $price_xtr } ⭐

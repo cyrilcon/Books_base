@@ -15,6 +15,6 @@ def paid_premium_button(
 
     paid_premium = InlineKeyboardButton(
         text=l10n.format_value("button-paid"),
-        callback_data=f"paid:premium:{id_payment}",
+        callback_data=f"paid_premium:{id_payment}",
     )
     return paid_premium

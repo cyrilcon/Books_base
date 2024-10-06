@@ -13,7 +13,7 @@ saturday-error-article-not-found =
     Введите артикул существуюшей книги ещё раз
 
 saturday-error-user-already-has-this-book =
-    У вас уже есть эта книга!!
+    У вас уже есть книга "<code>{ $title }</code>"!!
     Введите артикул книги ещё раз
 
 saturday-select-book-2 =
