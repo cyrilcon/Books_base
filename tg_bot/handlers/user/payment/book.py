@@ -38,7 +38,6 @@ async def buy_book(
     await ClearKeyboard.clear(call, storage)
     await state.clear()
 
-    price = int(call.data.split(":")[-2])
     id_book = int(call.data.split(":")[-1])
 
     response = await api.books.get_book_by_id(id_book=id_book)
@@ -73,6 +72,7 @@ async def buy_book(
         await call.answer()
         return
 
+    price = book.price.value
     payment = Payment(
         amount=price,
         comment=book.title,

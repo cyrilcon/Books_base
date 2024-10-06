@@ -58,9 +58,15 @@ class Discount(BaseModel):
     discount_100: int
 
 
+class Saturday(BaseModel):
+    rub: int
+    xtr: int
+
+
 class Price(BaseModel):
     premium: Premium
     discount: Discount
+    saturday: Saturday
 
 
 class Config(BaseSettings):

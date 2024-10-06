@@ -19,6 +19,7 @@ __all__ = (
     "Refund",
     "RemoveAdmin",
     "RemoveBlacklist",
+    "Saturday",
     "Search",
     "SendBook",
     "SendMessage",
@@ -49,6 +50,7 @@ from .payment import Payment
 from .refund import Refund
 from .remove_admin import RemoveAdmin
 from .remove_blacklist import RemoveBlacklist
+from .saturday import Saturday
 from .search import Search
 from .send_book import SendBook
 from .send_message import SendMessage

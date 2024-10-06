@@ -35,7 +35,7 @@ def pay_premium_keyboard(
                 pay_rub_button(l10n, price=price_rub, url_payment=url_payment),
             ],
             [
-                paid_premium_button(l10n, price=price_rub, id_payment=id_payment),
+                paid_premium_button(l10n, id_payment=id_payment),
             ],
             [
                 cancel_payment_button(l10n),

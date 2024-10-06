@@ -32,10 +32,10 @@ async def payment_premium(
     user: UserSchema,
     bot: Bot,
 ):
-    price = float(call.data.split(":")[-2])
     id_payment = call.data.split(":")[-1]
+    price = config.price.premium.rub
 
-    if not Payment.check_payment(Payment(amount=int(price), id=id_payment)):
+    if not Payment.check_payment(Payment(amount=price, id=id_payment)):
         await call.message.answer(l10n.format_value("payment-error-payment-not-found"))
         await call.answer()
         return

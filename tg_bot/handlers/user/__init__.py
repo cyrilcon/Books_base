@@ -10,6 +10,7 @@ from .payment import payment_routers
 from .paysupport import paysupport_router
 from .premium import premium_router
 from .privacy import privacy_router
+from .saturday import saturday_routers
 from .search import search_routers
 from .settings import settings_router
 from .share_base import share_base_routers
@@ -30,6 +31,7 @@ user_routers.include_routers(
     paysupport_router,
     premium_router,
     privacy_router,
+    saturday_routers,
     settings_router,
     share_base_routers,
     search_routers,  # Must be the latest
