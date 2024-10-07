@@ -1,6 +1,5 @@
 from aiogram import Router
 from aiogram.filters import Command
-from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
@@ -13,7 +12,6 @@ command_stats_router = Router()
 async def stats(
     message: Message,
     l10n: FluentLocalization,
-    state: FSMContext,
 ):
     response = await api.users.get_user_statistics()
     statistic = response.get_model()
@@ -30,4 +28,3 @@ async def stats(
             },
         )
     )
-    await state.clear()
