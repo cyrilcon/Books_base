@@ -3,11 +3,12 @@ __all__ = ("admin_routers",)
 from aiogram import Router
 
 from tg_bot.filters import SuperAdminFilter, AdminFilter
+from tg_bot.middlewares import ResetStateMiddleware
 from .add_admin import command_add_admin_router, add_admin_routers
 from .add_article import add_article_routers
 from .add_blacklist import add_blacklist_routers
 from .add_book import add_book_routers
-from .admin import admin_router
+from .admin import command_admin_router
 from .broadcast import broadcast_routers
 from .cancel_premium import cancel_premium_routers
 from .delete_article import delete_article_routers
@@ -24,7 +25,7 @@ from .remove_blacklist import remove_blacklist_routers
 from .send_book import send_book_routers
 from .send_message import send_message_routers
 from .serve_order import serve_order_routers
-from .stats import stats_router
+from .stats import command_stats_router
 from .take_base import take_base_routers
 from .take_discount import take_discount_routers
 from .view_orders import view_orders_router
@@ -37,9 +38,11 @@ supper_admin_commands_router.include_routers(
 )
 
 admin_commands_router = Router()
+admin_commands_router.message.middleware(ResetStateMiddleware())
 admin_commands_router.include_routers(
-    admin_router,  # Must be the first
+    command_admin_router,  # Must be the first
     supper_admin_commands_router,
+    command_stats_router,
 )
 
 admin_routers = Router()
@@ -66,7 +69,6 @@ admin_routers.include_routers(
     send_book_routers,
     send_message_routers,
     serve_order_routers,
-    stats_router,
     take_base_routers,
     take_discount_routers,
     view_orders_router,

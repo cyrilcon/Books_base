@@ -7,10 +7,10 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.services import ClearKeyboard
 
-admin_router = Router()
+command_admin_router = Router()
 
 
-@admin_router.message(Command("admin"))
+@command_admin_router.message(Command("admin"))
 async def admin(
     message: Message,
     l10n: FluentLocalization,
