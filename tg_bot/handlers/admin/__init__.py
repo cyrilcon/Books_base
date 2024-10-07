@@ -1,7 +1,7 @@
 from aiogram import Router
 
 from tg_bot.filters import SuperAdminFilter, AdminFilter
-from .add_admin import command_add_admin_router, add_admin_routers
+from .add_admin import add_admin_routers, add_admin_process_router
 from .add_article import add_article_routers
 from .add_blacklist import add_blacklist_routers
 from .add_book import add_book_routers
@@ -27,24 +27,23 @@ from .take_base import take_base_routers
 from .take_discount import take_discount_routers
 from .view_orders import view_orders_router
 
-supper_admin_command_routers = Router()
-supper_admin_command_routers.message.filter(SuperAdminFilter())
-supper_admin_command_routers.include_routers(
-    command_add_admin_router,
+supper_admin_commands_router = Router()
+supper_admin_commands_router.message.filter(SuperAdminFilter())
+supper_admin_commands_router.include_routers(
+    add_admin_routers,
 )
 
-command_admin_routers = Router()
-command_admin_routers.message.filter(AdminFilter())
-command_admin_routers.include_routers(
-    supper_admin_command_routers,  # Must be the first
+admin_commands_router = Router()
+admin_commands_router.include_routers(
+    admin_router,  # Must be the first
+    supper_admin_commands_router,
 )
 
 admin_routers = Router()
 admin_routers.message.filter(AdminFilter())
 admin_routers.include_routers(
-    command_admin_routers,  # Must be the first
-    admin_router,
-    add_admin_routers,
+    admin_commands_router,  # Must be the first
+    add_admin_process_router,
     add_article_routers,
     add_blacklist_routers,
     add_book_routers,
