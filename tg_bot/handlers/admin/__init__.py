@@ -6,7 +6,7 @@ from tg_bot.filters import SuperAdminFilter, AdminFilter
 from tg_bot.middlewares import ResetStateMiddleware
 from .add_admin import command_add_admin_router, add_admin_routers
 from .add_article import add_article_routers
-from .add_blacklist import add_blacklist_routers
+from .add_blacklist import command_add_blacklist_router, add_blacklist_routers
 from .add_book import add_book_routers
 from .admin import command_admin_router
 from .broadcast import broadcast_routers
@@ -42,6 +42,7 @@ admin_commands_router.message.middleware(ResetStateMiddleware())
 admin_commands_router.include_routers(
     command_admin_router,  # Must be the first
     supper_admin_commands_router,
+    command_add_blacklist_router,
     command_stats_router,
 )
 
