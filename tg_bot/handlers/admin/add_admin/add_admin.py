@@ -7,10 +7,10 @@ from fluent.runtime import FluentLocalization
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.states import AddAdmin
 
-add_admin_router = Router()
+command_add_admin_router = Router()
 
 
-@add_admin_router.message(Command("add_admin"))
+@command_add_admin_router.message(Command("add_admin"))
 async def add_admin(
     message: Message,
     l10n: FluentLocalization,

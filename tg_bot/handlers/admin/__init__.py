@@ -1,7 +1,9 @@
+__all__ = ("admin_routers",)
+
 from aiogram import Router
 
 from tg_bot.filters import SuperAdminFilter, AdminFilter
-from .add_admin import add_admin_routers, add_admin_process_router
+from .add_admin import command_add_admin_router, add_admin_routers
 from .add_article import add_article_routers
 from .add_blacklist import add_blacklist_routers
 from .add_book import add_book_routers
@@ -17,7 +19,7 @@ from .give_book import give_book_routers
 from .give_discount import give_discount_routers
 from .give_premium import give_premium_routers
 from .refund import refund_routers
-from .remove_admin import remove_admin_routers
+from .remove_admin import command_remove_admin_router, remove_admin_routers
 from .remove_blacklist import remove_blacklist_routers
 from .send_book import send_book_routers
 from .send_message import send_message_routers
@@ -30,7 +32,8 @@ from .view_orders import view_orders_router
 supper_admin_commands_router = Router()
 supper_admin_commands_router.message.filter(SuperAdminFilter())
 supper_admin_commands_router.include_routers(
-    add_admin_routers,
+    command_add_admin_router,
+    command_remove_admin_router,
 )
 
 admin_commands_router = Router()
@@ -43,7 +46,7 @@ admin_routers = Router()
 admin_routers.message.filter(AdminFilter())
 admin_routers.include_routers(
     admin_commands_router,  # Must be the first
-    add_admin_process_router,
+    add_admin_routers,
     add_article_routers,
     add_blacklist_routers,
     add_book_routers,
@@ -68,5 +71,3 @@ admin_routers.include_routers(
     take_discount_routers,
     view_orders_router,
 )
-
-__all__ = ("admin_routers",)
