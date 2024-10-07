@@ -13,6 +13,7 @@ from api.books_base_api import api
 from config import config
 from handlers import routers_list
 from middlewares import (
+    ClearKeyboardMiddleware,
     DatabaseMiddleware,
     LocalizationMiddleware,
     StorageMiddleware,
@@ -56,14 +57,17 @@ def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
     """
 
     middleware_types = [
+        ClearKeyboardMiddleware(storage),
         DatabaseMiddleware(),
         LocalizationMiddleware(),
         StorageMiddleware(storage),
     ]
 
     for middleware_type in middleware_types:
-        dp.message.outer_middleware(middleware_type)
-        dp.callback_query.outer_middleware(middleware_type)
+        # dp.message.outer_middleware(middleware_type)
+        # dp.callback_query.outer_middleware(middleware_type)
+        dp.message.middleware(middleware_type)
+        dp.callback_query.middleware(middleware_type)
 
 
 def setup_logging():

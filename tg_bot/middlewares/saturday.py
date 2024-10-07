@@ -23,7 +23,7 @@ class SaturdayMiddleware(BaseMiddleware):
 
         current_day = datetime.now().weekday()
 
-        if current_day != 6:
+        if current_day != 5:
             await event.answer(l10n.format_value("saturday-error"))
             await state.clear()
             return

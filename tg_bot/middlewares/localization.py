@@ -18,10 +18,10 @@ class LocalizationMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
-        id_user = event.from_user.id
+        # id_user = event.from_user.id
 
-        if id_user == event._bot.id:
-            return await handler(event, data)
+        # if id_user == event._bot.id:
+        #     return await handler(event, data)
 
         user: UserSchema = data["user"]
 

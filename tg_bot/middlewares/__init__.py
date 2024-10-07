@@ -1,5 +1,6 @@
 __all__ = (
     "BlacklistMiddleware",
+    "ClearKeyboardMiddleware",
     "DatabaseMiddleware",
     "LocalizationMiddleware",
     "SaturdayMiddleware",
@@ -7,6 +8,7 @@ __all__ = (
 )
 
 from .blacklist import BlacklistMiddleware
+from .clear_keyboard import ClearKeyboardMiddleware
 from .database import DatabaseMiddleware
 from .localization import LocalizationMiddleware
 from .saturday import SaturdayMiddleware
