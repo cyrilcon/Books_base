@@ -19,6 +19,7 @@ from .give_base import command_give_base_router, give_base_routers
 from .give_book import command_give_book_router, give_book_routers
 from .give_discount import command_give_discount_router, give_discount_routers
 from .give_premium import command_give_premium_router, give_premium_routers
+from .refund import command_refund_router, refund_routers
 from .remove_admin import command_remove_admin_router, remove_admin_routers
 from .remove_blacklist import command_remove_blacklist_router, remove_blacklist_routers
 from .send_book import comment_send_book_router, send_book_routers
@@ -52,6 +53,7 @@ admin_commands_router.include_routers(
     command_give_book_router,
     command_give_discount_router,
     command_give_premium_router,
+    command_refund_router,
     command_remove_blacklist_router,
     comment_send_book_router,
     command_send_message_router,
@@ -78,6 +80,7 @@ admin_routers.include_routers(
     give_book_routers,
     give_discount_routers,
     give_premium_routers,
+    refund_routers,
     remove_admin_routers,
     remove_blacklist_routers,
     send_book_routers,
