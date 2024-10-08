@@ -1,5 +1,11 @@
+__all__ = (
+    "command_add_book_router",
+    "add_book_routers",
+)
+
 from aiogram import Router
 
+from .add_book import command_add_book_router
 from .add_book_cancel import add_book_cancel_router
 from .add_book_step_1_article import add_book_step_1_router
 from .add_book_step_2_title import add_book_step_2_router

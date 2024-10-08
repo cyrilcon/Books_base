@@ -1,15 +1,17 @@
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
-from tg_bot.services import ClearKeyboard, BookFormatter
+from tg_bot.keyboards.inline import (
+    cancel_keyboard,
+    back_cancel_keyboard,
+    back_yes_cancel_keyboard,
+)
+from tg_bot.services import BookFormatter
 from tg_bot.states import AddBook
-from .keyboards import back_yes_cancel_keyboard
 
 add_book_step_2_router = Router()
 
@@ -45,33 +47,20 @@ async def add_book_step_2(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     title = message.text
 
     if len(title) > 255:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("add-book-error-title-too-long"),
             reply_markup=back_cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
     if '"' in title:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("add-book-error-invalid-title"),
             reply_markup=back_cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -85,7 +74,7 @@ async def add_book_step_2(
         book = result.books[0].book
         article = BookFormatter.format_article(book.id_book)
 
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value(
                 "add-book-error-title-already-exists",
                 {
@@ -95,19 +84,14 @@ async def add_book_step_2(
             ),
             reply_markup=back_yes_cancel_keyboard(l10n),
         )
-    else:
-        sent_message = await message.answer(
-            l10n.format_value("add-book-authors"),
-            reply_markup=back_cancel_keyboard(l10n),
-        )
-        await state.set_state(AddBook.add_authors)
+        return
 
-    await state.update_data(title=title)
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
+    await message.answer(
+        l10n.format_value("add-book-authors"),
+        reply_markup=back_cancel_keyboard(l10n),
     )
+    await state.update_data(title=title)
+    await state.set_state(AddBook.add_authors)
 
 
 @add_book_step_2_router.callback_query(

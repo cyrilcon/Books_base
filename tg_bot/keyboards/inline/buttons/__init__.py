@@ -1,11 +1,11 @@
 __all__ = (
     "back_button",
     "buy_book_button",
-    "buy_deep_link_button",
     "buy_set_button",
     "cancel_button",
     "channel_button",
     "clear_button",
+    "deep_link_buy_button",
     "create_price_50_button",
     "create_price_85_button",
     "not_from_user_button",
@@ -59,7 +59,6 @@ __all__ = (
 
 from .back import back_button
 from .buy_book import buy_book_button
-from .buy_deep_link import buy_deep_link_button
 from .buy_set import buy_set_button
 from .cancel import cancel_button
 from .channel import channel_button
@@ -70,6 +69,7 @@ from .create_price import (
     not_from_user_button,
     not_post_button,
 )
+from .deep_link_buy import deep_link_buy_button
 from .delete import delete_button
 from .discounts import (
     cancel_discount_button,
