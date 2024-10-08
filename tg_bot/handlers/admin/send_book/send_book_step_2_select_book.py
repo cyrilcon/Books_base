@@ -2,14 +2,12 @@ from aiogram import Router, F, Bot
 from aiogram.exceptions import AiogramError
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard, buy_or_read_keyboard
 from tg_bot.services import (
-    ClearKeyboard,
     generate_book_caption,
     is_valid_book_article,
     get_fluent_localization,
@@ -29,7 +27,7 @@ async def back_to_send_book_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("send-book-select-user"),
+        l10n.format_value("send-book"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(SendBook.select_user)
@@ -44,22 +42,14 @@ async def send_book_step_2(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     article = message.text
 
     if not is_valid_book_article(article):
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("send-book-error-invalid-article"),
             reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -69,14 +59,9 @@ async def send_book_step_2(
     status = response.status
 
     if status != 200:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("send-book-error-article-not-found"),
             reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
