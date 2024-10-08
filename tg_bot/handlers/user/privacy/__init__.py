@@ -1,1 +1,1 @@
-from .privacy import privacy_router
+from .privacy import command_privacy_router

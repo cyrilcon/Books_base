@@ -36,9 +36,6 @@ __all__ = (
     "search_by_title_button",
     "book_unavailable_button",
     "serve_button",
-    "set_language_en_button",
-    "set_language_ru_button",
-    "set_language_uk_button",
     "share_base_back_button",
     "share_base_cancel_button",
     "share_our_store_button",
@@ -111,11 +108,6 @@ from .search import (
     search_by_title_button,
 )
 from .serve_order import book_unavailable_button, serve_button
-from .set_language import (
-    set_language_en_button,
-    set_language_ru_button,
-    set_language_uk_button,
-)
 from .share_base_back import share_base_back_button
 from .share_base_cancel import share_base_cancel_button
 from .share_our_store import share_our_store_button

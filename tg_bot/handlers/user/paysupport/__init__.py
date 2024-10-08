@@ -1,1 +1,1 @@
-from .paysupport import paysupport_router
+from .paysupport import command_paysupport_router
