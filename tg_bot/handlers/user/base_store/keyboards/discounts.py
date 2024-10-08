@@ -1,11 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup
 
-from tg_bot.keyboards.inline.buttons import (
-    discount_15_button,
-    discount_30_button,
-    discount_50_button,
-    discount_100_button,
-)
+from tg_bot.keyboards.inline.buttons import discount_button
 
 
 def discounts_keyboard(l10n) -> InlineKeyboardMarkup:
@@ -18,12 +13,12 @@ def discounts_keyboard(l10n) -> InlineKeyboardMarkup:
     discounts_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                discount_15_button(l10n),
-                discount_30_button(l10n),
-                discount_50_button(l10n),
+                discount_button(l10n, discount_value=15),
+                discount_button(l10n, discount_value=30),
+                discount_button(l10n, discount_value=50),
             ],
             [
-                discount_100_button(l10n),
+                discount_button(l10n, discount_value=100),
             ],
         ],
     )

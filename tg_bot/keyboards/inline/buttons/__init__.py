@@ -12,14 +12,6 @@ __all__ = (
     "language_ru_button",
     "language_uk_button",
     "news_channel_button",
-    "article_button",
-    "authors_button",
-    "cover_button",
-    "description_button",
-    "files_button",
-    "genres_button",
-    "price_button",
-    "title_button",
     "order_button",
     "order_again_button",
     "cancel_payment_button",
@@ -43,25 +35,19 @@ __all__ = (
     "yes_button",
     "not_from_user_button",
     "not_post_button",
-    "price_50_button",
-    "price_85_button",
-    "article_button",
-    "authors_button",
-    "cover_button",
-    "description_button",
-    "files_button",
-    "genres_button",
     "price_button",
-    "title_button",
+    "edit_article_button",
+    "edit_authors_button",
+    "edit_cover_button",
+    "edit_description_button",
+    "edit_files_button",
+    "edit_genres_button",
+    "edit_price_button",
+    "edit_title_button",
     "cancel_discount_button",
-    "discount_100_button",
-    "discount_15_button",
-    "discount_30_button",
-    "discount_50_button",
+    "discount_button",
 )
 
-from .article import article_button
-from .authors import authors_button
 from .back import back_button
 from .buy_book import buy_book_button
 from .buy_set import buy_set_button
@@ -69,17 +55,18 @@ from .cancel import cancel_button
 from .cancel_discount import cancel_discount_button
 from .channel import channel_button
 from .clear import clear_button
-from .cover import cover_button
 from .deep_link_buy import deep_link_buy_button
 from .delete import delete_button
-from .description import description_button
-from .discount_100 import discount_100_button
-from .discount_15 import discount_15_button
-from .discount_30 import discount_30_button
-from .discount_50 import discount_50_button
+from .discount import discount_button
 from .done import done_button
-from .files import files_button
-from .genres import genres_button
+from .edit_article import edit_article_button
+from .edit_authors import edit_authors_button
+from .edit_cover import edit_cover_button
+from .edit_description import edit_description_button
+from .edit_files import edit_files_button
+from .edit_genres import edit_genres_button
+from .edit_price import edit_price_button
+from .edit_title import edit_title_button
 from .language_en import language_en_button
 from .language_ru import language_ru_button
 from .language_uk import language_uk_button
@@ -98,8 +85,6 @@ from .payment import (
 )
 from .post import post_button
 from .price import price_button
-from .price_50 import price_50_button
-from .price_85 import price_85_button
 from .read import read_button
 from .reply import reply_button
 from .search import (
@@ -112,5 +97,4 @@ from .share_base_back import share_base_back_button
 from .share_base_cancel import share_base_cancel_button
 from .share_our_store import share_our_store_button
 from .show_book import show_book_button
-from .title import title_button
 from .yes import yes_button

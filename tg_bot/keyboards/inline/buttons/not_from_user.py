@@ -1,6 +1,8 @@
 from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
+from tg_bot.config import config
+
 
 def not_from_user_button(l10n: FluentLocalization) -> InlineKeyboardButton:
     """
@@ -11,6 +13,6 @@ def not_from_user_button(l10n: FluentLocalization) -> InlineKeyboardButton:
 
     not_from_user = InlineKeyboardButton(
         text=l10n.format_value("button-not-from-user"),
-        callback_data="not_from_user:85",
+        callback_data=f"not_from_user:{config.price.book.main.rub}",
     )
     return not_from_user

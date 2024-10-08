@@ -4,6 +4,7 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from api.books_base_api.schemas import BookSchema, UserSchema
+from tg_bot.config import config
 from tg_bot.services.book_formatter import BookFormatter
 from tg_bot.services.fluent_loader import get_fluent_localization
 
@@ -43,11 +44,11 @@ async def generate_book_caption(
             "message": "",
             "price_text": "",
         },
-        50: {
+        config.price.book.daily: {
             "message": l10n.format_value("daily-action") if is_post else "",
             "price_text": f"\n{l10n.format_value("price", {"price": price})}\n",
         },
-        85: {
+        config.price.book.main: {
             "message": l10n.format_value("new-book-from-user") if from_user else "",
             "price_text": f"\n{l10n.format_value("price", {"price": price})}\n",
         },
@@ -65,11 +66,11 @@ async def generate_book_caption(
             price_text = l10n.format_value("free-with-premium")
         elif id_book in book_ids:
             price_text = ""
-        elif user.has_discount and price != 50:
+        elif user.has_discount and price != config.price.book.daily:
             prices = {
-                15: 72,
-                30: 60,
-                50: 43,
+                15: round(0.85 * config.price.book.daily),
+                30: round(0.70 * config.price.book.daily),
+                50: round(0.50 * config.price.book.daily),
                 100: 0,
             }
             price = prices.get(user.has_discount)

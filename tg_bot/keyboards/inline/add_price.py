@@ -1,8 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup
 
+from tg_bot.config import config
 from tg_bot.keyboards.inline.buttons import (
-    price_85_button,
-    price_50_button,
+    price_button,
     not_post_button,
     not_from_user_button,
     back_button,
@@ -20,8 +20,8 @@ def add_price_keyboard(l10n) -> InlineKeyboardMarkup:
     add_price_keyboard_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                price_85_button(l10n),
-                price_50_button(l10n),
+                price_button(l10n, price=config.price.book.main.rub),
+                price_button(l10n, price=config.price.book.daily.xtr),
             ],
             [
                 not_post_button(l10n),
