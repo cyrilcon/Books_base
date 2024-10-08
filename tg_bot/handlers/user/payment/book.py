@@ -395,10 +395,7 @@ async def payment_book_cancel(
     await call.message.edit_reply_markup()
 
 
-@payment_book_router.message(
-    StateFilter(PaymentState.book),
-    F.text,
-)
+@payment_book_router.message(StateFilter(PaymentState.book))
 async def payment_book_unprocessed_messages(
     message: Message,
     l10n: FluentLocalization,

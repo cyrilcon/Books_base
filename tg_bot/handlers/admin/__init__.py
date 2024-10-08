@@ -13,6 +13,7 @@ from .broadcast import command_broadcast_router, broadcast_routers
 from .cancel_premium import command_cancel_premium_router, cancel_premium_routers
 from .delete_article import command_delete_article_router, delete_article_routers
 from .delete_book import command_delete_book_router, delete_book_routers
+from .edit_book import command_edit_book_router, edit_book_routers
 from .get_profile import command_get_profile_router, get_profile_routers
 from .give_base import command_give_base_router, give_base_routers
 from .give_book import command_give_book_router, give_book_routers
@@ -45,6 +46,7 @@ admin_commands_router.include_routers(
     command_cancel_premium_router,
     command_delete_article_router,
     command_delete_book_router,
+    command_edit_book_router,
     command_get_profile_router,
     command_give_base_router,
     command_give_book_router,
@@ -70,6 +72,7 @@ admin_routers.include_routers(
     cancel_premium_routers,
     delete_article_routers,
     delete_book_routers,
+    edit_book_routers,
     get_profile_routers,
     give_base_routers,
     give_book_routers,

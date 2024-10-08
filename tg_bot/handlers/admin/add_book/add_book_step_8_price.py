@@ -40,7 +40,7 @@ async def back_to_add_book_step_7(
 
 @add_book_step_8_router.callback_query(
     StateFilter(AddBook.select_price),
-    F.data.startswith("create_price")
+    F.data.startswith("price")
     | F.data.startswith("not_from_user")
     | F.data.startswith("not_post"),
 )

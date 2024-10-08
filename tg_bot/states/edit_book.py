@@ -12,3 +12,4 @@ class EditBook(StatesGroup):
     edit_genres = State()
     edit_cover = State()
     edit_files = State()
+    edit_price = State()

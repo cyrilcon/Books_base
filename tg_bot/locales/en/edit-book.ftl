@@ -1,4 +1,4 @@
-edit-book-select-book = Введите <i><b>артикул</b></i> книги, чтобы изменить её данные
+edit-book = Введите <i><b>артикул</b></i> книги, чтобы изменить её данные
 
 edit-book-error-invalid-article =
     Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
@@ -87,7 +87,7 @@ edit-book-more-files =
 
 edit-book-delete-files = Выберите файл, который хотите удалить
 
-edit-book-select-price = Выберите новую <i><b>цену</b></i> книги
+edit-book-price = Выберите новую <i><b>цену</b></i> книги
 
 edit-book-price-error-price-already-set = У этой книги уже установалена такая цена!!
 
@@ -98,3 +98,5 @@ edit-book-error-caption-too-long =
 edit-book-success = Данные книги успешно изменены!!
 
 edit-book-canceled = Вы отменили изменение данных о книге
+
+edit-book-price-unprocessed-messages = Установите новую цену книги или отмените изменение

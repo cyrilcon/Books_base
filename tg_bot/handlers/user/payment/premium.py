@@ -189,10 +189,7 @@ async def payment_premium_cancel(
     await call.message.edit_reply_markup()
 
 
-@payment_premium_router.message(
-    StateFilter(PaymentState.premium),
-    F.text,
-)
+@payment_premium_router.message(StateFilter(PaymentState.premium))
 async def payment_premium_unprocessed_messages(
     message: Message,
     l10n: FluentLocalization,

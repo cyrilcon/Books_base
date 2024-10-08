@@ -2,8 +2,9 @@ from aiogram.types import InlineKeyboardButton
 from fluent.runtime import FluentLocalization
 
 
-def update_price_50_button(
-    l10n: FluentLocalization, id_book: int
+def price_50_button(
+    l10n: FluentLocalization,
+    id_book: int | None = None,
 ) -> InlineKeyboardButton:
     """
     The "50₽" button is formed.
@@ -12,8 +13,8 @@ def update_price_50_button(
     :return: The "50₽" button.
     """
 
-    update_price_50 = InlineKeyboardButton(
+    price_50 = InlineKeyboardButton(
         text=l10n.format_value("button-price-50"),
-        callback_data=f"update_price:50:{id_book}",
+        callback_data=f"price:50" + f":{id_book}" if id_book else "price:50",
     )
-    return update_price_50
+    return price_50

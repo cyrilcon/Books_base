@@ -2,8 +2,8 @@ from typing import Callable, Dict, Any, Awaitable
 
 from aiogram import BaseMiddleware
 from aiogram.dispatcher.flags import get_flag
-from aiogram.types import TelegramObject, Message, CallbackQuery
 from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.types import TelegramObject, Message, CallbackQuery
 
 
 class ClearKeyboardMiddleware(BaseMiddleware):
@@ -37,7 +37,9 @@ class ClearKeyboardMiddleware(BaseMiddleware):
                 await self.save_message_id(id_user, message_id)
 
             elif isinstance(event, CallbackQuery):
-                await self.save_message_id(id_user, event.message.message_id)
+                skip_message = get_flag(data, "skip_message", default=0)
+                message_id = event.message.message_id + skip_message
+                await self.save_message_id(id_user, message_id)
 
         return result
 
@@ -50,9 +52,6 @@ class ClearKeyboardMiddleware(BaseMiddleware):
 
         if previous_message_id:
             try:
-                # TODO: подумать над этим, возможно пригодится при покупки книги
-                # if isinstance(event, CallbackQuery):
-                #     event = event.message
                 await event.bot.edit_message_reply_markup(
                     chat_id=event.chat.id,
                     message_id=previous_message_id,
