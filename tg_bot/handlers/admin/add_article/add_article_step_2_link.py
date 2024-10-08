@@ -3,15 +3,16 @@ import re
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
-from tg_bot.services import ClearKeyboard
+from tg_bot.keyboards.inline import (
+    cancel_keyboard,
+    back_cancel_keyboard,
+    languages_back_cancel_keyboard,
+)
 from tg_bot.states import AddArticle
-from .keyboards import languages_keyboard
 
 add_article_step_2_router = Router()
 
@@ -47,60 +48,36 @@ async def add_article_step_2(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     link = message.text
 
     if len(link) > 255:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("add-article-error-link-too-long"),
             reply_markup=back_cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
     if not re.match(r"^https://telegra\.ph/", link):
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("add-article-error-invalid-link"),
             reply_markup=back_cancel_keyboard(l10n),
         )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
         return
 
-    response = await api.articles.get_article_by_link(link)
+    response = await api.articles.get_article_by_link(link=link)
     status = response.status
 
     if status == 200:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("add-article-error-link-already-exists"),
             reply_markup=back_cancel_keyboard(l10n),
         )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
         return
 
-    sent_message = await message.answer(
+    await message.answer(
         l10n.format_value("add-article-language-code"),
-        reply_markup=languages_keyboard(l10n),
+        reply_markup=languages_back_cancel_keyboard(l10n),
     )
     await state.update_data(link=link)
     await state.set_state(AddArticle.select_language_code)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )

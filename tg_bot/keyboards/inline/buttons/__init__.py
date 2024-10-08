@@ -17,6 +17,9 @@ __all__ = (
     "discount_30_button",
     "discount_50_button",
     "done_button",
+    "language_en_button",
+    "language_ru_button",
+    "language_uk_button",
     "news_channel_button",
     "article_button",
     "authors_button",
@@ -28,9 +31,6 @@ __all__ = (
     "title_button",
     "update_price_50_button",
     "update_price_85_button",
-    "language_en_button",
-    "language_ru_button",
-    "language_uk_button",
     "order_button",
     "order_again_button",
     "cancel_payment_button",
@@ -91,7 +91,9 @@ from .edit_book import (
     update_price_50_button,
     update_price_85_button,
 )
-from .languages import language_en_button, language_ru_button, language_uk_button
+from .language_en import language_en_button
+from .language_ru import language_ru_button
+from .language_uk import language_uk_button
 from .news_channel import news_channel_button
 from .order import order_button
 from .order_again import order_again_button
