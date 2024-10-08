@@ -1,38 +1,23 @@
+__all__ = (
+    "user_commands_router",
+    "user_routers",
+)
+
 from aiogram import Router
 
-from .base_store import base_store_routers
+from tg_bot.middlewares import ResetStateMiddleware
+from .start import start_routers
+
 from .booking import booking_router
-from .cancel_order import cancel_order_routers
-from .my_books import my_books_router
-from .news import news_router
-from .order import order_routers
-from .payment import payment_routers
-from .paysupport import paysupport_router
-from .premium import premium_router
-from .privacy import privacy_router
-from .saturday import saturday_routers
-from .search import search_routers
-from .settings import settings_router
-from .share_base import share_base_routers
-from .start import start_router
-from .support import support_routers
+
+user_commands_router = Router()
+user_commands_router.message.middleware(ResetStateMiddleware())
+user_commands_router.include_routers(
+    start_routers,  # Must be the first
+)
 
 user_routers = Router()
 user_routers.include_routers(
-    start_router,  # Must be the first
-    support_routers,  # Must be the second
-    payment_routers,  # Must be the third
-    base_store_routers,
     booking_router,
-    cancel_order_routers,
-    my_books_router,
-    news_router,
-    order_routers,
-    paysupport_router,
-    premium_router,
-    privacy_router,
-    saturday_routers,
-    settings_router,
-    share_base_routers,
-    search_routers,  # Must be the latest
+    # search_routers,  # Must be the latest
 )

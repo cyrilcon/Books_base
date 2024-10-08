@@ -1,4 +1,7 @@
-__all__ = ("admin_routers",)
+__all__ = (
+    "admin_commands_router",
+    "admin_routers",
+)
 
 from aiogram import Router
 
@@ -65,7 +68,6 @@ admin_commands_router.include_routers(
 admin_routers = Router()
 admin_routers.message.filter(AdminFilter())
 admin_routers.include_routers(
-    admin_commands_router,  # Must be the first
     add_admin_routers,
     add_article_routers,
     add_blacklist_routers,
