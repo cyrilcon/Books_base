@@ -11,6 +11,7 @@ from .admin import command_admin_router
 from .broadcast import command_broadcast_router, broadcast_routers
 from .cancel_premium import command_cancel_premium_router, cancel_premium_routers
 from .get_profile import command_get_profile_router, get_profile_routers
+from .give_base import command_give_base_router, give_base_routers
 from .give_premium import command_give_premium_router, give_premium_routers
 from .remove_admin import command_remove_admin_router, remove_admin_routers
 from .remove_blacklist import command_remove_blacklist_router, remove_blacklist_routers
@@ -34,6 +35,7 @@ admin_commands_router.include_routers(
     command_broadcast_router,
     command_cancel_premium_router,
     command_get_profile_router,
+    command_give_base_router,
     command_give_premium_router,
     command_remove_blacklist_router,
     command_send_message_router,
@@ -50,6 +52,7 @@ admin_routers.include_routers(
     broadcast_routers,
     cancel_premium_routers,
     get_profile_routers,
+    give_base_routers,
     give_premium_routers,
     remove_admin_routers,
     remove_blacklist_routers,
