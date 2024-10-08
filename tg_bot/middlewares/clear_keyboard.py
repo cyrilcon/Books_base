@@ -31,10 +31,9 @@ class ClearKeyboardMiddleware(BaseMiddleware):
 
         result = await handler(event, data)
 
-        if safe_message:
-            if isinstance(event, Message):
-                message_id = event.message_id + 1
-                await self.save_message_id(id_user, message_id)
+        if safe_message and isinstance(event, Message):
+            message_id = event.message_id + 1
+            await self.save_message_id(id_user, message_id)
 
         return result
 
