@@ -30,7 +30,7 @@ admin_commands_router.include_routers(
     command_cancel_premium_router,
     command_give_premium_router,
     command_remove_blacklist_router,
-    send_message_routers,
+    command_send_message_router,
     command_stats_router,
 )
 
@@ -44,5 +44,5 @@ admin_routers.include_routers(
     give_premium_routers,
     remove_admin_routers,
     remove_blacklist_routers,
-    command_send_message_router,
+    send_message_routers,
 )
