@@ -39,6 +39,10 @@ async def generate_book_caption(
     price = kwargs.get("price", book_data.get("price"))
 
     intro_config = {
+        0: {
+            "message": "",
+            "price_text": "",
+        },
         50: {
             "message": l10n.format_value("daily-action") if is_post else "",
             "price_text": f"\n{l10n.format_value("price", {"price": price})}\n",
