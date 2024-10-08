@@ -25,7 +25,7 @@ async def back_to_give_discount_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("give-discount-select-user"),
+        l10n.format_value("give-discount"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GiveDiscount.select_user)

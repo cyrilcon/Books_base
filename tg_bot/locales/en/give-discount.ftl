@@ -1,4 +1,4 @@
-give-discount-select-user =
+give-discount =
     <b>1/2</b>
     Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите выдать скидку
 

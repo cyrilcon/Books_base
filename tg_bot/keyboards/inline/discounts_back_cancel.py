@@ -10,14 +10,14 @@ from tg_bot.keyboards.inline.buttons import (
 )
 
 
-def discounts_keyboard(l10n) -> InlineKeyboardMarkup:
+def discounts_back_cancel_keyboard(l10n) -> InlineKeyboardMarkup:
     """
-    The "discounts" keyboard is formed.
+    The "discounts_back_cancel" keyboard is formed.
     :param l10n: Language set by the user.
-    :return: The "discounts" keyboard.
+    :return: The "discounts_back_cancel" keyboard.
     """
 
-    discounts_markup = InlineKeyboardMarkup(
+    discounts_back_cancel_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 discount_15_button(l10n),
@@ -33,4 +33,4 @@ def discounts_keyboard(l10n) -> InlineKeyboardMarkup:
             ],
         ],
     )
-    return discounts_markup
+    return discounts_back_cancel_markup
