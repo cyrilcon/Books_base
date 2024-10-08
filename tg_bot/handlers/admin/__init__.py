@@ -17,6 +17,7 @@ from .remove_admin import command_remove_admin_router, remove_admin_routers
 from .remove_blacklist import command_remove_blacklist_router, remove_blacklist_routers
 from .send_message import command_send_message_router, send_message_routers
 from .stats import command_stats_router
+from .take_base import command_take_base_router, take_base_routers
 
 supper_admin_commands_router = Router()
 supper_admin_commands_router.message.filter(SuperAdminFilter())
@@ -40,6 +41,7 @@ admin_commands_router.include_routers(
     command_remove_blacklist_router,
     command_send_message_router,
     command_stats_router,
+    command_take_base_router,
 )
 
 admin_routers = Router()
@@ -57,4 +59,5 @@ admin_routers.include_routers(
     remove_admin_routers,
     remove_blacklist_routers,
     send_message_routers,
+    take_base_routers,
 )
