@@ -11,6 +11,7 @@ from .cancel_premium import command_cancel_premium_router, cancel_premium_router
 from .give_premium import command_give_premium_router, give_premium_routers
 from .remove_admin import command_remove_admin_router, remove_admin_routers
 from .remove_blacklist import command_remove_blacklist_router, remove_blacklist_routers
+from .send_message import command_send_message_router, send_message_routers
 from .stats import command_stats_router
 
 supper_admin_commands_router = Router()
@@ -29,6 +30,7 @@ admin_commands_router.include_routers(
     command_cancel_premium_router,
     command_give_premium_router,
     command_remove_blacklist_router,
+    send_message_routers,
     command_stats_router,
 )
 
@@ -42,4 +44,5 @@ admin_routers.include_routers(
     give_premium_routers,
     remove_admin_routers,
     remove_blacklist_routers,
+    command_send_message_router,
 )
