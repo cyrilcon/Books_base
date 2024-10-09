@@ -21,7 +21,7 @@ def add_price_keyboard(l10n) -> InlineKeyboardMarkup:
         inline_keyboard=[
             [
                 price_button(l10n, price=config.price.book.main.rub),
-                price_button(l10n, price=config.price.book.daily.xtr),
+                price_button(l10n, price=config.price.book.daily.rub),
             ],
             [
                 not_post_button(l10n),

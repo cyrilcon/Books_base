@@ -19,7 +19,7 @@ def edit_price_keyboard(l10n, id_book: int) -> InlineKeyboardMarkup:
         inline_keyboard=[
             [
                 price_button(l10n, price=config.price.book.main.rub, id_book=id_book),
-                price_button(l10n, price=config.price.book.daily.xtr, id_book=id_book),
+                price_button(l10n, price=config.price.book.daily.rub, id_book=id_book),
             ],
             [
                 cancel_button(l10n),
