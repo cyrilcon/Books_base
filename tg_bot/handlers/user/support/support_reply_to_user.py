@@ -8,13 +8,19 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tg_bot.services import get_user_localization, ClearKeyboard, create_user_link
+from tg_bot.services import ClearKeyboard, create_user_link, get_fluent_localization
 from tg_bot.states import Support
 
 support_reply_to_user_router = Router()
 
 
-@support_reply_to_user_router.callback_query(F.data.startswith("reply_to"))
+@support_reply_to_user_router.callback_query(
+    F.data.startswith("reply_to"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def support_reply_to_user(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -45,23 +51,20 @@ async def support_reply_to_user_process(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     from_chat_id = message.chat.id
     message_id = message.message_id
 
     data = await state.get_data()
     id_user_recipient = data["id_user_recipient"]
-    l10n_recipient = await get_user_localization(id_user_recipient)
 
     response = await api.users.get_user_by_id(id_user=id_user_recipient)
     user = response.get_model()
 
     user_link = create_user_link(user.full_name, user.username)
 
+    l10n_recipient = get_fluent_localization(user.language_code)
     try:
         sent_message = await bot.copy_message(
             chat_id=id_user_recipient,
