@@ -4,9 +4,11 @@ __all__ = (
     "back_yes_cancel_keyboard",
     "buy_or_read_keyboard",
     "cancel_keyboard",
+    "cancel_discount_keyboard",
     "channel_keyboard",
     "deep_link_buy_keyboard",
     "delete_cancel_keyboard",
+    "discounts_keyboard",
     "discounts_back_cancel_keyboard",
     "done_clear_back_cancel_keyboard",
     "done_clear_delete_cancel_keyboard",
@@ -31,9 +33,11 @@ from .back_cancel import back_cancel_keyboard
 from .back_yes_cancel import back_yes_cancel_keyboard
 from .buy_or_read import buy_or_read_keyboard
 from .cancel import cancel_keyboard
+from .cancel_discount import cancel_discount_keyboard
 from .channel import channel_keyboard
 from .deep_link_buy import deep_link_buy_keyboard
 from .delete_cancel import delete_cancel_keyboard
+from .discounts import discounts_keyboard
 from .discounts_back_cancel import discounts_back_cancel_keyboard
 from .done_clear_back_cancel import done_clear_back_cancel_keyboard
 from .done_clear_delete_cancel import done_clear_delete_cancel_keyboard

@@ -20,6 +20,7 @@ async def base_store_cancel_discount(
     discount_value = user.has_discount
 
     if not discount_value:
+        await call.message.edit_reply_markup()
         await call.answer(
             l10n.format_value("base-store-cancel-discount-error"),
             show_alert=True,
@@ -50,8 +51,8 @@ async def base_store_cancel_discount(
     await call.answer()
 
     user_link = create_user_link(user.full_name, user.username)
-
     l10n_chat = get_fluent_localization(config.chat.language_code)
+
     await bot.send_message(
         chat_id=config.chat.payment,
         text=l10n_chat.format_value(
