@@ -17,6 +17,7 @@ __all__ = (
     "languages_back_cancel_keyboard",
     "my_books_keyboard",
     "order_again_keyboard",
+    "orders_keyboard",
     "post_cancel_keyboard",
     "reply_keyboard",
     "serve_order_keyboard",
@@ -43,6 +44,7 @@ from .languages import languages_keyboard
 from .languages_back_cancel import languages_back_cancel_keyboard
 from .my_books import my_books_keyboard
 from .order_again import order_again_keyboard
+from .orders import orders_keyboard
 from .post_cancel import post_cancel_keyboard
 from .reply import reply_keyboard
 from .serve_order import serve_order_keyboard

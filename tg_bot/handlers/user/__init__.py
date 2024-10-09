@@ -7,6 +7,7 @@ from aiogram import Router
 
 from tg_bot.middlewares import ResetStateMiddleware
 from .booking import command_booking_router
+from .cancel_order import command_cancel_order_router, cancel_order_routers
 from .my_books import command_my_books_router, my_books_routers
 from .order import command_order_router, order_routers
 from .paysupport import command_paysupport_router
@@ -20,6 +21,7 @@ user_commands_router.message.middleware(ResetStateMiddleware())
 user_commands_router.include_routers(
     start_routers,  # Must be the first
     command_booking_router,
+    command_cancel_order_router,
     command_my_books_router,
     command_order_router,
     command_paysupport_router,
@@ -29,6 +31,7 @@ user_commands_router.include_routers(
 
 user_routers = Router()
 user_routers.include_routers(
+    cancel_order_routers,
     my_books_routers,
     order_routers,
     settings_routers,
