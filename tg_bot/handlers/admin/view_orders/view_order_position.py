@@ -8,7 +8,13 @@ from .get_order_info import get_order_info
 view_order_position_router = Router()
 
 
-@view_order_position_router.callback_query(F.data.startswith("order_position"))
+@view_order_position_router.callback_query(
+    F.data.startswith("order_position"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def view_order_position(
     call: CallbackQuery,
     l10n: FluentLocalization,

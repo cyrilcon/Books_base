@@ -7,13 +7,19 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tg_bot.services import ClearKeyboard, get_user_localization
+from tg_bot.services import get_user_localization, ClearKeyboard
 from tg_bot.states import ServeOrder
 
 serve_from_button_router = Router()
 
 
-@serve_from_button_router.callback_query(F.data.startswith("serve_order"))
+@serve_from_button_router.callback_query(
+    F.data.startswith("serve_order"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def serve_order_from_button(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -21,7 +27,6 @@ async def serve_order_from_button(
     storage: RedisStorage,
 ):
     await ClearKeyboard.clear(call, storage)
-    await state.clear()
 
     id_order = int(call.data.split(":")[-1])
 
@@ -42,13 +47,13 @@ async def serve_order_from_button(
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(ServeOrder.select_book)
+    await call.answer()
 
     await ClearKeyboard.safe_message(
         storage=storage,
         id_user=call.from_user.id,
         sent_message_id=sent_message.message_id,
     )
-    await call.answer()
 
 
 @serve_from_button_router.callback_query(F.data.startswith("book_unavailable"))
@@ -56,16 +61,22 @@ async def serve_order_book_unavailable(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(call, storage)
     await state.clear()
     await call.message.edit_reply_markup()
 
     id_order = int(call.data.split(":")[-1])
 
     response = await api.orders.get_order_by_id(id_order=id_order)
+    status = response.status
+
+    if status != 200:
+        await call.message.answer(
+            l10n.format_value("serve-order-error-order-already-served-or-canceled")
+        )
+        return
+
     order = response.get_model()
 
     l10n_recipient = await get_user_localization(id_user=order.id_user)
