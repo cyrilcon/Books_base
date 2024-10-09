@@ -8,6 +8,7 @@ class ClearKeyboard:
         """
         Removing inline keyboard from the previous user's message.
         """
+
         id_user = message.from_user.id
         previous_message_id = await storage.redis.get(f"last_message_id:{id_user}")
 
@@ -30,4 +31,5 @@ class ClearKeyboard:
         """
         Saving a message that will have the inline keyboard removed.
         """
+
         await storage.redis.set(f"last_message_id:{id_user}", sent_message_id)

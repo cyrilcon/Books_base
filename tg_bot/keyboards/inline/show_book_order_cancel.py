@@ -19,7 +19,7 @@ def show_book_order_cancel_keyboard(
     :return: The "show_book_order_cancel" keyboard.
     """
 
-    show_booking_cancel_markup = InlineKeyboardMarkup(
+    show_book_order_cancel_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 show_book_button(l10n, id_book=id_book),
@@ -32,4 +32,4 @@ def show_book_order_cancel_keyboard(
             ],
         ],
     )
-    return show_booking_cancel_markup
+    return show_book_order_cancel_markup

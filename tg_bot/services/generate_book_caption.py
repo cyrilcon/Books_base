@@ -44,11 +44,11 @@ async def generate_book_caption(
             "message": "",
             "price_text": "",
         },
-        config.price.book.daily: {
+        config.price.book.daily.rub: {
             "message": l10n.format_value("daily-action") if is_post else "",
             "price_text": f"\n{l10n.format_value("price", {"price": price})}\n",
         },
-        config.price.book.main: {
+        config.price.book.main.rub: {
             "message": l10n.format_value("new-book-from-user") if from_user else "",
             "price_text": f"\n{l10n.format_value("price", {"price": price})}\n",
         },
