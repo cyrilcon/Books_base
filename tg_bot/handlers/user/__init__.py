@@ -10,6 +10,7 @@ from .base_store import command_base_store_router, base_store_routers
 from .booking import command_booking_router
 from .cancel_order import command_cancel_order_router, cancel_order_routers
 from .my_books import command_my_books_router, my_books_routers
+from .news import command_news_router, news_routers
 from .order import command_order_router, order_routers
 from .paysupport import command_paysupport_router
 from .privacy import command_privacy_router
@@ -27,6 +28,7 @@ user_commands_router.include_routers(
     command_booking_router,
     command_cancel_order_router,
     command_my_books_router,
+    command_news_router,
     command_order_router,
     command_paysupport_router,
     command_privacy_router,
@@ -40,6 +42,7 @@ user_routers.include_routers(
     base_store_routers,
     cancel_order_routers,
     my_books_routers,
+    news_routers,
     order_routers,
     settings_routers,
     share_base_routers,
