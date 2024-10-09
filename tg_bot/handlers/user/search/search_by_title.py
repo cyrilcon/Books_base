@@ -3,7 +3,6 @@ import re
 from aiogram import Router, F
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
@@ -12,28 +11,24 @@ from api.books_base_api import api
 from api.books_base_api.schemas import UserSchema
 from tg_bot.enums import SearchBy
 from tg_bot.keyboards.inline import buy_or_read_keyboard
-from tg_bot.services import (
-    generate_book_caption,
-    BookFormatter,
-    ClearKeyboard,
-    is_valid_book_article,
-)
+from tg_bot.services import generate_book_caption, BookFormatter, is_valid_book_article
 from .keyboards import search_by_keyboard, book_pagination_keyboard
 
 search_by_title_router = Router()
 search_by_title_router.message.middleware(ChatActionMiddleware())
 
 
-@search_by_title_router.callback_query(F.data.startswith("search_by_title"))
+@search_by_title_router.callback_query(
+    F.data.startswith("search_by_title"),
+    flags={
+        # "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def search_by_title(
     call: CallbackQuery,
     l10n: FluentLocalization,
-    state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(call, storage)
-    await state.clear()
-
     await call.message.edit_text(
         l10n.format_value("search-by-title"),
         reply_markup=search_by_keyboard(l10n, by=SearchBy.TITLE),
@@ -41,7 +36,14 @@ async def search_by_title(
     await call.answer()
 
 
-@search_by_title_router.message(F.text, flags={"chat_action": "typing"})
+@search_by_title_router.message(
+    F.text,
+    flags={
+        "chat_action": "typing",
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def search_by_title_process(
     message: Message,
     l10n: FluentLocalization,
@@ -50,7 +52,13 @@ async def search_by_title_process(
     await book_search(message, l10n, user)
 
 
-@search_by_title_router.callback_query(F.data.startswith("book_page"))
+@search_by_title_router.callback_query(
+    F.data.startswith("book_page"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def book_page(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -63,15 +71,19 @@ async def book_page(
     await call.answer()
 
 
-@search_by_title_router.callback_query(F.data.startswith("get_book"))
+@search_by_title_router.callback_query(
+    F.data.startswith("get_book"),
+    flags={
+        # "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def get_book(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     user: UserSchema,
 ):
-    await ClearKeyboard.clear(call, storage)
     await state.clear()
 
     id_book = int(call.data.split(":")[-1])
@@ -85,9 +97,9 @@ async def get_book(
             l10n.format_value(
                 "error-book-unavailable",
                 {"article": article},
-            )
+            ),
+            show_alert=True,
         )
-        await call.answer()
         return
 
     book = response.get_model()
@@ -224,23 +236,14 @@ async def book_search(
             f"<i>{authors}</i> (<code>{article}</code>)"
         )
         book_number += 1
+
+    keyboard = book_pagination_keyboard(
+        l10n=l10n,
+        found=found,
+        books=books,
+        page=page,
+    )
     try:
-        await message.edit_text(
-            text,
-            reply_markup=book_pagination_keyboard(
-                l10n=l10n,
-                found=found,
-                books=books,
-                page=page,
-            ),
-        )
+        await message.edit_text(text=text, reply_markup=keyboard)
     except TelegramBadRequest:
-        await message.answer(
-            text,
-            reply_markup=book_pagination_keyboard(
-                l10n=l10n,
-                found=found,
-                books=books,
-                page=page,
-            ),
-        )
+        await message.answer(text=text, reply_markup=keyboard)

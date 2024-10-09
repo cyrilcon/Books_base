@@ -14,6 +14,7 @@ from .news import command_news_router, news_routers
 from .order import command_order_router, order_routers
 from .paysupport import command_paysupport_router
 from .privacy import command_privacy_router
+from .search import command_search_router, search_routers
 from .search import search_routers
 from .settings import command_settings_router, settings_routers
 from .share_base import common_share_base_router, share_base_routers
@@ -35,6 +36,7 @@ user_commands_router.include_routers(
     command_settings_router,
     common_share_base_router,
     command_support_router,
+    command_search_router,  # Must be the latest
 )
 
 user_routers = Router()

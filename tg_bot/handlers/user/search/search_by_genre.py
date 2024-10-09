@@ -4,14 +4,13 @@ from aiogram import Router, F
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.enums import SearchBy
-from tg_bot.services import BookFormatter, ClearKeyboard
+from tg_bot.services import BookFormatter
 from tg_bot.states import Search
 from .keyboards import (
     search_by_keyboard,
@@ -24,15 +23,18 @@ search_by_genre_router = Router()
 search_by_genre_router.message.middleware(ChatActionMiddleware())
 
 
-@search_by_genre_router.callback_query(F.data.startswith("search_by_genre"))
+@search_by_genre_router.callback_query(
+    F.data.startswith("search_by_genre"),
+    flags={
+        # "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def search_by_genre(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(call, storage)
-
     response = await api.genres.get_genres_with_pagination()
     genres = response.get_model()
 
@@ -61,7 +63,11 @@ async def search_by_genre(
 @search_by_genre_router.message(
     StateFilter(Search.by_genre),
     F.text,
-    flags={"chat_action": "typing"},
+    flags={
+        "chat_action": "typing",
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
 )
 async def search_by_genre_process(
     message: Message,
@@ -71,7 +77,13 @@ async def search_by_genre_process(
     await genre_search(message, l10n, state)
 
 
-@search_by_genre_router.callback_query(F.data.startswith("genres_page"))
+@search_by_genre_router.callback_query(
+    F.data.startswith("genres_page"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def genres_page(call: CallbackQuery, l10n: FluentLocalization):
     page = int(call.data.split(":")[-1])
 
@@ -100,7 +112,13 @@ async def genres_page(call: CallbackQuery, l10n: FluentLocalization):
     await call.answer()
 
 
-@search_by_genre_router.callback_query(F.data.startswith("genre_page"))
+@search_by_genre_router.callback_query(
+    F.data.startswith("genre_page"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def genre_page(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -113,7 +131,13 @@ async def genre_page(
     await call.answer()
 
 
-@search_by_genre_router.callback_query(F.data.startswith("get_genre"))
+@search_by_genre_router.callback_query(
+    F.data.startswith("get_genre"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def get_genre(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -126,9 +150,9 @@ async def get_genre(
 
     if status != 200:
         await call.message.answer(
-            l10n.format_value("search-by-genre-error-genre-unavailable")
+            l10n.format_value("search-by-genre-error-genre-unavailable"),
+            show_alert=True,
         )
-        await call.answer()
         return
 
     genre = response.get_model()
@@ -167,7 +191,13 @@ async def get_genre(
     await call.answer()
 
 
-@search_by_genre_router.callback_query(F.data.startswith("genre_book_page"))
+@search_by_genre_router.callback_query(
+    F.data.startswith("genre_book_page"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def genre_book_page(call: CallbackQuery, l10n: FluentLocalization):
     page = int(call.data.split(":")[-2])
     id_genre = int(call.data.split(":")[-1])
@@ -277,28 +307,18 @@ async def genre_search(
                 f"<i>{authors}</i> (<code>{article}</code>)"
             )
             book_number += 1
+
+        keyboard = genre_book_pagination_keyboard(
+            l10n=l10n,
+            found=count,
+            books=books,
+            id_genre=id_genre,
+            page=page,
+        )
         try:
-            await message.edit_text(
-                text=text,
-                reply_markup=genre_book_pagination_keyboard(
-                    l10n=l10n,
-                    found=count,
-                    books=books,
-                    id_genre=id_genre,
-                    page=page,
-                ),
-            )
+            await message.edit_text(text=text, reply_markup=keyboard)
         except TelegramBadRequest:
-            await message.answer(
-                text=text,
-                reply_markup=genre_book_pagination_keyboard(
-                    l10n=l10n,
-                    found=count,
-                    books=books,
-                    id_genre=id_genre,
-                    page=page,
-                ),
-            )
+            await message.answer(text=text, reply_markup=keyboard)
         await state.clear()
         return
 
@@ -313,23 +333,14 @@ async def genre_search(
         genre_name = genre.genre_name
         text += f"\n\n<b>{genre_number}.</b> <code>{genre_name}</code>"
         genre_number += 1
+
+    keyboard = genre_pagination_keyboard(
+        l10n=l10n,
+        genres=genres,
+        found=found,
+        page=page,
+    )
     try:
-        await message.edit_text(
-            text=text,
-            reply_markup=genre_pagination_keyboard(
-                l10n=l10n,
-                genres=genres,
-                found=found,
-                page=page,
-            ),
-        )
+        await message.edit_text(text=text, reply_markup=keyboard)
     except TelegramBadRequest:
-        await message.answer(
-            text=text,
-            reply_markup=genre_pagination_keyboard(
-                l10n=l10n,
-                genres=genres,
-                found=found,
-                page=page,
-            ),
-        )
+        await message.answer(text=text, reply_markup=keyboard)
