@@ -11,7 +11,7 @@ def edit_files_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboardB
     """
 
     edit_files = InlineKeyboardButton(
-        text=l10n.format_value("button-files"),
+        text=l10n.format_value("button-edit-files"),
         callback_data=f"edit_files:{id_book}",
     )
     return edit_files

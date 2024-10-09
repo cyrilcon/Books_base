@@ -15,6 +15,7 @@ from .paysupport import command_paysupport_router
 from .privacy import command_privacy_router
 from .search import search_routers
 from .settings import command_settings_router, settings_routers
+from .share_base import common_share_base_router, share_base_routers
 from .start import start_routers
 from .support import command_support_router, support_routers
 
@@ -30,6 +31,7 @@ user_commands_router.include_routers(
     command_paysupport_router,
     command_privacy_router,
     command_settings_router,
+    common_share_base_router,
     command_support_router,
 )
 
@@ -40,6 +42,7 @@ user_routers.include_routers(
     my_books_routers,
     order_routers,
     settings_routers,
+    share_base_routers,
     support_routers,
     search_routers,  # Must be the latest
 )

@@ -11,7 +11,7 @@ def edit_genres_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboard
     """
 
     edit_genres = InlineKeyboardButton(
-        text=l10n.format_value("button-genres"),
+        text=l10n.format_value("button-edit-genres"),
         callback_data=f"edit_genres:{id_book}",
     )
     return edit_genres

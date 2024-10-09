@@ -14,7 +14,7 @@ edit_price_router = Router()
 
 @edit_price_router.callback_query(
     F.data.startswith("edit_price"),
-    flags={"safe_message": False},
+    flags={"skip_message": 1},
 )
 async def edit_price(
     call: CallbackQuery,
@@ -78,7 +78,13 @@ async def update_price(
     await call.answer()
 
 
-@edit_price_router.message(StateFilter(EditBook.edit_price))
+@edit_price_router.message(
+    StateFilter(EditBook.edit_price),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def edit_price_unprocessed_messages(
     message: Message,
     l10n: FluentLocalization,

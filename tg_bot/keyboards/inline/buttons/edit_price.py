@@ -11,7 +11,7 @@ def edit_price_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboardB
     """
 
     edit_price = InlineKeyboardButton(
-        text=l10n.format_value("button-price"),
+        text=l10n.format_value("button-edit-price"),
         callback_data=f"edit_price:{id_book}",
     )
     return edit_price

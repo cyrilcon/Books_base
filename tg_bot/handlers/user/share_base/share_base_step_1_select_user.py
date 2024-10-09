@@ -1,40 +1,19 @@
 from aiogram import Router, F
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.types import Message, LinkPreviewOptions
+from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import ClearKeyboard, extract_username
+from tg_bot.keyboards.inline import (
+    cancel_keyboard,
+    share_our_store_keyboard,
+    share_base_keyboard,
+)
+from tg_bot.services import extract_username
 from tg_bot.states import ShareBase
-from .keyboards import share_base_keyboard, share_our_store_keyboard
 
 share_base_step_1_router = Router()
-
-
-@share_base_step_1_router.message(Command("share_base"))
-async def share_base(
-    message: Message,
-    l10n: FluentLocalization,
-    state: FSMContext,
-    storage: RedisStorage,
-):
-    await ClearKeyboard.clear(message, storage)
-
-    sent_message = await message.answer(
-        l10n.format_value("share-base-select-user"),
-        reply_markup=cancel_keyboard(l10n),
-        link_preview_options=LinkPreviewOptions(is_disabled=True),
-    )
-    await state.set_state(ShareBase.select_user)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )
 
 
 @share_base_step_1_router.message(
@@ -45,57 +24,39 @@ async def share_base_step_1(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     id_user = message.from_user.id
 
     username = extract_username(message.text)
 
     if not username:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("share-base-error-invalid-username"),
             reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
     if username == message.from_user.username:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("share-base-error-self-transfer"),
             reply_markup=cancel_keyboard(l10n),
         )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
         return
 
-    response = await api.users.get_user_by_username(username)
+    response = await api.users.get_user_by_username(username=username)
     status = response.status
 
     if status != 200:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value(
                 "share-base-error-user-not-found",
                 {"username": username},
             ),
             reply_markup=share_our_store_keyboard(l10n),
         )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
         return
 
-    response = await api.users.get_user_by_id(id_user)
+    response = await api.users.get_user_by_id(id_user=id_user)
     base_balance = response.get_model().base_balance
 
     await message.answer(
@@ -105,4 +66,4 @@ async def share_base_step_1(
         ),
         reply_markup=share_base_keyboard(l10n, base=base_balance),
     )
-    await state.clear()
+    await state.set_state(ShareBase.transfer)

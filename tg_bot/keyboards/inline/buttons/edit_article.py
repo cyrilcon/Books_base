@@ -11,7 +11,7 @@ def edit_article_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboar
     """
 
     edit_article = InlineKeyboardButton(
-        text=l10n.format_value("button-article"),
+        text=l10n.format_value("button-edit-article"),
         callback_data=f"edit_article:{id_book}",
     )
     return edit_article

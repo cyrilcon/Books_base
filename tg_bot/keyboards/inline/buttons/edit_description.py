@@ -14,7 +14,7 @@ def edit_description_button(
     """
 
     edit_description = InlineKeyboardButton(
-        text=l10n.format_value("button-description"),
+        text=l10n.format_value("button-edit-description"),
         callback_data=f"edit_description:{id_book}",
     )
     return edit_description

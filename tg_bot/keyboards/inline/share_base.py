@@ -1,8 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from tg_bot.keyboards.inline.buttons import (
-    share_base_back_button,
-    share_base_cancel_button,
+    back_button,
+    cancel_button,
 )
 
 
@@ -30,8 +30,8 @@ def share_base_keyboard(l10n, base: int) -> InlineKeyboardMarkup:
         buttons[:3],
         buttons[3:],
         [
-            share_base_back_button(l10n),
-            share_base_cancel_button(l10n),
+            back_button(l10n),
+            cancel_button(l10n),
         ],
     ]
     share_base_markup = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)

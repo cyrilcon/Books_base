@@ -16,21 +16,21 @@ button-not-post = 🚫 Не публиковать
 
 button-not-from-user = 👤 Не от пользователя
 
-button-article = 📄 Артикул
+button-edit-article = 📄 Артикул
 
-button-title = 📚 Название
+button-edit-title = 📚 Название
 
-button-authors = ✍️ Авторы
+button-edit-authors = ✍️ Авторы
 
-button-description = 📝 Описание
+button-edit-description = 📝 Описание
 
-button-genres = 🎭 Жанры
+button-edit-genres = 🎭 Жанры
 
-button-cover = 🖼️ Обложка
+button-edit-cover = 🖼️ Обложка
 
-button-files = 📁 Файлы
+button-edit-files = 📁 Файлы
 
-button-price = 💵 Цена
+button-edit-price = 💵 Цена
 
 button-yes = ✅ Да
 
@@ -78,7 +78,7 @@ button-read = Читать
 
 button-pay-rub = 💳 Оплатить { $price }₽
 
-button-pay-xtr = ⭐ Оплатить { $price } ⭐
+button-pay-xtr = ⭐ Оплатить { $price }
 
 button-paid = 🧾 Уже оплатил
 

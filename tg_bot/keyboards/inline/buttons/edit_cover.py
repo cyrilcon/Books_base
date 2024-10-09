@@ -11,7 +11,7 @@ def edit_cover_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboardB
     """
 
     edit_cover = InlineKeyboardButton(
-        text=l10n.format_value("button-cover"),
+        text=l10n.format_value("button-edit-cover"),
         callback_data=f"edit_cover:{id_book}",
     )
     return edit_cover

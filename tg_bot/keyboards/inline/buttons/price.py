@@ -16,7 +16,7 @@ def price_button(
     """
 
     price = InlineKeyboardButton(
-        text=l10n.format_value(f"button-price-{price}"),
+        text=l10n.format_value("button-price", {"price": price}),
         callback_data=f"price:{price}" + f":{id_book}" if id_book else f"price:{price}",
     )
     return price

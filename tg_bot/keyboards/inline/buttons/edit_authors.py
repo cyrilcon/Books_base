@@ -11,7 +11,7 @@ def edit_authors_button(l10n: FluentLocalization, id_book: int) -> InlineKeyboar
     """
 
     edit_authors = InlineKeyboardButton(
-        text=l10n.format_value("button-authors"),
+        text=l10n.format_value("button-edit-authors"),
         callback_data=f"edit_authors:{id_book}",
     )
     return edit_authors
