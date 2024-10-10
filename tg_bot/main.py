@@ -17,6 +17,7 @@ from middlewares import (
     DatabaseMiddleware,
     LocalizationMiddleware,
     StorageMiddleware,
+    ThrottlingMiddleware,
 )
 from services import set_default_commands
 
@@ -61,6 +62,7 @@ def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
         DatabaseMiddleware(),
         LocalizationMiddleware(),
         StorageMiddleware(storage),
+        ThrottlingMiddleware(storage, throttle_time=60),
     ]
 
     for middleware_type in middleware_types:

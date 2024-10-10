@@ -39,9 +39,9 @@ async def read(
             l10n.format_value(
                 "error-book-unavailable",
                 {"article": article},
-            )
+            ),
+            show_alert=True,
         )
-        await call.answer()
         return
 
     book = response.get_model()

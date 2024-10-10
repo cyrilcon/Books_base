@@ -30,6 +30,7 @@ payment_book_router = Router()
     flags={
         "clear_keyboard": False,
         "safe_message": False,
+        "throttle": True,
     },
 )
 async def buy_book(
@@ -204,7 +205,6 @@ async def payment_book(
             show_alert=True,
         )
         await state.clear()
-        await call.answer()
         return
 
     if not Payment.check_payment(Payment(amount=price, id=id_payment)):

@@ -6,6 +6,7 @@ __all__ = (
     "ResetStateMiddleware",
     "SaturdayMiddleware",
     "StorageMiddleware",
+    "ThrottlingMiddleware",
 )
 
 from .blacklist import BlacklistMiddleware
@@ -15,3 +16,4 @@ from .localization import LocalizationMiddleware
 from .reset_state import ResetStateMiddleware
 from .saturday import SaturdayMiddleware
 from .storage import StorageMiddleware
+from .throttling import ThrottlingMiddleware
