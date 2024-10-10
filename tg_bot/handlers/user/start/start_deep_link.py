@@ -14,7 +14,8 @@ start_deep_link_router = Router()
 
 
 @start_deep_link_router.message(
-    CommandStart(deep_link=True, magic=F.args.regexp(re.compile(r"book_(\d+)")))
+    CommandStart(deep_link=True, magic=F.args.regexp(re.compile(r"book_(\d+)"))),
+    flags={"safe_message": False},
 )
 async def start_deep_link(
     message: Message,

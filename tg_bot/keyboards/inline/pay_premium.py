@@ -13,7 +13,7 @@ def pay_premium_keyboard(
     l10n: FluentLocalization,
     url_payment: str,
     price_xtr: int,
-    price_rub: int | float,
+    price_rub: int,
     id_payment: str,
 ):
     """
