@@ -49,7 +49,6 @@ payment-premium-unprocessed-messages = Оплатите <b>{ -books-base-premium
 
 payment-check =
     <i>Ваш ID транзакци:</i>
-
     <code>{ $id_payment }</code>
 
 payment-error-payment-not-found = Транзакция не найдена!!

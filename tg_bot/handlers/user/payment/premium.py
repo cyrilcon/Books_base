@@ -1,7 +1,6 @@
 from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from fluent.runtime import FluentLocalization
 
@@ -10,12 +9,7 @@ from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum, Use
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
-from tg_bot.services import (
-    Payment,
-    create_user_link,
-    ClearKeyboard,
-    get_fluent_localization,
-)
+from tg_bot.services import Payment, create_user_link, get_fluent_localization
 from tg_bot.states import Payment as PaymentState
 
 payment_premium_router = Router()
@@ -24,6 +18,10 @@ payment_premium_router = Router()
 @payment_premium_router.callback_query(
     StateFilter(PaymentState.premium),
     F.data.startswith("paid_premium"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
 )
 async def payment_premium(
     call: CallbackQuery,
@@ -113,14 +111,11 @@ async def payment_premium_on_successful(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     user: UserSchema,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     id_payment = message.successful_payment.telegram_payment_charge_id
-    price = float(message.successful_payment.total_amount)
+    price = message.successful_payment.total_amount
 
     if user.has_discount:
         await api.users.discounts.delete_discount(id_user=user.id_user)
@@ -189,7 +184,13 @@ async def payment_premium_cancel(
     await call.message.edit_reply_markup()
 
 
-@payment_premium_router.message(StateFilter(PaymentState.premium))
+@payment_premium_router.message(
+    StateFilter(PaymentState.premium),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def payment_premium_unprocessed_messages(
     message: Message,
     l10n: FluentLocalization,

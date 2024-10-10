@@ -3,7 +3,9 @@ from fluent.runtime import FluentLocalization
 
 
 def pay_rub_button(
-    l10n: FluentLocalization, price: float, url_payment: str
+    l10n: FluentLocalization,
+    price: float,
+    url_payment: str,
 ) -> InlineKeyboardButton:
     """
     The "Pay" button is formed.

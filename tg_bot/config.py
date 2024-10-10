@@ -96,6 +96,7 @@ class Config(BaseSettings):
 
     logging_level: str = "ERROR"
     use_redis: bool = True
+    link: str
 
     tg_bot: TgBot
     redis: Redis
