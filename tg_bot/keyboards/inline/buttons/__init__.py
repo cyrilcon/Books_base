@@ -30,6 +30,7 @@ __all__ = (
     "order_again_button",
     "paid_book_button",
     "paid_premium_button",
+    "paid_set_button",
     "pay_rub_button",
     "pay_xtr_button",
     "post_button",
@@ -76,6 +77,7 @@ from .order import order_button
 from .order_again import order_again_button
 from .paid_book import paid_book_button
 from .paid_premium import paid_premium_button
+from .paid_set import paid_set_button
 from .pay_rub import pay_rub_button
 from .pay_xtr import pay_xtr_button
 from .post import post_button

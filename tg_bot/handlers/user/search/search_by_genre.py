@@ -149,7 +149,7 @@ async def get_genre(
     status = response.status
 
     if status != 200:
-        await call.message.answer(
+        await call.answer(
             l10n.format_value("search-by-genre-error-genre-unavailable"),
             show_alert=True,
         )

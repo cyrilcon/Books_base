@@ -15,6 +15,7 @@ from tg_bot.states import Payment as PaymentState
 payment_premium_router = Router()
 
 
+# TODO: ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ У ПОЛЬЗОВАТЕЛЯ УЖЕ ЕСТЬ PREMIUM
 @payment_premium_router.callback_query(
     StateFilter(PaymentState.premium),
     F.data.startswith("paid_premium"),
@@ -34,8 +35,10 @@ async def payment_premium(
     price = config.price.premium.rub
 
     if not Payment.check_payment(Payment(amount=price, id=id_payment)):
-        await call.message.answer(l10n.format_value("payment-error-payment-not-found"))
-        await call.answer()
+        await call.answer(
+            l10n.format_value("payment-error-payment-not-found"),
+            show_alert=True,
+        )
         return
 
     await call.message.edit_reply_markup()
@@ -66,6 +69,7 @@ async def payment_premium(
         reply_markup=channel_keyboard(l10n),
     )
     await state.clear()
+    await call.answer()
 
     user_link = create_user_link(user.full_name, user.username)
 
@@ -83,7 +87,6 @@ async def payment_premium(
             },
         ),
     )
-    await call.answer()
 
 
 @payment_premium_router.pre_checkout_query(StateFilter(PaymentState.premium))

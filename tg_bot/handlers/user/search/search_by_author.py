@@ -96,7 +96,7 @@ async def get_author(
     status = response.status
 
     if status != 200:
-        await call.message.answer(
+        await call.answer(
             l10n.format_value("search-by-author-error-author-unavailable"),
             show_alert=True,
         )

@@ -93,7 +93,7 @@ async def get_book(
     status = response.status
 
     if status != 200:
-        await call.message.answer(
+        await call.answer(
             l10n.format_value(
                 "error-book-unavailable",
                 {"article": article},

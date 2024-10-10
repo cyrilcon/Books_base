@@ -19,7 +19,6 @@ def paid_set_button(
 
     paid_set = InlineKeyboardButton(
         text=l10n.format_value("button-paid"),
-        # callback_data=f"paid_set:{id_payment}:{','.join(map(str, book_ids))}",
-        callback_data=f"paid_set:{id_payment}:9999,8888,7777",
+        callback_data=f"paid_set:{id_payment}:{','.join(map(str, book_ids))}",
     )
     return paid_set

@@ -35,7 +35,7 @@ async def read(
 
         article = BookFormatter.format_article(id_book=id_book)
 
-        await call.message.answer(
+        await call.answer(
             l10n.format_value(
                 "error-book-unavailable",
                 {"article": article},

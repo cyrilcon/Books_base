@@ -200,7 +200,7 @@ async def payment_book(
 
     if id_book in book_ids:
         await call.message.edit_reply_markup()
-        await call.message.answer(
+        await call.answer(
             l10n.format_value("payment-book-error-user-already-has-this-book"),
             show_alert=True,
         )
@@ -208,8 +208,10 @@ async def payment_book(
         return
 
     if not Payment.check_payment(Payment(amount=price, id=id_payment)):
-        await call.message.answer(l10n.format_value("payment-error-payment-not-found"))
-        await call.answer()
+        await call.answer(
+            l10n.format_value("payment-error-payment-not-found"),
+            show_alert=True,
+        )
         return
 
     await call.message.edit_reply_markup()
@@ -265,6 +267,7 @@ async def payment_book(
         reply_markup=channel_keyboard(l10n),
     )
     await state.clear()
+    await call.answer()
 
     user_link = create_user_link(user.full_name, user.username)
 
@@ -285,7 +288,6 @@ async def payment_book(
             },
         ),
     )
-    await call.answer()
 
 
 @payment_book_router.pre_checkout_query(StateFilter(PaymentState.book))
@@ -333,15 +335,15 @@ async def payment_book_on_successful(
         book_ids=[id_book],
     )
 
-    response = await api.books.get_book_by_id(id_book=id_book)
-    book = response.get_model()
-
     await message.answer(
         l10n.format_value(
             "payment-check",
             {"id_payment": id_payment},
         ),
     )
+
+    response = await api.books.get_book_by_id(id_book=id_book)
+    book = response.get_model()
 
     await send_files(
         bot=bot,

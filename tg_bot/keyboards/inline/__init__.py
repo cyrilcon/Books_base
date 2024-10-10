@@ -23,6 +23,7 @@ __all__ = (
     "orders_keyboard",
     "pay_book_keyboard",
     "pay_premium_keyboard",
+    "pay_set_keyboard",
     "post_cancel_keyboard",
     "reply_keyboard",
     "serve_order_keyboard",
@@ -58,6 +59,7 @@ from .order_again import order_again_keyboard
 from .orders import orders_keyboard
 from .pay_book import pay_book_keyboard
 from .pay_premium import pay_premium_keyboard
+from .pay_set import pay_set_keyboard
 from .post_cancel import post_cancel_keyboard
 from .reply import reply_keyboard
 from .serve_order import serve_order_keyboard
