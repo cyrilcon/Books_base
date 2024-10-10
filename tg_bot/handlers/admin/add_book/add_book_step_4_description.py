@@ -1,14 +1,15 @@
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from tg_bot.keyboards.inline import back_cancel_keyboard
-from tg_bot.services import ClearKeyboard, BookFormatter
+from tg_bot.keyboards.inline import (
+    back_cancel_keyboard,
+    done_clear_back_cancel_keyboard,
+)
+from tg_bot.services import BookFormatter
 from tg_bot.states import AddBook
-from .keyboards import done_clear_back_cancel_keyboard
 
 add_book_step_4_router = Router()
 
@@ -44,21 +45,13 @@ async def add_book_step_4(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     description = message.text
 
     if len(description) > 850:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("add-book-error-description-too-long"),
             reply_markup=back_cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -67,7 +60,7 @@ async def add_book_step_4(
 
     if genres:
         genres = BookFormatter.format_genres(genres)
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value(
                 "add-book-more-genres",
                 {"genres": genres},
@@ -75,16 +68,10 @@ async def add_book_step_4(
             reply_markup=done_clear_back_cancel_keyboard(l10n),
         )
     else:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("add-book-genres"),
             reply_markup=back_cancel_keyboard(l10n),
         )
 
     await state.update_data(description=description)
     await state.set_state(AddBook.add_genres)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )

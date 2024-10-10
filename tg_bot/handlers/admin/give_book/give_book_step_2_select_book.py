@@ -2,7 +2,6 @@ from aiogram import Router, F, Bot
 from aiogram.exceptions import AiogramError
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
@@ -12,7 +11,6 @@ from tg_bot.config import config
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard, my_books_keyboard
 from tg_bot.services import (
-    ClearKeyboard,
     generate_book_caption,
     is_valid_book_article,
     Payment,
@@ -33,7 +31,7 @@ async def back_to_give_book_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("give-book-select-user"),
+        l10n.format_value("give-book"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(GiveBook.select_user)
@@ -48,22 +46,14 @@ async def give_book_step_2(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     article = message.text
 
     if not is_valid_book_article(article):
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("give-book-error-invalid-article"),
             reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -73,14 +63,9 @@ async def give_book_step_2(
     status = response.status
 
     if status != 200:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("give-book-error-article-not-found"),
             reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -88,36 +73,30 @@ async def give_book_step_2(
 
     data = await state.get_data()
     id_user_recipient = data.get("id_user_recipient")
-    language_code_recipient = data.get("language_code_recipient")
     user_link = data.get("user_link")
 
     response = await api.users.get_book_ids(id_user=id_user_recipient)
     book_ids = response.result
 
     if id_book in book_ids:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value(
                 "give-book-error-user-already-has-this-book",
                 {"title": book.title, "article": article},
             ),
             reply_markup=cancel_keyboard(l10n),
         )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
         return
-
-    l10n_recipient = get_fluent_localization(language_code_recipient)
 
     response = await api.users.get_user_by_id(id_user=id_user_recipient)
     user = response.get_model()
 
+    l10n_recipient = get_fluent_localization(user.language_code)
     caption = await generate_book_caption(
         book_data=book,
         l10n=l10n_recipient,
         user=user,
+        price=0,
     )
 
     try:

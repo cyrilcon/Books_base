@@ -7,15 +7,18 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.keyboards.inline import cancel_keyboard
+from tg_bot.keyboards.inline import (
+    cancel_keyboard,
+    order_again_keyboard,
+    serve_order_keyboard,
+)
 from tg_bot.services import (
-    ClearKeyboard,
     create_user_link,
     generate_id_order,
     get_fluent_localization,
+    ClearKeyboard,
 )
 from tg_bot.states import Order
-from .keyboards import order_again_keyboard, serve_order_keyboard
 
 order_step_2_router = Router()
 
@@ -30,7 +33,7 @@ async def back_to_order_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("order-book-title"),
+        l10n.format_value("order"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Order.book_title)
@@ -40,6 +43,7 @@ async def back_to_order_step_1(
 @order_step_2_router.message(
     StateFilter(Order.author_name),
     F.text,
+    flags={"safe_message": False},
 )
 async def order_step_2(
     message: Message,
@@ -48,8 +52,6 @@ async def order_step_2(
     storage: RedisStorage,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     id_user = message.from_user.id
 
     author_name = message.text
@@ -80,7 +82,7 @@ async def order_step_2(
 
     await message.answer(
         l10n.format_value(
-            "order-success-message-for-user",
+            "order-success",
             {
                 "book_title": book_title,
                 "author_name": author_name,
@@ -100,7 +102,7 @@ async def order_step_2(
     await bot.send_message(
         chat_id=config.chat.order,
         text=l10n.format_value(
-            "order-success",
+            "order-success-message-for-admin",
             {
                 "user_link": user_link,
                 "id_user": str(id_user),

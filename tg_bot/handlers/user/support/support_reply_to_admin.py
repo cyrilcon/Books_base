@@ -13,7 +13,13 @@ from tg_bot.states import Support
 support_reply_to_admin_router = Router()
 
 
-@support_reply_to_admin_router.callback_query(F.data == "reply_to:admin")
+@support_reply_to_admin_router.callback_query(
+    F.data == "reply_to:admin",
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def support_reply_to_admin(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -42,11 +48,8 @@ async def support_process(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     id_user = message.from_user.id
     user_link = create_user_link(
         full_name=message.from_user.full_name,

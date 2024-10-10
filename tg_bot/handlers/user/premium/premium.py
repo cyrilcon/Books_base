@@ -8,9 +8,9 @@ from fluent.runtime import FluentLocalization
 
 from api.books_base_api.schemas import UserSchema
 from tg_bot.config import config
-from tg_bot.services import ClearKeyboard, Payment
+from tg_bot.keyboards.inline import pay_premium_keyboard
+from tg_bot.services import Payment, ClearKeyboard
 from tg_bot.states import Payment as PaymentState
-from .keyboards import pay_premium_keyboard
 
 premium_router = Router()
 premium_router.message.middleware(ChatActionMiddleware())
@@ -18,7 +18,11 @@ premium_router.message.middleware(ChatActionMiddleware())
 
 @premium_router.message(
     Command("premium"),
-    flags={"chat_action": "typing"},
+    flags={
+        "chat_action": "typing",
+        "clear_keyboard": False,
+        "throttle": True,
+    },
 )
 async def premium(
     message: Message,
@@ -28,7 +32,6 @@ async def premium(
     user: UserSchema,
 ):
     await ClearKeyboard.clear(message, storage)
-    await state.clear()
 
     if user.is_premium:
         await message.answer(
@@ -41,11 +44,11 @@ async def premium(
 
     payment = Payment(
         amount=price_rub,
-        comment="Books_base Premium",
+        comment=l10n.format_value("Books_base Premium"),
     )
     payment.create()
 
-    sent_message = await message.answer_invoice(
+    await message.answer_invoice(
         title="Books_base Premium ⚜️",
         description=l10n.format_value(
             "payment-premium",
@@ -64,9 +67,3 @@ async def premium(
         ),
     )
     await state.set_state(PaymentState.premium)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )

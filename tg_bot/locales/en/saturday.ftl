@@ -1,3 +1,5 @@
+saturday-action = Субботная акция
+
 saturday-error = Сегодня не суббота!!
 
 saturday-select-book-1 =

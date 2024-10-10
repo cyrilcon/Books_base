@@ -1,12 +1,10 @@
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import back_cancel_keyboard
-from tg_bot.services import ClearKeyboard
 from tg_bot.states import AddBook
 
 add_book_step_3_router = Router()
@@ -43,48 +41,29 @@ async def add_book_step_3(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     authors = message.text.split(", ")
 
     for author_name in authors:
         if len(author_name) > 255:
-            sent_message = await message.answer(
+            await message.answer(
                 l10n.format_value("add-book-error-author-name-too-long"),
                 reply_markup=back_cancel_keyboard(l10n),
-            )
-            await ClearKeyboard.safe_message(
-                storage=storage,
-                id_user=message.from_user.id,
-                sent_message_id=sent_message.message_id,
             )
             return
 
         if '"' in author_name:
-            sent_message = await message.answer(
+            await message.answer(
                 l10n.format_value("add-book-error-invalid-author-name"),
                 reply_markup=back_cancel_keyboard(l10n),
-            )
-            await ClearKeyboard.safe_message(
-                storage=storage,
-                id_user=message.from_user.id,
-                sent_message_id=sent_message.message_id,
             )
             return
 
     authors = [{"author_name": author_name} for author_name in authors]
 
-    sent_message = await message.answer(
+    await message.answer(
         l10n.format_value("add-book-description"),
         reply_markup=back_cancel_keyboard(l10n),
     )
     await state.update_data(authors=authors)
     await state.set_state(AddBook.add_description)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )

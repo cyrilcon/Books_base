@@ -46,6 +46,21 @@ class YoomoneyWallet(BaseModel):
     number: str
 
 
+class Main(BaseModel):
+    rub: int
+    xtr: int
+
+
+class Daily(BaseModel):
+    rub: int
+    xtr: int
+
+
+class Book(BaseModel):
+    main: Main
+    daily: Daily
+
+
 class Premium(BaseModel):
     rub: int
     xtr: int
@@ -58,15 +73,16 @@ class Discount(BaseModel):
     discount_100: int
 
 
-class Saturday(BaseModel):
+class Set(BaseModel):
     rub: int
     xtr: int
 
 
 class Price(BaseModel):
+    book: Book
     premium: Premium
     discount: Discount
-    saturday: Saturday
+    set: Set
 
 
 class Config(BaseSettings):
@@ -80,6 +96,7 @@ class Config(BaseSettings):
 
     logging_level: str = "ERROR"
     use_redis: bool = True
+    link: str
 
     tg_bot: TgBot
     redis: Redis

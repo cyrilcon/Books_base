@@ -1,4 +1,4 @@
-remove-blacklist-select-user = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которого хотите удалить из чёрного списка
+remove-blacklist = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которого хотите удалить из чёрного списка
 
 remove-blacklist-error-user-already-not-blacklisted = Пользователь { $user_link } (<code>{ $id_user }</code>) не в чёрном списке
 

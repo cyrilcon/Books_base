@@ -11,22 +11,28 @@ from api.books_base_api import api
 from api.books_base_api.schemas import PaymentCurrencyEnum, PaymentTypeEnum, UserSchema
 from tg_bot.config import config
 from tg_bot.enums import MessageEffects
-from tg_bot.keyboards.inline import channel_keyboard
+from tg_bot.keyboards.inline import channel_keyboard, pay_book_keyboard
 from tg_bot.services import (
-    ClearKeyboard,
     Payment,
     create_user_link,
     BookFormatter,
     send_files,
     get_fluent_localization,
+    ClearKeyboard,
 )
 from tg_bot.states import Payment as PaymentState
-from .keyboards import pay_book_keyboard
 
 payment_book_router = Router()
 
 
-@payment_book_router.callback_query(F.data.startswith("buy_book"))
+@payment_book_router.callback_query(
+    F.data.startswith("buy_book"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+        "throttle": True,
+    },
+)
 async def buy_book(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -73,15 +79,17 @@ async def buy_book(
         await call.answer()
         return
 
-    price = book.price.value
+    price_rub = book.price.value
+    price_xtr = config.price.book.main.xtr
+
     payment = Payment(
-        amount=price,
+        amount=price_rub,
         comment=book.title,
     )
     payment.create()
     id_payment = payment.id
 
-    if price == 85:
+    if price_rub == config.price.book.main.rub:
         discount = user.has_discount
 
         if discount == 100:
@@ -126,20 +134,27 @@ async def buy_book(
             return
 
         elif discount:
-            prices = {
-                15: 72,
-                30: 60,
-                50: 43,
+            prices_rub = {
+                15: round(0.85 * config.price.book.main.rub),
+                30: round(0.70 * config.price.book.main.rub),
+                50: round(0.50 * config.price.book.main.rub),
             }
-            price = prices.get(discount)
+            price_rub = prices_rub.get(discount)
+
+            prices_xtr = {
+                15: round(0.85 * config.price.book.main.xtr),
+                30: round(0.70 * config.price.book.main.xtr),
+                50: round(0.50 * config.price.book.main.xtr),
+            }
+            price_xtr = prices_xtr.get(discount)
 
     sent_message = await call.message.answer_invoice(
         title=book.title,
         description=l10n.format_value(
             "payment-book",
-            {"price_rub": price, "price_xtr": price},
+            {"price_rub": price_rub, "price_xtr": price_xtr},
         ),
-        prices=[LabeledPrice(label="XTR", amount=price)],
+        prices=[LabeledPrice(label="XTR", amount=price_xtr)],
         provider_token="",
         payload=f"book:{id_book}",
         currency="XTR",
@@ -147,12 +162,12 @@ async def buy_book(
             l10n=l10n,
             id_book=id_book,
             url_payment=payment.invoice,
-            price=price,
+            price_xtr=price_xtr,
+            price_rub=price_rub,
             id_payment=id_payment,
         ),
     )
     await state.set_state(PaymentState.book)
-
     await ClearKeyboard.safe_message(
         storage=storage,
         id_user=call.from_user.id,
@@ -164,6 +179,10 @@ async def buy_book(
 @payment_book_router.callback_query(
     StateFilter(PaymentState.book),
     F.data.startswith("paid_book"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
 )
 async def payment_book(
     call: CallbackQuery,
@@ -181,16 +200,18 @@ async def payment_book(
 
     if id_book in book_ids:
         await call.message.edit_reply_markup()
-        await call.message.answer(
-            l10n.format_value("payment-book-error-user-already-has-this-book")
+        await call.answer(
+            l10n.format_value("payment-book-error-user-already-has-this-book"),
+            show_alert=True,
         )
         await state.clear()
-        await call.answer()
         return
 
     if not Payment.check_payment(Payment(amount=price, id=id_payment)):
-        await call.message.answer(l10n.format_value("payment-error-payment-not-found"))
-        await call.answer()
+        await call.answer(
+            l10n.format_value("payment-error-payment-not-found"),
+            show_alert=True,
+        )
         return
 
     await call.message.edit_reply_markup()
@@ -221,7 +242,11 @@ async def payment_book(
         files=book.files,
     )
 
-    base = random.randint(7, 15) if price == 50 else random.randint(10, 20)
+    if price == config.price.book.daily.rub:
+        base = random.randint(7, 15)
+    else:
+        base = random.randint(10, 20)
+
     await api.users.update_user(
         id_user=user.id_user,
         base_balance=user.base_balance + base,
@@ -242,6 +267,7 @@ async def payment_book(
         reply_markup=channel_keyboard(l10n),
     )
     await state.clear()
+    await call.answer()
 
     user_link = create_user_link(user.full_name, user.username)
 
@@ -262,7 +288,6 @@ async def payment_book(
             },
         ),
     )
-    await call.answer()
 
 
 @payment_book_router.pre_checkout_query(StateFilter(PaymentState.book))
@@ -294,21 +319,12 @@ async def payment_book_on_successful(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     user: UserSchema,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     id_payment = message.successful_payment.telegram_payment_charge_id
     price = float(message.successful_payment.total_amount)
     id_book = int(message.successful_payment.invoice_payload.split(":")[-1])
-
-    # TODO: удалить на продакшене
-    await bot.refund_star_payment(
-        user_id=message.from_user.id,
-        telegram_payment_charge_id=id_payment,
-    )
 
     await api.payments.create_payment(
         id_payment=id_payment,
@@ -319,15 +335,15 @@ async def payment_book_on_successful(
         book_ids=[id_book],
     )
 
-    response = await api.books.get_book_by_id(id_book=id_book)
-    book = response.get_model()
-
     await message.answer(
         l10n.format_value(
             "payment-check",
             {"id_payment": id_payment},
         ),
     )
+
+    response = await api.books.get_book_by_id(id_book=id_book)
+    book = response.get_model()
 
     await send_files(
         bot=bot,
@@ -336,7 +352,11 @@ async def payment_book_on_successful(
         files=book.files,
     )
 
-    base = random.randint(7, 15) if price == 50 else random.randint(10, 20)
+    if price == config.price.book.daily.rub:
+        base = random.randint(7, 15)
+    else:
+        base = random.randint(10, 20)
+
     await api.users.update_user(
         id_user=user.id_user,
         base_balance=user.base_balance + base,
@@ -357,6 +377,12 @@ async def payment_book_on_successful(
         reply_markup=channel_keyboard(l10n),
     )
     await state.clear()
+
+    # TODO: удалить на продакшене
+    await bot.refund_star_payment(
+        user_id=message.from_user.id,
+        telegram_payment_charge_id=id_payment,
+    )
 
     user_link = create_user_link(user.full_name, user.username)
 
@@ -397,7 +423,10 @@ async def payment_book_cancel(
 
 @payment_book_router.message(
     StateFilter(PaymentState.book),
-    F.text,
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
 )
 async def payment_book_unprocessed_messages(
     message: Message,

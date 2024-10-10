@@ -1,8 +1,8 @@
 from aiogram import Router, Bot, F
 from aiogram.exceptions import AiogramError
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.types import CallbackQuery, LinkPreviewOptions
+from aiogram.types import CallbackQuery, LinkPreviewOptions, Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
@@ -10,7 +10,6 @@ from tg_bot.config import config
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import (
-    ClearKeyboard,
     get_user_localization,
     create_user_link,
     extract_username,
@@ -21,32 +20,32 @@ from tg_bot.states import ShareBase
 share_base_step_2_router = Router()
 
 
-@share_base_step_2_router.callback_query(F.data == "share_base_back")
+@share_base_step_2_router.callback_query(
+    StateFilter(ShareBase.transfer),
+    F.data == "back",
+)
 async def back_to_share_base_step_1(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    sent_message = await call.message.edit_text(
-        l10n.format_value("share-base-select-user"),
+    await call.message.edit_text(
+        l10n.format_value("share-base"),
         reply_markup=cancel_keyboard(l10n),
         link_preview_options=LinkPreviewOptions(is_disabled=True),
     )
     await state.set_state(ShareBase.select_user)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=call.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )
     await call.answer()
 
 
-@share_base_step_2_router.callback_query(F.data.startswith("share_base"))
+@share_base_step_2_router.callback_query(
+    StateFilter(ShareBase.transfer),
+    F.data.startswith("share_base"),
+)
 async def share_base_step_2(
     call: CallbackQuery,
     l10n: FluentLocalization,
+    state: FSMContext,
     bot: Bot,
 ):
     base_received = int(call.data.split(":")[-1])
@@ -114,6 +113,7 @@ async def share_base_step_2(
                 },
             ),
         )
+        await state.clear()
         await call.answer()
 
         user_link_recipient = create_user_link(
@@ -137,3 +137,17 @@ async def share_base_step_2(
                 },
             ),
         )
+
+
+@share_base_step_2_router.message(
+    StateFilter(ShareBase.transfer),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
+async def share_base_step_2_unprocessed_messages(
+    message: Message,
+    l10n: FluentLocalization,
+):
+    await message.answer(l10n.format_value("share-base-unprocessed-messages"))

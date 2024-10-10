@@ -2,12 +2,11 @@ from aiogram import Router, F, Bot
 from aiogram.exceptions import AiogramError
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tg_bot.services import ClearKeyboard, get_fluent_localization
+from tg_bot.services import get_fluent_localization
 from tg_bot.states import SendMessage
 
 send_message_step_2_router = Router()
@@ -23,7 +22,7 @@ async def back_to_send_message_step_1(
     state: FSMContext,
 ):
     await call.message.edit_text(
-        l10n.format_value("send-message-select-user"),
+        l10n.format_value("send-message"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(SendMessage.select_user)
@@ -31,15 +30,12 @@ async def back_to_send_message_step_1(
 
 
 @send_message_step_2_router.message(StateFilter(SendMessage.write_message))
-async def support_reply_to_user_process(
+async def send_message_step_2(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     data = await state.get_data()
     id_user_recipient = data["id_user_recipient"]
     language_code_recipient = data["language_code_recipient"]

@@ -1,3 +1,5 @@
+__all__ = ("payment_routers",)
+
 from aiogram import Router
 
 from .book import payment_book_router

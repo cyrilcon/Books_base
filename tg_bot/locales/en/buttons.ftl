@@ -10,29 +10,27 @@ button-clear = 🧹 Стереть
 
 button-delete = 🗑️ Удалить
 
-button-price-85 = 85₽
-
-button-price-50 = 50₽
+button-price = { $price }₽
 
 button-not-post = 🚫 Не публиковать
 
 button-not-from-user = 👤 Не от пользователя
 
-button-article = 📄 Артикул
+button-edit-article = 📄 Артикул
 
-button-title = 📚 Название
+button-edit-title = 📚 Название
 
-button-authors = ✍️ Авторы
+button-edit-authors = ✍️ Авторы
 
-button-description = 📝 Описание
+button-edit-description = 📝 Описание
 
-button-genres = 🎭 Жанры
+button-edit-genres = 🎭 Жанры
 
-button-cover = 🖼️ Обложка
+button-edit-cover = 🖼️ Обложка
 
-button-files = 📁 Файлы
+button-edit-files = 📁 Файлы
 
-button-price = 💵 Цена
+button-edit-price = 💵 Цена
 
 button-yes = ✅ Да
 
@@ -48,13 +46,10 @@ button-order-again = 🔄 Заказать ещё
 
 button-reply = 💬 Ответить
 
-button-discount-15 = Скидка 15%
-
-button-discount-30 = Скидка 30%
-
-button-discount-50 = Скидка 50%
-
-button-discount-100 = 🎁 Бесплатная книга
+button-discount = { $discount_value ->
+        [100] 🎁 Бесплатная книга
+       *[other] Скидка { $discount_value }%
+    }
 
 button-cancel-discount = 🚫 Отменить { $discount_value ->
         [100] купон
@@ -83,7 +78,7 @@ button-read = Читать
 
 button-pay-rub = 💳 Оплатить { $price }₽
 
-button-pay-xtr = ⭐ Оплатить { $price } ⭐
+button-pay-xtr = ⭐ Оплатить { $price }
 
 button-paid = 🧾 Уже оплатил
 

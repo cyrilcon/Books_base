@@ -1,1 +1,3 @@
-from .privacy import privacy_router
+__all__ = ("command_privacy_router",)
+
+from .privacy import command_privacy_router

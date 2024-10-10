@@ -2,24 +2,22 @@ from aiogram import Router, F, Bot
 from aiogram.exceptions import AiogramError
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.keyboards.inline import cancel_keyboard, buy_or_read_keyboard
 from tg_bot.services import (
-    ClearKeyboard,
     generate_book_caption,
     is_valid_book_article,
     get_fluent_localization,
 )
 from tg_bot.states import ServeOrder
 
-serve_step_2_router = Router()
+serve_order_step_2_router = Router()
 
 
-@serve_step_2_router.callback_query(
+@serve_order_step_2_router.callback_query(
     StateFilter(ServeOrder.select_book),
     F.data == "back",
 )
@@ -36,7 +34,7 @@ async def back_to_serve_order_step_1(
     await call.answer()
 
 
-@serve_step_2_router.message(
+@serve_order_step_2_router.message(
     StateFilter(ServeOrder.select_book),
     F.text,
 )
@@ -44,22 +42,14 @@ async def serve_step_2(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
     bot: Bot,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     article = message.text
 
     if not is_valid_book_article(article):
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("serve-order-error-invalid-article"),
             reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -69,14 +59,9 @@ async def serve_step_2(
     status = response.status
 
     if status != 200:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("serve-order-error-article-not-found"),
             reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -93,7 +78,11 @@ async def serve_step_2(
     user = response.get_model()
 
     l10n_recipient = get_fluent_localization(user.language_code)
-    caption = await generate_book_caption(book_data=book, l10n=l10n_recipient)
+    caption = await generate_book_caption(
+        book_data=book,
+        l10n=l10n_recipient,
+        user=user,
+    )
 
     try:
         sent_message = await bot.send_message(

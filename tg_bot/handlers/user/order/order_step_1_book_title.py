@@ -1,7 +1,6 @@
 from aiogram import Router, F
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery
 from fluent.runtime import FluentLocalization
 
@@ -11,34 +10,12 @@ from tg_bot.keyboards.inline import (
     back_cancel_keyboard,
     cancel_keyboard,
     buy_or_read_keyboard,
+    show_book_order_cancel_keyboard,
 )
-from tg_bot.services import ClearKeyboard, generate_book_caption, BookFormatter
+from tg_bot.services import generate_book_caption, BookFormatter
 from tg_bot.states import Order
-from .keyboards import show_book_order_cancel_keyboard
 
 order_step_1_router = Router()
-
-
-@order_step_1_router.message(Command("order"))
-async def order(
-    message: Message,
-    l10n: FluentLocalization,
-    state: FSMContext,
-    storage: RedisStorage,
-):
-    await ClearKeyboard.clear(message, storage)
-
-    sent_message = await message.answer(
-        l10n.format_value("order-book-title"),
-        reply_markup=cancel_keyboard(l10n),
-    )
-    await state.set_state(Order.book_title)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )
 
 
 @order_step_1_router.message(
@@ -49,21 +26,13 @@ async def order_step_1(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     book_title = message.text
 
     if len(book_title) > 255:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("order-error-book-title-too-long"),
             reply_markup=cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -82,26 +51,20 @@ async def order_step_1(
         authors = BookFormatter.format_authors(book.authors)
         article = BookFormatter.format_article(id_book)
 
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value(
                 "order-book-error-book-already-exists",
                 {"title": book_title, "authors": authors, "article": article},
             ),
-            reply_markup=show_book_order_cancel_keyboard(l10n, id_book),
+            reply_markup=show_book_order_cancel_keyboard(l10n, id_book=id_book),
         )
     else:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("order-author-name"),
             reply_markup=back_cancel_keyboard(l10n),
         )
         await state.set_state(Order.author_name)
     await state.update_data(book_title=book_title)
-
-    await ClearKeyboard.safe_message(
-        storage=storage,
-        id_user=message.from_user.id,
-        sent_message_id=sent_message.message_id,
-    )
 
 
 @order_step_1_router.callback_query(
@@ -150,7 +113,7 @@ async def order_step_1_display_book_details(
     await state.clear()
 
     book = response.get_model()
-    caption = await generate_book_caption(book_data=book, l10n=l10n)
+    caption = await generate_book_caption(book_data=book, l10n=l10n, user=user)
 
     await call.message.answer_photo(
         photo=book.cover,

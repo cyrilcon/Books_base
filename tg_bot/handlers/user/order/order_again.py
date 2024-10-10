@@ -11,7 +11,13 @@ from tg_bot.states import Order
 order_again_router = Router()
 
 
-@order_again_router.callback_query(F.data == "order_again")
+@order_again_router.callback_query(
+    F.data == "order_again",
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def order_again(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -21,14 +27,14 @@ async def order_again(
     await ClearKeyboard.clear(call, storage)
 
     sent_message = await call.message.answer(
-        l10n.format_value("order-book-title"),
+        l10n.format_value("order"),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Order.book_title)
+    await call.answer()
 
     await ClearKeyboard.safe_message(
         storage=storage,
         id_user=call.from_user.id,
         sent_message_id=sent_message.message_id,
     )
-    await call.answer()

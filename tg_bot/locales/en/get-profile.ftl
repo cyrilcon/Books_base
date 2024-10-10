@@ -1,4 +1,4 @@
-get-profile-select-user =  Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, информацию которого вы хотите получить
+get-profile =  Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, информацию которого вы хотите получить
 
 get-profile-template =
     { $status_icons } { $user_link } (<code>{ $id_user }</code>) { $language_code ->

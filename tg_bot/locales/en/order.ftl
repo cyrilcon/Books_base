@@ -1,4 +1,4 @@
-order-book-title =
+order =
     <b>1/2</b>
     Введите <i><b>название</b></i> книги, которую хотите заказать
 
@@ -16,7 +16,7 @@ order-error-author-name-too-long =
     Слишком длинное имя у автора!!
     Введите <i><b>автора</b></i> книги ещё раз
 
-order-success-message-for-user =
+order-success =
     Вы заказали книгу <b>"<code>{ $book_title }</code>"</b> от автора <i>{ $author_name }</i>, спасибо за заказ!!
 
     Номер вашего заказа: <code>№{ $id_order }</code>
@@ -32,7 +32,7 @@ order-information-template =
 
     <b>Номер заказа:</b> <code>№{ $id_order }</code>
 
-order-success = Вы получили заказ от пользователя { order-information-template }
+order-success-message-for-admin = Вы получили заказ от пользователя { order-information-template }
 
 order-canceled = Вы отменили заказ
 

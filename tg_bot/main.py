@@ -11,11 +11,13 @@ from aiogram.fsm.strategy import FSMStrategy
 
 from api.books_base_api import api
 from config import config
-from handlers import routers_list
+from handlers import routers
 from middlewares import (
+    ClearKeyboardMiddleware,
     DatabaseMiddleware,
     LocalizationMiddleware,
     StorageMiddleware,
+    ThrottlingMiddleware,
 )
 from services import set_default_commands
 
@@ -56,14 +58,18 @@ def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
     """
 
     middleware_types = [
+        ClearKeyboardMiddleware(storage),
         DatabaseMiddleware(),
         LocalizationMiddleware(),
         StorageMiddleware(storage),
+        ThrottlingMiddleware(storage, throttle_time=60),
     ]
 
     for middleware_type in middleware_types:
-        dp.message.outer_middleware(middleware_type)
-        dp.callback_query.outer_middleware(middleware_type)
+        # dp.message.outer_middleware(middleware_type)
+        # dp.callback_query.outer_middleware(middleware_type)
+        dp.message.middleware(middleware_type)
+        dp.callback_query.middleware(middleware_type)
 
 
 def setup_logging():
@@ -113,7 +119,7 @@ async def main():
         fsm_strategy=FSMStrategy.CHAT,  # CHAT - state and data common for the whole chat
     )
 
-    dp.include_routers(*routers_list)  # Installing routers
+    dp.include_routers(routers)  # Installing routers
 
     register_global_middlewares(dp, storage)  # Installing middlewares
 

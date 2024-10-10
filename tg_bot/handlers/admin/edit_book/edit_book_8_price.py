@@ -1,44 +1,44 @@
 from aiogram import Router, F
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.services import generate_book_caption, ClearKeyboard
-from .keyboards import edit_book_keyboard, price_keyboard
+from tg_bot.keyboards.inline import edit_price_keyboard, edit_book_keyboard
+from tg_bot.services import generate_book_caption
+from tg_bot.states import EditBook
 
 edit_price_router = Router()
 
 
-@edit_price_router.callback_query(F.data.startswith("edit_price"))
+@edit_price_router.callback_query(
+    F.data.startswith("edit_price"),
+    flags={"skip_message": 1},
+)
 async def edit_price(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(call, storage)
-    await state.clear()
-
     id_book = int(call.data.split(":")[-1])
     await call.message.answer(
-        l10n.format_value("edit-book-select-price"),
-        reply_markup=price_keyboard(l10n, id_book),
+        l10n.format_value("edit-book-price"),
+        reply_markup=edit_price_keyboard(l10n, id_book=id_book),
     )
+    await state.set_state(EditBook.edit_price)
     await call.answer()
 
 
-@edit_price_router.callback_query(F.data.startswith("update_price"))
+@edit_price_router.callback_query(
+    StateFilter(EditBook.edit_price),
+    F.data.startswith("price"),
+)
 async def update_price(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(call, storage)
-    await state.clear()
-
     id_book_edited = int(call.data.split(":")[-1])
     price = int(call.data.split(":")[-2])
 
@@ -72,6 +72,21 @@ async def update_price(
     await call.message.answer_photo(
         photo=book.cover,
         caption=caption,
-        reply_markup=edit_book_keyboard(l10n, book.id_book),
+        reply_markup=edit_book_keyboard(l10n, id_book=book.id_book),
     )
+    await state.clear()
     await call.answer()
+
+
+@edit_price_router.message(
+    StateFilter(EditBook.edit_price),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
+async def edit_price_unprocessed_messages(
+    message: Message,
+    l10n: FluentLocalization,
+):
+    await message.answer(l10n.format_value("edit-book-price-unprocessed-messages"))

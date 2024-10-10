@@ -1,1 +1,3 @@
-from .booking import booking_router
+__all__ = ("command_booking_router",)
+
+from .booking import command_booking_router

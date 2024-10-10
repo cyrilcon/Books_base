@@ -1,11 +1,14 @@
-"""Import all routers and add them to routers_list."""
+__all__ = ("routers",)
 
-from .user import user_routers
-from .admin import admin_routers
+from aiogram import Router
 
-routers_list = [
+from .admin import admin_commands_router, admin_routers
+from .user import user_commands_router, user_routers
+
+routers = Router()
+routers.include_routers(
+    admin_commands_router,
+    user_commands_router,
     admin_routers,
     user_routers,
-]
-
-__all__ = ("routers_list",)
+)

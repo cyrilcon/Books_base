@@ -1,4 +1,4 @@
-broadcast-write-message = Введите сообщение для рассылки
+broadcast = Введите сообщение для рассылки
 
 broadcast-success =
     Отправлено { $success_count }/{ $users_count } сообщений

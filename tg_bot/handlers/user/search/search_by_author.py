@@ -4,14 +4,13 @@ from aiogram import Router, F
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.enums import SearchBy
-from tg_bot.services import BookFormatter, ClearKeyboard
+from tg_bot.services import BookFormatter
 from tg_bot.states import Search
 from .keyboards import (
     search_by_keyboard,
@@ -23,15 +22,18 @@ search_by_author_router = Router()
 search_by_author_router.message.middleware(ChatActionMiddleware())
 
 
-@search_by_author_router.callback_query(F.data.startswith("search_by_author"))
+@search_by_author_router.callback_query(
+    F.data.startswith("search_by_author"),
+    flags={
+        # "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def search_by_author(
     call: CallbackQuery,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(call, storage)
-
     await call.message.edit_text(
         l10n.format_value("search-by-author"),
         reply_markup=search_by_keyboard(l10n, by=SearchBy.AUTHOR),
@@ -43,7 +45,11 @@ async def search_by_author(
 @search_by_author_router.message(
     StateFilter(Search.by_author),
     F.text,
-    flags={"chat_action": "typing"},
+    flags={
+        "chat_action": "typing",
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
 )
 async def search_by_author_process(
     message: Message,
@@ -53,7 +59,13 @@ async def search_by_author_process(
     await author_search(message, l10n, state)
 
 
-@search_by_author_router.callback_query(F.data.startswith("author_page"))
+@search_by_author_router.callback_query(
+    F.data.startswith("author_page"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def author_page(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -66,7 +78,13 @@ async def author_page(
     await call.answer()
 
 
-@search_by_author_router.callback_query(F.data.startswith("get_author"))
+@search_by_author_router.callback_query(
+    F.data.startswith("get_author"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def get_author(
     call: CallbackQuery,
     l10n: FluentLocalization,
@@ -74,19 +92,19 @@ async def get_author(
 ):
     id_author = int(call.data.split(":")[-1])
 
-    response = await api.authors.get_author_by_id(id_author)
+    response = await api.authors.get_author_by_id(id_author=id_author)
     status = response.status
 
     if status != 200:
-        await call.message.answer(
-            l10n.format_value("search-by-author-error-author-unavailable")
+        await call.answer(
+            l10n.format_value("search-by-author-error-author-unavailable"),
+            show_alert=True,
         )
-        await call.answer()
         return
 
     author = response.get_model()
 
-    response = await api.books.get_books_by_author_id(id_author)
+    response = await api.books.get_books_by_author_id(id_author=id_author)
     result = response.get_model()
     count = result.count
     books = result.books
@@ -120,7 +138,13 @@ async def get_author(
     await call.answer()
 
 
-@search_by_author_router.callback_query(F.data.startswith("author_book_page"))
+@search_by_author_router.callback_query(
+    F.data.startswith("author_book_page"),
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
+)
 async def author_book_page(call: CallbackQuery, l10n: FluentLocalization):
     page = int(call.data.split(":")[-2])
     id_author = int(call.data.split(":")[-1])
@@ -231,28 +255,18 @@ async def author_search(
                 f"(<code>{article}</code>)"
             )
             book_number += 1
+
+        keyboard = author_book_pagination_keyboard(
+            l10n=l10n,
+            found=count,
+            books=books,
+            id_author=id_author,
+            page=page,
+        )
         try:
-            await message.edit_text(
-                text=text,
-                reply_markup=author_book_pagination_keyboard(
-                    l10n=l10n,
-                    found=count,
-                    books=books,
-                    id_author=id_author,
-                    page=page,
-                ),
-            )
+            await message.edit_text(text=text, reply_markup=keyboard)
         except TelegramBadRequest:
-            await message.answer(
-                text=text,
-                reply_markup=author_book_pagination_keyboard(
-                    l10n=l10n,
-                    found=count,
-                    books=books,
-                    id_author=id_author,
-                    page=page,
-                ),
-            )
+            await message.answer(text=text, reply_markup=keyboard)
         await state.clear()
         return
 
@@ -267,23 +281,14 @@ async def author_search(
         author_name = author.author_name
         text += f"\n\n<b>{author_number}.</b> <code>{author_name}</code>"
         author_number += 1
+
+    keyboard = author_pagination_keyboard(
+        l10n=l10n,
+        found=found,
+        authors=authors,
+        page=page,
+    )
     try:
-        await message.edit_text(
-            text=text,
-            reply_markup=author_pagination_keyboard(
-                l10n=l10n,
-                found=found,
-                authors=authors,
-                page=page,
-            ),
-        )
+        await message.edit_text(text=text, reply_markup=keyboard)
     except TelegramBadRequest:
-        await message.answer(
-            text=text,
-            reply_markup=author_pagination_keyboard(
-                l10n=l10n,
-                found=found,
-                authors=authors,
-                page=page,
-            ),
-        )
+        await message.answer(text=text, reply_markup=keyboard)

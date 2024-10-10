@@ -1,25 +1,18 @@
 from aiogram import Router
 from aiogram.filters import Command
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
-from tg_bot.services import ClearKeyboard
 
-stats_router = Router()
+command_stats_router = Router()
 
 
-@stats_router.message(Command("stats"))
+@command_stats_router.message(Command("stats"))
 async def stats(
     message: Message,
     l10n: FluentLocalization,
-    state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     response = await api.users.get_user_statistics()
     statistic = response.get_model()
 
@@ -35,4 +28,3 @@ async def stats(
             },
         )
     )
-    await state.clear()
