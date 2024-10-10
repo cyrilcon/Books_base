@@ -26,6 +26,7 @@ from .keyboards import pay_set_keyboard
 payment_set_router = Router()
 
 
+# TODO: ДОБАВИТЬ МИДЛВАРЬ С СУББОТОЙ
 @payment_set_router.callback_query(F.data.startswith("buy_set"))
 async def buy_set(
     call: CallbackQuery,
@@ -74,8 +75,8 @@ async def buy_set(
             await call.answer()
             return
 
-    price_rub = config.price.saturday.rub
-    price_xtr = config.price.saturday.xtr
+    price_rub = config.price.set.rub
+    price_xtr = config.price.set.xtr
 
     payment = Payment(
         amount=price_rub,

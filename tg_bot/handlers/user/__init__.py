@@ -16,6 +16,7 @@ from .payment import payment_routers
 from .paysupport import command_paysupport_router
 from .premium import premium_router
 from .privacy import command_privacy_router
+from .saturday import command_saturday_router, saturday_routers
 from .search import command_search_router, search_routers
 from .search import search_routers
 from .settings import command_settings_router, settings_routers
@@ -35,6 +36,7 @@ user_commands_router.include_routers(
     command_order_router,
     command_paysupport_router,
     command_privacy_router,
+    command_saturday_router,
     command_settings_router,
     common_share_base_router,
     command_support_router,
@@ -49,6 +51,7 @@ user_routers.include_routers(
     news_routers,
     order_routers,
     premium_router,
+    saturday_routers,
     payment_routers,
     settings_routers,
     share_base_routers,

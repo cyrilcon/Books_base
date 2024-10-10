@@ -1,17 +1,18 @@
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import Message, CallbackQuery, InputMediaPhoto
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
 from tg_bot.config import config
-from tg_bot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
-from tg_bot.services import ClearKeyboard, is_valid_book_article
+from tg_bot.keyboards.inline import (
+    cancel_keyboard,
+    back_cancel_keyboard,
+    buy_set_keyboard,
+)
+from tg_bot.services import is_valid_book_article
 from tg_bot.states import Saturday
-
-from .keyboards import buy_keyboard
 
 saturday_step_3_router = Router()
 
@@ -50,21 +51,13 @@ async def saturday_step_3(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
-    storage: RedisStorage,
 ):
-    await ClearKeyboard.clear(message, storage)
-
     article_3 = message.text
 
     if not is_valid_book_article(article_3):
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("saturday-error-invalid-article"),
             reply_markup=back_cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -74,14 +67,9 @@ async def saturday_step_3(
     book_ids = data.get("book_ids")
 
     if id_book_3 in book_ids:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("saturday-error-article-already-selected"),
             reply_markup=back_cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -89,33 +77,22 @@ async def saturday_step_3(
     status = response.status
 
     if status != 200:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value("saturday-error-article-not-found"),
             reply_markup=cancel_keyboard(l10n),
         )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
-        )
         return
 
+    book = response.get_model()
     user_book_ids = data.get("user_book_ids")
 
-    book = response.get_model()
-
     if id_book_3 in user_book_ids:
-        sent_message = await message.answer(
+        await message.answer(
             l10n.format_value(
                 "saturday-error-user-already-has-this-book",
                 {"title": book.title},
             ),
             reply_markup=back_cancel_keyboard(l10n),
-        )
-        await ClearKeyboard.safe_message(
-            storage=storage,
-            id_user=message.from_user.id,
-            sent_message_id=sent_message.message_id,
         )
         return
 
@@ -138,10 +115,10 @@ async def saturday_step_3(
                 "title_1": title_1,
                 "title_2": title_2,
                 "title_3": book.title,
-                "price_rub": config.price.saturday.rub,
-                "price_xtr": config.price.saturday.xtr,
+                "price_rub": config.price.set.rub,
+                "price_xtr": config.price.set.xtr,
             },
         ),
-        reply_markup=buy_keyboard(l10n, book_ids=book_ids),
+        reply_markup=buy_set_keyboard(l10n, book_ids=book_ids),
     )
     await state.clear()

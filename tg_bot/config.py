@@ -73,7 +73,7 @@ class Discount(BaseModel):
     discount_100: int
 
 
-class SaturdayAction(BaseModel):
+class Set(BaseModel):
     rub: int
     xtr: int
 
@@ -82,7 +82,7 @@ class Price(BaseModel):
     book: Book
     premium: Premium
     discount: Discount
-    saturday_action: SaturdayAction
+    set: Set
 
 
 class Config(BaseSettings):

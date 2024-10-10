@@ -3,6 +3,7 @@ __all__ = (
     "back_cancel_keyboard",
     "back_yes_cancel_keyboard",
     "buy_or_read_keyboard",
+    "buy_set_keyboard",
     "cancel_keyboard",
     "cancel_discount_keyboard",
     "channel_keyboard",
@@ -37,6 +38,7 @@ from .add_price import add_price_keyboard
 from .back_cancel import back_cancel_keyboard
 from .back_yes_cancel import back_yes_cancel_keyboard
 from .buy_or_read import buy_or_read_keyboard
+from .buy_set import buy_set_keyboard
 from .cancel import cancel_keyboard
 from .cancel_discount import cancel_discount_keyboard
 from .channel import channel_keyboard
