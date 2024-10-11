@@ -1,15 +1,16 @@
 from typing import Callable, Dict, Any, Awaitable
 
 from aiogram import BaseMiddleware
+from aiogram.fsm.context import FSMContext
 from aiogram.types import TelegramObject
+from fluent.runtime import FluentLocalization
 
 from api.books_base_api.schemas import UserSchema
-from tg_bot.services import get_fluent_localization
 
 
-class LocalizationMiddleware(BaseMiddleware):
+class PremiumMiddleware(BaseMiddleware):
     """
-    Middleware to retrieve and inject the user's preferred language for localization purposes.
+    Middleware to check if the user has premium.
     """
 
     async def __call__(
@@ -19,8 +20,12 @@ class LocalizationMiddleware(BaseMiddleware):
         data: Dict[str, Any],
     ) -> Any:
         user: UserSchema = data["user"]
+        l10n: FluentLocalization = data["l10n"]
+        state: FSMContext = data["state"]
 
-        l10n = get_fluent_localization(user.language_code)
-        data["l10n"] = l10n
+        if user.is_premium:
+            await event.answer(l10n.format_value("error-user-has-premium"))
+            await state.clear()
+            return
 
         return await handler(event, data)

@@ -18,6 +18,7 @@ BASE_COMMANDS = [
     "base_store",
     "share_base",
     "news",
+    "saturday",
     "support",
     "settings",
     "paysupport",
@@ -52,6 +53,7 @@ ADMIN_COMMANDS = [
     "remove_admin",
     "send_message",
     "broadcast",
+    "test_broadcast",
     "stats",
 ]
 

@@ -1,6 +1,6 @@
 command-my-account = 🙋🏼 Your { -books-base } account
 
-command-my-books = 📚 Your purchased books
+command-my-books = 🗃️ Your purchased books
 
 command-premium = ⚜️ Get Premium
 
@@ -15,6 +15,8 @@ command-base-store = 💎 Shop for discounts
 command-share-base = 🤝🏻 Share base with a friend
 
 command-news = 📰 Latest { -books-base } news
+
+command-saturday = 📚 Saturday's action
 
 command-support = ⚠️ Tech-support
 
@@ -75,5 +77,7 @@ command-remove-admin = 🙅🏼 Remove administrator
 command-send-message = 🧑🏼‍💻 Send message to user
 
 command-broadcast = 📢 Send broadcast
+
+command-test-broadcast = 📟 Send test broadcast
 
 command-stats = 📊 User activity

@@ -28,6 +28,7 @@ __all__ = (
     "Support",
     "TakeBase",
     "TakeDiscount",
+    "TestBroadcast",
 )
 
 from .add_admin import AddAdmin
@@ -59,3 +60,4 @@ from .share_base import ShareBase
 from .support import Support
 from .take_base import TakeBase
 from .take_discount import TakeDiscount
+from .test_broadcast import TestBroadcast

@@ -31,6 +31,7 @@ from .serve_order import command_serve_order_router, serve_order_routers
 from .stats import command_stats_router
 from .take_base import command_take_base_router, take_base_routers
 from .take_discount import command_take_discount_router, take_discount_routers
+from .test_broadcast import command_test_broadcast_router, test_broadcast_routers
 from .view_orders import command_view_orders_router, view_orders_routers
 
 supper_admin_commands_router = Router()
@@ -66,6 +67,7 @@ admin_commands_router.include_routers(
     command_stats_router,
     command_take_base_router,
     command_take_discount_router,
+    command_test_broadcast_router,
     command_view_orders_router,
 )
 
@@ -94,5 +96,6 @@ admin_routers.include_routers(
     serve_order_routers,
     take_base_routers,
     take_discount_routers,
+    test_broadcast_routers,
     view_orders_routers,
 )
