@@ -10,6 +10,7 @@ __all__ = (
     "DeleteBook",
     "EditBook",
     "GetProfile",
+    "GetToken",
     "GiveBase",
     "GiveBook",
     "GiveDiscount",
@@ -42,6 +43,7 @@ from .delete_article import DeleteArticle
 from .delete_book import DeleteBook
 from .edit_book import EditBook
 from .get_profile import GetProfile
+from .get_token import GetToken
 from .give_base import GiveBase
 from .give_book import GiveBook
 from .give_discount import GiveDiscount

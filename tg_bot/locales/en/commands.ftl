@@ -76,6 +76,8 @@ command-remove-admin = 🙅🏼 Remove administrator
 
 command-send-message = 🧑🏼‍💻 Send message to user
 
+command-get-token = 🏞️ Get token of a picture
+
 command-broadcast = 📢 Send broadcast
 
 command-test-broadcast = 📟 Send test broadcast

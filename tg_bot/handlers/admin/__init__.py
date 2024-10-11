@@ -18,6 +18,7 @@ from .delete_article import command_delete_article_router, delete_article_router
 from .delete_book import command_delete_book_router, delete_book_routers
 from .edit_book import command_edit_book_router, edit_book_routers
 from .get_profile import command_get_profile_router, get_profile_routers
+from .get_token import command_get_token_router, get_token_routers
 from .give_base import command_give_base_router, give_base_routers
 from .give_book import command_give_book_router, give_book_routers
 from .give_discount import command_give_discount_router, give_discount_routers
@@ -55,6 +56,7 @@ admin_commands_router.include_routers(
     command_delete_book_router,
     command_edit_book_router,
     command_get_profile_router,
+    command_get_token_router,
     command_give_base_router,
     command_give_book_router,
     command_give_discount_router,
@@ -84,6 +86,7 @@ admin_routers.include_routers(
     delete_book_routers,
     edit_book_routers,
     get_profile_routers,
+    get_token_routers,
     give_base_routers,
     give_book_routers,
     give_discount_routers,
