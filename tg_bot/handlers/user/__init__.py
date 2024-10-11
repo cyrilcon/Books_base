@@ -16,6 +16,7 @@ from .payment import payment_routers
 from .paysupport import command_paysupport_router
 from .premium import premium_router
 from .privacy import command_privacy_router
+from .read import read_router
 from .saturday import command_saturday_router, saturday_routers
 from .search import command_search_router, search_routers
 from .search import search_routers
@@ -50,9 +51,10 @@ user_routers.include_routers(
     my_books_routers,
     news_routers,
     order_routers,
-    premium_router,
     saturday_routers,
     payment_routers,
+    premium_router,
+    read_router,
     settings_routers,
     share_base_routers,
     support_routers,
