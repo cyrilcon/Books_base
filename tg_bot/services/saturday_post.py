@@ -1,6 +1,7 @@
 from aiogram import Bot
 from aiogram.utils.deep_linking import create_start_link
 
+from api.books_base_api import api
 from tg_bot.config import config
 from tg_bot.keyboards.inline import deep_link_set_keyboard
 from tg_bot.services import get_fluent_localization
@@ -14,6 +15,8 @@ async def saturday_post(bot: Bot):
 
     :param bot: The instance of bot to send the message to
     """
+
+    await api.books.update_book_price()
 
     l10n = get_fluent_localization("ru")
     deep_link_url = await create_start_link(bot, f"set")
