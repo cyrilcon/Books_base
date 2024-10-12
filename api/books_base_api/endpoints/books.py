@@ -97,6 +97,17 @@ class BooksApi:
         )
         return ApiResponse(status, result)
 
+    async def update_book_price(self) -> ApiResponse[BookSchema]:
+        """
+        Update the price of the book with a price of 50 to 85
+        """
+
+        status, result = await self.base_client.make_request(
+            method="PATCH",
+            url=f"{self.endpoint}/price",
+        )
+        return ApiResponse(status, result, model=BookSchema)
+
     async def search_books_by_title(
         self,
         title: str,
