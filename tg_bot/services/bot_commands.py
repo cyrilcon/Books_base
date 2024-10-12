@@ -53,6 +53,7 @@ ADMIN_COMMANDS = [
     "remove_admin",
     "send_message",
     "get_token",
+    "saturday_post",
     "broadcast",
     "test_broadcast",
     "stats",

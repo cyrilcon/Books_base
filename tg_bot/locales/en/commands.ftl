@@ -78,6 +78,8 @@ command-send-message = 🧑🏼‍💻 Send message to user
 
 command-get-token = 🏞️ Get token of a picture
 
+command-saturday-post = 📚 Post saturday action
+
 command-broadcast = 📢 Send broadcast
 
 command-test-broadcast = 📟 Send test broadcast

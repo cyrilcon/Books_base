@@ -26,6 +26,7 @@ from .give_premium import command_give_premium_router, give_premium_routers
 from .refund import command_refund_router, refund_routers
 from .remove_admin import command_remove_admin_router, remove_admin_routers
 from .remove_blacklist import command_remove_blacklist_router, remove_blacklist_routers
+from .saturday_post import command_saturday_post_router
 from .send_book import comment_send_book_router, send_book_routers
 from .send_message import command_send_message_router, send_message_routers
 from .serve_order import command_serve_order_router, serve_order_routers
@@ -63,6 +64,7 @@ admin_commands_router.include_routers(
     command_give_premium_router,
     command_refund_router,
     command_remove_blacklist_router,
+    command_saturday_post_router,
     comment_send_book_router,
     command_send_message_router,
     command_serve_order_router,

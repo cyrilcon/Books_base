@@ -13,7 +13,6 @@ async def saturday_post(bot: Bot):
     The function generates a deep link to execute the command and sends a photo with the given text and keyboard.
 
     :param bot: The instance of bot to send the message to
-    :type bot: Bot
     """
 
     l10n = get_fluent_localization("ru")

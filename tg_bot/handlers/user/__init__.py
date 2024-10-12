@@ -9,6 +9,7 @@ from tg_bot.middlewares import ResetStateMiddleware
 from .base_store import command_base_store_router, base_store_routers
 from .booking import command_booking_router
 from .cancel_order import command_cancel_order_router, cancel_order_routers
+from .help import command_help_router
 from .my_books import command_my_books_router, my_books_routers
 from .news import command_news_router, news_routers
 from .order import command_order_router, order_routers
@@ -34,6 +35,7 @@ user_commands_router.include_routers(
     command_base_store_router,
     command_booking_router,
     command_cancel_order_router,
+    command_help_router,
     command_my_books_router,
     command_news_router,
     command_order_router,
