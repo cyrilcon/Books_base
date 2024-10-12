@@ -97,7 +97,6 @@ class Config(BaseSettings):
     )
 
     logging_level: str = "ERROR"
-    use_redis: bool = True
     link: str
     timezone_offset: int = Field(description="Time zone offset relative to UTC")
     saturday_post: str

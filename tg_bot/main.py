@@ -5,7 +5,6 @@ import betterlogging as bl
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.exceptions import AiogramError
-from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -100,13 +99,10 @@ def get_storage():
         Storage: The storage object based on the configuration.
     """
 
-    if config.use_redis:
-        return RedisStorage.from_url(
-            config.redis.dsn(),
-            key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True),
-        )
-    else:
-        return MemoryStorage()
+    return RedisStorage.from_url(
+        config.redis.dsn(),
+        key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True),
+    )
 
 
 async def restart_scheduler(bot: Bot):
