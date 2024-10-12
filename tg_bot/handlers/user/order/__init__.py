@@ -5,7 +5,6 @@ __all__ = (
 
 from aiogram import Router
 
-from tg_bot.middlewares import BlacklistMiddleware
 from .order import command_order_router
 from .order_again import order_again_router
 from .order_cancel import order_cancel_router
@@ -13,8 +12,6 @@ from .order_step_1_book_title import order_step_1_router
 from .order_step_2_author_name import order_step_2_router
 
 order_routers = Router()
-order_routers.message.middleware(BlacklistMiddleware())
-order_routers.callback_query.middleware(BlacklistMiddleware())
 order_routers.include_routers(
     order_cancel_router,
     order_again_router,

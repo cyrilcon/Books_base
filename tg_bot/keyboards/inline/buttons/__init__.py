@@ -9,6 +9,7 @@ __all__ = (
     "channel_button",
     "clear_button",
     "deep_link_buy_button",
+    "deep_link_set_button",
     "delete_button",
     "discount_button",
     "done_button",
@@ -56,6 +57,7 @@ from .cancel_payment import cancel_payment_button
 from .channel import channel_button
 from .clear import clear_button
 from .deep_link_buy import deep_link_buy_button
+from .deep_link_set import deep_link_set_button
 from .delete import delete_button
 from .discount import discount_button
 from .done import done_button

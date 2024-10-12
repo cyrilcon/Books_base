@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from datetime import timedelta, timezone
+
+from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -97,6 +99,8 @@ class Config(BaseSettings):
     logging_level: str = "ERROR"
     use_redis: bool = True
     link: str
+    timezone_offset: int = Field(description="Time zone offset relative to UTC")
+    saturday_post: str
 
     tg_bot: TgBot
     redis: Redis
@@ -105,6 +109,13 @@ class Config(BaseSettings):
     channel: Channel
     yoomoney_wallet: YoomoneyWallet
     price: Price
+
+    @property
+    def timezone(self):
+        """
+        Returns the timezone based on the numeric offset from UTC.
+        """
+        return timezone(timedelta(hours=self.timezone_offset))
 
 
 config = Config()

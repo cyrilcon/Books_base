@@ -5,9 +5,11 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard
+from tg_bot.middlewares import BlacklistMiddleware
 from tg_bot.states import Support
 
 command_support_router = Router()
+command_support_router.message.middleware(BlacklistMiddleware())
 
 
 @command_support_router.message(Command("support"))

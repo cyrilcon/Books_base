@@ -5,9 +5,11 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard
+from tg_bot.middlewares import BlacklistMiddleware
 from tg_bot.states import Order
 
 command_order_router = Router()
+command_order_router.message.middleware(BlacklistMiddleware())
 
 
 @command_order_router.message(Command("order"))

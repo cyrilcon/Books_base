@@ -8,6 +8,8 @@ from aiogram.exceptions import AiogramError
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram.fsm.strategy import FSMStrategy
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
 
 from api.books_base_api import api
 from config import config
@@ -19,7 +21,7 @@ from middlewares import (
     StorageMiddleware,
     ThrottlingMiddleware,
 )
-from services import set_default_commands
+from services import set_default_commands, saturday_post
 
 
 async def on_startup(bot: Bot):
@@ -27,6 +29,10 @@ async def on_startup(bot: Bot):
     Called on bot startup.
     """
 
+    # Reboot scheduler after bot restart
+    await restart_scheduler(bot)
+
+    # Notify admins to restart the bot
     response = await api.users.admins.get_admin_ids()
     admins = response.result
 
@@ -66,8 +72,6 @@ def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
     ]
 
     for middleware_type in middleware_types:
-        # dp.message.outer_middleware(middleware_type)
-        # dp.callback_query.outer_middleware(middleware_type)
         dp.message.middleware(middleware_type)
         dp.callback_query.middleware(middleware_type)
 
@@ -103,6 +107,23 @@ def get_storage():
         )
     else:
         return MemoryStorage()
+
+
+async def restart_scheduler(bot: Bot):
+    """
+    The scheduler is restored after the bot is restarted.
+    # :param scheduler: An instance of scheduler for scheduling tasks.
+    :param bot: Bot instance.
+    """
+
+    # Reboot scheduler after bot restart
+    scheduler = AsyncIOScheduler(timezone=config.timezone)
+    scheduler.add_job(
+        saturday_post,
+        trigger=CronTrigger(day_of_week="sat", hour=9, minute=0),
+        args=[bot],
+    )
+    scheduler.start()  # Start the scheduler
 
 
 async def main():

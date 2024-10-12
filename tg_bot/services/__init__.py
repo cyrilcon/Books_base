@@ -14,6 +14,7 @@ __all__ = (
     "get_user_localization",
     "is_valid_book_article",
     "Payment",
+    "saturday_post",
     "send_files",
 )
 
@@ -31,4 +32,5 @@ from .generate_id_order import generate_id_order
 from .get_user_localization import get_user_localization
 from .is_valid_book_article import is_valid_book_article
 from .payment import Payment
+from .saturday_post import saturday_post
 from .send_files import send_files

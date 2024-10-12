@@ -24,11 +24,13 @@ from .settings import command_settings_router, settings_routers
 from .share_base import common_share_base_router, share_base_routers
 from .start import start_routers
 from .support import command_support_router, support_routers
+from .unprocessed_messages import unprocessed_messages_router
 
 user_commands_router = Router()
 user_commands_router.message.middleware(ResetStateMiddleware())
 user_commands_router.include_routers(
-    start_routers,  # Must be the first
+    command_saturday_router,  # Must be the first
+    start_routers,  # Must be the second
     command_base_store_router,
     command_booking_router,
     command_cancel_order_router,
@@ -37,11 +39,10 @@ user_commands_router.include_routers(
     command_order_router,
     command_paysupport_router,
     command_privacy_router,
-    command_saturday_router,
+    command_search_router,
     command_settings_router,
     common_share_base_router,
     command_support_router,
-    command_search_router,  # Must be the latest
 )
 
 user_routers = Router()
@@ -58,5 +59,6 @@ user_routers.include_routers(
     settings_routers,
     share_base_routers,
     support_routers,
-    search_routers,  # Must be the latest
+    search_routers,
+    unprocessed_messages_router,  # Must be the latest
 )

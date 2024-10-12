@@ -8,6 +8,7 @@ __all__ = (
     "cancel_discount_keyboard",
     "channel_keyboard",
     "deep_link_buy_keyboard",
+    "deep_link_set_keyboard",
     "delete_cancel_keyboard",
     "discounts_keyboard",
     "discounts_back_cancel_keyboard",
@@ -44,6 +45,7 @@ from .cancel import cancel_keyboard
 from .cancel_discount import cancel_discount_keyboard
 from .channel import channel_keyboard
 from .deep_link_buy import deep_link_buy_keyboard
+from .deep_link_set import deep_link_set_keyboard
 from .delete_cancel import delete_cancel_keyboard
 from .discounts import discounts_keyboard
 from .discounts_back_cancel import discounts_back_cancel_keyboard

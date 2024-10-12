@@ -21,24 +21,22 @@ async def my_books(
     l10n: FluentLocalization,
     user: UserSchema,
 ):
-    id_user = message.from_user.id
-
-    response = await api.users.get_book_ids(id_user=id_user)
-    book_ids = response.result
-
-    if len(book_ids) == 0:
-        await message.answer(
-            l10n.format_value("my-books-no-books"),
-            reply_markup=channel_keyboard(l10n),
-        )
-        return
-
     if user.is_premium:
         await message.answer(
             l10n.format_value(
                 "my-books-user-has-premium",
                 {"channel_link": config.channel.link},
             ),
+            reply_markup=channel_keyboard(l10n),
+        )
+        return
+
+    response = await api.users.get_book_ids(id_user=user.id_user)
+    book_ids = response.result
+
+    if len(book_ids) == 0:
+        await message.answer(
+            l10n.format_value("my-books-no-books"),
             reply_markup=channel_keyboard(l10n),
         )
         return

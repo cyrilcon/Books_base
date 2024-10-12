@@ -1,16 +1,21 @@
-from aiogram import Router
-from aiogram.filters import Command
+from aiogram import Router, F
+from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.config import config
 from tg_bot.keyboards.inline import cancel_keyboard
+from tg_bot.middlewares import SaturdayMiddleware
 from tg_bot.states import Saturday
 
 command_saturday_router = Router()
+command_saturday_router.message.middleware(SaturdayMiddleware())
 
 
+@command_saturday_router.message(
+    CommandStart(deep_link=True, magic=F.args.regexp("set"))
+)
 @command_saturday_router.message(Command("saturday"))
 async def saturday(
     message: Message,
