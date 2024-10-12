@@ -26,6 +26,13 @@ async def give_base_1_process(
         await message.answer(response_message, reply_markup=cancel_keyboard(l10n))
         return
 
+    if user.is_premium:
+        await message.answer(
+            l10n.format_value("give-base-error-user-has-premium"),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        return
+
     id_user = user.id_user
     user_link = create_user_link(user.full_name, user.username)
 

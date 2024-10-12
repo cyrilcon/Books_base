@@ -56,6 +56,18 @@ async def share_base_step_1(
         )
         return
 
+    user = response.get_model()
+
+    if user.is_premium:
+        await message.answer(
+            l10n.format_value(
+                "share-base-error-user-has-premium",
+                {"username": username},
+            ),
+            reply_markup=cancel_keyboard(l10n),
+        )
+        return
+
     response = await api.users.get_user_by_id(id_user=id_user)
     base_balance = response.get_model().base_balance
 

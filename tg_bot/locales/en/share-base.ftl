@@ -14,6 +14,10 @@ share-base-error-self-transfer =
 
 share-base-error-user-not-found = Пользователь <b>@{ $username }</b> ещё не посещал наш магазин!!
 
+share-base-error-user-has-premium =
+    Вы не можете перевести <i><b>base</b></i>!!
+    Пользователь <b>@{ $username }</b> имеет статус { -books-base-premium } ⚜️
+
 share-base-transfer =
     <b>2/2</b>
     Сколько <i><b>base</b></i> вы хотите отправить пользователю <b>@{ $username }</b>??

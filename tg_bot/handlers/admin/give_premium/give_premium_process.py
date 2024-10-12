@@ -60,6 +60,9 @@ async def give_premium_process(
     else:
         await api.users.premium.create_premium(id_user=id_user)
 
+        if user.has_discount:
+            await api.users.discounts.delete_discount(id_user=id_user)
+
         l10n_params = {
             "msg_id": "give-premium-success",
             "args": {"user_link": user_link, "id_user": str(id_user)},

@@ -5,11 +5,9 @@ from aiogram.types import Message, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.middlewares import BlacklistMiddleware
 from tg_bot.states import ShareBase
 
 common_share_base_router = Router()
-common_share_base_router.message.middleware(BlacklistMiddleware())
 
 
 @common_share_base_router.message(Command("share_base"))
