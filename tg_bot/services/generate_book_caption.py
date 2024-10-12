@@ -66,11 +66,11 @@ async def generate_book_caption(
             price_text = l10n.format_value("free-with-premium")
         elif id_book in book_ids:
             price_text = ""
-        elif user.has_discount and price != config.price.book.daily:
+        elif user.has_discount and price != config.price.book.daily.rub:
             prices = {
-                15: round(0.85 * config.price.book.daily),
-                30: round(0.70 * config.price.book.daily),
-                50: round(0.50 * config.price.book.daily),
+                15: round(0.85 * config.price.book.main.rub),
+                30: round(0.70 * config.price.book.main.rub),
+                50: round(0.50 * config.price.book.main.rub),
                 100: 0,
             }
             price = prices.get(user.has_discount)
