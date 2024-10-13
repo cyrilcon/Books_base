@@ -1,51 +1,51 @@
 search =
-    Бот постоянно находится в режиме "поиска книги". Поэтому вам не обязательно вводить команду /search, чтобы начать процесс поиска.
+    The bot is always in "book search" mode. Therefore, you don't have to enter the command /search to start the search process.
 
-    Просто введите название книги, которой вы ищите и бот выдаст вам результаты поиска.
+    Just enter the title of the book you are looking for, and the bot will provide you with search results.
 
 search-pagination-info =
-    Это страница { $page } из { $all_pages }.
+    This is page { $page } of { $all_pages }.
 
-    Используйте кнопки ⬅️/➡️ для навигации между страницами.
+    Use the buttons ⬅️/➡️ to navigate between pages.
 
-    Чтобы ознакомиться с конкретным контентом, нажмите на её номер.
+    To view specific content, click on its number.
 
-search-by-title =  Введите название книги, которой вы ищите
+search-by-title = Enter the title of the book you are looking for
 
-search-by-author = Введите название автора, которого вы ищите
+search-by-author = Enter the name of the author you are looking for
 
-search-by-genre = Выберите жанр из списка или введите название жанра, чтобы найти нужный вам жанр
+search-by-genre = Select a genre from the list or enter the name of the genre to find the one you need
 
 search-by-title-error-title-too-long =
-    Слишком длинное название книги!!
-    Сократите и введите <i><b>название книги</b></i> ещё раз
+    The book title is too long!!
+    Please shorten it and enter the <i><b>book title</b></i> again
 
 search-by-author-error-author-name-too-long =
-    Слишком большое длинное название автора!!
-    Сократите и введите <i><b>название автора</b></i> ещё раз
+    The author's name is too long!!
+    Please shorten it and enter the <i><b>author's name</b></i> again
 
 search-by-genre-error-genre-name-too-long =
-    Слишком большое название жанра!!
-    Сократите и введите <i><b>название жанра</b></i> книги ещё раз
+    The genre name is too long!!
+    Please shorten it and enter the <i><b>genre name</b></i> again
 
-search-by-title-error-article-not-found = Книга с артикулом <b>{ $article }</b> не найдена
+search-by-title-error-article-not-found = Book with article <b>{ $article }</b> not found
 
-search-by-title-error-title-not-found = Книга по запросу "<code>{ $book_title_request }</code>" не найдена
+search-by-title-error-title-not-found = Book by the query "<code>{ $book_title_request }</code>" not found
 
-search-by-author-error-not-found = Автор по запросу "<code>{ $author_name_request }</code>" не найден
+search-by-author-error-not-found = Author by the query "<code>{ $author_name_request }</code>" not found
 
-search-by-genre-error-not-found = Жанр по запросу "<code>{ $genre_name_request }</code>" не найден
+search-by-genre-error-not-found = Genre by the query "<code>{ $genre_name_request }</code>" not found
 
-search-by-author-error-author-unavailable = Запрашиваемый вами автор больше не доступен 😕
+search-by-author-error-author-unavailable = The author you requested is no longer available 😕
 
-search-by-genre-error-genre-unavailable = Запрашиваемый вами жанр больше не доступен 😕
+search-by-genre-error-genre-unavailable = The genre you requested is no longer available 😕
 
-search-by-title-success = Найдено несколько книг по запросу "<code>{ $book_title_request }</code>":
+search-by-title-success = Several books were found for the query "<code>{ $book_title_request }</code>":
 
-search-by-author-success = Найдено несколько авторов по запросу "<code>{ $author_name_request }</code>":
+search-by-author-success = Several authors were found for the query "<code>{ $author_name_request }</code>":
 
-search-by-genre-success = Найдено несколько жанров по запросу "<code>{ $genre_name_request }</code>":
+search-by-genre-success = Several genres were found for the query "<code>{ $genre_name_request }</code>":
 
-search-by-author-all-books = Все книги автора "<code>{ $author_name }</code>":
+search-by-author-all-books = All books by the author "<code>{ $author_name }</code>":
 
-search-by-genre-all-books = Все книги жанра "<code>{ $genre_name }</code>":
+search-by-genre-all-books = All books in the genre "<code>{ $genre_name }</code>":

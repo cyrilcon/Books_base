@@ -1,22 +1,22 @@
-error = Произошла ошибка :(
+error = An error occurred 😕
 
-error-user-not-found-by-username = Пользователь @{ $username } не найден!!
+error-user-not-found-by-username = User @{ $username } not found!!
 
-error-user-not-found-by-id = Пользователь с ID <code>{ $id_user }</code> не найден!!
+error-user-not-found-by-id = User with ID <code>{ $id_user }</code> not found!!
 
-error-invalid-username = Ваше сообщение не содержит <i><b>имени пользователя</b></i> или <i><b>ссылки</b></i> на него!!
+error-invalid-username = Your message does not contain a <i><b>username</b></i> or a <i><b>link</b></i> to it!!
 
-error-user-blocked-bot = Пользователь заблокировал бота!!
+error-user-blocked-bot = The user has blocked the bot!!
 
-error-book-unavailable = Запрашиваемая вами книга с артикулом <code>{ $article }</code> больше не доступна 😕
+error-book-unavailable = The requested book with article <code>{ $article }</code> is no longer available 😕
 
-error-user-blacklisted = В данный момент эта команда не доступна!!
+error-user-blacklisted = This command is currently unavailable!!
 
 error-user-has-premium =
-    У вас действует { -books-base-premium } ⚜️
-    Вам эта опция недоступна!!
+    You have an active { -books-base-premium } ⚜️
+    This option is unavailable to you!!
 
 error-unprocessed-messages =
-    Простите, мы вас не поняли 😕
-    Все команды доступны в меню бота.
-    Ознакомится с ботом — /help
+    Sorry, we didn't understand you 😕
+    All commands are available in the bot's menu.
+    To learn more about the bot — /help

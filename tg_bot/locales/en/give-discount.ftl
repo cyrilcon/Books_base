@@ -1,34 +1,34 @@
 give-discount =
     <b>1/2</b>
-    Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите выдать скидку
+    Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user you want to grant a discount to
 
-give-discount-error-user-has-premium = Пользователь имеет статус { -books-base-premium } ⚜️
+give-discount-error-user-has-premium = The user has { -books-base-premium } ⚜️ status
 
 give-discount-error-user-already-has-discount =
-    Пользователь уже имеет <b>{ $discount_value ->
-        [100] купон на бесплатную книгу
-       *[other] скидку { $discount_value }%
+    The user already has <b>{ $discount_value ->
+        [100] a coupon for a free book
+       *[other] a discount of { $discount_value }%
     }</b>!!
 
 give-discount-select-discount =
     <b>2/2</b>
-    Выберите <i><b>скидку</b></i>, которую хотите выдать пользователю { $user_link } (<code>{ $id_user }</code>)
+    Select the <i><b>discount</b></i> you want to grant to user { $user_link } (<code>{ $id_user }</code>)
 
 give-discount-success =
-    Пользователю { $user_link } (<code>{ $id_user }</code>) <b>{ $discount_value ->
-        [100] выдан купон на бесплатную книгу
-       *[other] выдана скидка { $discount_value }%
+    User { $user_link } (<code>{ $id_user }</code>) has been granted <b>{ $discount_value ->
+        [100] a coupon for a free book
+       *[other] a discount of { $discount_value }%
     }</b>
 
 give-discount-success-message-for-user =
-    Вы получили <b>{ $discount_value ->
-        [100] купон на бесплатную книгу
-       *[other] скидку { $discount_value }%
+    You received <b>{ $discount_value ->
+        [100] a coupon for a free book
+       *[other] a discount of { $discount_value }%
     }</b>!!
 
-    Вы можете истратить { $discount_value ->
-        [100] его
-       *[other] её
-    } при следующей покупки.
+    You can use { $discount_value ->
+        [100] it
+       *[other] them
+    } on your next purchase.
 
-give-discount-canceled = Вы отменили выдачу скидки пользователю
+give-discount-canceled = You canceled the discount issuance to the user

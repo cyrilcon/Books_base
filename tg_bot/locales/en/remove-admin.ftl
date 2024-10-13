@@ -1,9 +1,9 @@
-remove-admin = Введите <i><b>имя пользователя</b></i> администратора или его <i><b>ID</b></i>, которого хотите разжаловить
+remove-admin = Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the admin you want to demote
 
-remove-admin-error-self-remove = Вы не можете удалить себя из списка администраторов
+remove-admin-error-self-remove = You cannot remove yourself from the admin list
 
-remove-admin-error-user-already-not-admin = Пользователь { $user_link } (<code>{ $id_user }</code>) не был администратором
+remove-admin-error-user-already-not-admin = User { $user_link } (<code>{ $id_user }</code>) was not an admin
 
-remove-admin-success = Администратор { $user_link } (<code>{ $id_user }</code>) был разжалован
+remove-admin-success = Admin { $user_link } (<code>{ $id_user }</code>) has been demoted
 
-remove-admin-canceled = Вы отменили разжалование администратора
+remove-admin-canceled = You have canceled the demotion of the admin

@@ -1,102 +1,102 @@
-edit-book = Введите <i><b>артикул</b></i> книги, чтобы изменить её данные
+edit-book = Please enter the <i><b>article</b></i> of the book to change its details
 
 edit-book-error-invalid-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
-    Введите артикул книги ещё раз
+    The article must start with the symbol <b>"#"</b> and consist of 4 digits!!
+    Please enter the article of the book again
 
 edit-book-error-article-not-found =
-    Книга с таким артикулом не найдена!!
-    Введите артикул существуюшей книги ещё раз
+    Book with this article not found!!
+    Please enter the article of an existing book again
 
 edit-book-article =
-    Введите новый <i><b>артикул</b></i>
+    Please enter a new <i><b>article</b></i>
 
-    Текущий артикул: <code>{ $article }</code>
+    Current article: <code>{ $article }</code>
 
 edit-book-error-article-already-exists =
-    Книга с таким артикулом уже существует!!
-    Введите артикул ещё раз
+    A book with this article already exists!!
+    Please enter the article again
 
 edit-book-title =
-    Введите новое <i><b>название</b></i> книги
+    Please enter the new <i><b>title</b></i> of the book
 
-    Текущее название: <code>{ $title }</code>
+    Current title: <code>{ $title }</code>
 
 edit-book-error-title-too-long =
-    Слишком большое название книги!!
-    Сократите и введите <i><b>название</b></i> книги ещё раз
+    The title of the book is too long!!
+    Please shorten and enter the <i><b>title</b></i> of the book again
 
 edit-book-error-invalid-title =
-    В названии книги не должно содержаться символов <b>"кавычек"</b>!!
-    Введите название книги ещё раз
+    The title of the book should not contain <b>"quotation marks"</b>!!
+    Please enter the title of the book again
 
 edit-book-error-title-already-exists =
-    Книга с названием <b>"{ $title }"</b> (<code>{ $article }</code>) уже существует!!
+    A book with the title <b>"{ $title }"</b> (<code>{ $article }</code>) already exists!!
 
-    Вы уверены, что хотите добавить книгу??
+    Are you sure you want to change this book??
 
 edit-book-authors =
-    Введите нового <i><b>автора</b></i>
+    Please enter a new <i><b>author</b></i>
 
-    Текущий автор: <code>{ $authors }</code>
+    Current author: <code>{ $authors }</code>
 
 edit-book-error-invalid-author-name =
-    В имени автора не должно содержаться символов <b>"кавычек"</b>!!
-    Введите имя автора ещё раз
+    The author's name should not contain <b>"quotation marks"</b>!!
+    Please enter the author's name again
 
 edit-book-error-author-name-too-long =
-    Слишком длинное имя у автора!!
-    Сократите и введите <i><b>автора(ов)</b></i> ещё раз
+    The author's name is too long!!
+    Please shorten and enter the <i><b>author(s)</b></i> again
 
 edit-book-description =
-    Введите новое <i><b>описание</b></i>
+    Please enter a new <i><b>description</b></i>
 
-    Текущее описание:
+    Current description:
     <code>{ $description }</code>
 
 edit-book-error-description-too-long =
-    Слишком большое описание!!
-    Сократите и введите <i><b>описание</b></i> книги ещё раз
+    The description is too long!!
+    Please shorten and enter the <i><b>description</b></i> of the book again
 
 edit-book-genres =
-    Введите новые <i><b>жанры</b></i>
+    Please enter new <i><b>genres</b></i>
 
-    Текущие жанры:
+    Current genres:
     <code>{ $genres }</code>
 
 edit-book-error-genre-name-too-long =
-    Слишком динное название жанра!!
-    Сократите и введите <i><b>жанры</b></i> книги ещё раз
+    The genre name is too long!!
+    Please shorten and enter the <i><b>genres</b></i> of the book again
 
-edit-book-cover = Отправьте новое <i><b>фото обложки</b></i> книги
+edit-book-cover = Please send a new <i><b>cover photo</b></i> of the book
 
-edit-book-files = Отправьте новый <i><b>файл</b></i> книги или удалите ненужный
+edit-book-files = Please send a new <i><b>file</b></i> of the book or delete the unnecessary one
 
 edit-book-error-file-already-sent =
-    Вы уже отправляли файл этого формата!!
-    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+    You have already sent a file of this format!!
+    Please send another <i><b>file</b></i> or click <i>"Done"</i>
 
-    <b>Форматы:</b>
+    <b>Formats:</b>
     { $formats }
 
 edit-book-more-files =
-    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+    Please send another <i><b>file</b></i> or click <i>"Done"</i>
 
-    <b>Форматы:</b>
+    <b>Formats:</b>
     { $formats }
 
-edit-book-delete-files = Выберите файл, который хотите удалить
+edit-book-delete-files = Please choose a file you want to delete
 
-edit-book-price = Выберите новую <i><b>цену</b></i> книги
+edit-book-price = Please choose a new <i><b>price</b></i> for the book
 
-edit-book-price-error-price-already-set = У этой книги уже установалена такая цена!!
+edit-book-price-error-price-already-set = This book already has this price set!!
 
 edit-book-error-caption-too-long =
-    Слишком большой текст!!
-    (У вас <b>{ $caption_length }</b>/1024 символов)
+    The text is too long!!
+    (You have <b>{ $caption_length }</b>/1024 characters)
 
-edit-book-success = Данные книги успешно изменены!!
+edit-book-success = Book details successfully changed!!
 
-edit-book-canceled = Вы отменили изменение данных о книге
+edit-book-canceled = You have canceled the change of the book's details
 
-edit-book-price-unprocessed-messages = Установите новую цену книги или отмените изменение
+edit-book-price-unprocessed-messages = Set a new price for the book or cancel the change

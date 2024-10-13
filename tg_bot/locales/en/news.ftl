@@ -1,7 +1,7 @@
 article-template =
     <b>{ $title }</b>
-    (<a href="{ $link }">Прямая ссылка</a>)
+    (<a href="{ $link }">Direct link</a>)
 
-    от <i>{ $added-date }</i>
+    from <i>{ $added-date }</i>
 
-news-absent = Новости пока что отсутствуют 🗞️
+news-absent = No news available at the moment 🗞️

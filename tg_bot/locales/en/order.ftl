@@ -1,39 +1,39 @@
 order =
     <b>1/2</b>
-    Введите <i><b>название</b></i> книги, которую хотите заказать
+    Please enter the <i><b>title</b></i> of the book you want to order
 
 order-error-book-title-too-long =
-    Слишком большое название книги!!
-    Сократите и введите <i><b>название</b></i> книги ещё раз
+    The book title is too long!!
+    Please shorten it and enter the <i><b>title</b></i> of the book again
 
-order-book-error-book-already-exists = В нашей библиотеке уже есть книга со схожим названием по вашему запросу: <b>"<code>{ $title }</code>"</b> <i>{ $authors }</i> (<code>{ $article }</code>)
+order-book-error-book-already-exists = We already have a book with a similar title based on your request: <b>"<code>{ $title }</code>"</b> <i>{ $authors }</i> (<code>{ $article }</code>)
 
 order-author-name =
     <b>2/2</b>
-    Теперь введите <i><b>автора</b></i> книги, которую хотите заказать
+    Now enter the <i><b>author</b></i> of the book you want to order
 
 order-error-author-name-too-long =
-    Слишком длинное имя у автора!!
-    Введите <i><b>автора</b></i> книги ещё раз
+    The author's name is too long!!
+    Please enter the <i><b>author</b></i> of the book again
 
 order-success =
-    Вы заказали книгу <b>"<code>{ $book_title }</code>"</b> от автора <i>{ $author_name }</i>, спасибо за заказ!!
+    You have ordered the book <b>"<code>{ $book_title }</code>"</b> by author <i>{ $author_name }</i>, thank you for your order!!
 
-    Номер вашего заказа: <code>№{ $id_order }</code>
+    Your order number is: <code>№{ $id_order }</code>
 
-    Благодаря <b>Вам</b> наша библиотека { -books-base } расширяется!!
-    Бот отправит вам книгу, как только мы обработаем ваш заказ.
+    Thanks to <b>you</b>, our library { -books-base } is expanding!!
+    The bot will send you the book as soon as we process your order.
 
 order-information-template =
     { $user_link } (<code>{ $id_user }</code>)
 
-    <b>Книга:</b> <code>{ $book_title }</code>
-    <b>Автор:</b> <code>{ $author_name }</code>
+    <b>Book:</b> <code>{ $book_title }</code>
+    <b>Author:</b> <code>{ $author_name }</code>
 
-    <b>Номер заказа:</b> <code>№{ $id_order }</code>
+    <b>Order number:</b> <code>№{ $id_order }</code>
 
-order-success-message-for-admin = Вы получили заказ от пользователя { order-information-template }
+order-success-message-for-admin = You have received an order from user { order-information-template }
 
-order-canceled = Вы отменили заказ
+order-canceled = You have canceled the order
 
-orders-absent = Заказы отсутствуют
+orders-absent = No orders available

@@ -1,5 +1,5 @@
-test-broadcast = Введите сообщение для ТЕСТОВОЙ рассылки
+test-broadcast = Enter the message for the test broadcast
 
-test-broadcast-success = Отправлено { $success_count }/{ $admin_ids } ТЕСТОВЫХ сообщений
+test-broadcast-success = { $success_count }/{ $admin_ids } test messages sent
 
-test-broadcast-canceled = ТЕСТОВАЯ отправка рассылки отменина
+test-broadcast-canceled = Test broadcast sending canceled.

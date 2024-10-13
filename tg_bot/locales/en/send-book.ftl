@@ -1,19 +1,19 @@
 send-book =
     <b>1/2</b>
-    Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите отправить книгу
+    Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user you want to send the book to
 
 send-book-select-book =
     <b>2/2</b>
-    Введите <i><b>артикул</b></i> книги, которой хотите отправить пользователю { $user_link } (<code>{ $id_user }</code>).
+    Enter the <i><b>article</b></i> of the book you want to send to user { $user_link } (<code>{ $id_user }</code>)
 
 send-book-error-invalid-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
-    Введите артикул книги ещё раз
+    The article must start with the character <b>"#"</b> and consist of 4 digits!!
+    Please enter the article of the book again
 
 send-book-error-article-not-found =
-    Книга с таким артикулом не найдена!!
-    Введите артикул существуюшей книги ещё раз
+    The book with that article was not found!!
+    Please enter the article of an existing book again
 
-send-book-success = Книга "<code>{ $title }</code>" (<code>{ $article }</code>) отправлена пользователю { $user_link } (<code>{ $id_user }</code>)!!
+send-book-success = The book "<code>{ $title }</code>" (<code>{ $article }</code>) has been sent to user { $user_link } (<code>{ $id_user }</code>)!!
 
-send-book-canceled = Вы не отправили книгу пользователю
+send-book-canceled = You did not send the book to the user

@@ -1,7 +1,7 @@
-remove-blacklist = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которого хотите удалить из чёрного списка
+remove-blacklist = Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user you want to remove from the blacklist
 
-remove-blacklist-error-user-already-not-blacklisted = Пользователь { $user_link } (<code>{ $id_user }</code>) не в чёрном списке
+remove-blacklist-error-user-already-not-blacklisted = User { $user_link } (<code>{ $id_user }</code>) is not in the blacklist
 
-remove-blacklist-success = Пользователь { $user_link } (<code>{ $id_user }</code>) удалён из чёрного списка
+remove-blacklist-success = User { $user_link } (<code>{ $id_user }</code>) has been removed from the blacklist
 
-remove-blacklist-canceled = Вы отменили удаление пользователя из чёрного списка
+remove-blacklist-canceled = You have canceled the removal of the user from the blacklist

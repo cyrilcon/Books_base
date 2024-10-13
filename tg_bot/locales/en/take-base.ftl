@@ -1,18 +1,18 @@
 take-base =
     <b>1/2</b>
-    Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, у которого хотите изъять <i>base</i> 💎
+    Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user from whom you want to take <i>base</i> 💎
 
 take-base-deduct-base =
     <b>2/2</b>
-    Введите <i><b>количество base</b></i> 💎, которое хотите изъять у пользователя { $user_link } (<code>{ $id_user }</code>).
+    Enter the <i><b>amount of base</b></i> 💎 you want to take from user { $user_link } (<code>{ $id_user }</code>)
 
     { user-balance }
 
-take-base-error-invalid-base = Количество <i>base</i> 💎 должно быть целым положительным числом!!
+take-base-error-invalid-base = The amount of <i>base</i> 💎 must be a whole positive number!!
 
 take-base-success =
-    У пользователя { $user_link } (<code>{ $id_user }</code>) изъято { $base_deducted } <i>base</i> 💎
+    { $user_link } (<code>{ $id_user }</code>) has had { $base_deducted } <i>base</i> 💎 taken
 
     { user-balance }
 
-take-base-canceled = Вы не изъяили base у пользователя
+take-base-canceled = You did not take base from the user

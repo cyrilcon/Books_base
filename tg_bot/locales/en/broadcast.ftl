@@ -1,12 +1,11 @@
-broadcast = Введите сообщение для рассылки
+broadcast = Enter a message for the broadcast
 
 broadcast-success =
-    Отправлено { $success_count }/{ $users_count } сообщений
+    Sent { $success_count }/{ $users_count } messages
 
     { $blacklisted_users_count ->
-        [one] { $blacklisted_users_count } пользователь заблокирован
-        [few] { $blacklisted_users_count } пользователя заблокировано
-       *[other] { $blacklisted_users_count } пользователей заблокировано
+        [one] { $blacklisted_users_count } user is blocked
+        *[other] { $blacklisted_users_count } users are blocked
     }
 
-broadcast-canceled = Отправка рассылки отменина
+broadcast-canceled = The broadcast sending has been canceled

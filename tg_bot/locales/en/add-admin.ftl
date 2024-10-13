@@ -1,9 +1,9 @@
-add-admin = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите выдать права администратора
+add-admin = Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user to whom you want to grant administrator rights
 
-add-admin-error-user-already-admin = Пользователь { $user_link } (<code>{ $id_user }</code>) уже является администратором!!
+add-admin-error-user-already-admin = The user { $user_link } (<code>{ $id_user }</code>) is already an administrator!!
 
-add-admin-success = Пользователю { $user_link } (<code>{ $id_user }</code>) выданы права администратора
+add-admin-success = The user { $user_link } (<code>{ $id_user }</code>) has been granted administrator rights
 
-add-admin-success-message-for-user = Вам выданы права администратора!!
+add-admin-success-message-for-user = You have been granted administrator rights!!
 
-add-admin-canceled = Вы отменили выдачу прав администратора
+add-admin-canceled = You have canceled granting administrator rights

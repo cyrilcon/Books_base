@@ -1,24 +1,24 @@
 add-book-article =
     <b>1/8</b>
-    Введите <i><b>артикул</b></i> книги, чтобы добавить её в бд
+    Enter the <i><b>article code</b></i> of the book to add it to the database
 
-    Свободный артикул: <code>{ $free_article }</code>
+    Available article: <code>{ $free_article }</code>
 
 add-book-error-invalid-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
-    Введите артикул книги ещё раз
+    The article code must start with the symbol <b>"#"</b> and contain 4 digits!!
+    Enter the article code again
 
-    Свободный артикул: <code>{ $free_article }</code>
+    Available article: <code>{ $free_article }</code>
 
 add-book-error-article-already-exists =
-    Книга с таким артикулом уже существует!!
-    Введите артикул ещё раз
+    A book with this article code already exists!!
+    Enter the article code again
 
-    Свободный артикул: <code>{ $free_article }</code>
+    Available article: <code>{ $free_article }</code>
 
 add-book-title =
     <b>2/8</b>
-    Введите <i><b>название</b></i> книги
+    Enter the <i><b>title</b></i> of the book
 
 add-book-title-back =
     { add-book-title }
@@ -26,21 +26,21 @@ add-book-title-back =
     <code>{ $title }</code>
 
 add-book-error-title-too-long =
-    Слишком большое название книги!!
-    Сократите и введите <i><b>название</b></i> книги ещё раз
+    The book title is too long!!
+    Shorten it and enter the <i><b>title</b></i> again
 
 add-book-error-invalid-title =
-    В названии книги не должно содержаться символов <b>"кавычек"</b>!!
-    Введите название книги ещё раз
+    The book title must not contain <b>quotation marks</b>!!
+    Enter the book title again
 
 add-book-error-title-already-exists =
-    Книга с названием <b>"{ $title }"</b> (<code>{ $article }</code>) уже существует!!
+    A book with the title <b>"{ $title }"</b> (<code>{ $article }</code>) already exists!!
 
-    Вы уверены, что хотите добавить книгу??
+    Are you sure you want to add the book?
 
 add-book-authors =
     <b>3/8</b>
-    Введите <i><b>автора(ов)</b></i>
+    Enter the <i><b>author(s)</b></i>
 
 add-book-authors-back =
     { add-book-authors }
@@ -48,16 +48,16 @@ add-book-authors-back =
     <code>{ $authors }</code>
 
 add-book-error-author-name-too-long =
-    Слишком длинное имя у автора!!
-    Сократите и введите <i><b>автора(ов)</b></i> ещё раз
+    The author's name is too long!!
+    Shorten it and enter the <i><b>author(s)</b></i> again
 
 add-book-error-invalid-author-name =
-    В имени автора не должно содержаться символов <b>"кавычек"</b>!!
-    Введите имя автора ещё раз
+    The author's name must not contain <b>quotation marks</b>!!
+    Enter the author's name again
 
 add-book-description =
     <b>4/8</b>
-    Введите <i><b>описание</b></i> книги
+    Enter the <i><b>description</b></i> of the book
 
 add-book-description-back =
     { add-book-description }
@@ -65,60 +65,60 @@ add-book-description-back =
     <code>{ $description }</code>
 
 add-book-error-description-too-long =
-    Слишком большое описание!!
-    Сократите и введите <i><b>описание</b></i> книги ещё раз
+    The description is too long!!
+    Shorten it and enter the <i><b>description</b></i> again
 
 add-book-genres =
     <b>5/8</b>
-    Введите <i><b>жанры</b></i> книги
+    Enter the <i><b>genres</b></i> of the book
 
 add-book-error-genre-name-too-long =
-    Слишком динное название жанра!!
-    Сократите и введите <i><b>жанры</b></i> книги ещё раз
+    The genre name is too long!!
+    Shorten it and enter the <i><b>genres</b></i> again
 
 add-book-error-invalid-genre-name =
-    В названии жанра не должно содержаться символов <b>"кавычек"</b>!!
-    Введите название жанра ещё раз
+    The genre name must not contain <b>quotation marks</b>!!
+    Enter the genre name again
 
 add-book-more-genres =
-    Введите ещё <i><b>жанры</b></i> или нажмите <i>"Готово"</i>
+    Enter more <i><b>genres</b></i> or press <i>"Done"</i>
 
-    <b>Пример:</b>
+    <b>Example:</b>
     { $genres }
 
 add-book-cover =
     <b>6/8</b>
-    Отправьте <i><b>фото обложки</b></i> книги
+    Send the <i><b>cover photo</b></i> of the book
 
 add-book-files =
     <b>7/8</b>
-    Отправьте <i><b>файл</b></i> книги
+    Send the <i><b>file</b></i> of the book
 
 add-book-error-file-already-sent =
-    Вы уже отправляли файл этого формата!!
-    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+    You've already sent a file of this format!!
+    Send another <i><b>file</b></i> or press <i>"Done"</i>
 
-    <b>Форматы:</b>
+    <b>Formats:</b>
     { $formats }
 
 add-book-more-files =
-    Отправьте ещё <i><b>файл</b></i> или нажмите <i>"Готово"</i>
+    Send another <i><b>file</b></i> or press <i>"Done"</i>
 
-    <b>Форматы:</b>
+    <b>Formats:</b>
     { $formats }
 
 add-book-select-price =
     <b>8/8</b>
-    Выберите <i><b>цену</b></i> книги
+    Select the <i><b>price</b></i> of the book
 
 add-book-error-caption-too-long =
-    Слишком большой текст!!
-    Сократите описание
+    The text is too long!!
+    Shorten the description
 
     <code>{ $description }</code>
 
-    (У вас <b>{ $caption_length }</b>/1024 символов)
+    (You have <b>{ $caption_length }</b>/1024 characters)
 
-add-book-success = Книга добавлена!!
+add-book-success = The book has been added!!
 
-add-book-canceled = Вы отменили добавление книги
+add-book-canceled = You have canceled the book addition

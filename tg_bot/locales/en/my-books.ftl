@@ -1,16 +1,16 @@
 my-books-no-books =
-    У вас ещё нет купленных книг.
+    You do not have any purchased books yet.
 
-    Все доступные книги есть в нашем <a href="{ $channel_link }">Telegram канале</a> 👇🏻
+    All available books are in our <a href="{ $channel_link }">Telegram channel</a> 👇🏻
 
 my-books-user-has-premium =
-    У вас действует <b>{ -books-base-premium }</b> ⚜️
+    You have an active <b>{ -books-base-premium }</b> ⚜️
 
-    Вы можете читать все книги нашей библиотеки бесплатно без ограничений!!
+    You can read all the books in our library for free without any limits!!
 
-    Все доступные книги есть в нашем <a href="{ $channel_link }">Telegram канале</a> 👇🏻
+    All available books are in our <a href="{ $channel_link }">Telegram channel</a> 👇🏻
 
 my-books-user-has-premium-alert =
-    У вас действует { -books-base-premium } ⚜️
+    You have { -books-base-premium } ⚜️
 
-    Вам не нужна личная полка с книгами, так как вы можете читать все книги нашей библиотеки бесплатно без ограничений!!
+    You do not need a personal bookshelf since you can read all the books in our library for free without any limits!!

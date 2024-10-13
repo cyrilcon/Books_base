@@ -1,3 +1,3 @@
 start =
-    Hi, { $full_name }!!
-    Write the title or article of the book to buy or familiarize yourself with the product
+    Hello, { $full_name }!!
+    Please enter the title or article number of the book to purchase or review the product

@@ -1,60 +1,60 @@
 saturday-post =
-    ⚪ Дорогие любители читать и развиваться!!
+    ⚪ Dear lovers of reading and self-development!!
 
-    🟡 Напоминаем, что сегодня суббота. А это значит, что вы можете купить <b>3 книги за 150₽</b>!!
+    🟡 We remind you that today is Saturday. That means you can buy <b>3 books for 150₽</b>!!
 
-    🟠 Отправьте <a href="{ $bot_link }">нашему боту</a> команду "<code>/saturday</code>" или нажмите кнопку ниже поста и соберите свой собственный набор из трёх книг.
+    🟠 Send the command "<code>/saturday</code>" to <a href="{ $bot_link }">our bot</a> or click the button below the post to assemble your own set of three books.
 
-    🟤 Читайте и развивайтесь!!
+    🟤 Read and develop!!
 
-saturday-post-success = Субботний пост опубликован!!
+saturday-post-success = Saturday post published!!
 
-saturday-action = Субботная акция
+saturday-action = Saturday promotion
 
-saturday-error = Сегодня не суббота!!
+saturday-error = Today is not Saturday!!
 
 saturday-select-book-1 =
-    Соберите набор из трёх книг за <b>{ $price_rub }₽</b> или <b>{ $price_xtr }</b> ⭐️
-    Введите <i><b>артикул первой книги</b></i>, которую хотите добавить в набор
+    Assemble a set of three books for <b>{ $price_rub }₽</b> or <b>{ $price_xtr }</b> ⭐️
+    Enter the <i><b>article number of the first book</b></i> you want to add to the set
 
 saturday-error-invalid-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
-    Введите артикул книги ещё раз
+    The article number must start with the symbol <b>"#"</b> and contain 4 digits!!
+    Please enter the article number of the book again
 
 saturday-error-article-not-found =
-    Книга с таким артикулом не найдена!!
-    Введите артикул существуюшей книги ещё раз
+    A book with that article number was not found!!
+    Please enter the article number of an existing book again
 
 saturday-error-user-already-has-this-book =
-    У вас уже есть книга "<code>{ $title }</code>"!!
-    Введите артикул книги ещё раз
+    You already have the book "<code>{ $title }</code>"!!
+    Please enter the article number of the book again
 
 saturday-select-book-2 =
-    Введите <i><b>артикул второй книги</b></i>
+    Enter the <i><b>article number of the second book</b></i>
 
-    <i><u>Ваш набор:</u></i>
+    <i><u>Your set:</u></i>
     1. <code>{ $title_1 }</code>
     2. ...
     3. ...
 
 saturday-error-article-already-selected =
-    Книга с таким артикулом уже присутствует в вашем наборе!!
-    Введите артикул другой книги ещё раз
+    A book with that article number is already in your set!!
+    Please enter the article number of another book again
 
 saturday-select-book-3 =
-    Введите <i><b>артикул третьей книги</b></i>
+    Enter the <i><b>article number of the third book</b></i>
 
-    <i><u>Ваш набор:</u></i>
+    <i><u>Your set:</u></i>
     1. <code>{ $title_1 }</code>
     2. <code>{ $title_2 }</code>
     3. ...
 
 saturday-success =
-    <i><u>Ваш набор:</u></i>
+    <i><u>Your set:</u></i>
     1. <code>{ $title_1 }</code>
     2. <code>{ $title_2 }</code>
     3. <code>{ $title_3 }</code>
 
-    <b>Цена:</b> { $price_rub }₽ или { $price_xtr } ⭐
+    <b>Price:</b> { $price_rub }₽ or { $price_xtr } ⭐
 
-saturday-canceled = Вы не собрали свой собственный набор
+saturday-canceled = You did not assemble your own set

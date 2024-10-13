@@ -1,13 +1,13 @@
 send-message =
     <b>1/2</b>
-    Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите отправить сообщение
+    Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user you want to send a message to
 
 send-message-write-message =
     <b>2/2</b>
-    Напишите <i><b>сообщение</b></i>, которое хотите отправить пользователю { $user_link } (<code>{ $id_user }</code>)
+    Write the <i><b>message</b></i> you want to send to user { $user_link } (<code>{ $id_user }</code>)
 
-send-message-success-message-for-user = Вы получили сообщение от администратора
+send-message-success-message-for-user = You have received a message from the administrator
 
-send-message-success = Сообщение отправлено пользователю { $user_link } (<code>{ $id_user }</code>)!!
+send-message-success = The message has been sent to user { $user_link } (<code>{ $id_user }</code>)!!
 
-send-message-canceled = Вы отменили отправку сообщения пользователю
+send-message-canceled = You have canceled the message sending to the user

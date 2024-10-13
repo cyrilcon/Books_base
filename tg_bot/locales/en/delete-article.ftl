@@ -1,13 +1,13 @@
-delete-article = Введите <i><b>ссылку</b></i> на статью, которую хотите удалить
+delete-article = Please enter the <i><b>link</b></i> to the article you want to delete
 
 delete-article-error-invalid-link =
-    Это не является ссылкой на статью!!
-    Ссылка должна начинаться на <code>https://telegra.ph/</code> или <code>telegra.ph/</code>
+    This is not a valid article link!!
+    The link must start with <code>https://telegra.ph/</code> or <code>telegra.ph/</code>
 
 delete-article-error-article-not-found =
-    Статья с такой ссылкой не найдена!!
-    Введите ссылку на существующую статью ещё раз
+    Article with this link was not found!!
+    Please enter the link to an existing article again
 
-delete-article-success = Статья удалена!!
+delete-article-success = Article deleted!!
 
-delete-article-canceled = Вы отменили удаление статьи
+delete-article-canceled = You have canceled the deletion of the article

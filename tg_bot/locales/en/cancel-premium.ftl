@@ -1,7 +1,7 @@
-cancel-premium = Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите отменить статус { -books-base-premium } ⚜️
+cancel-premium = Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user whose { -books-base-premium } status you want to cancel ⚜️
 
-cancel-premium-error-user-already-has-not-premium = Пользователь { $user_link } (<code>{ $id_user }</code>) не имеет статуса { -books-base-premium } ⚜️
+cancel-premium-error-user-already-has-not-premium = User { $user_link } (<code>{ $id_user }</code>) does not have { -books-base-premium } status ⚜️
 
-cancel-premium-success = Пользователю { $user_link } (<code>{ $id_user }</code>) отменён статус { -books-base-premium } ⚜️
+cancel-premium-success = User { $user_link } (<code>{ $id_user }</code>) has had their { -books-base-premium } status canceled ⚜️
 
-cancel-premium-canceled = Вы не отменили статус { -books-base-premium } ⚜️
+cancel-premium-canceled = You did not cancel the { -books-base-premium } status ⚜️

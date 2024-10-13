@@ -1,1 +1,1 @@
-booking = Команда <code>/booking</code> переименована в /order с тем же функционалом
+booking = The command <code>/booking</code> has been renamed to /order with the same functionality

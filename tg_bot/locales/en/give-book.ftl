@@ -1,27 +1,27 @@
 give-book =
     <b>1/2</b>
-    Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите подарить книгу
+    Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user you want to gift a book to
 
-give-book-error-user-has-premium = Пользователь имеет статус { -books-base-premium } ⚜️
+give-book-error-user-has-premium = The user has { -books-base-premium } ⚜️ status
 
 give-book-select-book =
     <b>2/2</b>
-    Введите <i><b>артикул</b></i> книги, которой хотите подарить пользователю { $user_link } (<code>{ $id_user }</code>).
+    Enter the <i><b>article</b></i> of the book you want to gift to user { $user_link } (<code>{ $id_user }</code>).
 
 give-book-error-invalid-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
-    Введите артикул книги ещё раз
+    The article must start with the character <b>"#"</b> and consist of 4 digits!!
+    Please enter the article of the book again
 
 give-book-error-article-not-found =
-    Книга с таким артикулом не найдена!!
-    Введите артикул существуюшей книги ещё раз
+    No book found with that article!!
+    Please enter the article of an existing book again
 
-give-book-error-user-already-has-this-book = У пользователя уже есть книга "<code>{ $title }</code>" (<code>{ $article }</code>)!!
+give-book-error-user-already-has-this-book = The user already has the book "<code>{ $title }</code>" (<code>{ $article }</code>)!!
 
-give-book-success = Пользователь { $user_link } (<code>{ $id_user }</code>) получил книгу "<code>{ $title }</code>" (<code>{ $article }</code>)
+give-book-success = User { $user_link } (<code>{ $id_user }</code>) received the book "<code>{ $title }</code>" (<code>{ $article }</code>)
 
 give-book-success-message-for-user =
-    Вы получили подарок от нашего магазина { -books-base }!!
-    Книга "<code>{ $title }</code>" доступна в вашей личной книжной полке — /my_books
+    You received a gift from our store { -books-base }!!
+    The book "<code>{ $title }</code>" is available on your personal bookshelf — /my_books
 
-give-book-canceled = Вы отменили выдачу книги пользователю
+give-book-canceled = You canceled the book gift to the user

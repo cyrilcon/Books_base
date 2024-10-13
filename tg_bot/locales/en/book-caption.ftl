@@ -1,10 +1,10 @@
 daily-action =
-    Акция дня!!
-    Только сегодня книга <b>50₽</b>
+    Deal of the Day!!
+    Today only, the book is <b>50₽</b>
 
-new-book-from-user = Добавлена новая книга по заказу пользователя!!
+new-book-from-user = A new book has been added at the user's request!!
 
-price = <b>Цена:</b> { $price ->
+price = <b>Price:</b> { $price ->
         [85] { $price }₽
        *[other] { $price }₽ <s>85₽</s>
     }
@@ -17,9 +17,9 @@ book-caption-template =
 
     { $description }
 
-    Доступные форматы: { $formats }
+    Available formats: { $formats }
     { $price }
-    Артикул: <code>{ $article }</code>
+    Article number: <code>{ $article }</code>
     { $genres }
 
-free-with-premium = Бесплатно с { -books-base-premium } ⚜️
+free-with-premium = Free with { -books-base-premium } ⚜️

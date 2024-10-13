@@ -1,14 +1,14 @@
 serve-order-select-order =
     <b>1/2</b>
-    Введите <i><b>номер заказа</b></i>, которому хотите обслужить
+    Enter the <i><b>order number</b></i> you want to serve
 
 serve-order-error-invalid-order-number =
-    Номер заказа некорректен!!
-    Введите <i><b>номер заказа</b></i> ещё раз
+    The order number is incorrect!!
+    Please enter the <i><b>order number</b></i> again
 
 serve-order-error-order-not-found =
-    Заказ не найден!!
-    Введите <i><b>номер заказа</b></i> ещё раз
+    Order not found!!
+    Please enter the <i><b>order number</b></i> again
 
 serve-order-select-book =
     <b>2/2</b>
@@ -16,29 +16,29 @@ serve-order-select-book =
 
     { order-information-template }
 
-serve-order-select-book-from-button = Введите <i><b>артикул</b></i> книги, которой хотите отправить пользователю.
+serve-order-select-book-from-button = Enter the <i><b>article</b></i> of the book you want to send to the user
 
 serve-order-error-invalid-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
-    Введите артикул книги ещё раз
+    The article must start with the character <b>"#"</b> and have 4 digits!!
+    Please enter the article of the book again
 
 serve-order-error-article-not-found =
-    Книга с таким артикулом не найдена!!
-    Введите артикул существуюшей книги ещё раз
+    No book found with that article!!
+    Please enter the article of an existing book again
 
-serve-order-error-order-already-served-or-canceled = Заказ уже обслужен или отменён!!
+serve-order-error-order-already-served-or-canceled = The order has already been served or canceled!!
 
-serve-order-success-message-for-user = Ваш заказ <code>№{ $id_order }</code>:
+serve-order-success-message-for-user = Your order <code>№{ $id_order }</code>:
 
-serve-order-success = Заказ <code>№{ $id_order }</code> обслужен!!
+serve-order-success = Order <code>№{ $id_order }</code> has been served!!
 
 serve-order-book-unavailable =
-    Добрый день!!
-    К сожалению, мы не можем обслужить ваш заказ (<code>№{ $id_order }</code>), по причине – отсутствие книги "<code>{ $book_title }</code>" автора <i>{ $author_name }</i> у поставщика.
+    Good day!!
+    Unfortunately, we cannot serve your order (<code>№{ $id_order }</code>) due to the absence of the book "<code>{ $book_title }</code>" by author <i>{ $author_name }</i> from the supplier
 
-    Спасибо за понимание.
-    Читайте и развиватесь!!
+    Thank you for your understanding
+    Keep reading and developing!!
 
-serve-order-message-sent = Сообщение отправлено!!
+serve-order-message-sent = Message sent!!
 
-serve-order-canceled = Вы не обслужили заказ
+serve-order-canceled = You did not serve the order

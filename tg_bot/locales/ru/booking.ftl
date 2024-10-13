@@ -1,0 +1,1 @@
+booking = Команда <code>/booking</code> переименована в /order с тем же функционалом

@@ -1,13 +1,13 @@
-delete-book = Введите <i><b>артикул</b></i> книги, которой хотите удалить
+delete-book = Please enter the <i><b>article</b></i> of the book you want to delete
 
 delete-book-error-invalid-article =
-    Артикул должен начинаться с символа <b>"#"</b> и иметь 4 цифры!!
-    Введите артикул книги ещё раз
+    The article must start with the symbol <b>"#"</b> and consist of 4 digits!!
+    Please enter the article of the book again
 
 delete-book-error-article-not-found =
-    Книга с таким артикулом не найдена!!
-    Введите артикул существуюшей книги ещё раз
+    Book with this article not found!!
+    Please enter the article of an existing book again
 
-delete-book-success = Книга "<code>{ $title }</code>" удалена!!
+delete-book-success = Book "<code>{ $title }</code>" deleted!!
 
-delete-book-canceled = Вы отменили удаление книги
+delete-book-canceled = You have canceled the deletion of the book

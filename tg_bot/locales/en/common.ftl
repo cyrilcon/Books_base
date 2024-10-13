@@ -1,7 +1,7 @@
-base-balance = На вашем счету: <b>{ $base_balance } <i>base</i></b> 💎
+base-balance = Your balance: <b>{ $base_balance } <i>base</i></b> 💎
 
-user-balance = Баланс пользователя: <b>{ $base_balance } <i>base</i></b> 💎
+user-balance = User balance: <b>{ $base_balance } <i>base</i></b> 💎
 
-page = стр.
+page = page
 
-throttling = Слишком частый запрос. Попробуйте снова через { $time_left } секунд.
+throttling = Too many requests. Please try again in { $time_left } seconds.

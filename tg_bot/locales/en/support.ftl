@@ -1,25 +1,25 @@
-support = Пожалуйста, опишите вашу проблему одним сообщением. Вы можете прикрепить до 10 фотографий и видео с фиксацией вашей ошибки. Сообщение будет переслано <b>Администратору</b> { -books-base }
+support = Please describe your problem in one message. You can attach up to 10 photos and videos documenting your error. The message will be forwarded to the <b>Administrator</b> { -books-base }.
 
-support-admin-reply-prompt = Напишите ответ пользователю
+support-admin-reply-prompt = Write a reply to the user
 
-support-user-reply-prompt = Напишите ваш ответ <b>Администратору</b> { -books-base }
+support-user-reply-prompt = Write your reply to the <b>Administrator</b> { -books-base }
 
 support-message-from-user =
-    Отправитель:
+    Sender:
     { $user_link } (<code>{ $id_user }</code>)
 
-support-message-from-admin = Вы получили сообщение от администратора
+support-message-from-admin = You have received a message from the administrator
 
 support-user-success =
-    Спасибо, что обратились в поддержку!!
-    Мы как можно скорее решим проблему и свяжемся с вами.
+    Thank you for contacting support!!
+    We will resolve the issue as soon as possible and get back to you
 
-    Благодаря <b>Вам</b> библиотека { -books-base } становится только лучше!!
+    Thanks to <b>you</b>, the library { -books-base } is getting better!!
 
-support-user-message-sent = Сообщение отправлено администратору { -books-base }!!
+support-user-message-sent = The message has been sent to the administrator { -books-base }!!
 
-support-admin-message-sent = Сообщение отправлено пользователю { $user_link } (<code>{ $id_user }</code>)!!
+support-admin-message-sent = The message has been sent to user { $user_link } (<code>{ $id_user }</code>)!!
 
-support-user-message-canceled = Вы отменили отправку сообщения в тех-поддержку
+support-user-message-canceled = You have canceled the message to support
 
-support-admin-message-canceled = Вы отменили отправку сообщения пользвоателю
+support-admin-message-canceled = You have canceled the message to the user

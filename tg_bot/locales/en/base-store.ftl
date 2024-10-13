@@ -1,70 +1,70 @@
 base-store =
-    Добро пожаловать в <b>{ -base-store }</b>!!
+    Welcome to <b>{ -base-store }</b>!!
 
-    Здесь вы можете обменять ваши <i><b>base</b></i> на скидки при слудующей покупке. Получайте <i><b>base</b></i> за покупки в <b>{ -books-base }</b>
+    Here you can exchange your <i><b>base</b></i> for discounts on your next purchase. Earn <i><b>base</b></i> by purchasing from <b>{ -books-base }</b>.
 
-    <u><i>Прайс:</i></u>
-    Скидка <b>15%</b> на любую книгу — <b>{ $price_discount_15 }</b> 💎
-    Скидка <b>30%</b> на любую книгу — <b>{ $price_discount_30 }</b> 💎
-    Скидка <b>50%</b> на любую книгу — <b>{ $price_discount_50 }</b> 💎
-    <b>Бесплатная книга — { $price_discount_100 }</b> 💎
+    <u><i>Price List:</i></u>
+    15% discount on any book — <b>{ $price_discount_15 }</b> 💎
+    30% discount on any book — <b>{ $price_discount_30 }</b> 💎
+    50% discount on any book — <b>{ $price_discount_50 }</b> 💎
+    <b>Free book — { $price_discount_100 }</b> 💎
 
     { $discount_value ->
-        [100] <i>У вас уже действует купон на <b>бесплатную книгу</b>
-    Сперва истратьте этот купон, чтобы совершить новый обмен.
+        [100] <i>You already have a coupon for a <b>free book</b>.
+    Use this coupon first to make a new exchange.
 
-    Вы можете отменить этот купон. Вам вернутся на счёт ваши потраченные base.</i>
-        [15] <i>У вас уже действует <b>скидка { $discount_value }%</b>
-    Сперва истратьте эту скидку, чтобы совершить новый обмен.
+    You can cancel this coupon. Your spent base will be refunded.</i>
+        [15] <i>You already have a <b>{ $discount_value }% discount</b>.
+    Use this discount first to make a new exchange.
 
-    Вы можете отменить действующую скидку. Вам вернутся на счёт ваши потраченные base.</i>
-        [30] <i>У вас уже действует <b>скидка { $discount_value }%</b>
-    Сперва истратьте эту скидку, чтобы совершить новый обмен.
+    You can cancel the active discount. Your spent base will be refunded.</i>
+        [30] <i>You already have a <b>{ $discount_value }% discount</b>.
+    Use this discount first to make a new exchange.
 
-    Вы можете отменить действующую скидку. Вам вернутся на счёт ваши потраченные base.</i>
-        [50] <i>У вас уже действует <b>скидка { $discount_value }%</b>
-    Сперва истратьте эту скидку, чтобы совершить новый обмен.
+    You can cancel the active discount. Your spent base will be refunded.</i>
+        [50] <i>You already have a <b>{ $discount_value }% discount</b>.
+    Use this discount first to make a new exchange.
 
-    Вы можете отменить действующую скидку. Вам вернутся на счёт ваши потраченные base.</i>
+    You can cancel the active discount. Your spent base will be refunded.</i>
        *[other] { base-balance }
     }
 
-base-store-error-user-has-premium = Вам не доступен { -base-store }, так как у вас действует статус <b>{ -books-base-premium }</b> ⚜️
+base-store-error-user-has-premium = The { -base-store } is not available to you as you have an active <b>{ -books-base-premium }</b> status ⚜️.
 
-base-store-error-exchange-unavailable = Вы не можете сейчас обменять base.
+base-store-error-exchange-unavailable = You cannot exchange base right now.
 
-base-store-error-not-enough-base = У вас недостаточно base для обмена
+base-store-error-not-enough-base = You don't have enough base to make an exchange.
 
 base-store-exchange-success =
-    Вы обменяли <b>{ $price } <i>base</i></b> на <b>{ $discount_value ->
-        [100] Бесплатную книгу
-       *[other] Скидку { $discount_value }%
+    You exchanged <b>{ $price } <i>base</i></b> for a <b>{ $discount_value ->
+        [100] free book
+       *[other] { $discount_value }% discount
     }</b>!!
 
     { base-balance }
 
 base-store-exchange-success-message-for-admin =
-    Пользователь { $user_link } (<code>{ $id_user }</code>) обменял <b>{ $price } <i>base</i></b> на <b>{ $discount_value ->
-        [100] Бесплатную книгу
-       *[other] Скидку { $discount_value }%
+    User { $user_link } (<code>{ $id_user }</code>) exchanged <b>{ $price } <i>base</i></b> for a <b>{ $discount_value ->
+        [100] free book
+       *[other] { $discount_value }% discount
     }</b>!!
 
     { user-balance }
 
-base-store-cancel-discount-error = У вас уже нет никакой скидки!!
+base-store-cancel-discount-error = You don't have any active discount!!
 
 base-store-cancel-discount-success =
-    Вы успешно отменили <b>{ $discount_value ->
-        [100] купон на бесплатную книгу
-       *[other] скидку { $discount_value }%
+    You successfully canceled <b>{ $discount_value ->
+        [100] the free book coupon
+       *[other] the { $discount_value }% discount
     }</b>!!
 
     { base-balance }
 
 base-store-cancel-discount-success-message-for-admin =
-    Пользователь { $user_link } (<code>{ $id_user }</code>) отменил <b>{ $discount_value ->
-        [100] купон на бесплатную книгу
-       *[other] скидку { $discount_value }%
-    }</b>
+    User { $user_link } (<code>{ $id_user }</code>) canceled <b>{ $discount_value ->
+        [100] the free book coupon
+       *[other] the { $discount_value }% discount
+    }</b>.
 
     { user-balance }

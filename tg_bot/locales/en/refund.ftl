@@ -1,9 +1,9 @@
-refund = Введите id платежа, за который необходимо вернуть средтва.
+refund = Enter the payment ID for which the funds need to be refunded
 
-refund-error-not-found = Платёж не найден
+refund-error-not-found = Payment not found
 
-refund-error-currency-unavailable = Платёж не был совершён с помощью <b>stars</b> ⭐️
+refund-error-currency-unavailable = The payment was not made using <b>stars</b> ⭐️
 
-refund-success = Пользователю { $user_link } (<code>{ $id_user }</code>) вернули <b>{ $stars }</b> ⭐️
+refund-success = User { $user_link } (<code>{ $id_user }</code>) has been refunded <b>{ $stars }</b> ⭐️
 
-refund-canceled = Вы отменили возврат средств пользователю
+refund-canceled = You have canceled the refund for the user

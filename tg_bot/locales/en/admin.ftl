@@ -1,54 +1,54 @@
 admin =
-    📖 Добавить книгу — /add_book
+    📖 Add a book — /add_book
 
-    ♻️ Изменить данные о книге — /edit_book
+    ♻️ Edit book details — /edit_book
 
-    📕 Удалить книгу — /delete_book
+    📕 Delete a book — /delete_book
 
-    📙 Отправить книгу — /send_book
+    📙 Send a book — /send_book
 
-    📗 Подарить книгу — /give_book
+    📗 Gift a book — /give_book
 
-    ❌ Добавить в чёрный список — /add_blacklist
+    ❌ Add to blacklist — /add_blacklist
 
-    ❎ Удалить из чёрного списка — /remove_blacklist
+    ❎ Remove from blacklist — /remove_blacklist
 
-    📬 Посмотреть заказы — /view_orders
+    📬 View orders — /view_orders
 
-    📩 Обслужить заказ — /serve_order
+    📩 Serve an order — /serve_order
 
-    ⚜️ Подарить Premium — /give_premium
+    ⚜️ Gift Premium — /give_premium
 
-    ♦️ Отменить Premium — /cancel_premium
+    ♦️ Cancel Premium — /cancel_premium
 
-    💎 Выдать base — /give_base
+    💎 Grant base — /give_base
 
-    🔻 Отобрать base — /take_base
+    🔻 Revoke base — /take_base
 
-    🏷️ Выдать скидку — /give_discount
+    🏷️ Grant discount — /give_discount
 
-    🔺 Забрать скидку — /take_discount
+    🔺 Revoke discount — /take_discount
 
-    📰 Добавить статью — /add_article
+    📰 Add an article — /add_article
 
-    🟥 Удалить статью — /delete_article
+    🟥 Delete an article — /delete_article
 
-    🪪 Получить информацию о пользователе — /get_profile
+    🪪 Get user info — /get_profile
 
-    ⭐️ Вернуть stars пользователю — /refund
+    ⭐️ Refund stars to user — /refund
 
-    🙋🏼 Назначить администратора — /add_admin
+    🙋🏼 Assign admin — /add_admin
 
-    🙅🏼 Удалить администратора — /remove_admin
+    🙅🏼 Remove admin — /remove_admin
 
-    🧑🏼‍💻 Отправить сообщение пользователю — /send_message
+    🧑🏼‍💻 Send a message to a user — /send_message
 
-    🏞️ Получить токен фотографии — /get_token
+    🏞️ Get photo token — /get_token
 
-    📚 Ручной субботний пост — /saturday_post
+    📚 Manual Saturday post — /saturday_post
 
-    📢 Отправить рассылку — /broadcast
+    📢 Send a broadcast — /broadcast
 
-    📟 Отправить ТЕСТОВУЮ рассылку — /test_broadcast
+    📟 Send a test broadcast — /test_broadcast
 
-    📊 Активность пользователей — /stats
+    📊 User activity — /stats

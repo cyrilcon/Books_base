@@ -1,4 +1,4 @@
-get-profile =  Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, информацию которого вы хотите получить
+get-profile = Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user whose information you want to retrieve
 
 get-profile-template =
     { $status_icons } { $user_link } (<code>{ $id_user }</code>) { $language_code ->
@@ -9,17 +9,17 @@ get-profile-template =
     }
 
     { $discount ->
-        [100] Имеет купон на бесплатную книгу
-        [0] Не имеет никакую скидку
-       *[other] Имеет скидку <b>{ $discount }%</b>
+        [100] Has a coupon for a free book
+        [0] Has no discounts
+       *[other] Has a discount of <b>{ $discount }%</b>
     }
-    
+
     { user-balance }
 
-    Дата регистрации:
+    Registration date:
     <code>{ $registration_datetime }</code>
 
-    Последняя активность:
+    Last activity:
     <code>{ $last_activity_datetime }</code>
 
 get-profile-status-icon-admin = 👮🏻
@@ -28,4 +28,4 @@ get-profile-status-icon-blacklisted = 🚫
 
 get-profile-status-icon-premium = ⚜️
 
-get-profile-canceled = Вы отменили получение профиля
+get-profile-canceled = You have canceled the profile retrieval

@@ -1,25 +1,25 @@
 give-base =
     <b>1/2</b>
-    Введите <i><b>имя пользователя</b></i> или его <i><b>ID</b></i>, которому хотите выдать <i>base</i> 💎
+    Enter the <i><b>username</b></i> or <i><b>ID</b></i> of the user you want to give <i>base</i> 💎
 
-give-base-error-user-has-premium = Пользователь имеет статус { -books-base-premium } ⚜️
+give-base-error-user-has-premium = The user has { -books-base-premium } ⚜️ status
 
 give-base-transfer-base =
     <b>2/2</b>
-    Введите <i><b>количество base</b></i> 💎, которое хотите отправить пользователю { $user_link } (<code>{ $id_user }</code>).
+    Enter the <i><b>amount of base</b></i> 💎 you want to send to user { $user_link } (<code>{ $id_user }</code>).
 
     { user-balance }
 
-give-base-error-invalid-base = Количество <i>base</i> 💎 должно быть целым положительным числом!!
+give-base-error-invalid-base = The amount of <i>base</i> 💎 must be a positive integer!!
 
 give-base-success =
-    Пользователь { $user_link } (<code>{ $id_user }</code>) получил { $base_received } <i>base</i> 💎
+    User { $user_link } (<code>{ $id_user }</code>) received { $base_received } <i>base</i> 💎
 
     { user-balance }
 
 give-base-success-message-for-user =
-    Вы получили { $base_received } <i>base</i> 💎
+    You received { $base_received } <i>base</i> 💎
 
     { base-balance }
 
-give-base-canceled = Вы отменили отправку base пользователю
+give-base-canceled = You canceled sending base to the user

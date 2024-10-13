@@ -1,10 +1,10 @@
 cancel-order-error-user-has-no-order =
-    У вас отсутствуют действующие заказы!!
+    You have no active orders!!
 
-    Заказать книгу – /order
+    Order a book – /order
 
-cancel-order = Выберите номер заказа, который хотите отменить
+cancel-order = Select the order number you want to cancel
 
-cancel-order-error-order-already-canceled = Этот заказ уже отменён!!
+cancel-order-error-order-already-canceled = This order has already been canceled!!
 
-cancel-order-success = Заказ <code>№{ $id_order }</code> отменён!!
+cancel-order-success = Order <code>№{ $id_order }</code> has been canceled!!

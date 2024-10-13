@@ -1,62 +1,62 @@
-button-back = ⬅️ Назад
+button-back = ⬅️ Back
 
-button-cancel = ❌ Отмена
+button-cancel = ❌ Cancel
 
-button-post = 📤 Опубликовать
+button-post = 📤 Publish
 
-button-done = ✅ Готово
+button-done = ✅ Done
 
-button-clear = 🧹 Стереть
+button-clear = 🧹 Clear
 
-button-delete = 🗑️ Удалить
+button-delete = 🗑️ Delete
 
 button-price = { $price }₽
 
-button-not-post = 🚫 Не публиковать
+button-not-post = 🚫 Do not publish
 
-button-not-from-user = 👤 Не от пользователя
+button-not-from-user = 👤 Not from user
 
-button-edit-article = 📄 Артикул
+button-edit-article = 📄 Article
 
-button-edit-title = 📚 Название
+button-edit-title = 📚 Title
 
-button-edit-authors = ✍️ Авторы
+button-edit-authors = ✍️ Authors
 
-button-edit-description = 📝 Описание
+button-edit-description = 📝 Description
 
-button-edit-genres = 🎭 Жанры
+button-edit-genres = 🎭 Genres
 
-button-edit-cover = 🖼️ Обложка
+button-edit-cover = 🖼️ Cover
 
-button-edit-files = 📁 Файлы
+button-edit-files = 📁 Files
 
-button-edit-price = 💵 Цена
+button-edit-price = 💵 Price
 
-button-yes = ✅ Да
+button-yes = ✅ Yes
 
-button-show-book = 📖 Показать книгу
+button-show-book = 📖 Show book
 
-button-order = 🛒 Всё равно заказать
+button-order = 🛒 Still order
 
-button-serve = 📩 Обслужить
+button-serve = 📩 Serve
 
-button-unavailable = 🚫 Нет в наличии
+button-unavailable = 🚫 Not available
 
-button-order-again = 🔄 Заказать ещё
+button-order-again = 🔄 Order again
 
-button-reply = 💬 Ответить
+button-reply = 💬 Reply
 
 button-discount = { $discount_value ->
-        [100] 🎁 Бесплатная книга
-       *[other] Скидка { $discount_value }%
+        [100] 🎁 Free book
+       *[other] Discount { $discount_value }%
     }
 
-button-cancel-discount = 🚫 Отменить { $discount_value ->
-        [100] купон
-       *[other] скидку { $discount_value }%
+button-cancel-discount = 🚫 Cancel { $discount_value ->
+        [100] coupon
+       *[other] discount { $discount_value }%
     }
 
-button-share-our-store = 📤 Поделиться нашим магазином
+button-share-our-store = 📤 Share our store
 
 button-language-ru = 🇷🇺 RUS
 
@@ -64,27 +64,27 @@ button-language-en = 🇬🇧 ENG
 
 button-language-uk = 🇺🇦 UKR
 
-button-search-by-title = 📔 Поиск по названию
+button-search-by-title = 📔 Search by title
 
-button-search-by-author = 👨🏻‍🎨 Поиск по автору
+button-search-by-author = 👨🏻‍🎨 Search by author
 
-button-search-by-genre = 🎭 Поиск по жанру
+button-search-by-genre = 🎭 Search by genre
 
-button-news-channel = 📰 Канал с новостями
+button-news-channel = 📰 News channel
 
-button-buy = Купить
+button-buy = Buy
 
-button-read = Читать
+button-read = Read
 
-button-pay-rub = 💳 Оплатить { $price }₽
+button-pay-rub = 💳 Pay { $price }₽
 
-button-pay-xtr = ⭐ Оплатить { $price }
+button-pay-xtr = ⭐ Pay { $price }
 
-button-paid = 🧾 Уже оплатил
+button-paid = 🧾 Already paid
 
-button-cancel-payment = 🚫 Отменить покупку
+button-cancel-payment = 🚫 Cancel purchase
 
-button-all-books = 📚 Все книги
+button-all-books = 📚 All books
 
 button-arrow-left = ⬅️
 
