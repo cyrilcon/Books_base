@@ -5,6 +5,8 @@ payment-book-error-user-already-has-this-book = You already own this book!!
 payment-book-success =
     Thank you for your purchase!!
 
+    { book-available }
+
     { $base } <i>base</i> 💎 has been credited to your account
 
     All available books can be found in our <a href="{ $channel_link }">Telegram channel</a> 👇🏻
@@ -85,5 +87,3 @@ payment-check =
 payment-error-payment-not-found = Transaction not found!!
 
 payment-pre-checkout-failed-reason = Payment is currently not possible!!
-
-read = User { $user_link } (<code>{ $id_user }</code>) is reading the book "<code>{ $title }</code>" (<code>{ $article }</code>)

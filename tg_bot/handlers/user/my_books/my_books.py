@@ -36,7 +36,10 @@ async def my_books(
 
     if len(book_ids) == 0:
         await message.answer(
-            l10n.format_value("my-books-no-books"),
+            l10n.format_value(
+                "my-books-no-books",
+                {"channel_link": config.channel.link},
+            ),
             reply_markup=channel_keyboard(l10n),
         )
         return

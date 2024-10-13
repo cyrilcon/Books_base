@@ -5,3 +5,5 @@ user-balance = Баланс пользователя: <b>{ $base_balance } <i>ba
 page = стр.
 
 throttling = Слишком частый запрос. Попробуйте снова через { $time_left } секунд.
+
+book-available = Книга "<code>{ $title }</code>" доступна в вашей личной книжной полке — /my_books

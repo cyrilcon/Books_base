@@ -16,7 +16,7 @@ from .news import command_news_router, news_routers
 from .order import command_order_router, order_routers
 from .payment import payment_routers
 from .paysupport import command_paysupport_router
-from .premium import premium_router
+from .premium import command_premium_router
 from .privacy import command_privacy_router
 from .read import read_router
 from .saturday import command_saturday_router, saturday_routers
@@ -42,6 +42,7 @@ user_commands_router.include_routers(
     command_news_router,
     command_order_router,
     command_paysupport_router,
+    command_premium_router,
     command_privacy_router,
     command_search_router,
     command_settings_router,
@@ -58,7 +59,6 @@ user_routers.include_routers(
     order_routers,
     saturday_routers,
     payment_routers,
-    premium_router,
     read_router,
     settings_routers,
     share_base_routers,

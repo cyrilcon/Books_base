@@ -18,6 +18,9 @@ class LocalizationMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
+        if event.from_user.id == event._bot.id:
+            return
+
         user: UserSchema = data["user"]
 
         l10n = get_fluent_localization(user.language_code)

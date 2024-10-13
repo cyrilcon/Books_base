@@ -110,6 +110,12 @@ async def buy_book(
                 caption=book.title,
                 files=book.files,
             )
+            await call.message.answer(
+                l10n.format_value(
+                    "book-available",
+                    {"title": book.title},
+                )
+            )
 
             user_link = create_user_link(user.full_name, user.username)
 
@@ -259,6 +265,7 @@ async def payment_book(
         l10n.format_value(
             "payment-book-success",
             {
+                "title": book.title,
                 "base": base,
                 "channel_link": config.channel.link,
             },
@@ -369,6 +376,7 @@ async def payment_book_on_successful(
         l10n.format_value(
             "payment-book-success",
             {
+                "title": book.title,
                 "base": base,
                 "channel_link": config.channel.link,
             },

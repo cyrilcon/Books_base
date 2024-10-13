@@ -24,7 +24,7 @@ share-base-transfer =
 
     { base-balance }
 
-share-base-error-insufficient-funds = У вас недостатньо <i><b>base</b></i>, щоб надіслати їх @{ $username }!!
+share-base-error-insufficient-funds = У вас недостатньо base, щоб надіслати їх @{ $username }!!
 
 share-base-error-general =
     Виникла помилка під час надсилання <i><b>base</b></i>!!

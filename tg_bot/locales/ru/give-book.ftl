@@ -22,6 +22,6 @@ give-book-success = Пользователь { $user_link } (<code>{ $id_user }<
 
 give-book-success-message-for-user =
     Вы получили подарок от нашего магазина { -books-base }!!
-    Книга "<code>{ $title }</code>" доступна в вашей личной книжной полке — /my_books
+    { book-available }
 
 give-book-canceled = Вы отменили выдачу книги пользователю

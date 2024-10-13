@@ -23,15 +23,19 @@ class ThrottlingMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
+        id_user = event.from_user.id
+
+        if id_user == event._bot.id:
+            return
+
         l10n: FluentLocalization = data["l10n"]
-        user_id = event.from_user.id
 
         throttling_enabled = get_flag(data, "throttle", default=False)
 
         if not throttling_enabled:
             return await handler(event, data)
 
-        user_key = f"throttle_{user_id}"
+        user_key = f"throttle_{id_user}"
 
         last_request_time = await self.storage.redis.get(user_key)
 

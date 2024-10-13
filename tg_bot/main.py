@@ -36,6 +36,7 @@ async def on_startup(bot: Bot):
     admins = response.result
 
     await set_default_commands(bot, admins)
+
     for admin in admins:
         try:
             await bot.send_message(chat_id=admin, text="Bot restarted!!")
@@ -141,6 +142,7 @@ async def main():
     register_global_middlewares(dp, storage)  # Installing middlewares
 
     await on_startup(bot)
+
     try:
         await dp.start_polling(bot)
     finally:

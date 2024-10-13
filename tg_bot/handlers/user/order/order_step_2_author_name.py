@@ -101,7 +101,7 @@ async def order_step_2(
     l10n_chat = get_fluent_localization(config.chat.language_code)
     await bot.send_message(
         chat_id=config.chat.order,
-        text=l10n.format_value(
+        text=l10n_chat.format_value(
             "order-success-message-for-admin",
             {
                 "user_link": user_link,

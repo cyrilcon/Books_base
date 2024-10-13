@@ -13,7 +13,10 @@ from tg_bot.services import get_fluent_localization, create_user_link
 base_store_process_router = Router()
 
 
-@base_store_process_router.callback_query(F.data.startswith("discount"))
+@base_store_process_router.callback_query(
+    F.data.startswith("discount"),
+    flags={"safe_message": False},
+)
 async def base_store_discount(
     call: CallbackQuery,
     l10n: FluentLocalization,

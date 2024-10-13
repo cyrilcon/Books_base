@@ -15,18 +15,12 @@ async def my_account(
     user: UserSchema,
 ):
     if user.is_premium:
-        has_discount_or_premium = (
-            "\n" + l10n.format_value("my-account-has-premium") + "\n"
-        )
+        has_discount_or_premium = f"\n{l10n.format_value("my-account-has-premium")}\n"
     elif user.has_discount:
-        has_discount_or_premium = (
-            "\n"
-            + l10n.format_value(
+        has_discount_or_premium = f"\n{l10n.format_value(
                 "my-account-has-discount",
                 {"discount": user.has_discount},
-            )
-            + "\n"
-        )
+            )}\n"
     else:
         has_discount_or_premium = ""
 

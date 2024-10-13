@@ -4,6 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
+from api.books_base_api.schemas import UserSchema
 from tg_bot.config import config
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.middlewares import SaturdayMiddleware
@@ -21,7 +22,12 @@ async def saturday(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
+    user: UserSchema,
 ):
+    if user.is_premium:
+        await message.answer(l10n.format_value("saturday-error-user-has-premium"))
+        return
+
     await message.answer(
         l10n.format_value(
             "saturday-select-book-1",

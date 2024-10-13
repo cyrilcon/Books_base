@@ -13,6 +13,8 @@ saturday-action = Субботняя акция
 
 saturday-error = Сегодня не суббота!!
 
+saturday-error-user-has-premium = Вам не доступна субботняя акция, так как у вас действует статус <b>{ -books-base-premium }</b> ⚜️
+
 saturday-select-book-1 =
     Соберите набор из трёх книг за <b>{ $price_rub }₽</b> или <b>{ $price_xtr }</b> ⭐️
     Введите <i><b>артикул первой книги</b></i>, которую хотите добавить в набор

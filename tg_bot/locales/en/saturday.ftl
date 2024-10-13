@@ -13,6 +13,8 @@ saturday-action = Saturday promotion
 
 saturday-error = Today is not Saturday!!
 
+saturday-error-user-has-premium = The Saturday promotion is not available to you because you have an active <b>{ -books-base-premium }</b> ⚜️ status.
+
 saturday-select-book-1 =
     Assemble a set of three books for <b>{ $price_rub }₽</b> or <b>{ $price_xtr }</b> ⭐️
     Enter the <i><b>article number of the first book</b></i> you want to add to the set

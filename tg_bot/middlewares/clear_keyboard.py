@@ -23,6 +23,9 @@ class ClearKeyboardMiddleware(BaseMiddleware):
     ) -> Any:
         id_user = event.from_user.id
 
+        if id_user == event._bot.id:
+            return
+
         clear_keyboard = get_flag(data, "clear_keyboard", default=True)
         safe_message = get_flag(data, "safe_message", default=True)
 

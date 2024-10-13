@@ -12,11 +12,11 @@ from tg_bot.keyboards.inline import pay_premium_keyboard
 from tg_bot.services import Payment, ClearKeyboard
 from tg_bot.states import Payment as PaymentState
 
-premium_router = Router()
-premium_router.message.middleware(ChatActionMiddleware())
+command_premium_router = Router()
+command_premium_router.message.middleware(ChatActionMiddleware())
 
 
-@premium_router.message(
+@command_premium_router.message(
     Command("premium"),
     flags={
         "chat_action": "typing",

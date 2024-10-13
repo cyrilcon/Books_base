@@ -4,12 +4,17 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api.schemas import UserSchema
+from tg_bot.config import config
+from tg_bot.keyboards.inline import channel_keyboard
 from tg_bot.services import set_user_commands
 
 command_start_router = Router()
 
 
-@command_start_router.message(CommandStart())
+@command_start_router.message(
+    CommandStart(),
+    flags={"safe_message": False},
+)
 async def start(
     message: Message,
     l10n: FluentLocalization,
@@ -19,8 +24,12 @@ async def start(
     await message.answer(
         l10n.format_value(
             "start",
-            {"full_name": user.full_name},
-        )
+            {
+                "full_name": user.full_name,
+                "channel_link": config.channel.link,
+            },
+        ),
+        reply_markup=channel_keyboard(l10n),
     )
     await set_user_commands(
         bot=bot,

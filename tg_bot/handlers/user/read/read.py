@@ -46,6 +46,17 @@ async def read(
 
     book = response.get_model()
 
+    response = await api.users.get_book_ids(id_user=user.id_user)
+    book_ids = response.result
+
+    if id_book not in book_ids and not user.is_premium:
+        await call.message.edit_reply_markup()
+        await call.answer(
+            l10n.format_value("read-error-user-has-not-this-book"),
+            show_alert=True,
+        )
+        return
+
     await send_files(
         bot=bot,
         chat_id=call.from_user.id,

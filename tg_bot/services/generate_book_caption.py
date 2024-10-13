@@ -63,7 +63,7 @@ async def generate_book_caption(
         book_ids = response.result
 
         if user.is_premium:
-            price_text = l10n.format_value("free-with-premium")
+            price_text = f"\n{l10n.format_value("free-with-premium")}\n"
         elif id_book in book_ids:
             price_text = ""
         elif user.has_discount and price != config.price.book.daily.rub:

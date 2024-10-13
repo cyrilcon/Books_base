@@ -25,6 +25,9 @@ class DatabaseMiddleware(BaseMiddleware):
         full_name = event.from_user.full_name
         username = event.from_user.username
 
+        if id_user == event._bot.id:
+            return
+
         response = await api.users.get_user_by_id(id_user)
         status = response.status
 
