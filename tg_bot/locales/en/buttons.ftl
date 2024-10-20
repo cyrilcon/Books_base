@@ -58,7 +58,7 @@ button-cancel-discount = 🚫 Cancel { $discount_value ->
 
 button-share-our-store = 📤 Share our store
 
-button-language-ru = 🇷🇺 RUS
+button-language-ru = 🏳️ RUS
 
 button-language-en = 🇬🇧 ENG
 

@@ -12,7 +12,10 @@ settings_process_router = Router()
 
 @settings_process_router.callback_query(
     F.data.startswith("language"),
-    flags={"safe_message": False},
+    flags={
+        "clear_keyboard": False,
+        "safe_message": False,
+    },
 )
 async def settings_process(
     call: CallbackQuery,

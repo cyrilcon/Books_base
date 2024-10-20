@@ -2,7 +2,7 @@ from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
@@ -34,6 +34,7 @@ async def back_to_order_step_1(
 ):
     await call.message.edit_text(
         l10n.format_value("order"),
+        link_preview_options=LinkPreviewOptions(is_disabled=True),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Order.book_title)

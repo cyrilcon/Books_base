@@ -9,6 +9,8 @@ payment-book-success =
 
     На ваш рахунок нараховано { $base } <i>base</i> 💎
 
+    <i>(<a href="https://telegra.ph/Books-base-Payment-and-Refund-Policy-UK-10-15#🔴-Умови-повернення">Умови повернення</a>)</i>
+
     Всі доступні книги є в нашому <a href="{ $channel_link }">Telegram каналі</a> 👇🏻
 
 payment-book-paid-message-for-admin =
@@ -62,6 +64,8 @@ payment-set-success =
     Дякуємо за покупку!!
 
     На ваш рахунок нараховано { $base } <i>base</i> 💎
+
+    <i>(<a href="https://telegra.ph/Books-base-Payment-and-Refund-Policy-UK-10-15#🔴-Умови-повернення">Умови повернення</a>)</i>
 
     Всі доступні книги є в нашому <a href="{ $channel_link }">Telegram каналі</a> 👇🏻
 

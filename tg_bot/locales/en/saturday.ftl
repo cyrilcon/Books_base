@@ -19,6 +19,8 @@ saturday-select-book-1 =
     Assemble a set of three books for <b>{ $price_rub }₽</b> or <b>{ $price_xtr }</b> ⭐️
     Enter the <i><b>article number of the first book</b></i> you want to add to the set
 
+    All available books can be found in our <a href="{ $channel_link }">Telegram channel</a>
+
 saturday-error-invalid-article =
     The article number must start with the symbol <b>"#"</b> and contain 4 digits!!
     Please enter the article number of the book again

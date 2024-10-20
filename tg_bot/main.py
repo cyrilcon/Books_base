@@ -14,6 +14,7 @@ from api.books_base_api import api
 from config import config
 from handlers import routers
 from middlewares import (
+    BlacklistMiddleware,
     ClearKeyboardMiddleware,
     DatabaseMiddleware,
     LocalizationMiddleware,
@@ -64,10 +65,11 @@ def register_global_middlewares(dp: Dispatcher, storage: RedisStorage):
     """
 
     middleware_types = [
-        ClearKeyboardMiddleware(storage),
+        StorageMiddleware(storage),
         DatabaseMiddleware(),
         LocalizationMiddleware(),
-        StorageMiddleware(storage),
+        ClearKeyboardMiddleware(storage),
+        BlacklistMiddleware(),
         ThrottlingMiddleware(storage, throttle_time=60),
     ]
 

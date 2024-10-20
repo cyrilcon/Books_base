@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message
+from aiogram.types import Message, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api.schemas import UserSchema
@@ -34,8 +34,10 @@ async def saturday(
             {
                 "price_rub": config.price.set.rub,
                 "price_xtr": config.price.set.xtr,
+                "channel_link": config.channel.link,
             },
         ),
+        link_preview_options=LinkPreviewOptions(is_disabled=True),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Saturday.select_book_1)

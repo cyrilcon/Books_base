@@ -4,7 +4,13 @@ from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.types import CallbackQuery, LabeledPrice, PreCheckoutQuery, Message
+from aiogram.types import (
+    CallbackQuery,
+    LabeledPrice,
+    PreCheckoutQuery,
+    Message,
+    LinkPreviewOptions,
+)
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
@@ -270,6 +276,7 @@ async def payment_book(
                 "channel_link": config.channel.link,
             },
         ),
+        link_preview_options=LinkPreviewOptions(url=config.channel.link),
         message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
@@ -381,6 +388,7 @@ async def payment_book_on_successful(
                 "channel_link": config.channel.link,
             },
         ),
+        link_preview_options=LinkPreviewOptions(url=config.channel.link),
         message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )

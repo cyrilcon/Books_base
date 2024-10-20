@@ -9,6 +9,8 @@ payment-book-success =
 
     { $base } <i>base</i> 💎 has been credited to your account
 
+    <i>(<a href="https://telegra.ph/Books-base-Payment-and-Refund-Policy-EN-10-15#🔴-Return-Policy">Return Policy</a>)</i>
+
     All available books can be found in our <a href="{ $channel_link }">Telegram channel</a> 👇🏻
 
 payment-book-paid-message-for-admin =
@@ -62,6 +64,8 @@ payment-set-success =
     Thank you for your purchase!!
 
     { $base } <i>base</i> 💎 has been credited to your account
+
+    <i>(<a href="https://telegra.ph/Books-base-Payment-and-Refund-Policy-EN-10-15#🔴-Return-Policy">Return Policy</a>)</i>
 
     All available books can be found in our <a href="{ $channel_link }">Telegram channel</a> 👇🏻
 

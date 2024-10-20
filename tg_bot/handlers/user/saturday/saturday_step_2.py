@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from api.books_base_api import api
@@ -32,8 +32,10 @@ async def back_to_saturday_step_1(
             {
                 "price_rub": config.price.set.rub,
                 "price_xtr": config.price.set.xtr,
+                "channel_link": config.channel.link,
             },
         ),
+        link_preview_options=LinkPreviewOptions(is_disabled=True),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.update_data(book_ids=book_ids)

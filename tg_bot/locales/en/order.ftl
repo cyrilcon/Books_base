@@ -2,6 +2,8 @@ order =
     <b>1/2</b>
     Please enter the <i><b>title</b></i> of the book you want to order
 
+    <i>(Read our <a href="https://telegra.ph/Books-base-EN-10-18#📝-Book-Orders">order service policy</a>)</i>
+
 order-error-book-title-too-long =
     The book title is too long!!
     Please shorten it and enter the <i><b>title</b></i> of the book again

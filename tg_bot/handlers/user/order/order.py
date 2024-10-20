@@ -1,15 +1,13 @@
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message
+from aiogram.types import Message, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.middlewares import BlacklistMiddleware
 from tg_bot.states import Order
 
 command_order_router = Router()
-command_order_router.message.middleware(BlacklistMiddleware())
 
 
 @command_order_router.message(Command("order"))
@@ -20,6 +18,7 @@ async def order(
 ):
     await message.answer(
         l10n.format_value("order"),
+        link_preview_options=LinkPreviewOptions(is_disabled=True),
         reply_markup=cancel_keyboard(l10n),
     )
     await state.set_state(Order.book_title)

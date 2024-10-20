@@ -18,7 +18,7 @@ command-news = 📰 Latest { -books-base } news
 
 command-saturday = 📚 Saturday's action
 
-command-support = ⚠️ Tech-support
+command-support = 💬 Tech-support
 
 command-settings = ⚙️ Language settings
 

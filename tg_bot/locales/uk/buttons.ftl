@@ -58,7 +58,7 @@ button-cancel-discount = 🚫 Скасувати { $discount_value ->
 
 button-share-our-store = 📤 Поділитися нашим магазином
 
-button-language-ru = 🇷🇺 RUS
+button-language-ru = 🏳️ RUS
 
 button-language-en = 🇬🇧 ENG
 
