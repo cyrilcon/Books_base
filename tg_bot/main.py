@@ -21,7 +21,7 @@ from middlewares import (
     StorageMiddleware,
     ThrottlingMiddleware,
 )
-from services import set_default_commands, saturday_post
+from services import set_default_commands, set_bot_description, saturday_post
 
 
 async def on_startup(bot: Bot):
@@ -37,6 +37,7 @@ async def on_startup(bot: Bot):
     admins = response.result
 
     await set_default_commands(bot, admins)
+    await set_bot_description(bot)
 
     for admin in admins:
         try:
