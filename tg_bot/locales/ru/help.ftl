@@ -1,20 +1,20 @@
 help =
     <b>🟤 Что такое Books_base??</b>:
 
-    https://telegra.ph/Books-base-RU-10-18
+    { article-main }
 
     <b>🤖 Команды бота Books_base</b>:
 
-    https://telegra.ph/Books-base-Bot-Commands-RU-10-14
+    { article-bot-commands }
 
     <b>🔒 Политика конфиденциальности Books_base</b>:
 
-    https://telegra.ph/Books-base-Privacy-Policy-RU-10-14
+    { article-privacy-policy }
 
     <b>💳 Способы оплаты и условия возврата</b>:
 
-    https://telegra.ph/Books-base-Payment-and-Refund-Policy-RU-10-15
+    { article-payment-and-refund-policy }
 
     <b>📚 Акции нашей библиотеки</b>:
 
-    https://telegra.ph/Books-base-Promotions-RU-10-16
+    { article-promotions }

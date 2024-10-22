@@ -1,20 +1,20 @@
 help =
     <b>🟤 What is Books_base??</b>:
 
-    https://telegra.ph/Books-base-EN-10-18
+    { article-main }
 
     <b>🤖 Bot Commands for Books_base</b>:
 
-    https://telegra.ph/Books-base-Bot-Commands-EN-10-14
+    { article-bot-commands }
 
     <b>🔒 Books_base Privacy Policy</b>:
 
-    https://telegra.ph/Books-base-Privacy-Policy-EN-10-14
+    { article-privacy-policy }
 
     <b>💳 Payment and Return Policy</b>:
 
-    https://telegra.ph/Books-base-Payment-and-Refund-Policy-EN-10-15
+    { article-payment-and-refund-policy }
 
     <b>📚 Library Promotions</b>:
 
-    https://telegra.ph/Books-base-Promotions-EN-10-16
+    { article-promotions }

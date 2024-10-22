@@ -276,7 +276,10 @@ async def payment_book(
                 "channel_link": config.channel.link,
             },
         ),
-        link_preview_options=LinkPreviewOptions(url=config.channel.link),
+        link_preview_options=LinkPreviewOptions(
+            url=config.channel.link,
+            prefer_small_media=True,
+        ),
         message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
@@ -388,7 +391,10 @@ async def payment_book_on_successful(
                 "channel_link": config.channel.link,
             },
         ),
-        link_preview_options=LinkPreviewOptions(url=config.channel.link),
+        link_preview_options=LinkPreviewOptions(
+            url=config.channel.link,
+            prefer_small_media=True,
+        ),
         message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
     )
