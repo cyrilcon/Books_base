@@ -11,6 +11,6 @@ def share_our_store_button(l10n: FluentLocalization) -> InlineKeyboardButton:
 
     share_our_store = InlineKeyboardButton(
         text=l10n.format_value("button-share-our-store"),
-        switch_inline_query="– это крутой бот!! ...",  # TODO: Дописать!!
+        switch_inline_query=l10n.format_value("share-our-store"),
     )
     return share_our_store

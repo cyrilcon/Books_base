@@ -19,8 +19,6 @@ async def my_books_page(
     l10n: FluentLocalization,
     user: UserSchema,
 ):
-    page = int(call.data.split(":")[-1])
-
     if user.is_premium:
         await call.message.edit_reply_markup()
         await call.answer(
@@ -28,6 +26,8 @@ async def my_books_page(
             show_alert=True,
         )
         return
+
+    page = int(call.data.split(":")[-1])
 
     response = await api.users.get_book_ids(id_user=user.id_user)
     book_ids = response.result

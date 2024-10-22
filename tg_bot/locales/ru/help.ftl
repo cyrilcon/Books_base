@@ -1,5 +1,5 @@
 help =
-    <b>🟤 Что такое Books_base??</b>:
+    <b>📖 Что такое Books_base??</b>:
 
     { article-main }
 

@@ -1,3 +1,5 @@
+share-our-store = — is a unique e-book store where every book costs 85₽, available in various formats!!
+
 base-balance = Your balance: <b>{ $base_balance } <i>base</i></b> 💎
 
 user-balance = User balance: <b>{ $base_balance } <i>base</i></b> 💎

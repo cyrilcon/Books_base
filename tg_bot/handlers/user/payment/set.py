@@ -331,12 +331,6 @@ async def payment_set_on_successful(
     )
     await state.clear()
 
-    # TODO: удалить на продакшене
-    await bot.refund_star_payment(
-        user_id=message.from_user.id,
-        telegram_payment_charge_id=id_payment,
-    )
-
     user_link = create_user_link(user.full_name, user.username)
 
     l10n_chat = get_fluent_localization(config.chat.language_code)

@@ -15,7 +15,6 @@ from tg_bot.states import Payment as PaymentState
 payment_premium_router = Router()
 
 
-# TODO: ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ У ПОЛЬЗОВАТЕЛЯ УЖЕ ЕСТЬ PREMIUM
 @payment_premium_router.callback_query(
     StateFilter(PaymentState.premium),
     F.data.startswith("paid_premium"),
@@ -31,6 +30,14 @@ async def payment_premium(
     user: UserSchema,
     bot: Bot,
 ):
+    if user.is_premium:
+        await call.message.edit_reply_markup()
+        await call.answer(
+            l10n.format_value("payment-premium-error-user-already-has-premium"),
+            show_alert=True,
+        )
+        return
+
     id_payment = call.data.split(":")[-1]
     price = config.price.premium.rub
 
@@ -146,12 +153,6 @@ async def payment_premium_on_successful(
         reply_markup=channel_keyboard(l10n),
     )
     await state.clear()
-
-    # TODO: удалить на продакшене
-    await bot.refund_star_payment(
-        user_id=message.from_user.id,
-        telegram_payment_charge_id=id_payment,
-    )
 
     user_link = create_user_link(user.full_name, user.username)
 
