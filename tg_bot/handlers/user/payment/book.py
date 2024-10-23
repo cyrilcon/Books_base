@@ -273,11 +273,11 @@ async def payment_book(
             {
                 "title": book.title,
                 "base": base,
-                "channel_link": config.channel.link,
+                "channel_link": config.channel.main_link,
             },
         ),
         link_preview_options=LinkPreviewOptions(
-            url=config.channel.link,
+            url=config.channel.main_link,
             prefer_small_media=True,
         ),
         message_effect_id=MessageEffects.CONFETTI,
@@ -388,11 +388,11 @@ async def payment_book_on_successful(
             {
                 "title": book.title,
                 "base": base,
-                "channel_link": config.channel.link,
+                "channel_link": config.channel.main_link,
             },
         ),
         link_preview_options=LinkPreviewOptions(
-            url=config.channel.link,
+            url=config.channel.main_link,
             prefer_small_media=True,
         ),
         message_effect_id=MessageEffects.CONFETTI,

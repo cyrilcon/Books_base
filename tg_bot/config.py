@@ -7,6 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class TgBot(BaseModel):
     token: str
     super_admin: int
+    link: str
 
 
 class Redis(BaseModel):
@@ -35,12 +36,11 @@ class Chat(BaseModel):
 
 
 class Channel(BaseModel):
-    books_base: str
-    link: str
-    news_en: str
-    news_uk: str
-    news_ru: str
-    news_ro: str
+    main_id: str
+    main_link: str
+    news_en_link: str
+    news_ru_link: str
+    news_uk_lin: str
 
 
 class YoomoneyWallet(BaseModel):
@@ -97,7 +97,6 @@ class Config(BaseSettings):
     )
 
     logging_level: str = "ERROR"
-    link: str
     timezone_offset: int = Field(description="Time zone offset relative to UTC")
     saturday_post: str
 

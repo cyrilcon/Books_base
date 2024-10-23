@@ -13,6 +13,6 @@ def channel_button(l10n: FluentLocalization) -> InlineKeyboardButton:
 
     channel = InlineKeyboardButton(
         text=l10n.format_value("button-all-books"),
-        url=config.channel.link,
+        url=config.channel.main_link,
     )
     return channel

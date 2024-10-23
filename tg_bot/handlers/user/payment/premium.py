@@ -70,7 +70,7 @@ async def payment_premium(
     await call.message.answer(
         l10n.format_value(
             "payment-premium-success",
-            {"channel_link": config.channel.link},
+            {"channel_link": config.channel.main_link},
         ),
         message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),
@@ -147,7 +147,7 @@ async def payment_premium_on_successful(
     await message.answer(
         l10n.format_value(
             "payment-premium-success",
-            {"channel_link": config.channel.link},
+            {"channel_link": config.channel.main_link},
         ),
         message_effect_id=MessageEffects.CONFETTI,
         reply_markup=channel_keyboard(l10n),

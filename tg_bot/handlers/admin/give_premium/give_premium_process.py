@@ -50,7 +50,7 @@ async def give_premium_process(
             chat_id=id_user,
             text=l10n_recipient.format_value(
                 "give-premium-success-message-for-user",
-                {"channel_link": config.channel.link},
+                {"channel_link": config.channel.main_link},
             ),
             message_effect_id=MessageEffects.CONFETTI,
             reply_markup=channel_keyboard(l10n),

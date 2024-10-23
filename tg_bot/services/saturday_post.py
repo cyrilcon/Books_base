@@ -21,8 +21,8 @@ async def saturday_post(bot: Bot):
     l10n = get_fluent_localization("ru")
     deep_link_url = await create_start_link(bot, f"set")
     await bot.send_photo(
-        chat_id=config.channel.books_base,
+        chat_id=config.channel.main_id,
         photo=config.saturday_post,
-        caption=l10n.format_value("saturday-post", {"bot_link": config.link}),
+        caption=l10n.format_value("saturday-post", {"bot_link": config.main_link}),
         reply_markup=deep_link_set_keyboard(deep_link_url=deep_link_url),
     )

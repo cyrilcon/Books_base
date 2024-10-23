@@ -32,7 +32,7 @@ async def back_to_saturday_step_1(
             {
                 "price_rub": config.price.set.rub,
                 "price_xtr": config.price.set.xtr,
-                "channel_link": config.channel.link,
+                "channel_link": config.channel.main_link,
             },
         ),
         link_preview_options=LinkPreviewOptions(is_disabled=True),

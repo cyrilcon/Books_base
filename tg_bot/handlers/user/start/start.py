@@ -26,7 +26,7 @@ async def start(
             "start",
             {
                 "full_name": user.full_name,
-                "channel_link": config.channel.link,
+                "channel_link": config.channel.main_link,
             },
         ),
         reply_markup=channel_keyboard(l10n),
