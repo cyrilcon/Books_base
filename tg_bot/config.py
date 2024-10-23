@@ -30,17 +30,17 @@ class Api(BaseModel):
 class Chat(BaseModel):
     language_code: str
 
-    order: str
-    payment: str
-    support: str
+    order: int
+    payment: int
+    support: int
 
 
 class Channel(BaseModel):
-    main_id: str
+    main_id: int
     main_link: str
     news_en_link: str
     news_ru_link: str
-    news_uk_lin: str
+    news_uk_link: str
 
 
 class YoomoneyWallet(BaseModel):
