@@ -5,7 +5,7 @@ bot-description =
     🔍 Convenient search by title, author, or genre
     💾 All books in any format
     💰 Fixed price — 85₽ per book
-    📦 Instant book delivery directly to chat
+    📦 Instantly send books directly to chat
     ⚡️ Easy payment and fast support
 
 bot-short-description =
