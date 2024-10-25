@@ -1,5 +1,5 @@
-from api.books_base_api.base import BaseClient, ApiResponse
-from api.books_base_api.schemas import (
+from tg_bot.api_client.base import BaseClient, ApiResponse
+from tg_bot.api_client.schemas import (
     BookSchema,
     BooksResponse,
     BookTitleSimilarityResponse,

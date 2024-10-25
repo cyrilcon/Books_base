@@ -1,7 +1,7 @@
 from typing import List
 
-from api.books_base_api.base import BaseClient, ApiResponse
-from api.books_base_api.schemas import PaymentSchema
+from tg_bot.api_client.base import BaseClient, ApiResponse
+from tg_bot.api_client.schemas import PaymentSchema
 
 
 class PaymentsApi:

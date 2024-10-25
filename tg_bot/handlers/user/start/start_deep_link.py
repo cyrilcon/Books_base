@@ -5,8 +5,8 @@ from aiogram.filters import CommandStart, CommandObject
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
-from api.books_base_api.schemas import UserSchema
+from tg_bot.api_client import api
+from tg_bot.api_client.schemas import UserSchema
 from tg_bot.keyboards.inline import buy_or_read_keyboard
 from tg_bot.services import BookFormatter, generate_book_caption
 

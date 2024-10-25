@@ -1,6 +1,6 @@
-from tg_bot.config import config
-from api.books_base_api.base import BaseClient
-from api.books_base_api.endpoints import (
+from config import config
+from tg_bot.api_client.base import BaseClient
+from tg_bot.api_client.endpoints import (
     ArticlesApi,
     AuthorsApi,
     BooksApi,

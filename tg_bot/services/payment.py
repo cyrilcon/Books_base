@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from yoomoney import Quickpay, Client
 
-from tg_bot.config import config
+from config import config
 
 
 @dataclass

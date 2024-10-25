@@ -2,8 +2,8 @@ from typing import Tuple, Optional
 
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
-from api.books_base_api.schemas import ArticleSchema, UserSchema
+from tg_bot.api_client import api
+from tg_bot.api_client.schemas import ArticleSchema, UserSchema
 
 
 async def get_article_info(

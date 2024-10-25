@@ -1,7 +1,7 @@
 from aiogram.filters import BaseFilter
 from aiogram.types import Message
 
-from api.books_base_api import api
+from tg_bot.api_client import api
 
 
 class AdminFilter(BaseFilter):

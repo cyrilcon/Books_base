@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from tg_bot.config import config
+from config import config
 
 
 def convert_utc_datetime(utc_datetime: datetime) -> str:

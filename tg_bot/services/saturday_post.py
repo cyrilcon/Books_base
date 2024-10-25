@@ -1,8 +1,8 @@
 from aiogram import Bot
 from aiogram.utils.deep_linking import create_start_link
 
-from api.books_base_api import api
-from tg_bot.config import config
+from config import config
+from tg_bot.api_client import api
 from tg_bot.keyboards.inline import deep_link_set_keyboard
 from tg_bot.services import get_fluent_localization
 

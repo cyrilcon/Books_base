@@ -4,8 +4,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
-from tg_bot.config import config
+from config import config
+from tg_bot.api_client import api
 from tg_bot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
 from tg_bot.services import is_valid_book_article
 from tg_bot.states import Saturday

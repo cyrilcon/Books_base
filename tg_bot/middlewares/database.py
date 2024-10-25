@@ -3,7 +3,7 @@ from typing import Callable, Dict, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 
-from api.books_base_api import api
+from tg_bot.api_client import api
 
 
 class DatabaseMiddleware(BaseMiddleware):

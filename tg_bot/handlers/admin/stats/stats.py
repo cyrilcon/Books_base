@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
+from tg_bot.api_client import api
 
 command_stats_router = Router()
 

@@ -10,7 +10,6 @@ from aiogram.fsm.strategy import FSMStrategy
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from api.books_base_api import api
 from config import config
 from handlers import routers
 from middlewares import (
@@ -22,6 +21,7 @@ from middlewares import (
     ThrottlingMiddleware,
 )
 from services import set_default_commands, set_bot_description, saturday_post
+from tg_bot.api_client import api
 
 
 async def on_startup(bot: Bot):

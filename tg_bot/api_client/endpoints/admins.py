@@ -1,17 +1,17 @@
 from typing import List
 
-from api.books_base_api.base import BaseClient, ApiResponse
-from api.books_base_api.schemas import UserSchema
+from tg_bot.api_client.base import BaseClient, ApiResponse
+from tg_bot.api_client.schemas import UserSchema
 
 
-class BlacklistApi:
+class AdminsApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/blacklist"
+        self.endpoint = f"{prefix}/admins"
 
-    async def get_blacklisted_user_ids(self) -> ApiResponse[List[int]]:
+    async def get_admin_ids(self) -> ApiResponse[List[int]]:
         """
-        Get a list of blacklisted user IDs.
+        Get a list of admin user IDs.
         """
 
         status, result = await self.base_client.make_request(
@@ -20,9 +20,9 @@ class BlacklistApi:
         )
         return ApiResponse(status, result)
 
-    async def create_blacklist(self, id_user: int) -> ApiResponse[UserSchema]:
+    async def create_admin(self, id_user: int) -> ApiResponse[UserSchema]:
         """
-        Add a user to the blacklist.
+        Create an admin.
 
         :param id_user: Unique user identifier.
         """
@@ -38,9 +38,9 @@ class BlacklistApi:
         )
         return ApiResponse(status, result, model=UserSchema)
 
-    async def delete_blacklist(self, id_user: int) -> ApiResponse:
+    async def delete_admin(self, id_user: int) -> ApiResponse:
         """
-        Remove a user from the blacklist.
+        Remove a user from the list of admins.
 
         :param id_user: Unique user identifier.
         """

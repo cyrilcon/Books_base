@@ -3,8 +3,8 @@ from aiogram.filters import Command
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api.schemas import UserSchema
-from tg_bot.config import config
+from config import config
+from tg_bot.api_client.schemas import UserSchema
 from tg_bot.keyboards.inline import cancel_discount_keyboard, discounts_keyboard
 
 command_base_store_router = Router()

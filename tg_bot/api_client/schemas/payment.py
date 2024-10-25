@@ -4,7 +4,7 @@ from typing import List
 
 from pydantic import BaseModel, Field, model_validator
 
-from api.books_base_api.schemas import BookSchema
+from tg_bot.api_client.schemas import BookSchema
 
 
 class PaymentCurrencyEnum(str, Enum):

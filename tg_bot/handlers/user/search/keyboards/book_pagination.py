@@ -7,7 +7,7 @@ from tg_bot.keyboards.inline.buttons import (
     search_by_author_button,
     search_by_genre_button,
 )
-from api.books_base_api.schemas import BookTitleSimilarityResult
+from tg_bot.api_client.schemas import BookTitleSimilarityResult
 
 
 def book_pagination_keyboard(

@@ -2,7 +2,7 @@ from aiogram import Router, F
 from aiogram.types import CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api.schemas import UserSchema
+from tg_bot.api_client.schemas import UserSchema
 from tg_bot.handlers.user.news.get_news_info import get_article_info
 from tg_bot.keyboards.inline import view_articles_keyboard
 

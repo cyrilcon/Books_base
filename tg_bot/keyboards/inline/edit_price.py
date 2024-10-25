@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup
 
-from tg_bot.config import config
+from config import config
 from tg_bot.keyboards.inline.buttons import (
     price_button,
     cancel_button,

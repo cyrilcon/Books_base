@@ -1,7 +1,7 @@
 from aiogram.filters import BaseFilter
 from aiogram.types import Message
 
-from tg_bot.config import config
+from config import config
 
 
 class SuperAdminFilter(BaseFilter):

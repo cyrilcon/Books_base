@@ -5,7 +5,7 @@ from aiogram.types import CallbackQuery
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
+from tg_bot.api_client import api
 from tg_bot.keyboards.inline import (
     delete_cancel_keyboard,
     done_clear_delete_cancel_keyboard,

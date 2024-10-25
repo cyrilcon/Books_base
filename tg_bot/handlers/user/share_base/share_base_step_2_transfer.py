@@ -5,8 +5,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, LinkPreviewOptions, Message
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
-from tg_bot.config import config
+from config import config
+from tg_bot.api_client import api
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.services import (

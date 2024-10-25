@@ -2,9 +2,9 @@ from aiogram import Router, F, Bot
 from aiogram.types import CallbackQuery
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
-from api.books_base_api.schemas import UserSchema
-from tg_bot.config import config
+from config import config
+from tg_bot.api_client import api
+from tg_bot.api_client.schemas import UserSchema
 from tg_bot.services import get_fluent_localization, create_user_link
 
 base_store_cancel_discount_router = Router()

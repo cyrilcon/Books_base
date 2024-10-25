@@ -2,8 +2,8 @@ from aiogram import Router, F
 from aiogram.types import CallbackQuery, InputMediaPhoto
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
-from api.books_base_api.schemas import UserSchema
+from tg_bot.api_client import api
+from tg_bot.api_client.schemas import UserSchema
 from tg_bot.keyboards.inline import my_books_keyboard
 from tg_bot.services import generate_book_caption
 

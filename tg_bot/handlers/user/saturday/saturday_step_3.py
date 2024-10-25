@@ -4,8 +4,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, InputMediaPhoto
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
-from tg_bot.config import config
+from tg_bot.api_client import api
+from config import config
 from tg_bot.keyboards.inline import (
     cancel_keyboard,
     back_cancel_keyboard,

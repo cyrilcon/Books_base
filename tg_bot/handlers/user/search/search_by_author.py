@@ -8,7 +8,7 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
+from tg_bot.api_client import api
 from tg_bot.enums import SearchBy
 from tg_bot.services import BookFormatter
 from tg_bot.states import Search

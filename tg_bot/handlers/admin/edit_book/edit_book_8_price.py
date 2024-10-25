@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
+from tg_bot.api_client import api
 from tg_bot.keyboards.inline import edit_price_keyboard, edit_book_keyboard
 from tg_bot.services import generate_book_caption
 from tg_bot.states import EditBook

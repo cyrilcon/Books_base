@@ -2,9 +2,9 @@ from typing import Dict, Any, Union
 
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api import api
-from api.books_base_api.schemas import BookSchema, UserSchema
-from tg_bot.config import config
+from config import config
+from tg_bot.api_client import api
+from tg_bot.api_client.schemas import BookSchema, UserSchema
 from tg_bot.services.book_formatter import BookFormatter
 from tg_bot.services.fluent_loader import get_fluent_localization
 

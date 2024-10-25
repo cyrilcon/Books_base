@@ -3,8 +3,8 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
-from api.books_base_api.schemas import UserSchema
-from tg_bot.config import config
+from config import config
+from tg_bot.api_client.schemas import UserSchema
 from tg_bot.keyboards.inline import channel_keyboard
 from tg_bot.services import set_user_commands
 
