@@ -1,3 +1,4 @@
+from config import config
 from tg_bot.api_client.base import BaseClient, ApiResponse
 from tg_bot.api_client.schemas import GenreSearchResponse, GenreSchema
 
@@ -5,7 +6,7 @@ from tg_bot.api_client.schemas import GenreSearchResponse, GenreSchema
 class GenresApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/genres"
+        self.endpoint = f"{prefix}{config.api.v1.genres}"
 
     async def get_genres_with_pagination(
         self,

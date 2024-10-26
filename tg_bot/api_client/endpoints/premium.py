@@ -1,3 +1,4 @@
+from config import config
 from tg_bot.api_client.base import BaseClient, ApiResponse
 from tg_bot.api_client.schemas import UserSchema
 
@@ -5,7 +6,7 @@ from tg_bot.api_client.schemas import UserSchema
 class PremiumApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/premium"
+        self.endpoint = f"{prefix}{config.api.v1.premium}"
 
     async def create_premium(self, id_user: int) -> ApiResponse[UserSchema]:
         """

@@ -11,8 +11,9 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 from config import config
-from handlers import routers
-from middlewares import (
+from tg_bot.api_client import api
+from tg_bot.handlers import routers
+from tg_bot.middlewares import (
     BlacklistMiddleware,
     ClearKeyboardMiddleware,
     DatabaseMiddleware,
@@ -20,8 +21,7 @@ from middlewares import (
     StorageMiddleware,
     ThrottlingMiddleware,
 )
-from services import set_default_commands, set_bot_description, saturday_post
-from tg_bot.api_client import api
+from tg_bot.services import set_default_commands, set_bot_description, saturday_post
 
 
 async def on_startup(bot: Bot):

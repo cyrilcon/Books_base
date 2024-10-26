@@ -14,8 +14,8 @@ from tg_bot.api_client.endpoints import (
 class BooksBaseApi(BaseClient):
     def __init__(self, api_key: str = None):
         self.api_key = api_key
-        self.base_url = config.api.url
-        self.prefix = config.api.prefix
+        self.base_url = f"http://{config.api.run.host}:{config.api.run.port}"
+        self.prefix = config.api.prefix + config.api.v1.prefix
         super().__init__(base_url=self.base_url)
 
         self.articles = ArticlesApi(self, self.prefix)

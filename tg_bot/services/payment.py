@@ -40,7 +40,7 @@ class Payment:
             sum=self.amount,
             label=f"{self.id}",
             comment=self.comment,
-            successURL=config.main_link,
+            successURL=config.tg_bot.link,
         )
         link = quick_pay.base_url
 

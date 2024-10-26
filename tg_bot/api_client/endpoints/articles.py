@@ -1,3 +1,4 @@
+from config import config
 from tg_bot.api_client.base import BaseClient, ApiResponse
 from tg_bot.api_client.schemas import ArticleSchema
 
@@ -5,7 +6,7 @@ from tg_bot.api_client.schemas import ArticleSchema
 class ArticlesApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/articles"
+        self.endpoint = f"{prefix}{config.api.v1.articles}"
 
     async def create_article(
         self,

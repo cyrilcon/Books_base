@@ -1,3 +1,4 @@
+from config import config
 from tg_bot.api_client.base import BaseClient, ApiResponse
 from tg_bot.api_client.schemas import AuthorSearchResponse, AuthorSchema
 
@@ -5,7 +6,7 @@ from tg_bot.api_client.schemas import AuthorSearchResponse, AuthorSchema
 class AuthorsApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/authors"
+        self.endpoint = f"{prefix}{config.api.v1.authors}"
 
     async def search_authors(
         self,

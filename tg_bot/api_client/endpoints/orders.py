@@ -1,5 +1,6 @@
 from typing import List
 
+from config import config
 from tg_bot.api_client.base import BaseClient, ApiResponse
 from tg_bot.api_client.schemas import OrderSchema
 
@@ -7,7 +8,7 @@ from tg_bot.api_client.schemas import OrderSchema
 class OrdersApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/orders"
+        self.endpoint = f"{prefix}{config.api.v1.orders}"
 
     async def get_order_ids(self) -> ApiResponse[List[int]]:
         """
