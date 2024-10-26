@@ -2,8 +2,8 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
-from . import DiscountEnum
-from .user_id import UserId
+from api.api_v1.schemas import DiscountEnum
+from api.api_v1.schemas.user_id import UserId
 
 
 class UserBase(UserId):

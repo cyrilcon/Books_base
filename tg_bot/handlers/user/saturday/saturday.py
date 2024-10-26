@@ -5,7 +5,7 @@ from aiogram.types import Message, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from config import config
-from tg_bot.api_client.schemas import UserSchema
+from api.api_v1.schemas import UserSchema
 from tg_bot.keyboards.inline import cancel_keyboard
 from tg_bot.middlewares import SaturdayMiddleware
 from tg_bot.states import Saturday

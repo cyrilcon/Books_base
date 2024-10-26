@@ -4,7 +4,7 @@ from typing import List
 
 from pydantic import BaseModel, Field, model_validator
 
-from tg_bot.api_client.schemas import BookSchema
+from api.api_v1.schemas import BookSchema
 
 
 class PaymentCurrencyEnum(str, Enum):
@@ -32,7 +32,7 @@ class PaymentBase(BaseModel):
 
     id_payment: str = Field(..., description="Unique payment identifier")
     id_user: int = Field(..., description="Unique user identifier who made the payment")
-    price: float = Field(..., description="Price of payment")
+    price: int = Field(..., description="Price of payment")
     currency: PaymentCurrencyEnum = Field(
         ..., description="Currency in which the payment was made"
     )

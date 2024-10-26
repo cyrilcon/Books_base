@@ -7,7 +7,7 @@ from tg_bot.keyboards.inline.buttons import (
     search_by_title_button,
     search_by_genre_button,
 )
-from tg_bot.api_client.schemas import AuthorSearchResult
+from api.api_v1.schemas import AuthorSearchResult
 
 
 def author_pagination_keyboard(

@@ -1,13 +1,14 @@
 from typing import List
 
+from config import config
 from tg_bot.api_client.base import BaseClient, ApiResponse
-from tg_bot.api_client.schemas import UserSchema
+from api.api_v1.schemas import UserSchema
 
 
 class BlacklistApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/blacklist"
+        self.endpoint = f"{prefix}{config.api.v1.blacklist}"
 
     async def get_blacklisted_user_ids(self) -> ApiResponse[List[int]]:
         """

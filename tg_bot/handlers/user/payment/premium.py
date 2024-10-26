@@ -6,7 +6,7 @@ from fluent.runtime import FluentLocalization
 
 from config import config
 from tg_bot.api_client import api
-from tg_bot.api_client.schemas import PaymentCurrencyEnum, PaymentTypeEnum, UserSchema
+from api.api_v1.schemas import PaymentCurrencyEnum, PaymentTypeEnum, UserSchema
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
 from tg_bot.services import Payment, create_user_link, get_fluent_localization

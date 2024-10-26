@@ -1,5 +1,6 @@
+from config import config
 from tg_bot.api_client.base import BaseClient, ApiResponse
-from tg_bot.api_client.schemas import (
+from api.api_v1.schemas import (
     BookSchema,
     BooksResponse,
     BookTitleSimilarityResponse,
@@ -9,7 +10,7 @@ from tg_bot.api_client.schemas import (
 class BooksApi:
     def __init__(self, base_client: BaseClient, prefix: str):
         self.base_client = base_client
-        self.endpoint = f"{prefix}/books"
+        self.endpoint = f"{prefix}{config.api.v1.books}"
 
     async def create_book(self, data: dict) -> ApiResponse[BookSchema]:
         """
