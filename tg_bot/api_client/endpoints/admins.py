@@ -1,8 +1,8 @@
 from typing import List
 
+from api.api_v1.schemas import UserSchema
 from config import config
 from tg_bot.api_client.base import BaseClient, ApiResponse
-from tg_bot.api_client.schemas import UserSchema
 
 
 class AdminsApi:

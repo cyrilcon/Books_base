@@ -7,7 +7,7 @@ from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from config import config
-from tg_bot.api_client.schemas import UserSchema
+from api.api_v1.schemas import UserSchema
 from tg_bot.keyboards.inline import pay_premium_keyboard
 from tg_bot.services import Payment, ClearKeyboard
 from tg_bot.states import Payment as PaymentState

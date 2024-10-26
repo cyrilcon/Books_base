@@ -8,7 +8,7 @@ from aiogram.utils.chat_action import ChatActionMiddleware
 from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
-from tg_bot.api_client.schemas import UserSchema
+from api.api_v1.schemas import UserSchema
 from tg_bot.enums import SearchBy
 from tg_bot.keyboards.inline import buy_or_read_keyboard
 from tg_bot.services import generate_book_caption, BookFormatter, is_valid_book_article

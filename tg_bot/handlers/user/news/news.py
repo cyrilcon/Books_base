@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
-from tg_bot.api_client.schemas import UserSchema
+from api.api_v1.schemas import UserSchema
 from tg_bot.handlers.user.news.get_news_info import get_article_info
 from tg_bot.keyboards.inline import view_articles_keyboard
 

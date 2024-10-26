@@ -2,7 +2,7 @@ from aiogram.types import InlineKeyboardMarkup
 from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
-from tg_bot.api_client.schemas import UserSchema
+from api.api_v1.schemas import UserSchema
 from tg_bot.keyboards.inline.buttons import buy_book_button, read_button
 
 

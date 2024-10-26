@@ -6,7 +6,7 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
-from tg_bot.api_client.schemas import UserSchema
+from api.api_v1.schemas import UserSchema
 from tg_bot.keyboards.inline import buy_or_read_keyboard
 from tg_bot.services import BookFormatter, generate_book_caption
 

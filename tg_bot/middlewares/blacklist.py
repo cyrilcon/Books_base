@@ -5,7 +5,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import TelegramObject
 from fluent.runtime import FluentLocalization
 
-from tg_bot.api_client.schemas import UserSchema
+from api.api_v1.schemas import UserSchema
 
 
 class BlacklistMiddleware(BaseMiddleware):

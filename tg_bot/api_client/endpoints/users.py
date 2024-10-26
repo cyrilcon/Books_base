@@ -9,7 +9,7 @@ from tg_bot.api_client.endpoints import (
     DiscountsApi,
     PremiumApi,
 )
-from tg_bot.api_client.schemas import UserSchema, UserStats
+from api.api_v1.schemas import UserSchema, UserStats
 
 
 class UsersApi:

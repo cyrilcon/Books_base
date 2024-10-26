@@ -3,7 +3,7 @@ from typing import List
 from aiogram import Bot
 from aiogram.utils.media_group import MediaGroupBuilder
 
-from tg_bot.api_client.schemas import FileSchema
+from api.api_v1.schemas import FileSchema
 
 
 async def send_files(bot: Bot, chat_id: int, caption: str, files: List[FileSchema]):
