@@ -6,7 +6,7 @@ from database.db_helper import db_helper
 from database.models.base import Base
 from api.main import app
 
-SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///api/tests/test.db"
+SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///./tests/test.db"
 
 engine = create_async_engine(SQLALCHEMY_DATABASE_URL, echo=False)
 

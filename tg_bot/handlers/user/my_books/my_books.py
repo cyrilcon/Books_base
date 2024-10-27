@@ -25,7 +25,7 @@ async def my_books(
         await message.answer(
             l10n.format_value(
                 "my-books-user-has-premium",
-                {"channel_link": config.channel.main_link},
+                {"channel_link": config.channel.link},
             ),
             reply_markup=channel_keyboard(l10n),
         )
@@ -38,7 +38,7 @@ async def my_books(
         await message.answer(
             l10n.format_value(
                 "my-books-no-books",
-                {"channel_link": config.channel.main_link},
+                {"channel_link": config.channel.link},
             ),
             reply_markup=channel_keyboard(l10n),
         )

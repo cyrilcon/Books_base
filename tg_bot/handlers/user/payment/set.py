@@ -226,11 +226,11 @@ async def payment_set(
             "payment-set-success",
             {
                 "base": base,
-                "channel_link": config.channel.main_link,
+                "channel_link": config.channel.link,
             },
         ),
         link_preview_options=LinkPreviewOptions(
-            url=config.channel.main_link,
+            url=config.channel.link,
             prefer_small_media=True,
         ),
         message_effect_id=MessageEffects.CONFETTI,
@@ -319,11 +319,11 @@ async def payment_set_on_successful(
             "payment-set-success",
             {
                 "base": base,
-                "channel_link": config.channel.main_link,
+                "channel_link": config.channel.link,
             },
         ),
         link_preview_options=LinkPreviewOptions(
-            url=config.channel.main_link,
+            url=config.channel.link,
             prefer_small_media=True,
         ),
         message_effect_id=MessageEffects.CONFETTI,

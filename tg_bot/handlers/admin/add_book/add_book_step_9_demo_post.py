@@ -36,7 +36,7 @@ async def add_book_step_9(
     if is_post:
         deep_link_url = await create_start_link(bot, f"book_{id_book}")
         await bot.send_photo(
-            chat_id=config.channel.main_id,
+            chat_id=config.channel.id,
             photo=cover,
             caption=book_caption,
             reply_markup=deep_link_buy_keyboard(deep_link_url=deep_link_url),

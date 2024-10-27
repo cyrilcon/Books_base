@@ -34,7 +34,7 @@ async def saturday(
             {
                 "price_rub": config.price.set.rub,
                 "price_xtr": config.price.set.xtr,
-                "channel_link": config.channel.main_link,
+                "channel_link": config.channel.link,
             },
         ),
         link_preview_options=LinkPreviewOptions(is_disabled=True),
