@@ -1,53 +1,98 @@
-version: '3.8'
-
 services:
-  bot:
-    image: "${BOT_IMAGE_NAME}"
-    container_name: "${BOT_CONTAINER_NAME}"
-    stop_signal: SIGINT
+  tg_bot:
+    image: books_base_tg_bot_image
+    container_name: books_base_tg_bot
     build:
       context: .
-    working_dir: "/usr/src/app/${BOT_NAME}"
+      dockerfile: Dockerfile
+    working_dir: /usr/src/app/books_base_tg_bot
     volumes:
-      - .:/usr/src/app/${BOT_NAME}
-    command: >
-      bash -c "alembic upgrade head && python3 -m bot"
+      - .:/usr/src/app/books_base_tg_bot
+    command: python -m main
     restart: always
     env_file:
-      - "tg_bot/.env"
-#    network_mode: host  # Используется host mode для доступа к хосту
+      - .env
     depends_on:
-      - redis_cache  # Гарантирует, что redis_cache запущен перед тем, как стартует контейнер bot.
-      - pg_database  # Гарантирует, что pg_database запущен перед тем, как стартует контейнер bot.
+      - api
+      - redis
     networks:
       - books_base
+    stop_signal: SIGINT
+    logging:
+      driver: json-file
+      options:
+        max-size: 200k
+        max-file: 10
 
-  # http://pgconfigurator.cybertec.at/ Для конфигурации Postgres
-  pg_database:
-    container_name: "${PG_CONTAINER_NAME}"
-    image: postgres:alpine
-    ports:
-      - "5432:5432"
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_DB: "${POSTGRES_DB}"
+  api:
+    image: books_base_api_image
+    container_name: books_base_api
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    working_dir: /usr/src/app/books_base_api
     volumes:
-      - books_base_pgdata_volume:/var/lib/postgresql/data
+      - .:/usr/src/app/books_base_api
+    command: >
+      bash -c "
+        alembic upgrade head &&
+        gunicorn api.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind ${API__RUN__HOST}:${API__RUN__PORT}
+      "
+    restart: always
     env_file:
-      - 'tg_bot/.env'
-#    network_mode: host  # Используется host mode для доступа к хосту
+      - .env
+    depends_on:
+      - pg_database
     networks:
       - books_base
+    ports:
+      - ${API__RUN__PORT}:8000
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://${API__RUN__HOST}:${API__RUN__PORT}/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    logging:
+      driver: json-file
+      options:
+        max-size: 200k
+        max-file: 10
 
-  redis_cache:
-    image: redis:alpine
-    container_name: "${REDIS_CONTAINER_NAME}"
+  pg_database:
+    image: postgres:alpine
+    container_name: books_base_pg_database_2
     restart: always
-    command: redis-server --port ${REDIS_PORT} --loglevel warning --requirepass ${REDIS_PASSWORD}
     env_file:
-      - "tg_bot/.env"
-#    network_mode: host  # Используется host mode для доступа к хосту
+      - .env
+    environment:
+      POSTGRES_USER: ${DB__USER}
+      POSTGRES_PASSWORD: ${DB__PASSWORD}
+      POSTGRES_DB: ${DB__DATABASE}
+    volumes:
+      - books_base_pg_database_volume:/var/lib/postgresql/data
+    networks:
+      - books_base
+    ports:
+      - ${DB__PORT}:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB__USER} -d ${DB__DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 200k
+        max-file: 10
+
+  redis:
+    image: redis:alpine
+    container_name: books_base_redis_2
+    restart: always
+    command: redis-server --port ${REDIS__PORT} --loglevel warning --requirepass ${REDIS__PASSWORD}
+    env_file:
+      - .env
     volumes:
       - books_base_redis_volume:/data
     networks:
@@ -55,10 +100,13 @@ services:
 
 networks:
   books_base:
+    name: books_base
     driver: bridge
 
 volumes:
+  books_base_pg_database_volume:
+    name: books_base_pg_database_volume
+    external: true
   books_base_redis_volume:
     name: books_base_redis_volume
-  books_base_pgdata_volume:
-    name: books_base_pgdata_volume
+    external: true
