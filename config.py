@@ -63,7 +63,7 @@ class DatabaseConfig(BaseModel):
     pool_size: int = 50
     max_overflow: int = 10
 
-    def construct_url(self, driver="asyncpg", host=None, port=None) -> str:
+    def construct_url(self, driver="asyncpg", host=None, port=5432) -> str:
         if not host:
             host = self.host
         if not port:
