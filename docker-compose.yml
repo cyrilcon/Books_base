@@ -61,7 +61,7 @@ services:
 
   pg_database:
     image: postgres:alpine
-    container_name: books_base_pg_database_2
+    container_name: books_base_pg_database
     restart: always
     env_file:
       - .env
@@ -88,7 +88,7 @@ services:
 
   redis:
     image: redis:alpine
-    container_name: books_base_redis_2
+    container_name: books_base_redis
     restart: always
     command: redis-server --port ${REDIS__PORT} --loglevel warning --requirepass ${REDIS__PASSWORD}
     env_file:

@@ -19,7 +19,7 @@ yoomoney = "^0.1.1"
 requests = "^2.32.3"
 pydantic-settings = "^2.6.0"
 apscheduler = "^3.10.4"
-fastapi = "^0.115.3"
+fastapi = "^0.115.4"
 uvicorn = {version = "^0.32.0", extras = ["standard"]}
 alembic = "^1.13.3"
 sqlalchemy = {version = "^2.0.36", extras = ["asyncio"]}
@@ -31,6 +31,7 @@ aiosqlite = "^0.20.0"
 orjson = "^3.10.10"
 rapidfuzz = "^3.10.1"
 gunicorn = "^23.0.0"
+psycopg2-binary = "^2.9.10"
 
 
 [tool.poetry.group.dev.dependencies]
