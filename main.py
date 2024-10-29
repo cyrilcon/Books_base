@@ -84,11 +84,11 @@ def setup_logging():
     Set up logging configuration for the application.
     """
 
-    log_level = logging.INFO
+    log_level = config.logging_level
     bl.basic_colorized_config(level=log_level)
 
     logging.basicConfig(
-        level=config.logging_level,
+        level=log_level,
         format="%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s",
     )
     logger = logging.getLogger(__name__)

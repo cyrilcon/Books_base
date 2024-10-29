@@ -23,6 +23,6 @@ async def saturday_post(bot: Bot):
     await bot.send_photo(
         chat_id=config.channel.id,
         photo=config.saturday_post,
-        caption=l10n.format_value("saturday-post", {"bot_link": config.main_link}),
+        caption=l10n.format_value("saturday-post", {"bot_link": config.tg_bot.link}),
         reply_markup=deep_link_set_keyboard(deep_link_url=deep_link_url),
     )

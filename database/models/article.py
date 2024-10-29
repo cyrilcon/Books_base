@@ -15,7 +15,6 @@ class Article(Base, TableNameMixin):
     added_datetime: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=func.now(),
-        default=datetime.now(),
     )
 
     def __str__(self):

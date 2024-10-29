@@ -106,7 +106,5 @@ networks:
 volumes:
   books_base_pg_database_volume:
     name: books_base_pg_database_volume
-    external: true
   books_base_redis_volume:
     name: books_base_redis_volume
-    external: true

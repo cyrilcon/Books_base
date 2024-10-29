@@ -66,7 +66,7 @@ async def add_article_step_3(
             },
         ),
         link_preview_options=LinkPreviewOptions(
-            url=str(article.main_link),
+            url=str(article.link),
             prefer_large_media=True,
         ),
     )

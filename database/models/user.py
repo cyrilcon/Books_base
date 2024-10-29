@@ -24,12 +24,10 @@ class User(Base, TableNameMixin):
     registration_datetime: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=func.now(),
-        default=datetime.now(),
     )
     last_activity_datetime: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=func.now(),
-        default=datetime.now(),
     )
     base_balance: Mapped[int] = mapped_column(default=0, server_default="0")
 

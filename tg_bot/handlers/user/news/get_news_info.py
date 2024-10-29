@@ -76,7 +76,7 @@ async def get_article_info_success(
         "article-template",
         {
             "title": article.title,
-            "link": str(article.main_link),
+            "link": str(article.link),
             "added-date": article.added_datetime,
         },
     )
