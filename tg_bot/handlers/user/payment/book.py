@@ -1,4 +1,5 @@
 import random
+import uuid
 
 from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
@@ -86,20 +87,16 @@ async def buy_book(
         return
 
     price_rub = book.price.value
-    price_xtr = config.price.book.main.xtr
-
-    payment = Payment(
-        amount=price_rub,
-        comment=book.title,
-    )
-    payment.create()
-    id_payment = payment.id
+    price_xtr = config.price.book.daily.xtr
 
     if price_rub == config.price.book.main.rub:
+        price_xtr = config.price.book.main.rub
         discount = user.has_discount
 
         if discount == 100:
             await call.message.edit_reply_markup()
+
+            id_payment = str(uuid.uuid4())
 
             await api.users.discounts.delete_discount(id_user=user.id_user)
             await api.payments.create_payment(
@@ -159,6 +156,13 @@ async def buy_book(
                 50: round(0.50 * config.price.book.main.xtr),
             }
             price_xtr = prices_xtr.get(discount)
+
+    payment = Payment(
+        amount=price_rub,
+        comment=book.title,
+    )
+    payment.create()
+    id_payment = payment.id
 
     sent_message = await call.message.answer_invoice(
         title=book.title,
