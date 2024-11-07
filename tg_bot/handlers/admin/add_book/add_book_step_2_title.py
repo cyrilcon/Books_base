@@ -70,6 +70,8 @@ async def add_book_step_2(
     )
     result = response.get_model()
 
+    await state.update_data(title=title)
+
     if result.found > 0:
         book = result.books[0].book
         article = BookFormatter.format_article(book.id_book)
@@ -90,7 +92,6 @@ async def add_book_step_2(
         l10n.format_value("add-book-authors"),
         reply_markup=back_cancel_keyboard(l10n),
     )
-    await state.update_data(title=title)
     await state.set_state(AddBook.add_authors)
 
 
