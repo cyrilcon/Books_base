@@ -24,7 +24,7 @@ class UserBase(UserId):
     )
     language_code: str = Field(
         ...,
-        max_length=3,
+        max_length=10,
         description="IETF language tag of the user's language",
     )
 

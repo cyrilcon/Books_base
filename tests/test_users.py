@@ -212,7 +212,7 @@ class TestUsersFailure:
         """
 
         user_with_too_long_language_code_data = USER_DATA_2.copy()
-        user_with_too_long_language_code_data["language_code"] = "english"
+        user_with_too_long_language_code_data["language_code"] = "english_english"
 
         response = await client.post(prefix, json=user_with_too_long_language_code_data)
         assert response.status_code == 422
