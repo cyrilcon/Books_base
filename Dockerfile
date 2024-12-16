@@ -31,4 +31,4 @@ RUN useradd -m appuser
 USER appuser
 
 # Command to run the bot
-CMD ["python", "-m", "bot"]
+CMD ["python", "-m", "main"]
