@@ -16,6 +16,7 @@ BASE_COMMANDS = [
     "order",
     "cancel_order",
     "base_store",
+    "invite",
     "share_base",
     "news",
     "saturday",

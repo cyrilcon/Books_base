@@ -12,6 +12,8 @@ command-cancel-order = 🚫 Cancel an order
 
 command-base-store = 💎 Shop for discounts
 
+command-invite = 🫂 Share our store with friends
+
 command-share-base = 🤝🏻 Share base with a friend
 
 command-news = 📰 Latest { -books-base } news
