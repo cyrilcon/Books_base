@@ -10,14 +10,14 @@ from api.api_v1.schemas import UserSchema
 from tg_bot.keyboards.inline import buy_or_read_keyboard
 from tg_bot.services import BookFormatter, generate_book_caption
 
-start_deep_link_router = Router()
+start_book_router = Router()
 
 
-@start_deep_link_router.message(
+@start_book_router.message(
     CommandStart(deep_link=True, magic=F.args.regexp(re.compile(r"book_(\d+)"))),
     flags={"safe_message": False},
 )
-async def start_deep_link(
+async def start_book(
     message: Message,
     l10n: FluentLocalization,
     command: CommandObject,
