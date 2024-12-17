@@ -7,7 +7,7 @@ from fluent.runtime import FluentLocalization
 
 from config import config
 from tg_bot.api_client import api
-from tg_bot.keyboards.inline import deep_link_buy_keyboard
+from tg_bot.keyboards.inline import link_buy_keyboard
 from tg_bot.states import AddBook
 
 add_book_step_9_router = Router()
@@ -34,12 +34,12 @@ async def add_book_step_9(
     await api.books.create_book(data=data)
 
     if is_post:
-        deep_link_url = await create_start_link(bot, f"book_{id_book}")
+        link = await create_start_link(bot, f"book_{id_book}")
         await bot.send_photo(
             chat_id=config.channel.id,
             photo=cover,
             caption=book_caption,
-            reply_markup=deep_link_buy_keyboard(deep_link_url=deep_link_url),
+            reply_markup=link_buy_keyboard(link=link),
         )
     await call.message.answer(l10n.format_value("add-book-success"))
     await state.clear()

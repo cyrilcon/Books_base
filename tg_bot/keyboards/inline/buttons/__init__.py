@@ -8,8 +8,6 @@ __all__ = (
     "cancel_payment_button",
     "channel_button",
     "clear_button",
-    "deep_link_buy_button",
-    "deep_link_set_button",
     "delete_button",
     "discount_button",
     "done_button",
@@ -24,6 +22,8 @@ __all__ = (
     "language_en_button",
     "language_ru_button",
     "language_uk_button",
+    "link_buy_button",
+    "link_set_button",
     "news_channel_button",
     "not_from_user_button",
     "not_post_button",
@@ -56,8 +56,6 @@ from .cancel_discount import cancel_discount_button
 from .cancel_payment import cancel_payment_button
 from .channel import channel_button
 from .clear import clear_button
-from .deep_link_buy import deep_link_buy_button
-from .deep_link_set import deep_link_set_button
 from .delete import delete_button
 from .discount import discount_button
 from .done import done_button
@@ -72,6 +70,8 @@ from .edit_title import edit_title_button
 from .language_en import language_en_button
 from .language_ru import language_ru_button
 from .language_uk import language_uk_button
+from .link_buy import link_buy_button
+from .link_set import link_set_button
 from .news_channel import news_channel_button
 from .not_from_user import not_from_user_button
 from .not_post import not_post_button
