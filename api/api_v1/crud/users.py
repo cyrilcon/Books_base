@@ -161,6 +161,7 @@ async def get_user_details(
         registration_datetime=user.registration_datetime,
         last_activity_datetime=user.last_activity_datetime,
         base_balance=user.base_balance,
+        referrer_id=user.referrer_id,
         is_admin=bool(user.admin),
         is_blacklisted=bool(user.blacklist),
         is_premium=bool(user.premium),

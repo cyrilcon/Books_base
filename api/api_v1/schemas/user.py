@@ -62,6 +62,10 @@ class UserUpdate(BaseModel):
         ..., description="Time of last user activity"
     )
     base_balance: int | None = Field(None, description="User's base balance")
+    referrer_id: int | None = Field(
+        None,
+        description="ID of the user who invited this user, or None if not invited",
+    )
 
 
 class UserSchema(UserBase):
@@ -76,6 +80,10 @@ class UserSchema(UserBase):
         ..., description="Time of last user activity"
     )
     base_balance: int = Field(..., description="User's base balance")
+    referrer_id: int | None = Field(
+        None,
+        description="ID of the user who invited this user, or None if not invited",
+    )
     is_admin: bool = Field(..., description="True, if the user is an admin")
     is_blacklisted: bool = Field(..., description="True, if the user is blacklisted")
     is_premium: bool = Field(

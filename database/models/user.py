@@ -30,6 +30,7 @@ class User(Base, TableNameMixin):
         server_default=func.now(),
     )
     base_balance: Mapped[int] = mapped_column(default=0, server_default="0")
+    referrer_id: Mapped[int | None] = mapped_column(default=None, server_default=None)
 
     admin: Mapped["Admin"] = relationship(
         back_populates="user",
@@ -59,7 +60,8 @@ class User(Base, TableNameMixin):
             f"language_code={self.language_code!r}, "
             f"registration_datetime={self.registration_datetime!r}, "
             f"last_activity_datetime={self.last_activity_datetime!r}, "
-            f"base_balance={self.base_balance})"
+            f"base_balance={self.base_balance}, "
+            f"referrer_id={self.referrer_id})"
         )
 
     def __repr__(self):
