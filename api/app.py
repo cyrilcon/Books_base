@@ -23,7 +23,7 @@ def create_app() -> FastAPI:
         default_response_class=ORJSONResponse,
         lifespan=lifespan,
         description="Books_base API is an interface for managing the functionality of the Telegram bot, providing access to the electronic book library. The API enables integration and automation of interactions with the store, offering features for fast search, order processing, purchase management, and tracking user status.",
-        version="1.0.0",
+        version="1.1.0",
     )
 
     app.include_router(api_routers)

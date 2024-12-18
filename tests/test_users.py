@@ -122,6 +122,7 @@ class TestUsersSuccess:
         update_data = {
             "full_name": "Jane Doe",
             "last_activity_datetime": datetime.now().isoformat(),
+            "referrer_id": 2,
         }
 
         id_user = create_user["id_user"]
@@ -308,3 +309,25 @@ class TestUsersFailure:
             f"{prefix}/{id_user}", json=incomplete_update_data
         )
         assert response.status_code == 422
+
+    @pytest.mark.asyncio
+    async def test_update_user_invalid_referrer_id(
+        self, client: AsyncClient, create_user
+    ):
+        """
+        Test updating a user with referrer_id equal to id_user.
+        """
+
+        id_user = create_user["id_user"]
+        update_data = {
+            "last_activity_datetime": datetime.now().isoformat(),
+            "referrer_id": id_user,
+        }
+
+        response = await client.patch(f"{prefix}/{id_user}", json=update_data)
+        assert response.status_code == 400
+
+        error_text = (
+            "A user cannot refer themselves: 'referrer_id' must not equal 'id_user'!!"
+        )
+        assert response.json()["detail"] == error_text
