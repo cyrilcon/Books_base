@@ -8,6 +8,7 @@ __all__ = (
     "cancel_payment_button",
     "channel_button",
     "clear_button",
+    "copy_invite_link_button",
     "delete_button",
     "discount_button",
     "done_button",
@@ -42,7 +43,6 @@ __all__ = (
     "search_by_genre_button",
     "search_by_title_button",
     "serve_button",
-    "share_our_store_button",
     "show_book_button",
     "yes_button",
 )
@@ -56,6 +56,7 @@ from .cancel_discount import cancel_discount_button
 from .cancel_payment import cancel_payment_button
 from .channel import channel_button
 from .clear import clear_button
+from .copy_invite_link import copy_invite_link_button
 from .delete import delete_button
 from .discount import discount_button
 from .done import done_button
@@ -90,6 +91,5 @@ from .search_by_author import search_by_author_button
 from .search_by_genre import search_by_genre_button
 from .search_by_title import search_by_title_button
 from .serve import serve_button
-from .share_our_store import share_our_store_button
 from .show_book import show_book_button
 from .yes import yes_button

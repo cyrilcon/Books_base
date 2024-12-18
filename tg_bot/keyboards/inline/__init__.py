@@ -7,6 +7,8 @@ __all__ = (
     "cancel_keyboard",
     "cancel_discount_keyboard",
     "channel_keyboard",
+    "copy_invite_link_keyboard",
+    "copy_invite_link_cancel_keyboard",
     "delete_cancel_keyboard",
     "discounts_keyboard",
     "discounts_back_cancel_keyboard",
@@ -29,7 +31,6 @@ __all__ = (
     "reply_keyboard",
     "serve_order_keyboard",
     "share_base_keyboard",
-    "share_our_store_keyboard",
     "show_book_order_cancel_keyboard",
     "view_articles_keyboard",
     "view_orders_keyboard",
@@ -44,6 +45,8 @@ from .buy_set import buy_set_keyboard
 from .cancel import cancel_keyboard
 from .cancel_discount import cancel_discount_keyboard
 from .channel import channel_keyboard
+from .copy_invite_link import copy_invite_link_keyboard
+from .copy_invite_link_cancel import copy_invite_link_cancel_keyboard
 from .delete_cancel import delete_cancel_keyboard
 from .discounts import discounts_keyboard
 from .discounts_back_cancel import discounts_back_cancel_keyboard
@@ -66,7 +69,6 @@ from .post_cancel import post_cancel_keyboard
 from .reply import reply_keyboard
 from .serve_order import serve_order_keyboard
 from .share_base import share_base_keyboard
-from .share_our_store import share_our_store_keyboard
 from .show_book_order_cancel import show_book_order_cancel_keyboard
 from .view_articles import view_articles_keyboard
 from .view_orders import view_orders_keyboard

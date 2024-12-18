@@ -56,7 +56,7 @@ button-cancel-discount = 🚫 Cancel { $discount_value ->
        *[other] discount { $discount_value }%
     }
 
-button-share-our-store = 📤 Share our store
+button-copy-invite-link = 📋 Copy the link
 
 button-language-ru = 🏳️ RUS
 

@@ -56,7 +56,7 @@ button-cancel-discount = 🚫 Скасувати { $discount_value ->
        *[other] знижку { $discount_value }%
     }
 
-button-share-our-store = 📤 Поділитися нашим магазином
+button-copy-invite-link = 📋 Скопіювати посилання
 
 button-language-ru = 🏳️ RUS
 
