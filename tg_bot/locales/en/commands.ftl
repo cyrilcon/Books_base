@@ -12,7 +12,7 @@ command-cancel-order = 🚫 Cancel an order
 
 command-base-store = 💎 Shop for discounts
 
-command-invite = 🫂 Share our store with friends
+command-invite = 👥 Invite a friend
 
 command-share-base = 🤝🏻 Share base with a friend
 
