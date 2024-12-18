@@ -1,5 +1,5 @@
 bot-description =
-    Welcome to the @Books_base library!!
+    Welcome to the @{ -books-base } library!!
 
     📚 Quick access to thousands of e-books
     🔍 Convenient search by title, author, or genre
@@ -9,7 +9,7 @@ bot-description =
     ⚡️ Easy payment and fast support
 
 bot-short-description =
-    🟡 Main bot of the @Books_base store
+    🟡 Main bot of the @{ -books-base } store
 
     🟠 All e-books for 85₽ in any format
 

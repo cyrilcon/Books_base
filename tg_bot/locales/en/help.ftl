@@ -1,13 +1,13 @@
 help =
-    <b>📖 What is Books_base??</b>:
+    <b>📖 What is { -books-base }??</b>:
 
     { article-main }
 
-    <b>🤖 Bot Commands for Books_base</b>:
+    <b>🤖 Bot Commands for { -books-base }</b>:
 
     { article-bot-commands }
 
-    <b>🔒 Books_base Privacy Policy</b>:
+    <b>🔒 { -books-base } Privacy Policy</b>:
 
     { article-privacy-policy }
 

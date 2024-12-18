@@ -12,7 +12,10 @@ share-base-error-self-transfer =
     You cannot send <i><b>base</b></i> to yourself!!
     Please enter your friend's username or link again
 
-share-base-error-user-not-found = User <b>@{ $username }</b> has not visited our store yet!!
+share-base-error-user-not-found =
+    User <b>@{ $username }</b> has not visited our store yet!!
+
+    { invite }
 
 share-base-error-user-has-premium =
     You cannot transfer <i><b>base</b></i>!!

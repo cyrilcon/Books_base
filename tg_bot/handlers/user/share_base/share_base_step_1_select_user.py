@@ -1,13 +1,15 @@
-from aiogram import Router, F
+from aiogram import Router, F, Bot
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message
+from aiogram.types import Message, LinkPreviewOptions
+from aiogram.utils.deep_linking import create_start_link
 from fluent.runtime import FluentLocalization
 
+from config import config
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import (
     cancel_keyboard,
-    share_our_store_keyboard,
+    copy_invite_link_cancel_keyboard,
     share_base_keyboard,
 )
 from tg_bot.services import extract_username
@@ -24,6 +26,7 @@ async def share_base_step_1(
     message: Message,
     l10n: FluentLocalization,
     state: FSMContext,
+    bot: Bot,
 ):
     id_user = message.from_user.id
 
@@ -47,12 +50,22 @@ async def share_base_step_1(
     status = response.status
 
     if status != 200:
+        invite_link = await create_start_link(bot, str(message.from_user.id))
+        price_discount_100 = config.price.discount.discount_100
+
         await message.answer(
             l10n.format_value(
                 "share-base-error-user-not-found",
-                {"username": username},
+                {
+                    "username": username,
+                    "invite_link": invite_link,
+                    "price_discount_100": price_discount_100,
+                },
             ),
-            reply_markup=share_our_store_keyboard(l10n),
+            link_preview_options=LinkPreviewOptions(prefer_small_media=True),
+            reply_markup=copy_invite_link_cancel_keyboard(
+                l10n, invite_link=invite_link
+            ),
         )
         return
 

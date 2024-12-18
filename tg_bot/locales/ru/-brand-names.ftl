@@ -2,4 +2,4 @@
 
 -base-store = Base_Store
 
--books-base-premium = Books_base Premium
+-books-base-premium = { -books-base } Premium
