@@ -117,10 +117,15 @@ async def restart_scheduler(bot: Bot):
     """
 
     # Reboot scheduler after bot restart
-    scheduler = AsyncIOScheduler(timezone=config.timezone)
+    scheduler = AsyncIOScheduler()
     scheduler.add_job(
         saturday_post,
-        trigger=CronTrigger(day_of_week="sat", hour=9, minute=0),
+        trigger=CronTrigger(
+            day_of_week="sat",
+            hour=9,
+            minute=0,
+            timezone=config.timezone,
+        ),
         args=[bot],
     )
     scheduler.start()  # Start the scheduler
