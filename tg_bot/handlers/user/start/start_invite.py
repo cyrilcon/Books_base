@@ -10,6 +10,7 @@ from fluent.runtime import FluentLocalization
 from api.api_v1.schemas import UserSchema
 from config import config
 from tg_bot.api_client import api
+from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
 from tg_bot.services import set_user_commands, get_fluent_localization, create_user_link
 
@@ -72,6 +73,11 @@ async def start_invite(
         return
 
     referrer = response.get_model()
+
+    # If the referrer is a premium user or is blacklisted
+    if referrer.is_premium or referrer.is_blacklisted:
+        return
+
     price_discount_100 = config.price.discount.discount_100
     base_balance = referrer.base_balance + price_discount_100
 
@@ -100,6 +106,7 @@ async def start_invite(
                 },
             ),
             link_preview_options=LinkPreviewOptions(is_disabled=True),
+            message_effect_id=MessageEffects.CONFETTI,
         )
     except AiogramError:
         pass
