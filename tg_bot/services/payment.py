@@ -1,8 +1,7 @@
 import uuid
 from dataclasses import dataclass
-
-from yoomoney import Quickpay, Client
-
+from aiomoney import YooMoney
+from aiomoney.schemas import InvoiceSource
 from config import config
 
 
@@ -19,29 +18,20 @@ class Payment:
 
         self.id = str(uuid.uuid4())
 
-    def check_payment(self):
+    async def check_payment(self) -> bool:
         """Search for a transaction"""
 
-        client = Client(config.yoomoney_wallet.token)
-        history = client.operation_history(label=self.id)
-        for operation in history.operations:
-            if str(self.id) == operation.label:
-                return True
+        wallet = YooMoney(access_token=config.yoomoney_wallet.token)
+        return await wallet.is_payment_successful(label=self.id)
 
-    @property
-    def invoice(self):
+    async def invoice(self) -> str:
         """Creates a product and a payment link"""
 
-        quick_pay = Quickpay(
-            receiver=config.yoomoney_wallet.number,
-            quickpay_form="shop",
-            targets=f"Books_base",
-            paymentType="SB",
-            sum=self.amount,
-            label=f"{self.id}",
-            comment=self.comment,
-            successURL=config.tg_bot.link,
+        wallet = YooMoney(access_token=config.yoomoney_wallet.token)
+        payment_form = await wallet.create_invoice(
+            amount_rub=self.amount,
+            label=self.id,
+            payment_source=InvoiceSource.YOOMONEY_WALLET,
+            success_redirect_url=config.tg_bot.link,
         )
-        link = quick_pay.base_url
-
-        return link
+        return payment_form.url

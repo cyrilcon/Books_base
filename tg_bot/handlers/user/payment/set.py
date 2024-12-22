@@ -91,7 +91,7 @@ async def buy_set(
         comment=l10n.format_value("saturday-action"),
     )
     payment.create()
-    id_payment = payment.id
+    payment_link = await payment.invoice()
 
     sent_message = await call.message.answer_invoice(
         title=l10n.format_value("saturday-action"),
@@ -106,10 +106,10 @@ async def buy_set(
         reply_markup=pay_set_keyboard(
             l10n=l10n,
             book_ids=book_ids,
-            url_payment=payment.invoice,
+            url_payment=payment_link,
             price_rub=price_rub,
             price_xtr=price_xtr,
-            id_payment=id_payment,
+            id_payment=payment.id,
         ),
     )
     await state.set_state(PaymentState.set)
@@ -175,7 +175,7 @@ async def payment_set(
 
     price = config.price.set.rub
 
-    if not Payment.check_payment(Payment(amount=price, id=id_payment)):
+    if not await Payment(amount=price, id=id_payment).check_payment():
         await call.answer(
             l10n.format_value("payment-error-payment-not-found"),
             show_alert=True,

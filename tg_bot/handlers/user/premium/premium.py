@@ -47,6 +47,7 @@ async def premium(
         comment=l10n.format_value("Books_base Premium"),
     )
     payment.create()
+    payment_link = await payment.invoice()
 
     await message.answer_invoice(
         title="Books_base Premium ⚜️",
@@ -60,7 +61,7 @@ async def premium(
         currency="XTR",
         reply_markup=pay_premium_keyboard(
             l10n=l10n,
-            url_payment=payment.invoice,
+            url_payment=payment_link,
             price_xtr=price_xtr,
             price_rub=price_rub,
             id_payment=payment.id,

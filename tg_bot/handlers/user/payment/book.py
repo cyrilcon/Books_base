@@ -161,7 +161,7 @@ async def buy_book(
         comment=book.title,
     )
     payment.create()
-    id_payment = payment.id
+    payment_link = await payment.invoice()
 
     sent_message = await call.message.answer_invoice(
         title=book.title,
@@ -176,10 +176,10 @@ async def buy_book(
         reply_markup=pay_book_keyboard(
             l10n=l10n,
             id_book=id_book,
-            url_payment=payment.invoice,
+            url_payment=payment_link,
             price_xtr=price_xtr,
             price_rub=price_rub,
-            id_payment=id_payment,
+            id_payment=payment.id,
         ),
     )
     await state.set_state(PaymentState.book)
@@ -222,7 +222,7 @@ async def payment_book(
         await state.clear()
         return
 
-    if not Payment.check_payment(Payment(amount=price, id=id_payment)):
+    if not await Payment(amount=price, id=id_payment).check_payment():
         await call.answer(
             l10n.format_value("payment-error-payment-not-found"),
             show_alert=True,

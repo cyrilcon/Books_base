@@ -41,7 +41,7 @@ async def payment_premium(
     id_payment = call.data.split(":")[-1]
     price = config.price.premium.rub
 
-    if not Payment.check_payment(Payment(amount=price, id=id_payment)):
+    if not await Payment(amount=price, id=id_payment).check_payment():
         await call.answer(
             l10n.format_value("payment-error-payment-not-found"),
             show_alert=True,
