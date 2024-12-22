@@ -26,9 +26,8 @@ async def start_book(
     id_book = int(command.args.split("_")[1])
 
     response = await api.books.get_book_by_id(id_book=id_book)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         article = BookFormatter.format_article(id_book=id_book)
 
         await message.answer(

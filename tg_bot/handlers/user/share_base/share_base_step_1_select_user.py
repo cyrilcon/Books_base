@@ -47,9 +47,8 @@ async def share_base_step_1(
         return
 
     response = await api.users.get_user_by_username(username=username)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         invite_link = await create_start_link(bot, str(message.from_user.id))
         price_discount_100 = config.price.discount.discount_100
 

@@ -31,9 +31,8 @@ async def serve_order_from_button(
     id_order = int(call.data.split(":")[-1])
 
     response = await api.orders.get_order_by_id(id_order=id_order)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await call.message.edit_reply_markup()
         await call.message.answer(
             l10n.format_value("serve-order-error-order-already-served-or-canceled")
@@ -69,9 +68,8 @@ async def serve_order_book_unavailable(
     id_order = int(call.data.split(":")[-1])
 
     response = await api.orders.get_order_by_id(id_order=id_order)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await call.message.answer(
             l10n.format_value("serve-order-error-order-already-served-or-canceled")
         )

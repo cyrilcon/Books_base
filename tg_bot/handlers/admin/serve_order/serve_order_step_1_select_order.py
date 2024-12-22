@@ -36,9 +36,8 @@ async def serve_order_step_1(
     id_order = int(order_number)
 
     response = await api.orders.get_order_by_id(id_order=id_order)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await message.answer(
             l10n.format_value("serve-order-error-order-not-found"),
             reply_markup=cancel_keyboard(l10n),

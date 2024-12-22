@@ -33,9 +33,8 @@ async def saturday_step_1(
     id_book_1 = int(article_1.lstrip("#"))
 
     response = await api.books.get_book_by_id(id_book=id_book_1)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await message.answer(
             l10n.format_value("saturday-error-article-not-found"),
             reply_markup=cancel_keyboard(l10n),

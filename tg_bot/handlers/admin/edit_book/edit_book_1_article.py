@@ -64,9 +64,8 @@ async def edit_article_process(
     new_id_book = int(article.lstrip("#"))
 
     response = await api.books.get_book_by_id(id_book=new_id_book)
-    status = response.status
 
-    if status == 200:
+    if response.status == 200:
         await message.answer(
             l10n.format_value("edit-book-error-article-already-exists"),
             reply_markup=cancel_keyboard(l10n),

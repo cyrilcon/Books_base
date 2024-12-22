@@ -21,9 +21,8 @@ async def find_user(
     if identifier.isdigit():
         id_user = int(identifier)
         response = await api.users.get_user_by_id(id_user)
-        status = response.status
 
-        if status != 200:
+        if response.status != 200:
             response_message = l10n.format_value(
                 "error-user-not-found-by-id",
                 {"id_user": str(id_user)},
@@ -40,9 +39,8 @@ async def find_user(
         return None, response_message
 
     response = await api.users.get_user_by_username(username)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         response_message = l10n.format_value(
             "error-user-not-found-by-username",
             {"username": username},

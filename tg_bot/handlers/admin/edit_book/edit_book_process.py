@@ -41,9 +41,8 @@ async def edit_book_process(
     id_book = int(article.lstrip("#"))
 
     response = await api.books.get_book_by_id(id_book=id_book)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         sent_message = await message.answer(
             l10n.format_value("edit-book-error-article-not-found"),
             reply_markup=cancel_keyboard(l10n),

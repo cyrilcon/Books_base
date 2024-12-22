@@ -32,9 +32,8 @@ async def delete_article_process(
         return
 
     response = await api.articles.get_article_by_link(link=link)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await message.answer(
             l10n.format_value("delete-article-error-article-not-found"),
             reply_markup=cancel_keyboard(l10n),

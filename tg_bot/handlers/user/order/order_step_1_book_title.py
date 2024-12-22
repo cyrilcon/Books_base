@@ -98,9 +98,8 @@ async def order_step_1_display_book_details(
     article = BookFormatter.format_article(id_book)
 
     response = await api.books.get_book_by_id(id_book=id_book)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await call.message.answer(
             l10n.format_value(
                 "error-book-unavailable",

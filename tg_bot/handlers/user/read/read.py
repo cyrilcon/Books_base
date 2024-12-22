@@ -28,9 +28,8 @@ async def read(
     id_book = int(call.data.split(":")[-1])
 
     response = await api.books.get_book_by_id(id_book=id_book)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await call.message.edit_reply_markup()
 
         article = BookFormatter.format_article(id_book=id_book)

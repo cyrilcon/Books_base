@@ -90,9 +90,8 @@ async def get_book(
     article = BookFormatter.format_article(id_book)
 
     response = await api.books.get_book_by_id(id_book=id_book)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await call.answer(
             l10n.format_value(
                 "error-book-unavailable",
@@ -144,9 +143,8 @@ async def book_search(
     if is_valid_book_article(book_title_request):
         id_book = int(book_title_request.lstrip("#"))
         response = await api.books.get_book_by_id(id_book=id_book)
-        status = response.status
 
-        if status != 200:
+        if response.status != 200:
             await message.answer(
                 l10n.format_value(
                     "search-by-title-error-article-not-found",

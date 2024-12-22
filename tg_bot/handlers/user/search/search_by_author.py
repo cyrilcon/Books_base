@@ -93,9 +93,8 @@ async def get_author(
     id_author = int(call.data.split(":")[-1])
 
     response = await api.authors.get_author_by_id(id_author=id_author)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await call.answer(
             l10n.format_value("search-by-author-error-author-unavailable"),
             show_alert=True,

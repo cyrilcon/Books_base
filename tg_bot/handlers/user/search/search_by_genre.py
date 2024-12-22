@@ -146,9 +146,8 @@ async def get_genre(
     id_genre = int(call.data.split(":")[-1])
 
     response = await api.genres.get_genre_by_id(id_genre=id_genre)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await call.answer(
             l10n.format_value("search-by-genre-error-genre-unavailable"),
             show_alert=True,

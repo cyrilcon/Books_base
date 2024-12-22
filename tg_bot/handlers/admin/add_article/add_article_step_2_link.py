@@ -66,9 +66,8 @@ async def add_article_step_2(
         return
 
     response = await api.articles.get_article_by_link(link=link)
-    status = response.status
 
-    if status == 200:
+    if response.status == 200:
         await message.answer(
             l10n.format_value("add-article-error-link-already-exists"),
             reply_markup=back_cancel_keyboard(l10n),

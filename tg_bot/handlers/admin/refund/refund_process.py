@@ -28,9 +28,8 @@ async def refund_process(
     id_payment = message.text
 
     response = await api.payments.get_payment_by_id(id_payment=id_payment)
-    status = response.status
 
-    if status != 200:
+    if response.status != 200:
         await message.answer(
             l10n.format_value("refund-error-not-found"),
             reply_markup=cancel_keyboard(l10n),
