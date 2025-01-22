@@ -21,7 +21,7 @@ from tg_bot.middlewares import (
     StorageMiddleware,
     ThrottlingMiddleware,
 )
-from tg_bot.services import set_default_commands, set_bot_description, saturday_post
+from tg_bot.services.bot import set_default_commands, set_bot_description
 
 
 async def on_startup(bot: Bot):
