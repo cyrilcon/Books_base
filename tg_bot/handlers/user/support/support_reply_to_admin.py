@@ -7,7 +7,8 @@ from fluent.runtime import FluentLocalization
 
 from config import config
 from tg_bot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tg_bot.services import ClearKeyboard, create_user_link
+from tg_bot.services import ClearKeyboard
+from tg_bot.services.users import create_user_link
 from tg_bot.states import Support
 
 support_reply_to_admin_router = Router()

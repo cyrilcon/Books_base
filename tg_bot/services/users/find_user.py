@@ -4,7 +4,9 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
 from api.api_v1.schemas import UserSchema
-from tg_bot.services.extract_username import extract_username
+from tg_bot.services.users.extract_username import (
+    extract_username,
+)  # TODO: think it over
 
 
 async def find_user(

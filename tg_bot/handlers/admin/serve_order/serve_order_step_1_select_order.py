@@ -6,7 +6,7 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import cancel_keyboard, back_cancel_keyboard
-from tg_bot.services import create_user_link
+from tg_bot.services.users import create_user_link
 from tg_bot.states import ServeOrder
 
 serve_order_step_1_router = Router()

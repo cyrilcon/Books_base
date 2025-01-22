@@ -12,7 +12,7 @@ from tg_bot.keyboards.inline import (
     copy_invite_link_cancel_keyboard,
     share_base_keyboard,
 )
-from tg_bot.services import extract_username
+from tg_bot.services.users import extract_username
 from tg_bot.states import ShareBase
 
 share_base_step_1_router = Router()

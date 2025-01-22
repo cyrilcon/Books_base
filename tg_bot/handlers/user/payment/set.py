@@ -22,11 +22,11 @@ from tg_bot.middlewares import SaturdayMiddleware
 from tg_bot.services import (
     ClearKeyboard,
     Payment,
-    create_user_link,
     BookFormatter,
     send_files,
 )
 from tg_bot.services.localization import get_fluent_localization
+from tg_bot.services.users import create_user_link
 from tg_bot.states import Payment as PaymentState
 
 payment_set_router = Router()

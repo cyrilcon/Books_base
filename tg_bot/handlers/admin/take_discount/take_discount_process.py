@@ -7,8 +7,8 @@ from fluent.runtime import FluentLocalization
 from config import config
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import find_user, create_user_link
 from tg_bot.services.localization import get_fluent_localization
+from tg_bot.services.users import create_user_link, find_user
 from tg_bot.states import TakeDiscount
 
 take_discount_process_router = Router()

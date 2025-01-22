@@ -5,7 +5,7 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard, discounts_back_cancel_keyboard
-from tg_bot.services import find_user, create_user_link
+from tg_bot.services.users import create_user_link, find_user
 from tg_bot.states import GiveDiscount
 
 give_discount_step_1_router = Router()

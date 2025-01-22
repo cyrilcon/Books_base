@@ -21,12 +21,12 @@ from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard, pay_book_keyboard
 from tg_bot.services import (
     Payment,
-    create_user_link,
     BookFormatter,
     send_files,
     ClearKeyboard,
 )
 from tg_bot.services.localization import get_fluent_localization
+from tg_bot.services.users import create_user_link
 from tg_bot.states import Payment as PaymentState
 
 payment_book_router = Router()

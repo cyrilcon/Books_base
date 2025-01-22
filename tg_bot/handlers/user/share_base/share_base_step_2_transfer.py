@@ -9,8 +9,12 @@ from config import config
 from tg_bot.api_client import api
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import get_user_localization, create_user_link, extract_username
 from tg_bot.services.localization import get_fluent_localization
+from tg_bot.services.users import (
+    get_user_localization,
+    create_user_link,
+    extract_username,
+)
 from tg_bot.states import ShareBase
 
 share_base_step_2_router = Router()

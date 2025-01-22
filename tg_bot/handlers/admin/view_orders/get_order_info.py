@@ -3,7 +3,7 @@ from typing import Tuple, Optional
 from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
-from tg_bot.services import create_user_link
+from tg_bot.services.users import create_user_link
 
 
 async def get_order_info(
