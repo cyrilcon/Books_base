@@ -4,7 +4,7 @@ from aiogram.utils.deep_linking import create_start_link
 from config import config
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import link_set_keyboard
-from tg_bot.services import get_fluent_localization
+from tg_bot.services.localization import get_fluent_localization  # TODO: think it over
 
 
 async def saturday_post(bot: Bot):

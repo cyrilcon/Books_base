@@ -9,7 +9,8 @@ from tg_bot.api_client import api
 from api.api_v1.schemas import PaymentCurrencyEnum, PaymentTypeEnum, UserSchema
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
-from tg_bot.services import Payment, create_user_link, get_fluent_localization
+from tg_bot.services import Payment, create_user_link
+from tg_bot.services.localization import get_fluent_localization
 from tg_bot.states import Payment as PaymentState
 
 payment_premium_router = Router()

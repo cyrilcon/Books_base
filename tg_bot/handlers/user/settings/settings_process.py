@@ -5,7 +5,7 @@ from fluent.runtime import FluentLocalization
 from tg_bot.api_client import api
 from api.api_v1.schemas import UserSchema
 from tg_bot.keyboards.inline import languages_keyboard
-from tg_bot.services import get_fluent_localization
+from tg_bot.services.localization import get_fluent_localization
 
 settings_process_router = Router()
 

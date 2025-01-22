@@ -5,7 +5,8 @@ from fluent.runtime import FluentLocalization
 from config import config
 from tg_bot.api_client import api
 from api.api_v1.schemas import UserSchema
-from tg_bot.services import get_fluent_localization, create_user_link
+from tg_bot.services import create_user_link
+from tg_bot.services.localization import get_fluent_localization
 
 base_store_cancel_discount_router = Router()
 

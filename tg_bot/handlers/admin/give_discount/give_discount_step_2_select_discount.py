@@ -9,7 +9,7 @@ from config import config
 from tg_bot.api_client import api
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import get_fluent_localization
+from tg_bot.services.localization import get_fluent_localization
 from tg_bot.states import GiveDiscount
 
 give_discount_step_2_router = Router()

@@ -4,7 +4,7 @@ from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 
 from api.api_v1.schemas import UserSchema
-from tg_bot.services import get_fluent_localization
+from tg_bot.services.localization import get_fluent_localization
 
 
 class LocalizationMiddleware(BaseMiddleware):

@@ -6,7 +6,8 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import find_user, create_user_link, set_user_commands
+from tg_bot.services import find_user, create_user_link
+from tg_bot.services.bot import set_user_commands
 from tg_bot.states import RemoveAdmin
 
 remove_admin_process_router = Router()

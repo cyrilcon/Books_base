@@ -1,13 +1,13 @@
 __all__ = (
     "bot",
     "utils",
+    "localization",
     "BookFormatter",
     "Broadcaster",
     "ClearKeyboard",
     "create_user_link",
     "extract_username",
     "find_user",
-    "get_fluent_localization",
     "generate_book_caption",
     "generate_id_order",
     "get_user_localization",
@@ -18,13 +18,15 @@ __all__ = (
 
 from . import bot
 from . import utils
+from . import localization
 from .book_formatter import BookFormatter
 from .broadcaster import Broadcaster
 from .clear_keyboard import ClearKeyboard
 from .create_user_link import create_user_link
 from .extract_username import extract_username
 from .find_user import find_user
-from .fluent_loader import get_fluent_localization
+
+# from tg_bot.services.localization.fluent_loader import get_fluent_localization
 from .generate_book_caption import generate_book_caption
 from .generate_id_order import generate_id_order
 from .get_user_localization import get_user_localization

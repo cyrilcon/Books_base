@@ -6,7 +6,7 @@ from aiogram.types import CallbackQuery, Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tg_bot.services import get_fluent_localization
+from tg_bot.services.localization import get_fluent_localization
 from tg_bot.states import SendMessage
 
 send_message_step_2_router = Router()

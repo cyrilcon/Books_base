@@ -25,8 +25,8 @@ from tg_bot.services import (
     create_user_link,
     BookFormatter,
     send_files,
-    get_fluent_localization,
 )
+from tg_bot.services.localization import get_fluent_localization
 from tg_bot.states import Payment as PaymentState
 
 payment_set_router = Router()

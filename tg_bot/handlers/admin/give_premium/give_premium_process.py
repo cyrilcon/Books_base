@@ -9,7 +9,8 @@ from config import config
 from tg_bot.api_client import api
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard, channel_keyboard
-from tg_bot.services import find_user, create_user_link, get_fluent_localization
+from tg_bot.services import find_user, create_user_link
+from tg_bot.services.localization import get_fluent_localization
 from tg_bot.states import GivePremium
 
 give_premium_process_router = Router()

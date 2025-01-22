@@ -10,11 +10,8 @@ from tg_bot.api_client import api
 from api.api_v1.schemas import PaymentCurrencyEnum, PaymentTypeEnum
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard, my_books_keyboard
-from tg_bot.services import (
-    generate_book_caption,
-    Payment,
-    get_fluent_localization,
-)
+from tg_bot.services import generate_book_caption, Payment
+from tg_bot.services.localization import get_fluent_localization
 from tg_bot.services.utils import is_valid_book_article
 from tg_bot.states import GiveBook
 

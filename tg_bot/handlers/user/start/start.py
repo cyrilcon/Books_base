@@ -6,7 +6,7 @@ from fluent.runtime import FluentLocalization
 from api.api_v1.schemas import UserSchema
 from config import config
 from tg_bot.keyboards.inline import channel_keyboard
-from tg_bot.services import set_user_commands
+from tg_bot.services.bot import set_user_commands
 
 command_start_router = Router()
 

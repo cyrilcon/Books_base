@@ -9,7 +9,8 @@ from config import config
 from tg_bot.api_client import api
 from api.api_v1.schemas import PaymentCurrencyEnum
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import create_user_link, get_fluent_localization
+from tg_bot.services import create_user_link
+from tg_bot.services.localization import get_fluent_localization
 from tg_bot.states import Refund
 
 refund_process_router = Router()

@@ -12,7 +12,9 @@ from config import config
 from tg_bot.api_client import api
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
-from tg_bot.services import set_user_commands, get_fluent_localization, create_user_link
+from tg_bot.services import create_user_link
+from tg_bot.services.bot import set_user_commands
+from tg_bot.services.localization import get_fluent_localization
 
 start_invite_router = Router()
 
