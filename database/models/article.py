@@ -4,7 +4,7 @@ from sqlalchemy import func, String
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column
 
-from .base import Base, TableNameMixin
+from ._base import Base, TableNameMixin
 
 
 class Article(Base, TableNameMixin):

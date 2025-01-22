@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base, TableNameMixin
+from ._base import Base, TableNameMixin
 
 if TYPE_CHECKING:
     from .book import Book

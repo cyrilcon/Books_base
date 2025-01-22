@@ -5,7 +5,7 @@ from sqlalchemy import ForeignKey, func
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base, TableNameMixin
+from ._base import Base, TableNameMixin
 
 if TYPE_CHECKING:
     from .user import User
