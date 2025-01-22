@@ -10,7 +10,7 @@ def get_fluent_localization(language_code: str) -> FluentLocalization:
     """
 
     # Check "locales" directory on the same level as this file
-    locales_dir = Path(__file__).parent.parent / "locales"
+    locales_dir = Path(__file__).parent.parent.parent / "locales"
     if not locales_dir.exists():
         err = '"locales" directory does not exist'
         raise FileNotFoundError(err)
