@@ -5,7 +5,7 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import find_user, create_user_link, convert_utc_datetime
+from tg_bot.services import find_user, create_user_link, utils
 from tg_bot.states import GetProfile
 
 get_profile_process_router = Router()
@@ -30,8 +30,8 @@ async def get_profile_process(
 
     user_link = create_user_link(user.full_name, user.username)
 
-    registration_datetime = convert_utc_datetime(user.registration_datetime)
-    last_activity_datetime = convert_utc_datetime(user.last_activity_datetime)
+    registration_datetime = utils.convert_utc_datetime(user.registration_datetime)
+    last_activity_datetime = utils.convert_utc_datetime(user.last_activity_datetime)
 
     await message.answer(
         l10n.format_value(

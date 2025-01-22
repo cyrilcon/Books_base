@@ -11,7 +11,7 @@ from tg_bot.keyboards.inline import (
     back_cancel_keyboard,
     buy_set_keyboard,
 )
-from tg_bot.services import is_valid_book_article
+from tg_bot.services.utils import is_valid_book_article
 from tg_bot.states import Saturday
 
 saturday_step_3_router = Router()

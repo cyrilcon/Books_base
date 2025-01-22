@@ -11,7 +11,8 @@ from tg_bot.api_client import api
 from api.api_v1.schemas import UserSchema
 from tg_bot.enums import SearchBy
 from tg_bot.keyboards.inline import buy_or_read_keyboard
-from tg_bot.services import generate_book_caption, BookFormatter, is_valid_book_article
+from tg_bot.services import generate_book_caption, BookFormatter
+from tg_bot.services.utils import is_valid_book_article
 from .keyboards import search_by_keyboard, book_pagination_keyboard
 
 search_by_title_router = Router()
@@ -20,10 +21,7 @@ search_by_title_router.message.middleware(ChatActionMiddleware())
 
 @search_by_title_router.callback_query(
     F.data.startswith("search_by_title"),
-    flags={
-        # "clear_keyboard": False,
-        "safe_message": False,
-    },
+    flags={"safe_message": False},
 )
 async def search_by_title(
     call: CallbackQuery,
@@ -73,10 +71,7 @@ async def book_page(
 
 @search_by_title_router.callback_query(
     F.data.startswith("get_book"),
-    flags={
-        # "clear_keyboard": False,
-        "safe_message": False,
-    },
+    flags={"safe_message": False},
 )
 async def get_book(
     call: CallbackQuery,

@@ -25,10 +25,7 @@ search_by_genre_router.message.middleware(ChatActionMiddleware())
 
 @search_by_genre_router.callback_query(
     F.data.startswith("search_by_genre"),
-    flags={
-        # "clear_keyboard": False,
-        "safe_message": False,
-    },
+    flags={"safe_message": False},
 )
 async def search_by_genre(
     call: CallbackQuery,

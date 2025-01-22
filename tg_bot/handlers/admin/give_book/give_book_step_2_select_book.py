@@ -12,10 +12,10 @@ from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import cancel_keyboard, my_books_keyboard
 from tg_bot.services import (
     generate_book_caption,
-    is_valid_book_article,
     Payment,
     get_fluent_localization,
 )
+from tg_bot.services.utils import is_valid_book_article
 from tg_bot.states import GiveBook
 
 give_book_step_2_router = Router()

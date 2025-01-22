@@ -7,7 +7,8 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import cancel_keyboard, edit_book_keyboard
-from tg_bot.services import is_valid_book_article, generate_book_caption, ClearKeyboard
+from tg_bot.services import generate_book_caption, ClearKeyboard
+from tg_bot.services.utils import is_valid_book_article
 from tg_bot.states import EditBook
 
 edit_book_process_router = Router()

@@ -24,10 +24,7 @@ search_by_author_router.message.middleware(ChatActionMiddleware())
 
 @search_by_author_router.callback_query(
     F.data.startswith("search_by_author"),
-    flags={
-        # "clear_keyboard": False,
-        "safe_message": False,
-    },
+    flags={"safe_message": False},
 )
 async def search_by_author(
     call: CallbackQuery,
