@@ -4,13 +4,13 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from fluent.runtime import FluentLocalization
 
+from api.api_v1.schemas import PaymentCurrencyEnum, PaymentTypeEnum, UserSchema
 from config import config
 from tg_bot.api_client import api
-from api.api_v1.schemas import PaymentCurrencyEnum, PaymentTypeEnum, UserSchema
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard
-from tg_bot.services import Payment
 from tg_bot.services.localization import get_fluent_localization
+from tg_bot.services.payments import Payment
 from tg_bot.services.users import create_user_link
 from tg_bot.states import Payment as PaymentState
 
