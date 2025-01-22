@@ -7,7 +7,7 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import cancel_keyboard, reply_keyboard
-from tg_bot.services import ClearKeyboard
+from tg_bot.services.messaging import ClearKeyboard
 from tg_bot.services.users import get_user_localization
 from tg_bot.states import ServeOrder
 

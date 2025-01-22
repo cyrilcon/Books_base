@@ -9,7 +9,7 @@ from fluent.runtime import FluentLocalization
 from api.api_v1.schemas import UserSchema
 from config import config
 from tg_bot.keyboards.inline import pay_premium_keyboard
-from tg_bot.services import ClearKeyboard
+from tg_bot.services.messaging import ClearKeyboard
 from tg_bot.services.payments import Payment
 from tg_bot.states import Payment as PaymentState
 

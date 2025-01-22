@@ -19,12 +19,9 @@ from tg_bot.api_client import api
 from tg_bot.enums import MessageEffects
 from tg_bot.keyboards.inline import channel_keyboard, pay_set_keyboard
 from tg_bot.middlewares import SaturdayMiddleware
-from tg_bot.services import (
-    ClearKeyboard,
-    BookFormatter,
-    send_files,
-)
+from tg_bot.services import BookFormatter
 from tg_bot.services.localization import get_fluent_localization
+from tg_bot.services.messaging import send_files, ClearKeyboard
 from tg_bot.services.payments import Payment
 from tg_bot.services.users import create_user_link
 from tg_bot.states import Payment as PaymentState

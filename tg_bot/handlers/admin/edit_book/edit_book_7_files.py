@@ -12,7 +12,8 @@ from tg_bot.keyboards.inline import (
     edit_book_keyboard,
     formats_keyboard,
 )
-from tg_bot.services import generate_book_caption, send_files, BookFormatter
+from tg_bot.services import generate_book_caption, BookFormatter
+from tg_bot.services.messaging import send_files
 from tg_bot.states import EditBook
 
 edit_files_router = Router()

@@ -5,7 +5,7 @@ from aiogram.types import Message
 from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
-from tg_bot.services import Broadcaster
+from tg_bot.services.messaging import Broadcaster
 from tg_bot.states import Broadcast
 
 broadcast_process_router = Router()

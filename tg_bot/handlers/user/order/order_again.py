@@ -5,7 +5,7 @@ from aiogram.types import CallbackQuery, LinkPreviewOptions
 from fluent.runtime import FluentLocalization
 
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import ClearKeyboard
+from tg_bot.services.messaging import ClearKeyboard
 from tg_bot.states import Order
 
 order_again_router = Router()
