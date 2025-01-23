@@ -1,9 +1,7 @@
 from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
-from tg_bot.services.localization.fluent_loader import (
-    get_fluent_localization,
-)  # TODO: think it over
+from tg_bot.services.localization.fluent_loader import get_fluent_localization
 
 
 async def get_user_localization(id_user: int) -> FluentLocalization:

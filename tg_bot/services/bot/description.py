@@ -1,8 +1,6 @@
 from aiogram import Bot
 
-from tg_bot.services.localization.fluent_loader import (
-    get_fluent_localization,
-)  # TODO: think it over
+from tg_bot.services.localization.fluent_loader import get_fluent_localization
 
 # List of supported languages
 LANGUAGES = ["ru", "en", "uk"]
