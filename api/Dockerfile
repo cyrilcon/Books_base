@@ -12,7 +12,7 @@ WORKDIR /usr/src/app/books_base_api
 COPY pyproject.toml poetry.lock ./
 
 RUN poetry config virtualenvs.create false && \
-    poetry install --no-dev --no-interaction --no-ansi
+    poetry install --no-interaction --no-ansi --no-root
 
 # Final stage
 FROM python:3.12-slim
