@@ -10,7 +10,7 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
 from tg_bot.enums import SearchBy
-from tg_bot.services import BookFormatter
+from tg_bot.services.data import BookFormatter
 from tg_bot.states import Search
 from .keyboards import (
     search_by_keyboard,

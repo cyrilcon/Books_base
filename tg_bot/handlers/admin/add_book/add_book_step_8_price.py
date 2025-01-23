@@ -9,7 +9,7 @@ from tg_bot.keyboards.inline import (
     done_clear_back_cancel_keyboard,
     post_cancel_keyboard,
 )
-from tg_bot.services import generate_book_caption, BookFormatter
+from tg_bot.services.data import BookFormatter, generate_book_caption
 from tg_bot.states import AddBook
 
 add_book_step_8_router = Router()

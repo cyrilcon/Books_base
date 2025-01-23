@@ -5,7 +5,7 @@ from fluent.runtime import FluentLocalization
 from config import config
 from tg_bot.api_client import api
 from api.api_v1.schemas import UserSchema
-from tg_bot.services import BookFormatter
+from tg_bot.services.data import BookFormatter
 from tg_bot.services.localization import get_fluent_localization
 from tg_bot.services.messaging import send_files
 from tg_bot.services.users import create_user_link

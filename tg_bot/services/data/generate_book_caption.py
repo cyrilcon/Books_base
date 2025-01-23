@@ -5,7 +5,7 @@ from fluent.runtime import FluentLocalization
 from config import config
 from tg_bot.api_client import api
 from api.api_v1.schemas import BookSchema, UserSchema
-from tg_bot.services.book_formatter import BookFormatter
+from tg_bot.services.data.book_formatter import BookFormatter
 from tg_bot.services.localization.fluent_loader import get_fluent_localization
 
 

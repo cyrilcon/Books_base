@@ -6,7 +6,7 @@ from fluent.runtime import FluentLocalization
 
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import cancel_keyboard
-from tg_bot.services import BookFormatter
+from tg_bot.services.data import BookFormatter
 from tg_bot.states import AddBook
 
 command_add_book_router = Router()

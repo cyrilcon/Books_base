@@ -12,7 +12,7 @@ from tg_bot.keyboards.inline import (
     buy_or_read_keyboard,
     show_book_order_cancel_keyboard,
 )
-from tg_bot.services import generate_book_caption, BookFormatter
+from tg_bot.services.data import BookFormatter, generate_book_caption
 from tg_bot.states import Order
 
 order_step_1_router = Router()

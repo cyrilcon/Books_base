@@ -10,7 +10,7 @@ from tg_bot.keyboards.inline import (
     back_cancel_keyboard,
     done_clear_back_cancel_keyboard,
 )
-from tg_bot.services import BookFormatter
+from tg_bot.services.data import BookFormatter
 from tg_bot.states import AddBook
 
 add_book_step_5_router = Router()

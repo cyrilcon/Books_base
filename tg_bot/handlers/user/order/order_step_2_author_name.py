@@ -12,10 +12,10 @@ from tg_bot.keyboards.inline import (
     order_again_keyboard,
     serve_order_keyboard,
 )
-from tg_bot.services import generate_id_order
 from tg_bot.services.localization import get_fluent_localization
 from tg_bot.services.messaging import ClearKeyboard
 from tg_bot.services.users import create_user_link
+from tg_bot.services.utils import generate_id_order
 from tg_bot.states import Order
 
 order_step_2_router = Router()

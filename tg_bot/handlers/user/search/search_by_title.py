@@ -11,7 +11,7 @@ from tg_bot.api_client import api
 from api.api_v1.schemas import UserSchema
 from tg_bot.enums import SearchBy
 from tg_bot.keyboards.inline import buy_or_read_keyboard
-from tg_bot.services import generate_book_caption, BookFormatter
+from tg_bot.services.data import BookFormatter, generate_book_caption
 from tg_bot.services.utils import is_valid_book_article
 from .keyboards import search_by_keyboard, book_pagination_keyboard
 

@@ -11,7 +11,7 @@ from tg_bot.keyboards.inline import (
     yes_cancel_keyboard,
     edit_book_keyboard,
 )
-from tg_bot.services import generate_book_caption, BookFormatter
+from tg_bot.services.data import BookFormatter, generate_book_caption
 from tg_bot.states import EditBook
 
 edit_title_router = Router()

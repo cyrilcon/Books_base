@@ -5,7 +5,7 @@ from fluent.runtime import FluentLocalization
 from tg_bot.api_client import api
 from api.api_v1.schemas import UserSchema
 from tg_bot.keyboards.inline import my_books_keyboard
-from tg_bot.services import generate_book_caption
+from tg_bot.services.data import generate_book_caption
 
 my_books_page_router = Router()
 
