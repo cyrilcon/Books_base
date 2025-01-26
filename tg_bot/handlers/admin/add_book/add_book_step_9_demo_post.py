@@ -29,7 +29,7 @@ async def add_book_step_9(
     is_post = data.get("is_post")
     id_book = data.get("id_book")
     cover = data.get("cover")
-    book_caption = data.get("book_caption")
+    caption = data.get("caption")
 
     await api.books.create_book(data=data)
 
@@ -38,7 +38,7 @@ async def add_book_step_9(
         await bot.send_photo(
             chat_id=config.channel.id,
             photo=cover,
-            caption=book_caption,
+            caption=caption,
             reply_markup=link_buy_keyboard(link=link),
         )
     await call.message.answer(l10n.format_value("add-book-success"))

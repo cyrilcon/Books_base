@@ -10,6 +10,7 @@ from tg_bot.keyboards.inline import (
     post_cancel_keyboard,
 )
 from tg_bot.services.data import BookFormatter, generate_book_caption
+from tg_bot.services.utils import is_text_length_valid
 from tg_bot.states import AddBook
 
 add_book_step_8_router = Router()
@@ -62,20 +63,19 @@ async def add_book_step_8(
     cover = data.get("cover")
     description = data.get("description")
 
-    book_caption = await generate_book_caption(
+    caption = await generate_book_caption(
         book_data=data,
         is_post=is_post,
         from_user=from_user,
     )
-    caption_length = len(book_caption)
 
-    if caption_length > 1024:
+    if not is_text_length_valid(caption):
         await call.message.edit_text(
             l10n.format_value(
                 "add-book-error-caption-too-long",
                 {
                     "description": description,
-                    "caption_length": caption_length,
+                    "caption_length": len(caption),
                 },
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -86,10 +86,10 @@ async def add_book_step_8(
     await call.message.delete()
     await call.message.answer_photo(
         photo=cover,
-        caption=book_caption,
+        caption=caption,
         reply_markup=post_cancel_keyboard(l10n),
     )
-    await state.update_data(book_caption=book_caption)
+    await state.update_data(caption=caption)
     await state.set_state(AddBook.preview)
     await call.answer()
 
@@ -111,20 +111,19 @@ async def add_book_step_8_abbreviation_of_description(
     is_post = data.get("is_post")
     from_user = data.get("from_user")
 
-    book_caption = await generate_book_caption(
+    caption = await generate_book_caption(
         book_data=data,
         is_post=is_post,
         from_user=from_user,
     )
-    caption_length = len(book_caption)
 
-    if caption_length > 1024:
+    if not is_text_length_valid(caption):
         await message.answer(
             l10n.format_value(
                 "add-book-error-caption-too-long",
                 {
                     "description": abbreviated_description,
-                    "caption_length": caption_length,
+                    "caption_length": len(caption),
                 },
             ),
             reply_markup=cancel_keyboard(l10n),
@@ -133,8 +132,8 @@ async def add_book_step_8_abbreviation_of_description(
 
     await message.answer_photo(
         photo=cover,
-        caption=book_caption,
+        caption=caption,
         reply_markup=post_cancel_keyboard(l10n),
     )
-    await state.update_data(book_caption=book_caption)
+    await state.update_data(caption=caption)
     await state.set_state(AddBook.preview)

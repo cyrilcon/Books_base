@@ -7,6 +7,7 @@ from fluent.runtime import FluentLocalization
 from tg_bot.api_client import api
 from tg_bot.keyboards.inline import edit_price_keyboard, edit_book_keyboard
 from tg_bot.services.data import generate_book_caption
+from tg_bot.services.utils import is_text_length_valid
 from tg_bot.states import EditBook
 
 edit_price_router = Router()
@@ -53,13 +54,12 @@ async def update_price(
         return
 
     caption = await generate_book_caption(book_data=book, l10n=l10n, price=price)
-    caption_length = len(caption)
 
-    if caption_length > 1024:
+    if not is_text_length_valid(caption):
         await call.answer(
             l10n.format_value(
                 "edit-book-error-caption-too-long",
-                {"caption_length": caption_length},
+                {"caption_length": len(caption)},
             ),
             show_alert=True,
         )

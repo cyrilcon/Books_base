@@ -16,7 +16,7 @@ async def generate_book_caption(
     from_user: bool = False,
     user: UserSchema = None,
     **kwargs,
-):
+) -> str:
     """
     The caption of the post for the telegram channel is formed.
     :param book_data: Dictionary with book data.
@@ -81,7 +81,7 @@ async def generate_book_caption(
     genres = BookFormatter.format_genres(genres)
     article = BookFormatter.format_article(id_book)
 
-    book_caption = l10n.format_value(
+    caption = l10n.format_value(
         "book-caption-template",
         {
             "intro_message": intro_message,
@@ -95,4 +95,4 @@ async def generate_book_caption(
         },
     )
 
-    return book_caption
+    return caption

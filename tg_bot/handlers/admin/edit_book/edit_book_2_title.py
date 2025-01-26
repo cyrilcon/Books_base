@@ -12,6 +12,7 @@ from tg_bot.keyboards.inline import (
     edit_book_keyboard,
 )
 from tg_bot.services.data import BookFormatter, generate_book_caption
+from tg_bot.services.utils import is_text_length_valid
 from tg_bot.states import EditBook
 
 edit_title_router = Router()
@@ -96,13 +97,12 @@ async def edit_title_process(
     book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n, title=title)
-    caption_length = len(caption)
 
-    if caption_length > 1024:
+    if not is_text_length_valid(caption):
         await message.answer(
             l10n.format_value(
                 "edit-book-error-caption-too-long",
-                {"caption_length": caption_length},
+                {"caption_length": len(caption)},
             ),
             reply_markup=cancel_keyboard(l10n),
         )
@@ -138,13 +138,12 @@ async def edit_title_yes(
     book = response.get_model()
 
     caption = await generate_book_caption(book_data=book, l10n=l10n, title=title)
-    caption_length = len(caption)
 
-    if caption_length > 1024:
+    if not is_text_length_valid(caption):
         await call.message.answer(
             l10n.format_value(
                 "edit-book-error-caption-too-long",
-                {"caption_length": caption_length},
+                {"caption_length": len(caption)},
             ),
             reply_markup=cancel_keyboard(l10n),
         )
