@@ -215,10 +215,15 @@ async def update_user(
     Update user information.
     """
 
-    if (
-        user_update_data.referrer_id is not None
-        and user_update_data.referrer_id == user.id_user
-    ):
+    if user_update_data.referrer_id is not None:
+        referrer = await get_user_by_id(session, user_update_data.referrer_id)
+        if referrer is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Referrer with ID {user_update_data.referrer_id} does not exist!!",
+            )
+
+    if user_update_data.referrer_id == user.id_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="A user cannot refer themselves: 'referrer_id' must not equal 'id_user'!!",

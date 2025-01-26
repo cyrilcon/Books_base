@@ -22,8 +22,8 @@ class UserBase(UserId):
         max_length=32,
         description="User's username",
     )
-    language_code: str = Field(
-        ...,
+    language_code: str | None = Field(
+        None,
         max_length=10,
         description="IETF language tag of the user's language",
     )
@@ -55,7 +55,7 @@ class UserUpdate(BaseModel):
     )
     language_code: str | None = Field(
         None,
-        max_length=3,
+        max_length=10,
         description="IETF language tag of the user's language",
     )
     last_activity_datetime: datetime = Field(

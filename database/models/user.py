@@ -20,7 +20,9 @@ class User(Base, TableNameMixin):
     id_user: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=False)
     full_name: Mapped[str | None] = mapped_column(String(225), index=True)
     username: Mapped[str | None] = mapped_column(String(32), unique=True)
-    language_code: Mapped[str] = mapped_column(String(10))
+    language_code: Mapped[str | None] = mapped_column(
+        String(10), default="ru", server_default="ru"
+    )
     registration_datetime: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=func.now(),
@@ -30,7 +32,7 @@ class User(Base, TableNameMixin):
         server_default=func.now(),
     )
     base_balance: Mapped[int] = mapped_column(default=0, server_default="0")
-    referrer_id: Mapped[int | None] = mapped_column(default=None, server_default=None)
+    referrer_id: Mapped[int | None] = mapped_column(BIGINT)
 
     admin: Mapped["Admin"] = relationship(
         back_populates="user",
