@@ -10,7 +10,7 @@ prefix = config.api.prefix + config.api.v1.prefix + config.api.v1.payments
 
 PAYMENT_DATA_1 = {
     "id_payment": "463f1109-a51b-473a-9bd7-0eec7e113e7e",
-    "id_user": 1,
+    "id_user": 9223372036854775806,
     "price": 85,
     "currency": "RUB",
     "type": "book",
@@ -21,7 +21,7 @@ PAYMENT_DATA_1 = {
 }
 PAYMENT_DATA_2 = {
     "id_payment": "585f1109-a51b-473a-9bd7-0eec7e113e7d",
-    "id_user": 1,
+    "id_user": 9223372036854775806,
     "price": 385,
     "currency": "XTR",
     "type": "premium",

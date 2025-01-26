@@ -12,7 +12,7 @@ prefix = (
 )
 
 BLACKLIST_DATA = {
-    "id_user": 1,
+    "id_user": 9223372036854775806,
 }
 
 

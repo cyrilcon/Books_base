@@ -8,13 +8,13 @@ from config import config
 prefix = config.api.prefix + config.api.v1.prefix + config.api.v1.users
 
 USER_DATA_1 = {
-    "id_user": 1,
+    "id_user": 9223372036854775806,
     "full_name": "John Doe",
     "username": "john_doe",
     "language_code": "en",
 }
 USER_DATA_2 = {
-    "id_user": 2,
+    "id_user": 9223372036854775807,
     "full_name": "John Smith",
     "username": "john_smith",
     "language_code": "ru",
@@ -54,6 +54,19 @@ class TestUsersSuccess:
         response = await client.post(prefix, json=USER_DATA_1)
         assert response.status_code == 201
         assert response.json()["username"] == USER_DATA_1["username"]
+
+    @pytest.mark.asyncio
+    async def test_create_user_without_language_code(self, client: AsyncClient):
+        """
+        Test creating a new user.
+        """
+
+        user_data_1 = USER_DATA_1.copy()
+        del user_data_1["language_code"]
+
+        response = await client.post(prefix, json=user_data_1)
+        assert response.status_code == 201
+        assert response.json()["username"] == user_data_1["username"]
 
     @pytest.mark.asyncio
     async def test_get_user_statistics(self, client: AsyncClient, create_user):
@@ -119,10 +132,12 @@ class TestUsersSuccess:
         Test updating user information.
         """
 
+        await client.post(prefix, json=USER_DATA_2)
+
         update_data = {
             "full_name": "Jane Doe",
             "last_activity_datetime": datetime.now().isoformat(),
-            "referrer_id": 2,
+            "referrer_id": USER_DATA_2["id_user"],
         }
 
         id_user = create_user["id_user"]
@@ -213,7 +228,7 @@ class TestUsersFailure:
         """
 
         user_with_too_long_language_code_data = USER_DATA_2.copy()
-        user_with_too_long_language_code_data["language_code"] = "english_english"
+        user_with_too_long_language_code_data["language_code"] = "english_language"
 
         response = await client.post(prefix, json=user_with_too_long_language_code_data)
         assert response.status_code == 422
@@ -311,9 +326,28 @@ class TestUsersFailure:
         assert response.status_code == 422
 
     @pytest.mark.asyncio
-    async def test_update_user_invalid_referrer_id(
+    async def test_update_user_non_existent_referrer(
         self, client: AsyncClient, create_user
     ):
+        """
+        Test updating a user with a non-existent referrer_id.
+        """
+
+        non_existent_referrer_id = 9999
+        id_user = create_user["id_user"]
+        update_data = {
+            "last_activity_datetime": datetime.now().isoformat(),
+            "referrer_id": non_existent_referrer_id,
+        }
+
+        response = await client.patch(f"{prefix}/{id_user}", json=update_data)
+        assert response.status_code == 400
+
+        error_text = f"Referrer with ID {non_existent_referrer_id} does not exist!!"
+        assert response.json()["detail"] == error_text
+
+    @pytest.mark.asyncio
+    async def test_update_user_self_referral(self, client: AsyncClient, create_user):
         """
         Test updating a user with referrer_id equal to id_user.
         """

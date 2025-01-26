@@ -8,7 +8,7 @@ prefix = config.api.prefix + config.api.v1.prefix + config.api.v1.orders
 
 ORDER_DATA = {
     "id_order": 1,
-    "id_user": 1,
+    "id_user": 9223372036854775806,
     "book_title": "The Great Gatsby",
     "author_name": "F. Scott Fitzgerald",
 }
