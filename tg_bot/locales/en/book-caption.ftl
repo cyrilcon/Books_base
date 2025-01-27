@@ -15,7 +15,7 @@ book-caption-template =
     <b>"<code>{ $title }</code>"</b>
     <i>{ $authors }</i>
 
-    { $description }
+    <blockquote>{ $description }</blockquote>
 
     Available formats: { $formats }
     { $price }
